@@ -1,0 +1,236 @@
+/*
+*		MagicCookie
+*		邮件:imy@fantuanpu.com
+*		版本:2015.2.5 // Version2.0
+*		作者:Sapphirell
+*/
+
+/*规定默认内容*/
+.trans{
+    webkit-transition: all 0.5s ease-in,all 0.3s ease-out;
+    -moz-transition: all 0.5s ease-in,all 0.3s ease-out;
+    -o-transition: all 0.5s ease-in,all 0.3s ease-out;
+    transition: all 0.5s ease-in,all 0.3s ease-out;}
+.quick{
+    /*极快几乎没有过度的变化*/
+    transition: all 0.11s;
+}
+html ,body{font: 13px/1.5  'PingFang SC', 'Helvetica Neue', 'Helvetica', 'STHeitiSC-Light', 'Arial', sans-serif;color: #4C4C4C; margin: 0px;padding: 0px;overflow-x:hidden; }
+body {/*background: url(../fp-new/application/image/pattern1.jpg) repeat;*/background: #eee;}
+a{text-decoration: none; color: #847171;}
+a:hover{ text-decoration:none;}
+p{margin: 0 5px;    font-family: "Hiragino Sans GB","futura-pt",Helvetica,Arial,"Hiragino Sans GB W3","Microsoft YaHei",sans-serif;
+    line-height: 1.8em;}
+h1{margin: 5px;font-weight: 100;text-align: center;}
+h2{margin: 5px}
+h3{margin: 5px}
+h4,h5{margin: 3px;}
+i{cursor: pointer;/*字体图标*/}
+input,textarea{outline:none;}
+input[type="button"],input[type="submit"]{    color: #FFFFFF;background-color: rgba(255, 255, 255, 0);padding: 5px 20px;margin: 5px 0px;display: inline-block;cursor: pointer;font-weight: 900;font-size: 13px;border: 1px solid #D4D4D4;border-radius: 3px;background-color: #5bc0de;border-color: #46b8da;}
+/*input[type="button"]:active, input[type="submit"]:active{position: relative;top: 1px}*/
+
+/*input[type="text"],input[type="password"],textarea{outline: none;padding: 8px 15px;padding:8px 15px 8px 15px\0;height:16px;border:1px solid #eee;margin: 3px 0;  border-radius: 2px;!*box-shadow: 0 0 3px #efefef inset;*!}*/
+input[type="text"]:focus,textarea:focus,input[type="password"]:focus,input[type="email"]:focus{outline: none;border:1px solid #ccc;/*box-shadow: 0 0 3px #dfdfdf inset;-moz-box-shadow: 0 0 3px #dfdfdf inset;-webkit-box-shadow: 0 0 3px #dfdfdf inset;*/}
+input[type="checkbox"]{width: 14px;height: 14px;cursor: pointer;}
+input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
+    background-color: #fff!important;
+    background-image: none;
+    color: rgb(0, 0, 0);
+}
+
+select{cursor: pointer;    display: block;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;}
+select:focus {
+    border-color: #66afe9;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+}
+ul{padding: 0px;margin: 0px}
+::-webkit-scrollbar {height: 8px;width: 8px;background: rgba(222,222,222,0.5);border-radius: 5px;}
+::-webkit-scrollbar-thumb {width: 8px;min-height: 15px;background: rgba(0,0,0,0.3);border-radius: 5px;}
+::-webkit-scrollbar-button {display: none;}
+::-webkit-scrollbar-track {background-color: #ffffff;}
+::-webkit-scrollbar-track-piece {background: #ffffff;}
+
+@font-face {
+    font-family: 'Apple';  /*给自定义字体命名*/
+    src: url('Apple.eot');
+    src: url('Apple.eot?#iefix') format('eot'),
+    url('Apple.woff') format('woff'),
+    url('Apple.ttf') format('truetype'),
+    url('Apple.svg#Apple') format('svg');
+}
+
+
+/*
+*	页面结构
+*
+*/
+.wp{width: 960px;margin: 0 auto;}/*wp为页面居中的正文内容*/
+
+.header{height: 40px;background: #fff;  overflow: hidden;   box-shadow: 0 0 15px #ccc;   border-top: 2px solid #303A44;}
+.header a {text-decoration: none;font-size: 15px;margin: 8px;display: inline-block;float:left;    color: #3E3C3C;}
+
+.footer{margin-top: 20px;position: fixed;bottom: 0px;width: 100%}
+.footer ul{}
+.footer li{float: left;  float: right;background: #eee;border: 1px solid #ccc;border-width: 1px 1px 0px 1px;margin: 0px 8px;padding: 8px;border-radius: 5px 5px 0 0;cursor: pointer;}
+.wpfooter{    border-top: 8px dashed #E0E0E0;width: 960px;margin: 0 auto;margin-top: 8px;}
+.inline_block_960{display: none!important;/*960px 以下隐藏*/}
+@media screen and (max-width: 960px) {
+    .wp{width: 100%;margin: 0 auto;}
+    .wpfooter{    border-top: 8px dashed #E0E0E0;width: 100%;margin: 0 auto;margin-top: 8px;}
+    .inline_block_960{display: inline-block!important;}
+    .none_960{display: none!important;}
+
+}
+/*
+*	主要的应用模块
+*
+*/
+.noA{-webkit-transition: none!important;
+    -moz-transition: none!important;
+    -o-transition: none!important;
+    transition: none!important;}/*jquery过渡动画必须设置这个class*/
+.center{margin: 0 auto;}/*居中*/
+.clear{float: none!important;clear: both;display: block;}/*清理浮动,清理元素必须是block*/
+.trans{-webkit-transition: all 0.5s ease-in,all 0.3s ease-out;-moz-transition: all 0.5s ease-in,all 0.3s ease-out;-o-transition: all 0.5s ease-in,all 0.3s ease-out;transition: all 0.5s ease-in,all 0.3s ease-out;}/*对单个DOM应用过渡效果*/
+.posre{position: relative;}/*设置主体为相对定位，但下一层默认为绝对定位*/
+.posre > *{position: absolute;}
+.comic{font-family: Comic Sans MS;}
+/*
+*	次要的应用模块
+*
+*
+*/
+
+.bm{border: 1px solid;border-color: #ddd;overflow: hidden;border-radius: 4px}
+.bm_h{border-bottom: 1px solid #ddd;padding: 8px;background: #F6F6F6;background: -webkit-gradient(linear,left top,left 40,from(#FFF),color-stop(100%,#F3F3F3),to(#F3F3F3));background: -moz-linear-gradient(center top,#FFF,#F3F3F3 140%);background: -o-linear-gradient(top,#FFF 0%,#F3F3F3 140%);-webkit-box-shadow: 0px 2px 10px #eee;-moz-box-shadow: 0px 2px 10px #eee;}
+.bm_c{background: #fff;}
+
+.bm_c > .item,.bm > .item,.bm > div >.item{border-bottom: 1px solid #ddd;display: block;padding: 10px;background: #fff;    }
+.item:hover{background: #eee!important;}
+.bm_c > .item:last-child,.bm > .item:last-child,.bm > div >.item:last-child{border-bottom: 0px;}
+
+.blur{-webkit-filter: blur(3px);-moz-filter: blur(3px);-o-filter: blur(3px);-ms-filter: blur(3px);filter: blur(3px);}/*滤镜模糊效果*/
+.about{padding: 5px;margin: 5px;display: inline-block;/*border: 1px solid #C8C8C8;*/position: absolute;border-radius: 3px;max-width: 200px;position: absolute;filter:alpha(opacity=0);opacity:0;color: #fff;transition: none;z-index: 99;background:#474747;}
+.ab{position: absolute;width: 10px;height: 10px;background: #474747;
+    -webkit-transform: rotate(45deg);-ms-transform: rotate(45deg);transform: rotate(45deg);z-index: 2;top: -4px;left:10px;border: 1px solid #252525;/*border-width: 1px 0px 0px 1px;*/border-width:0px;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(M11=0.7071067811865474, M12=-0.7071067811865477, M21=0.7071067811865477, M22=0.7071067811865474, SizingMethod='auto expand');";
+    top: -7px\0;transition: none;}
+
+.notice{background-color: #e9faff;color: #337b92;padding: 8px;border: 1px solid;border-radius: 5px;margin: 3px;overflow: hidden;border-color: #74CDE7;}/*蓝色提醒框*/
+.alert{background-color: #FFF2E9;color: #7A9233;padding: 8px;border: 1px solid;border-radius: 5px;margin: 3px;overflow: hidden;border-color: #E7C774;}/*橘黄色提醒框*/
+.memuBtn{height: 25px;width: 25px;cursor: pointer;display: inline-block;float: left;margin: 9px}/*点击菜单*/
+#active{position: fixed;top:0px;left: -235px;background: #303A44;width: 235px;-webkit-transition: none!important;
+    -moz-transition: none!important;
+    -o-transition: none!important;
+    transition: none!important;}/*弹出左侧竖条*/
+
+/*实现选项卡、两侧圆角、间隔线不重复等功能*/
+.tab{}
+.tab_h{border-bottom: 1px solid #ccc;}
+.tab_m{}
+.tab_h > div{display: inline-block;float: left;padding: 2px 8px;border: 1px solid #ccc;border-width: 1px 0px 0px 1px;cursor: pointer;}
+.tab_h > div:first-child{border-radius: 3px 0px 0px 0px;}
+.tab_h > div:last-child{border-right: 1px solid #ccc;border-radius: 0px 3px 0px 0px;}
+
+.tab_h:after{content:"."; display:block; height:0; visibility:hidden; clear:both;}
+.tab_m > div{display: none}
+.tab_m > div:first-child{display: block;}
+.onchange{background: #fff}
+
+/*布置展开菜单*/
+.ul{border: 1px solid;border-bottom-width: 0px!important;background: #fff;}
+.ul > .ul_h{cursor: pointer;border-bottom: 1px solid;}
+.keys{display: none;}
+.keys > .item{border-bottom: 1px solid}
+.ul > .li {display: none;}
+.ul > .li:first-child{display: inline-block;}
+.ul > .li:last-child{border-bottom: 1px solid;}
+.ul_h:last {border-bottom: 0px solid!important;}
+.ul,.ul > .ul_h , .keys > .item , .ul > .li , .ul > .li:last-child{border-color: #e7e7e7;}
+/*表单*/
+.default_input {
+    border-radius: 5px 0px 0px 5px;
+
+    height: 30px;
+    margin: 5px;
+    position: relative;
+}
+.default_input span {text-align: right;
+    background: #eee;
+    float: left;
+    width: 17%;
+    height: inherit;
+    display: inline-block!important;
+    box-sizing: border-box;
+
+    border-radius: inherit;}
+.default_input input{
+    background: #fff;
+    width: 83%;
+    border-radius: 0px;
+    box-sizing: border-box;
+    display: inline-block;
+    height: inherit;
+    margin: 0px;
+    box-shadow: 0 2px 2px #F3F3F3 inset;
+    border: 1px solid #eee;
+}
+.default_input input:focus{box-shadow: 0 0px 6px #48C6FF; border-color: #00A0FF; }
+.default_input i{margin: 8px;display: inline-block;}
+/*头像弹出修改菜单*/
+/**颜色描述*/
+.purple{    color: #A5A8BF;}
+/*被框架引用的css，这部分不需要使用*/
+
+
+.memuBtn > .across{background-color: #444;width: 23px;height: 4px;float: left;margin-bottom: 4px;webkit-transition: all 0.5s ease-in,all 0.3s ease-out;-moz-transition: all 0.5s ease-in,all 0.3s ease-out;-o-transition: all 0.5s ease-in,all 0.3s ease-out;transition: all 0.5s ease-in,all 0.3s ease-out;}
+
+.glassCase{}
+
+.more , .less {text-align: center;width: 16px;display: inline-block;  color: #8DACBD!important;}
+.more {cursor: pointer;}
+.input_required{border-color:#F1A680!important;box-shadow:0 0 5px #FDBC8B;}
+/*轮播插件用的css*/
+.unslider-nav ol {
+    list-style: none;
+    text-align: center;
+}
+.unslider-nav ol li {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    margin: 0 4px;
+    background: transparent;
+    border-radius: 5px;
+    overflow: hidden;
+    text-indent: -999em;
+    border: 2px solid #fff;
+    cursor: pointer;
+}
+.unslider-nav ol li.unslider-active {
+    background: #fff;
+    cursor: default;
+}
+#active{box-shadow: 0 0 50px #7c7c7c}
+#active * {color: #fff;}
+.memuBtn .glyphicon-cog{font-size: 18px;}
+.memuBtn .glyphicon-cog:hover{color: #00CCFF}
+/*字体图标引用的css*/
+.fa-bg{    font-size: 1.75em;line-height: 1.75em;vertical-align: -15%;}

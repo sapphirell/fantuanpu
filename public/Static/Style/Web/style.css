@@ -1,0 +1,103 @@
+/*header*/
+.header_items {}
+.wp .hd{margin: 0px}
+.header_items span{font-size: 12px;
+    color: #B3B3B3;
+    font-weight: 100;}
+.hd li {
+    list-style: none;
+    display: inline-block;
+    margin-top: 5px;
+    margin-left: 25px;
+    color: #464646;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.hd li a {
+    font-size: 13px;
+    width: 100%;
+    display: inline-block;
+    height: 100%;
+
+    padding-top: 2px;
+    padding-left: 5px;
+    margin: 0px
+}
+
+.search{float: right;}
+
+.header .search .in_text{    padding: 0px 4px;
+    background: #303A44;
+    border: 0px;
+    color: #fff2e9;
+    height: 40px;
+    font-size: 18px;
+    font-family: 'PingFang SC', 'Helvetica Neue', 'Helvetica', 'STHeitiSC-Light', 'Arial', sans-serif;
+    font-weight: 100;}
+
+.header .title a {
+    display: inline-block;
+    width: 83px;
+    float: left;
+    font-family: 'PingFang SC', 'Helvetica Neue', 'Helvetica', 'STHeitiSC-Light', 'Arial', sans-serif;
+    background-color: rgba(255, 255, 255, 0.92);
+    font-weight: 200;
+    line-height: 2.6;
+    color: #a78484;
+    padding: 2px;
+    font-size: 12px;
+    margin: 1px;}
+.header .add-me{font-size: 12px;
+    cursor: pointer;line-height: 23px;    font-family: 'PingFang SC', 'Helvetica Neue', 'Helvetica', 'STHeitiSC-Light', 'Arial', sans-serif;
+    font-weight: 300;}
+.footer_cut {    border-bottom: 4px dashed #fff;  margin-top: 20px;}
+.banner {position: relative; overflow: hidden;border-radius: 5px;
+    background: #fff;
+    box-shadow: 0 0 5px #ccc;
+    width: inherit!important;max-height: 100px}
+
+.banner:hover{box-shadow: 0 0 8px #74cde7;}
+
+.banner img{width: 960px;  min-height:100px;  }
+.banner.quick {margin-bottom: 10px}
+.banner li { list-style: none; position: relative;}
+.banner ul li { float: left; cursor: pointer;}
+
+/*左侧*/
+
+.operation ul {
+    margin-top: 52px;
+}
+.list-group {
+    padding-left: 0;
+    margin-bottom: 20px;
+}
+.operation ul li {
+    padding: 10px;
+    cursor: pointer;
+    box-shadow: inset 30px -15px 80px rgba(0, 0, 0, 0.37);
+}
+.operation ul li a {
+    display: block;
+    color: #fff;
+}
+.operation ul li:hover {
+    box-shadow: inset 30px -15px 80px rgba(49, 182, 212, 0.37);
+}
+.operation ul li i {
+    float: right;
+    line-height: initial;
+    color: rgba(140, 140, 140, 0.53)!important;
+}
+
+.alert.alert-danger{position: absolute;
+    right: 10px;
+    width: 190px;
+    color: #ff9653;
+    background-color: rgba(255, 242, 233, 0.85);
+    top: 50px;
+    padding: 10px 30px}
+
+.ava_message{    padding: 20px 0px 0px 0px;  text-align: center;}
+#active .statement {text-align: center;font-size: 12px;    color: #929292;}

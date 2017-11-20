@@ -1,0 +1,60 @@
+
+.push_title {position: absolute;top: 10px;background: rgba(255, 255, 255, 0.71);padding: 4px 40px;display: none;}
+._3_1{width: 100%}
+._3_1_left{width: 75%;}
+._3_1_right{width: 25%;}
+
+.mod_tab{}
+.mod_tab li{list-style: none;float: right;background: #fff;padding: 9px 4px;margin: 5px;border-radius: 5px;box-shadow: 1px 2px 1px #ccc;cursor: pointer;}
+.mod_tab li span{    border: 2px dashed #ccc;
+    padding: 4px 20px;
+    border-radius: 8px;
+    font-weight: 800;
+    color: #AFAFAF;}
+.mod_tab li .hover{color: #888;
+}
+.tab_a {width: 100%;background: #fff;display: none;}
+.tab_a.on{
+    display: block;
+}
+.floater{    display: inline-block;
+    background: #E45555;
+    color: #ffffff;
+    padding: 3px;
+    border-radius: 100%;
+    width: 42px;
+    height: 42px;
+    text-align: center;
+    box-shadow: 2px 3px 10px #B9B9B9;
+    position: fixed;
+    bottom: 20px;
+    right: 80px;}
+.floater i{    margin-top: 2px;
+    margin-left: -1px;}
+._3_1_left .tab_a{height: 650px;margin-top:10px;margin-bottom: 20px;background: #fff;}
+/***viewthread***/
+
+.theme {width: 100%;min-height: 200px;background: #fff;box-shadow: 0 0 3px #ccc;margin-top: 40px}
+.thread_time {    font-weight: 200;
+    font-size: 13px;
+    text-align: center;
+    color: #9C9C9C;text-align: center;width: 100%;display: inline-block;    font-family: PingHei,STHeitiSC-Light,Lucida Grande,Lucida Sans Unicode,Helvetica,Arial,Verdana,sans-serif;}
+h1.thread_title{    padding-top: 27px;}
+.wp .message{    padding: 35px;}
+/****threadlist****/
+.ftl_container{width: 70%;float: left;}
+#pg{margin-bottom: 5px;}
+#pg > *{
+    background: #fff;
+    margin: 3px;
+    padding: 7px 13px;
+    color: #303A44!important;
+    box-sizing: border-box;
+    min-width: 37px;
+    display: inline-block;
+}
+/***自适应***/
+@media screen and (max-width: 960px) {
+    .banner,.banner img{width: 100%!important;}
+
+}
