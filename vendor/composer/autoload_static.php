@@ -278,6 +278,7 @@ class ComposerStaticInit5e29b2c2d84bb23a17bbe59e2ef81d8f
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\Forum\\ForumApiController' => __DIR__ . '/../..' . '/app/Http/Controllers/Forum/ForumApiController.php',
         'App\\Http\\Controllers\\Forum\\ForumBaseController' => __DIR__ . '/../..' . '/app/Http/Controllers/Forum/ForumBaseController.php',
+        'App\\Http\\Controllers\\Forum\\ThreadController' => __DIR__ . '/../..' . '/app/Http/Controllers/Forum/ThreadController.php',
         'App\\Http\\Controllers\\System\\CoreController' => __DIR__ . '/../..' . '/app/Http/Controllers/System/CoreController.php',
         'App\\Http\\Controllers\\System\\ServeController' => __DIR__ . '/../..' . '/app/Http/Controllers/System/ServeController.php',
         'App\\Http\\Controllers\\System\\TestController' => __DIR__ . '/../..' . '/app/Http/Controllers/System/TestController.php',

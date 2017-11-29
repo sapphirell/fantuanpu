@@ -16,6 +16,7 @@ return array(
     'App\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
     'App\\Http\\Controllers\\Forum\\ForumApiController' => $baseDir . '/app/Http/Controllers/Forum/ForumApiController.php',
     'App\\Http\\Controllers\\Forum\\ForumBaseController' => $baseDir . '/app/Http/Controllers/Forum/ForumBaseController.php',
+    'App\\Http\\Controllers\\Forum\\ThreadController' => $baseDir . '/app/Http/Controllers/Forum/ThreadController.php',
     'App\\Http\\Controllers\\System\\CoreController' => $baseDir . '/app/Http/Controllers/System/CoreController.php',
     'App\\Http\\Controllers\\System\\ServeController' => $baseDir . '/app/Http/Controllers/System/ServeController.php',
     'App\\Http\\Controllers\\System\\TestController' => $baseDir . '/app/Http/Controllers/System/TestController.php',
