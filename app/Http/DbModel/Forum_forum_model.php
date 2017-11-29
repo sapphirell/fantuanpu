@@ -12,7 +12,7 @@ class Forum_forum_model extends Model
 
 
     public function GetForumGroup(){
-        return DB::table($this->table.'_group')->select()->get();
+//        return DB::table($this->table.'_group')->select()->get();
     }
 
 
