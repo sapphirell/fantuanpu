@@ -30,5 +30,8 @@ class CoreController extends Controller
         return $cache_key;
 
     }
-
+    /**
+     * 板块列表缓存key
+     */
+    const NODES = 'nodes_array';
 }

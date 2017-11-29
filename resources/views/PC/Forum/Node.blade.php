@@ -42,10 +42,12 @@
                 <div class="tab_a on">
                     <div>
 
-                        @foreach($data['forumGroup'] as $value)
+                        @foreach($data['forumGroup'] as $group)
+                            @foreach($group['bottomforum'] as $nodes)
                             <div>
-                                <p>{{$value->gname}}</p>
+                                <a href="/forum-{{$nodes['fid']}}-1.html">{{$nodes['name']}}</a>
                             </div>
+                            @endforeach
                         @endforeach
 
                     </div>
