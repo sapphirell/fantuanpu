@@ -34,8 +34,9 @@ class ForumBaseController extends Controller
     }
 
 
-    public function ViewThread(Request $request){
-
+    public function ViewThread(Request $request,$fid,$page){
+        echo $fid;
+        echo $page;
     }
     public function ForumIndex(Request $request){
         $this->forumModel           =   New Forum_forum_model();
