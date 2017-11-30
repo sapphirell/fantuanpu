@@ -13,9 +13,10 @@ use Illuminate\Support\Facades\DB;
 class ForumBaseController extends Controller
 {
     public $forumModel;
-    public function __construct()
+    public function __construct(Forum_forum_model $forum_model)
     {
         parent::__construct();
+        $this->forumModel = $forum_model;
     }
 
     public function index(Request $request){
@@ -39,7 +40,7 @@ class ForumBaseController extends Controller
         echo $page;
     }
     public function ForumIndex(Request $request){
-        $this->forumModel           =   New Forum_forum_model();
+
         $this->data['forumGroup']   =   $this->forumModel->get_nodes();
 //        var_dump($this->data['forumGroup'] );
         return view('PC/Forum/Node')->with('data',$this->data);
