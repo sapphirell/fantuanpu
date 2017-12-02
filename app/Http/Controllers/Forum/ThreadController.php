@@ -18,4 +18,10 @@ class ThreadController extends Controller
     {
         dd($request);
     }
+
+
+    public function ViewThread(Request $request,$fid,$page){
+        echo $fid;
+        echo $page;
+    }
 }
