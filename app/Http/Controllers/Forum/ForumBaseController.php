@@ -45,6 +45,7 @@ class ForumBaseController extends Controller
     public function ForumIndex(Request $request)
     {
         $this->data['forumGroup']   =   $this->forumModel->get_nodes();
+//        dd($this->data['forumGroup']  );
         return view('PC/Forum/Node')->with('data',$this->data);
     }
     public function talk(Request $request,Forum_forum_model $forum_model)

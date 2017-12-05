@@ -41,6 +41,7 @@ if( UserAgent::isMobile() ){
         Route::get('/about', ['uses' => 'ForumBaseController@about', 'as' => 'about']);#about
         Route::get('/talk', ['uses' => 'ForumBaseController@talk', 'as' => 'talk']);#帖子首页
         Route::get('/forum-{id}-{page}.html', ['uses' => 'ForumBaseController@ThreadList', 'as' => 'thread']);#帖子首页
+        Route::get('/thread-{tid}-{page}.html', ['uses' => 'ThreadController@ViewThread', 'as' => 'thread']);#查看帖子
         Route::get('/new-thread', ['uses' => 'ThreadController@NewThreadView', 'as' => 'new-thread']);#帖子首页
         Route::post('/post-thread', ['uses' => 'ThreadController@StorePosts', 'as' => 'store-posts']);#存储发帖
 

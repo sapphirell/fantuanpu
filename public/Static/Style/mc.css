@@ -16,9 +16,10 @@
     transition: all 0.11s;
 }
 html ,body{font: 13px/1.5  'PingFang SC', 'Helvetica Neue', 'Helvetica', 'STHeitiSC-Light', 'Arial', sans-serif;color: #4C4C4C; margin: 0px;padding: 0px;overflow-x:hidden; }
-body {/*background: url(../fp-new/application/image/pattern1.jpg) repeat;*/background: #eee;}
-a{text-decoration: none; color: #847171;}
-a:hover{ text-decoration:none;}
+body {/*background: url(../fp-new/application/image/pattern1.jpg) repeat;*/ background: #fafafa;}
+a{color: #0084B4;}
+a.no_attn {    text-decoration: none;  color: #444;cursor: pointer}/*不引起注意的链接*/
+a:hover{}
 p{margin: 0 5px;    font-family: "Hiragino Sans GB","futura-pt",Helvetica,Arial,"Hiragino Sans GB W3","Microsoft YaHei",sans-serif;
     line-height: 1.8em;}
 h1{margin: 5px;font-weight: 100;text-align: center;}
