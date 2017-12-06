@@ -20,6 +20,10 @@ class Thread_model extends Model
 
         return $res;
     }
+
+    /**
+    * @path
+    **/
     public function getThreadList($fid)
     {
         return DB::table($this->table_thread)->where('fid',$fid)->orderBy('lastpost','desc')->select()->paginate(20) ;
