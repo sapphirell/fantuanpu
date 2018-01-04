@@ -33,5 +33,9 @@ class CoreController extends Controller
     /**
      * 板块列表缓存key
      */
-    const NODES = 'nodes_array';
+    const NODES = ['key'=>'nodes_array_','time'=>3600000];
+    /**
+     * 帖子详情缓存
+     */
+    const THREAD_VIEW = ['key'=>'thread_view_','time'=>86400];
 }

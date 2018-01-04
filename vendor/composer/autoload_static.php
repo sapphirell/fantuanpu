@@ -286,6 +286,7 @@ class ComposerStaticInit5e29b2c2d84bb23a17bbe59e2ef81d8f
         'App\\Http\\Controllers\\User\\UserBaseController' => __DIR__ . '/../..' . '/app/Http/Controllers/User/UserBaseController.php',
         'App\\Http\\Controllers\\User\\UserHelperController' => __DIR__ . '/../..' . '/app/Http/Controllers/User/UserHelperController.php',
         'App\\Http\\DbModel\\Forum_forum_model' => __DIR__ . '/../..' . '/app/Http/DbModel/Forum_forum_model.php',
+        'App\\Http\\DbModel\\Thread_model' => __DIR__ . '/../..' . '/app/Http/DbModel/Thread_model.php',
         'App\\Http\\DbModel\\UCenter_member_model' => __DIR__ . '/../..' . '/app/Http/DbModel/UCenter_member_model.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\Admin' => __DIR__ . '/../..' . '/app/Http/Middleware/Admin.php',

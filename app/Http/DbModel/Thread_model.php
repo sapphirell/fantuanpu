@@ -13,11 +13,7 @@ class Thread_model extends Model
 
     public function getThread($tid)
     {
-        //thread指帖子标题以及一楼的发帖
-        $res = DB::table($this->table_thread . 'as t')
-            ->leftJoin($this->table_post .' as p','t.tid','=','p.tid')
-            ->where(['tid'=>$tid])->select()->get();
-
+        $res['thread_post'] =  DB::table($this->table_post)->select()->where(['tid'=>$tid])->orderBy('pid')->get();
         return $res;
     }
     public function getThreadList($fid)

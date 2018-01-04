@@ -40,6 +40,10 @@ class UserBaseController extends Controller
         $request->session()->pull('user_info');
         return redirect()->route('home');
     }
+    public function OldUser()
+    {
+        return view('PC/User/OldUserView')->with('data',$this->data);
+    }
 
 
 }

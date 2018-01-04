@@ -54,6 +54,7 @@ if( UserAgent::isMobile() ){
         Route::get('/logout', ['uses' => 'UserBaseController@LogOut', 'as' => 'LogOut']);#退出
         Route::get('/register', ['uses' => 'UserBaseController@Register', 'as' => 'registe']);#注册
         Route::post('/do-login', ['uses' => 'UserBaseController@DoLogin', 'as' => 'do-login']);#登录
+        Route::get('/old-user', ['uses' => 'UserBaseController@OldUser', 'as' => 'OldUser']);#老账户寻回
     });
     //管理后台 IndexCp
     Route::group([

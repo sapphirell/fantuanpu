@@ -24,6 +24,7 @@ return array(
     'App\\Http\\Controllers\\User\\UserBaseController' => $baseDir . '/app/Http/Controllers/User/UserBaseController.php',
     'App\\Http\\Controllers\\User\\UserHelperController' => $baseDir . '/app/Http/Controllers/User/UserHelperController.php',
     'App\\Http\\DbModel\\Forum_forum_model' => $baseDir . '/app/Http/DbModel/Forum_forum_model.php',
+    'App\\Http\\DbModel\\Thread_model' => $baseDir . '/app/Http/DbModel/Thread_model.php',
     'App\\Http\\DbModel\\UCenter_member_model' => $baseDir . '/app/Http/DbModel/UCenter_member_model.php',
     'App\\Http\\Kernel' => $baseDir . '/app/Http/Kernel.php',
     'App\\Http\\Middleware\\Admin' => $baseDir . '/app/Http/Middleware/Admin.php',

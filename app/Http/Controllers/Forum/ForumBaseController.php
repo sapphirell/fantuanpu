@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Forum;
 
+use App\Http\Controllers\User\UserHelperController;
 use App\Http\DbModel\Forum_forum_model;
 use App\Http\DbModel\Thread_model;
 use Illuminate\Http\Request;
@@ -15,11 +16,16 @@ class ForumBaseController extends Controller
 {
     public $forumModel;
     public $threadModel;
+    public $helpModel;
     public function __construct(Forum_forum_model $forum_model,Thread_model $thread_model)
     {
+
+
         parent::__construct();
+
         $this->forumModel = $forum_model;
         $this->threadModel = $thread_model;
+
     }
 
     public function index(Request $request){
@@ -39,7 +45,6 @@ class ForumBaseController extends Controller
     public function ThreadList(Request $request,$fid,$page)
     {
         $this->data['list'] = $this->threadModel->getThreadList($fid);
-//        dd($this->data);
         return view('PC/Forum/ThreadList')->with('data',$this->data);
     }
     public function ForumIndex(Request $request)

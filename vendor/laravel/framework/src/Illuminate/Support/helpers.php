@@ -890,3 +890,15 @@ if (! function_exists('with')) {
         return $object;
     }
 }
+if (! function_exists('avatar')) {
+
+
+    function avatar($uid,$size,$radius,$class,$type='big')
+    {
+        //头像文件夹存储的头像分为三种，big、middle、small
+        $src = \App\Http\Controllers\User\UserHelperController::GetAvatarUrl($uid,$type);
+        $img = "<img src = $src width='".$size."px' style='border-radius:".$radius."%;overflow:hidden;' class='".$class."'>";
+        echo $img;
+
+    }
+}

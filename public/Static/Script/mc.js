@@ -65,7 +65,7 @@ $(document).ready(function(){
     //memuBtn
 
     $threeDiv = "<div class='across'></div><div class='across'></div><div class='across'></div>";
-    $threeDiv = '<span class="glyphicon glyphicon-cog trans" aria-hidden="true"></span>';
+    $threeDiv = '<span class="glyphicon glyphicon-cog trans" aria-hidden="true" style="margin-left: 10px"></span>';
     $memuBtn = $(".memuBtn");
     $memuBtn.append($threeDiv);
     var mbtnNum = '0';

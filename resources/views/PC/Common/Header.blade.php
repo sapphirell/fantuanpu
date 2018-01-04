@@ -2,8 +2,8 @@
 <head>
     <title>饭团扑.Net!-即使是做了上班族也想作个二次元啊喂</title>
 
-    <meta name="keywords" content="">
-    <meta name="description" content="">
+    <meta name="keywords" content="饭团扑,二次元,动漫,Lolita,jk">
+    <meta name="description" content="饭团扑,一个二次元社交社区">
     @include('PC.Common.HtmlHead')
 </head>
 
@@ -42,11 +42,14 @@
 
         <span class="clear"></span>
     </div>
+
 </div>
 
 <div id="active">
     <div class='ava_message'>
+
         <img src="/Image/avatar/noavatar_big.gif" width="80px" style="border-radius:100%;overflow:hidden;" class="left_memu_ava can_set_ava">
+{{--        {{ avatar(1,80,'left_memu_ava can_set_ava',100) }}--}}
         <p style=''>
             @if(!session('user_info')->uid)
             请<a id='alert_ajax_login' href='/login' style='color: #F09C9C;'>登录</a>您的账号
@@ -90,3 +93,14 @@
 
 
 </div>
+
+<script>
+    $(document).ready(function () {
+        @if(!session('user_info')->id)
+        layer.tips('点这里登录哦', '.memuBtn',{
+            tips: [3, 'rgb(255, 136, 175)'],
+            time: 4000
+        });
+        @endif
+    })
+</script>
