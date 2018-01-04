@@ -16,6 +16,10 @@ class Thread_model extends Model
         $res['thread_post'] =  DB::table($this->table_post)->select()->where(['tid'=>$tid])->orderBy('pid')->get();
         return $res;
     }
+
+    /**
+    * @path
+    **/
     public function getThreadList($fid)
     {
         return DB::table($this->table_thread)->where('fid',$fid)->orderBy('lastpost','desc')->select()->paginate(20) ;

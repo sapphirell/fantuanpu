@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Forum;
 
-use App\Http\DbModel\Thread_model;
-use Illuminate\Http\Request;
 
-use App\Http\Requests;
+use App\Http\DbModel\Thread_model;
+use App\ForumThread;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Response;
 
 class ThreadController extends Controller
 {
@@ -21,11 +22,11 @@ class ThreadController extends Controller
     {
         return view('PC/Forum/NewThread');
     }
+
     public function StorePosts(Request $request)
     {
         dd($request);
     }
-
 
     public function ViewThread(Request $request,$tid,$page){
 //        echo $tid;
@@ -35,5 +36,6 @@ class ThreadController extends Controller
 
         dd( $this->data['thread']);
         return view('PC/Forum/ThreadView')->with('data',$this->data);
+
     }
 }
