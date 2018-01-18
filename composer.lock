@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "8421dcff66584b598aadd3b3a836a9d4",
-    "content-hash": "b55a838047a2aed67ac629c4e11389ee",
+    "hash": "96bfee2e2f2fa10d555f8cca55e379b6",
+    "content-hash": "555c2da87a3ef7957f30ae8558eb5d36",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -795,16 +795,16 @@
         },
         {
             "name": "predis/predis",
-            "version": "v1.1.x-dev",
+            "version": "v1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nrk/predis.git",
-                "reference": "98ec0cc27efc1efab32b369962f97e29ecc0464a"
+                "reference": "f0210e38881631afeafb56ab43405a92cafd9fd1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://files.phpcomposer.com/files/nrk/predis/98ec0cc27efc1efab32b369962f97e29ecc0464a.zip",
-                "reference": "98ec0cc27efc1efab32b369962f97e29ecc0464a",
+                "url": "https://files.phpcomposer.com/files/nrk/predis/f0210e38881631afeafb56ab43405a92cafd9fd1.zip",
+                "reference": "f0210e38881631afeafb56ab43405a92cafd9fd1",
                 "shasum": ""
             },
             "require": {
@@ -841,7 +841,7 @@
                 "predis",
                 "redis"
             ],
-            "time": "2016-11-22 14:32:30"
+            "time": "2016-06-16 16:22:20"
         },
         {
             "name": "psr/log",
@@ -3236,9 +3236,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "predis/predis": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

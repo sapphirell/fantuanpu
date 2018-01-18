@@ -39,19 +39,21 @@ class UserHelperController extends Controller
 
     public static function GetAvatarUrl($uid,$size = 'middle' )
     {
-        $avatar = 'images/'.self::GetAvatarDir($uid, $size);
+        $usrAvatar      = self::GetAvatarDir($uid, $size);
+        //远程目录
+//        $avatar = 'images/'.$usrAvatar;
+        //本地目录模式
+        $local      = dirname(dirname(dirname(dirname(__DIR__)))) . '/public/';
+        $avadir     = 'Image/user_ava/images/';
+        $avatar     = $local . $avadir . $usrAvatar;
 
-
-        //var_dump( dirname(dirname(__FILE__)).'/image/user_ava/images/'.$this->get_avatar($uid, $size) );
-
-//        if( file_exists(dirname(dirname(__FILE__)).'/image/user_ava/images/'.self::GetAvatarDir($uid, $size)) ){
-
-            return self::LOCAL.'/'.$avatar;
-
-//        }else{
-//
-//            return self::LOCAL.'images/noavatar_'.$size.'.gif';
-//        }
+        if( file_exists($avatar) )
+        {
+            return $avadir . $usrAvatar;
+        }else
+        {
+            return $avadir .'/noavatar_middle.gif';
+        }
 
     }
 

@@ -16,7 +16,7 @@
                 <div class="form-group" style="float: right;margin-right: 10px;">
 
                     <div class="col-sm-offset-2 col-sm-10">
-                        <a href="/old-user">老账户寻回</a>
+                        <a id="old_user" href="/old-user">老账户寻回</a>
                         <button type="submit" class="btn  btn-info">登录</button>
                     </div>
                 </div>

@@ -2,7 +2,9 @@
 
 namespace App\Http\DbModel;
 
+use App\Http\Controllers\System\CoreController;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class Forum_forum_model extends Model
@@ -39,5 +41,14 @@ class Forum_forum_model extends Model
 
         return $f;
 
+    }
+    public static function get_nodes_by_fid($fid)
+    {
+        $configCacheKey = CoreController::NODES_INFO;
+        $cacheKey       = $configCacheKey['keys'] . $fid;
+        return Cache::remember($cacheKey,$configCacheKey['time'],function () use ($fid)
+        {
+            return self::where('fid',$fid)->select()->first();
+        });
     }
 }

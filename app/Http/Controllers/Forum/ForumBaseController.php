@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Forum;
 
+use App\Http\Controllers\System\CoreController;
 use App\Http\Controllers\User\UserHelperController;
 use App\Http\DbModel\Forum_forum_model;
 use App\Http\DbModel\Thread_model;
@@ -19,7 +20,6 @@ class ForumBaseController extends Controller
     public $helpModel;
     public function __construct(Forum_forum_model $forum_model,Thread_model $thread_model)
     {
-
 
         parent::__construct();
 
@@ -49,8 +49,11 @@ class ForumBaseController extends Controller
     }
     public function ForumIndex(Request $request)
     {
-        $this->data['forumGroup']   =   $this->forumModel->get_nodes();
-//        dd($this->data['forumGroup']  );
+        $cacheKey = CoreController::NODES;
+        $this->data['forumGroup']   = Cache::remember($cacheKey['keys'],$cacheKey['time'],function ()
+        {
+            return $this->forumModel->get_nodes();
+        });
         return view('PC/Forum/Node')->with('data',$this->data);
     }
     public function talk(Request $request,Forum_forum_model $forum_model)

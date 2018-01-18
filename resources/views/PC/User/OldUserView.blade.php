@@ -6,9 +6,9 @@
     <div class="bm">
         <div class="bm_h"><h1>账户寻回/回忆账号</h1></div>
         <div class="bm_c">
-            <p>输入您用户名中包含的字符!</p>
-            <form action="/get-old-user" method="get">
-                <input type="text" name="name_str" class="form-control" >
+            <p>输入您用户名中包含的字符! (*只显示30个相关用户)</p>
+            <form action="/old-user" method="get">
+                <input type="text" name="username" class="form-control" value="{{$data['search-username']}}">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
             </form>
 
@@ -20,6 +20,17 @@
                         <td>名字</td>
                         <td>邮箱</td>
                     </tr>
+                    @if(!empty($data['user-list']))
+                        @foreach($data['user-list'] as $key=>$value)
+                            <tr>
+                                <td>{{$key+1}}</td>
+                                <td>{{avatar($value['uid'],20,100,'avatar','small')}}</td>
+                                <td>{{$value->username}}</td>
+                                <td><a href="/get-email?email={{$value->email}}">{{$value->email}}</a></td>
+                            </tr>
+                        @endforeach
+                    @endif
+
                 </table>
             </div>
         </div>

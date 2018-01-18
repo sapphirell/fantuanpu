@@ -3287,17 +3287,17 @@
     },
     {
         "name": "predis/predis",
-        "version": "v1.1.x-dev",
-        "version_normalized": "1.1.9999999.9999999-dev",
+        "version": "v1.1.1",
+        "version_normalized": "1.1.1.0",
         "source": {
             "type": "git",
             "url": "https://github.com/nrk/predis.git",
-            "reference": "98ec0cc27efc1efab32b369962f97e29ecc0464a"
+            "reference": "f0210e38881631afeafb56ab43405a92cafd9fd1"
         },
         "dist": {
             "type": "zip",
-            "url": "https://files.phpcomposer.com/files/nrk/predis/98ec0cc27efc1efab32b369962f97e29ecc0464a.zip",
-            "reference": "98ec0cc27efc1efab32b369962f97e29ecc0464a",
+            "url": "https://files.phpcomposer.com/files/nrk/predis/f0210e38881631afeafb56ab43405a92cafd9fd1.zip",
+            "reference": "f0210e38881631afeafb56ab43405a92cafd9fd1",
             "shasum": ""
         },
         "require": {
@@ -3310,7 +3310,7 @@
             "ext-curl": "Allows access to Webdis when paired with phpiredis",
             "ext-phpiredis": "Allows faster serialization and deserialization of the Redis protocol"
         },
-        "time": "2016-11-22 14:32:30",
+        "time": "2016-06-16 16:22:20",
         "type": "library",
         "installation-source": "dist",
         "autoload": {

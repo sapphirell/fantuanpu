@@ -515,10 +515,8 @@ class SentinelReplication implements ReplicationInterface
     /**
      * Asserts that the specified connection matches an expected role.
      *
-     * @param NodeConnectionInterface $connection Connection to a redis server.
-     * @param string                  $role       Expected role of the server ("master", "slave" or "sentinel").
-     *
-     * @throws RoleException
+     * @param NodeConnectionInterface $sentinel Connection to a redis server.
+     * @param string                  $role     Expected role of the server ("master", "slave" or "sentinel").
      */
     protected function assertConnectionRole(NodeConnectionInterface $connection, $role)
     {

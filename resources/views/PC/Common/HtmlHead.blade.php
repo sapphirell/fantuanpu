@@ -2,8 +2,10 @@
 <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
-
+<!-- Set render engine for 360 browser -->
+<meta name="renderer" content="webkit">
+<!-- No Baidu Siteapp-->
+<meta http-equiv="Cache-Control" content="no-siteapp"/>
 <!-- 新 Bootstrap 核心 CSS 文件 -->
 <link rel="stylesheet" type="text/css" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
 {{--<link  rel="stylesheet" type="text/css"   href="/Static/Style/bootstrap.min.css">--}}

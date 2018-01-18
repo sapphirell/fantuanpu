@@ -48,7 +48,6 @@ if( UserAgent::isMobile() ){
          *@return App\Http\Controllers\Forum\ThreadController
          */
         Route::get('/thread-{tid}-{page}.html', ['uses' => 'ThreadController@viewThread', 'as' => 'thread']);#查看帖子
-
         Route::get('/new-thread', ['uses' => 'ThreadController@NewThreadView', 'as' => 'new-thread']);#帖子首页
         Route::post('/post-thread', ['uses' => 'ThreadController@StorePosts', 'as' => 'store-posts']);#存储发帖
 
@@ -62,6 +61,8 @@ if( UserAgent::isMobile() ){
         Route::get('/register', ['uses' => 'UserBaseController@Register', 'as' => 'registe']);#注册
         Route::post('/do-login', ['uses' => 'UserBaseController@DoLogin', 'as' => 'do-login']);#登录
         Route::get('/old-user', ['uses' => 'UserBaseController@OldUser', 'as' => 'OldUser']);#老账户寻回
+        Route::get('/get-email', ['uses' => 'UserBaseController@GetAccountByEmail', 'as' => 'GetAccountByEmail']);#根据邮箱找回账户
+        Route::post('/get-email', ['uses' => 'UserBaseController@RetrieveMail', 'as' => 'RetrieveMail']);#根据邮箱找回账户,发送邮件
     });
     //管理后台 IndexCp
     Route::group([

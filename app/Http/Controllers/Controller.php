@@ -20,6 +20,10 @@ class Controller extends BaseController
      */
     public $User;
 
+    /**
+     *
+     */
+    const DOMAIN = 'http://www.fantuanpu.com/';
 
     public function __construct()
     {

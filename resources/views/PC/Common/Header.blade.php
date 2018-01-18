@@ -26,7 +26,7 @@
     <div class="wp">
         <h1 style="display: inline;margin:0px;float:right;"></h1>
         <div class="search">
-            <a class="add-me " ><i class="icon-plus"></i> Me</a>
+            <a class="add-me"><i class="icon-plus"></i> Me</a>
             <from action="">
                 <input type="text" name="" class="in_text" placeholder="Searching..">
 
@@ -48,8 +48,8 @@
 <div id="active">
     <div class='ava_message'>
 
-        <img src="/Image/avatar/noavatar_big.gif" width="80px" style="border-radius:100%;overflow:hidden;" class="left_memu_ava can_set_ava">
-{{--        {{ avatar(1,80,'left_memu_ava can_set_ava',100) }}--}}
+        {{--<img src="/Image/avatar/noavatar_big.gif" width="80px" style="border-radius:100%;overflow:hidden;" class="left_memu_ava can_set_ava">--}}
+        {{ avatar(session('user_info')->uid,80,100,'left_memu_ava can_set_ava') }}
         <p style=''>
             @if(!session('user_info')->uid)
             请<a id='alert_ajax_login' href='/login' style='color: #F09C9C;'>登录</a>您的账号

@@ -272,6 +272,7 @@ class ComposerStaticInit5e29b2c2d84bb23a17bbe59e2ef81d8f
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Events\\Event' => __DIR__ . '/../..' . '/app/Events/Event.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
+        'App\\ForumThread' => __DIR__ . '/../..' . '/app/ForumThread.php',
         'App\\Http\\Controllers\\Admincp\\AdmincpController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admincp/AdmincpController.php',
         'App\\Http\\Controllers\\Auth\\AuthController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/AuthController.php',
         'App\\Http\\Controllers\\Auth\\PasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/PasswordController.php',

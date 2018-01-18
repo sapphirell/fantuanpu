@@ -9,6 +9,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Session;
 
+/**
+ * Class CoreController
+ * @package App\Http\Controllers\System
+ *          提供缓存关键字,time为缓存的分钟数,不足1分钟的请手动设置
+ */
 class CoreController extends Controller
 {
     public function __construct()
@@ -16,26 +21,28 @@ class CoreController extends Controller
         parent::__construct();
     }
 
-    /***********
-     * @param $condition 加密参数,数组
-     * @return string md5秘钥
-     */
-    public static function GetCacheKey($condition){
-        $cache_key = 'fp_';
-        $array_count = count($condition);
-
-        foreach ($condition as $key=>$value){//生成缓存秘钥
-            $cache_key .= $key.$value;
-        }
-        return $cache_key;
-
-    }
     /**
      * 板块列表缓存key
      */
     const NODES = ['key'=>'nodes_array_','time'=>3600000];
     /**
+     * 板块信息
+     */
+    const NODES_INFO = ['key'=>'nodes_info_','time'=>3600000];
+    /**
      * 帖子详情缓存
      */
-    const THREAD_VIEW = ['key'=>'thread_view_','time'=>86400];
+    const THREAD_VIEW = ['key'=>'thread_view_','time'=>600];
+    /**
+     * 取得老用户查询缓存
+     */
+    const OLD_USER = ['key'=>'old_user_key_','time'=>1000];
+    /**
+     * 60秒内有没有给某邮箱发送过邮件
+     */
+    const HAS_POST_MAIL_TO = ['key' => 'has_post_mail_to_','time'=>1];
+    /**
+     * 60秒内有没有发送过任意邮件
+     */
+    const HAS_POST_MAIL = ['key' => 'has_post_mail_', 'time'=>1];
 }
