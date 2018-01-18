@@ -60,6 +60,13 @@ class ForumBaseController extends Controller
     {
         return view('PC/Forum/Talk')->with('data',$this->data);
     }
+    public function notice(Request $request)
+    {
+        if ($request->input('username'))
+        {
 
+        }
+        return view('PC/Forum/Notice')->with('data',$this->data);
+    }
 
 }

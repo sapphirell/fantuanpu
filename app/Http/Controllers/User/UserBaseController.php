@@ -18,6 +18,7 @@ class UserBaseController extends Controller
     }
 
     public function LoginView(){
+
         return view('PC/User/Login')->with('data',$this->data);
     }
 
@@ -35,15 +36,15 @@ class UserBaseController extends Controller
         self::validate($request, $rules, $messages);
 
 
-
+        //redirect('/')
         return UserApiController::Api_DoLogin($request)
-                                ? redirect('/')
+                                ? "<script>window.parent.location.reload();</script>"
                                 : back()->withErrors('密码输入错误');
     }
     public function LogOut(Request $request)
     {
         $request->session()->pull('user_info');
-        return redirect()->route('home');
+        return redirect()->route('forum');
     }
     public function OldUser(Request $request)
     {
@@ -96,4 +97,5 @@ class UserBaseController extends Controller
         //比较发送函数返回的时间戳和当前的时间戳,如果时间戳相等,则是发送成功
         return $response == time();
     }
+
 }

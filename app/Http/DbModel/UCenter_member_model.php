@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 class UCenter_member_model extends Model
 {
-    public $table='pre_user';
+    public $table='pre_ucenter_members';
     public $timestamps = false;
 
     public static function GetUserInfoByEmail($email){

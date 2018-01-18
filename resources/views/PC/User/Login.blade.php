@@ -1,5 +1,6 @@
 {{--@include('PC.Common.Header')--}}
 @include('PC.Common.HtmlHead')
+@include('PC.Common.error')
 <link rel="stylesheet" type="text/css" href="/Static/Style/Web/reg_login.style.css">
 
 <div class="wp" ng-init="template=['PC','Common','User','Login']">

@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>饭团扑.Net!-即使是做了上班族也想作个二次元啊喂</title>
+    <title>饭团扑.com | 二次元萌腐宅的聚居地。</title>
 
     <meta name="keywords" content="饭团扑,二次元,动漫,Lolita,jk">
     <meta name="description" content="饭团扑,一个二次元社交社区">
@@ -22,7 +22,7 @@
 
 <div class="header">
     <div class="memuBtn"></div>
-    <p class="title"><a href="/about" style="">饭团扑.net</a></p>
+    <p class="title"><a href="/about" style="">饭团扑.com</a></p>
     <div class="wp">
         <h1 style="display: inline;margin:0px;float:right;"></h1>
         <div class="search">
@@ -34,8 +34,8 @@
 
         </div>
         <ul class='hd'>
-            <li><a href="/forum"  class="header_items"><p class="none_960">节点 <span>Nodes</span></p><i class="inline_block_960 fa fa-code-fork fa-2x"></i></a></li>
-
+            <li><a href="/forum"  class="header_items"><p class="none_960">板块 <span>Forums</span></p><i class="inline_block_960 fa fa-code-fork fa-2x"></i></a></li>
+            <li><a href="/notice"  class="header_items"><p class="none_960">公告/招募</p></a></li>
         </ul>
 
 

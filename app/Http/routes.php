@@ -14,6 +14,10 @@ use App\Http\UserAgent;
 
 if( UserAgent::isMobile() ){
     //移动端
+    Route::get('/', function () {
+        return '移动端界面还未写好…';
+    });
+    //移动端
     Route::group([
         'namespace' => 'User'
     ], function () {
@@ -40,6 +44,8 @@ if( UserAgent::isMobile() ){
         Route::get('/forum', ['uses' => 'ForumBaseController@index', 'as' => 'forum-index']);#论坛首页
         Route::get('/about', ['uses' => 'ForumBaseController@about', 'as' => 'about']);#about
         Route::get('/talk', ['uses' => 'ForumBaseController@talk', 'as' => 'talk']);#帖子首页
+        Route::get('/notice', ['uses' => 'ForumBaseController@notice', 'as' => 'notice']);#声明
+        Route::post('/notice', ['uses' => 'ForumBaseController@notice', 'as' => 'notice']);#声明
         Route::get('/forum-{id}-{page}.html', ['uses' => 'ForumBaseController@ThreadList', 'as' => 'thread']);#帖子首页
 
         /**
