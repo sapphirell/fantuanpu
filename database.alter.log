@@ -1,0 +1,10 @@
+CREATE TABLE `pre_fantuanpu_leaveword` (
+  `id` int(10) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `message` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `type` int(1) NOT NULL DEFAULT '1' COMMENT '第几次留言板',
+  PRIMARY KEY (`id`),
+  KEY `type` (`created_at`,`type`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8

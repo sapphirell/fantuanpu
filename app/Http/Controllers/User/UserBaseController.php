@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\System\CoreController;
+use App\Http\Controllers\System\MailController;
 use App\Http\DbModel\User_model;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -78,24 +79,28 @@ class UserBaseController extends Controller
         {
             $accessToken = md5($userEmail.time());
             //发送邮件
-
+            $data['url'] =  self::DOMAIN . "retrieve/?source=email&token=".$accessToken;
             $input = [
                 'email' => $userEmail,
-                'toUser' => $userEmail,
-                'subject' => "账户{$userEmail}密码找回",
-                'view' => 'common'
+                'toUser' => "hentai@fantuanpu.com",
+                'subject' => "密码找回",
+                'msg' => '1234',
+                'view' => 'Default'
             ];
-            $data['url'] =  self::DOMAIN . "retrieve/?source=email&token=".$accessToken;
+            MailController::sendMail($input);
 
-            Mail::send('PC.Emails.RetrieveMail', $data, function ($message)  use ($userEmail){
-                $message->from('admin@fantuanpu.com', '密码找回邮件');
-                $message->to($userEmail,$userEmail);
-            });
             //添加缓存锁
             return time();
         });
+        if ($response == time())
+        {
+            return json_encode(['status'=>true,'msg'=>'发送成功']);
+        }
+        else
+        {
+            return json_encode(['status'=>false,'msg'=>'发送失败,发送间隔为60秒']);
+        }
         //比较发送函数返回的时间戳和当前的时间戳,如果时间戳相等,则是发送成功
-        return $response == time();
     }
 
 }

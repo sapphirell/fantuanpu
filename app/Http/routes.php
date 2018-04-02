@@ -42,7 +42,7 @@ if( UserAgent::isMobile() ){
     ], function () {
         Route::get('/', ['uses' => 'ForumBaseController@index', 'as' => 'forum']);#论坛首页
         Route::get('/forum', ['uses' => 'ForumBaseController@index', 'as' => 'forum-index']);#论坛首页
-        Route::get('/about', ['uses' => 'ForumBaseController@about', 'as' => 'about']);#about
+        Route::get('/about', ['uses' => 'ForumBaseController@index', 'as' => 'about']);#about
         Route::get('/talk', ['uses' => 'ForumBaseController@talk', 'as' => 'talk']);#帖子首页
         Route::get('/notice', ['uses' => 'ForumBaseController@notice', 'as' => 'notice']);#声明
         Route::post('/notice', ['uses' => 'ForumBaseController@notice', 'as' => 'notice']);#声明
@@ -56,6 +56,7 @@ if( UserAgent::isMobile() ){
         Route::get('/thread-{tid}-{page}.html', ['uses' => 'ThreadController@viewThread', 'as' => 'thread']);#查看帖子
         Route::get('/new-thread', ['uses' => 'ThreadController@NewThreadView', 'as' => 'new-thread']);#帖子首页
         Route::post('/post-thread', ['uses' => 'ThreadController@StorePosts', 'as' => 'store-posts']);#存储发帖
+        Route::get('/webim', ['uses' => 'ForumBaseController@webim', 'as' => 'webim']);#webim即时聊天
 
     });
     //用户
@@ -79,6 +80,15 @@ if( UserAgent::isMobile() ){
     ], function () {
         Route::get('/admincp', ['uses' => 'AdmincpController@IndexCp', 'as' => 'admin']);#管理后台首页
 
+    });
+    //App 接口
+    Route::group([
+        'namespace' => 'App',
+//        'middleware' => [
+//            'app'
+//        ]
+    ],function () {
+        Route::get('/app/test', ['uses' => 'UserController@test', 'as' => 'app-user-test']);#app测试
     });
 }
 

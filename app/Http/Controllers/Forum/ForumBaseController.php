@@ -68,5 +68,12 @@ class ForumBaseController extends Controller
         }
         return view('PC/Forum/Notice')->with('data',$this->data);
     }
+    public function webim()
+    {
+        return view('PC/Forum/Webim')->with('data',$this->data);
+    }
+    public function about()
+    {
 
+    }
 }
