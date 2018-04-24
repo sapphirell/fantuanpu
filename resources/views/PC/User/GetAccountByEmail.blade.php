@@ -15,7 +15,7 @@
                         @if(empty($data['backUrl']))
                         <a href="{{$data['backUrl']}}">返回</a>
                         @endif
-                        <button type="submit" class="btn  btn-info" style="margin: 10px;box-sizing: border-box;float: right;">给上述email发送验证电邮</button>
+                        <button type="submit" class="btn  btn-info" style="margin: 10px;box-sizing: border-box;float: right;">给上述email发送验证邮件</button>
                     </div>
                 </div>
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">

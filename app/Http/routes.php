@@ -12,19 +12,19 @@
 */
 use App\Http\UserAgent;
 
-if( UserAgent::isMobile() ){
-    //移动端
-    Route::get('/', function () {
-        return '移动端界面还未写好…';
-    });
-    //移动端
-    Route::group([
-        'namespace' => 'User'
-    ], function () {
-
-    });
-
-}else{
+//if( UserAgent::isMobile() ){
+//    //移动端
+//    Route::get('/', function () {
+//        return '移动端界面还未写好…';
+//    });
+//    //移动端
+//    Route::group([
+//        'namespace' => 'User'
+//    ], function () {
+//
+//    });
+//
+//}else{
     //pc端
     //服务
     Route::group([
@@ -90,6 +90,6 @@ if( UserAgent::isMobile() ){
     ],function () {
         Route::get('/app/test', ['uses' => 'UserController@test', 'as' => 'app-user-test']);#app测试
     });
-}
+//}
 
 

@@ -22,13 +22,11 @@ class Forum_forum_model extends Model
         *
         */
         $topMod = $this->get_bottom_nodes(0,'group',1);
-
-        foreach ($topMod as $key => $value) {
+        foreach ($topMod as $key => &$value) {
             # 找出每一个归属上级版块的板块来
-            $query[$key]['bottomforum'] = $this->get_bottom_nodes($value['fid'],'forum',1);
+            $value['bottomforum'] = $this->get_bottom_nodes($value['fid'],'forum',1);
         }
-
-        return $query;
+        return $topMod;
     }
 
     public function get_bottom_nodes($fid,$type = 'forum')
@@ -37,7 +35,7 @@ class Forum_forum_model extends Model
         $f = Forum_forum_model::where([
             'type' => $type,
             'fup' => $fid
-        ])->select()->get()->toArray();
+        ])->select()->orderBy('displayorder')->get()->toArray();
 
         return $f;
 

@@ -22,7 +22,7 @@
 
 
     </div>
-    <div class="_3_1">
+    <div class="_3_1" style="    overflow: hidden;min-height: 1200px;">
         <div class="_3_1_left">
             <div class="mod_tab">
                 <ul>
@@ -40,16 +40,75 @@
                 <div class="tab_a">最近回复</div>
                 <div class="tab_a">最热主题</div>
                 <div class="tab_a on">
-                    <div>
-
+                    <div class="node_father">
                         @foreach($data['forumGroup'] as $group)
-                            @foreach($group['bottomforum'] as $nodes)
                             <div>
-                                <a href="/forum-{{$nodes['fid']}}-1.html">{{$nodes['name']}}</a>
+                            <h3 style="    margin: 5px;font-size: 15px;font-weight: 300;color: #7d4a4a;text-shadow: 0 0 1px #bec7c4;">{{$group['name']}}</h3>
+                            {{--<div>分区版主:</div>--}}
                             </div>
-                            @endforeach
-                        @endforeach
+                            <div class="forum_group">
+                                @foreach($group['bottomforum'] as $nodes)
+                                    @if($group['forumcolumns'] == '0')
+                                        <div class="forum_block" style="display: inline-block;float: left;margin: 10px 30px 30px 30px;    width: 40%;">
+                                            <a href="/forum-{{$nodes['fid']}}-1.html"><h3 class="forum_title">{{$nodes['name']}}</h3></a>
+                                            <div class="forum_img"></div>
+                                            <p class="forum_description trans">
+                                                今日: <span>{{$nodes['todayposts']}}</span> · 主题: <span>{{$nodes['threads']}}</span> · 帖数: <span><?php echo round($nodes['posts']/10000,2)."万"; ?></span>
+                                            </p>
+                                            <p>
+                                                <a class="forum_lastpost"  href="thread-{{explode("\t",$nodes['lastpost'])[0]}}-1.html">{{explode("\t",$nodes['lastpost'])[1]}}</a>
+                                            </p>
+                                        </div>
+                                    @elseif($group['forumcolumns'] == '2')
 
+                                        <div class="forum_block" style="display: inline-block;float: left;margin: 10px 30px 30px 30px;    width: 40%;">
+                                            <a href="/forum-{{$nodes['fid']}}-1.html"><h3 class="forum_title">{{$nodes['name']}}</h3></a>
+                                            <div class="forum_img"></div>
+                                            <p class="forum_description trans">
+                                                今日: <span class="forum_today trans">{{$nodes['todayposts']}}</span> · 主题: <span class="forum_threads trans">{{$nodes['threads']}}</span> · 帖数: <span class="forum_posts trans"><?php echo round($nodes['posts']/10000,2)."万"; ?></span>
+                                            </p>
+                                            <p>
+                                                <a class="forum_lastpost"  href="thread-{{explode("\t",$nodes['lastpost'])[0]}}-1.html">{{explode("\t",$nodes['lastpost'])[1]}}</a>
+                                            </p>
+                                        </div>
+                                    @elseif($group['forumcolumns'] == '3')
+                                    @else
+                                    @endif
+
+                                    {{--<h3 class="forum_title"--}}
+                                        {{--@if($group['forumcolumns'] == '2')--}}
+                                        {{--style="display: inline-block;float: left;margin: 20px 90px 30px 30px;   "--}}
+                                        {{--@elseif($group['forumcolumns'] == '3')--}}
+                                        {{--style="display: inline-block;float: left;margin: 10px 30px 10px 30px;"--}}
+                                        {{--@elseif($group['forumcolumns'] == '0')--}}
+                                        {{--style="display: block;float: left;margin: 20px 90px 30px 30px;"--}}
+                                        {{--@else--}}
+                                        {{--style="display: block;float: left;min-width: 100%;"--}}
+                                            {{--@endif>--}}
+                                        {{--{{$nodes['name']}}--}}
+                                    {{--</h3>--}}
+                                    {{--<div class="forum_block"--}}
+                                        {{--@if($group['forumcolumns'] == '2')--}}
+                                            {{--style="display: inline-block;float: left;margin: 20px 90px 30px 30px;   "--}}
+                                        {{--@elseif($group['forumcolumns'] == '3')--}}
+                                            {{--style="display: inline-block;float: left;margin: 10px 30px 10px 30px;"--}}
+                                        {{--@elseif($group['forumcolumns'] == '0')--}}
+                                            {{--style="display: block;float: left;margin: 20px 90px 30px 30px;"--}}
+                                        {{--@else--}}
+                                            {{--style="display: block;float: left;min-width: 100%;"--}}
+                                            {{--@endif--}}
+                                    {{-->--}}
+
+                                    {{--</div>--}}
+                                    {{--<p>--}}
+                                        {{--{{$nodes['']}}--}}
+                                    {{--</p>--}}
+
+                                @endforeach
+                                <div class="clear"></div>
+                            </div>
+                        @endforeach
+                        <div class="clear"></div>
                     </div>
                     <!--节点列表-->
                 </div>
