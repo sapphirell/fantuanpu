@@ -22,7 +22,8 @@ class TestController extends Controller
     }
 
     public function index(){
-        echo "asd";
+        $user_info = session('user_info');
+        dd($user_info);
 //        return $this->forum_model ::GetForumList();
 //        return $this->mail->re();
 

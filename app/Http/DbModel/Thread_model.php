@@ -23,7 +23,10 @@ class Thread_model extends Model
     **/
     public function getThreadList($fid,$page)
     {
-        return DB::table($this->table_thread)->where('fid',$fid)->orderBy('lastpost','desc')->select()->offset($page)->limit(20)->get();
+        return DB::table($this->table_thread)
+            ->where('fid',$fid)
+            ->orderBy('lastpost','desc')
+            ->select()->offset($page-1)->limit(20)->get();
     }
 }
 

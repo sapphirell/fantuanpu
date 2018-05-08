@@ -28,5 +28,33 @@ class Controller extends BaseController
     public function __construct()
     {
         error_reporting(E_ERROR);
+        date_default_timezone_set('Asia/Shanghai');
     }
+    public static function response($data = null,$ret='200',$msg='操作成功')
+    {
+        if (!empty($data)&&!is_object($data)&&!is_array($data)){
+            throw new  \ErrorException('data类型错误');
+        }
+
+        if (empty($data)) {
+            $res =  ['ret'=>intval($ret),'msg'=>$msg,'data'=>[]];
+        } else {
+            $res =  ['ret'=>intval($ret),'msg'=>$msg,'data'=>$data];
+        }
+        if (!empty($res['data']) && is_array($res['data'])) {
+            foreach ($res['data'] as  &$val) {
+                if ( is_numeric ( $val ) ) {
+                    $val = strval($val);
+                }
+                if (is_null($val)) {
+                    $val = '';
+                }
+                if (is_array ($val)) {
+                    $val = self::changeString($val);
+                }
+            }
+        }
+        return response(json_encode($res,JSON_UNESCAPED_UNICODE))->header('Content-Type', 'application/json')->header('Charset','UTF-8');
+    }
+
 }

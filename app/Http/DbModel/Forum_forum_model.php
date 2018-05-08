@@ -43,7 +43,8 @@ class Forum_forum_model extends Model
     public static function get_nodes_by_fid($fid,$page)
     {
         $configCacheKey = CoreController::NODES_INFO;
-        $cacheKey       = $configCacheKey['keys'] . $fid;
+        $cacheKey       = $configCacheKey['key'] . $fid;
+
         return Cache::remember($cacheKey,$configCacheKey['time'],function () use ($fid)
         {
             return self::where('fid',$fid)->select()->first();

@@ -61,8 +61,9 @@
 
         <form action="/new-thread" style="margin: 10px 10px">
             <p style="margin: 10px 0px;">
-                <input type="text" name="subject" class="form-control" style="" name="subject">
+                <input type="text" name="subject" class="form-control" style="" name="subject" id="subject">
             </p>
+            <input type="hidden" value="{{$data['fid']}}" id="fid">
             {{ csrf_field('new_thread_token') }}
             <div id="new_thread"></div>
             <textarea id="message" name="message" style="display:none;"></textarea>
@@ -84,16 +85,22 @@
         editor.create();
         $('#post_thread').click(function () {
             var edHtml = html2ubb(editor.txt.html())
-            var subject = $('#subject').text()
+            var subject = $('#subject').val()
             var _token = $('#new_thread_token').val()
+            var fid     = $('#fid').val()
             var postData = {
                 'subject' : subject,
                 'message' : edHtml,
-                '_token'  : _token
+                '_token'  : _token ,
+                'fid'     : fid
             };
             console.log(postData)
-            $.post('/new-thread',postData,function (data) {
-                alert(data)
+            $.post('/new-thread',postData,function (event) {
+                alert(event.msg);
+                if (event.ret == 200)
+                {
+                    location.reload();
+                }
             })
         })
     })

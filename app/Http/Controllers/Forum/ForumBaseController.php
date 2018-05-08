@@ -45,8 +45,7 @@ class ForumBaseController extends Controller
     public function ThreadList(Request $request,$fid,$page)
     {
         $this->data['list'] = $this->threadModel->getThreadList($fid,$page);
-//        dd($this->data);
-//        $request->input('page') = $page;
+        $this->data['fid']  = $fid;
         return view('PC/Forum/ThreadList')->with('data',$this->data);
     }
     public function ForumIndex(Request $request)
@@ -56,7 +55,7 @@ class ForumBaseController extends Controller
         {
             return $this->forumModel->get_nodes();
         });
-//        dd($this->data['forumGroup']);
+
         return view('PC/Forum/Node')->with('data',$this->data);
     }
     public function talk(Request $request,Forum_forum_model $forum_model)
@@ -77,6 +76,5 @@ class ForumBaseController extends Controller
     }
     public function about()
     {
-
     }
 }
