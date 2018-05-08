@@ -21,9 +21,9 @@ class Thread_model extends Model
     /**
     * @path
     **/
-    public function getThreadList($fid)
+    public function getThreadList($fid,$page)
     {
-        return DB::table($this->table_thread)->where('fid',$fid)->orderBy('lastpost','desc')->select()->paginate(20) ;
+        return DB::table($this->table_thread)->where('fid',$fid)->orderBy('lastpost','desc')->select()->offset($page)->limit(20)->get();
     }
 }
 

@@ -897,7 +897,7 @@ if (! function_exists('avatar')) {
     {
         //头像文件夹存储的头像分为三种，big、middle、small
         $src = \App\Http\Controllers\User\UserHelperController::GetAvatarUrl($uid,$type);
-        $img = "<img src = $src width='".$size."px' style='border-radius:".$radius."%;overflow:hidden;' class='".$class."'>";
+        $img = "<img src = $src width='".$size."px' height='{$size}' style='border-radius:".$radius."%;overflow:hidden;' class='".$class."'>";
         echo $img;
 
     }
@@ -948,6 +948,7 @@ function tpl_quote() {
 }
 function parseurl($url, $text, $scheme) {
     global $_G;
+    var_dump($text);
     if(!$url && preg_match("/((https?|ftp|gopher|news|telnet|rtsp|mms|callto|bctp|thunder|qqdl|synacast){1}:\/\/|www\.)[^\[\"']+/i", trim($text), $matches)) {
         $url = $matches[0];
         $length = 65;
@@ -964,14 +965,47 @@ function parseurl($url, $text, $scheme) {
         return '<a href="'.$url.'" target="_blank">'.$text.'</a>';
     }
 }
+function parseimg($width, $height, $src, $lazyload, $pid, $extra = '') {
+    global $_G;
+    if(strstr($src, 'file:') || substr($src, 1, 1) == ':') {
+        return $src;
+    }
+    if($width > $_G['setting']['imagemaxwidth']) {
+        $height = intval($_G['setting']['imagemaxwidth'] * $height / $width);
+        $width = $_G['setting']['imagemaxwidth'];
+        if(defined('IN_MOBILE') && !defined('TPL_DEFAULT')) {
+            $extra = '';
+        } else {
+            $extra = 'onmouseover="img_onmouseoverfunc(this)" onclick="zoom(this)" style="cursor:pointer"';
+        }
+    }
+    $attrsrc = !IS_ROBOT && $lazyload ? 'file' : 'src';
+    $rimg_id = random(5);
+    $GLOBALS['aimgs'][$pid][] = $rimg_id;
+
+    return bbcodeurl($src, '<img id="aimg_'.$rimg_id.'" onclick="zoom(this, this.src, 0, 0, '.($_G['setting']['showexif'] ? 1 : 0).')" class="zoom"'.($width > 0 ? ' width="'.$width.'"' : '').($height > 0 ? ' height="'.$height.'"' : '').' '.$attrsrc.'="{url}" '.($extra ? $extra.' ' : '').'border="0" alt="" />');
+}
+
+function bbcodeurl($url, $tags) {
+    if(!preg_match("/<.+?>/s", $url)) {
+        if(!in_array(strtolower(substr($url, 0, 6)), array('http:/', 'https:', 'ftp://', 'rtsp:/', 'mms://')) && !preg_match('/^static\//', $url) && !preg_match('/^data\//', $url)) {
+            $url = 'http://'.$url;
+        }
+        return str_replace(array('submit', 'member.php?mod=logging'), array('', ''), str_replace('{url}', addslashes($url), $tags));
+    } else {
+        return '&nbsp;'.$url;
+    }
+}
 if (! function_exists('bbcode2html')) {
 
 
-    function bbcode2html($message, $smileyoff, $bbcodeoff, $htmlon = 0, $allowsmilies = 1, $allowbbcode = 1, $allowimgcode = 1, $allowhtml = 0, $jammer = 0, $parsetype = '0', $authorid = '0', $allowmediacode = '0', $pid = 0, $lazyload = 0, $pdateline = 0) {
+    function bbcode2html($message, $smileyoff, $bbcodeoff, $htmlon = 1, $allowsmilies = 1, $allowbbcode = 1, $allowimgcode = 1, $allowhtml = 0, $jammer = 0, $parsetype = '0', $authorid = '0', $allowmediacode = '0', $pid = 0, $lazyload = 0, $pdateline = 0) {
         global $_G;
 
         static $authorreplyexist;
 
+
+//        $message=str_replace(["\r\n","\n","\r"],'<br />',$message);
         if($parsetype != 1 && !$bbcodeoff && $allowbbcode && (strpos($message, '[/code]') || strpos($message, '[/CODE]')) !== FALSE) {
             $message = preg_replace("/\s?\[code\](.+?)\[\/code\]\s?/ies", "codedisp('\\1')", $message);
         }
@@ -1006,11 +1040,17 @@ if (! function_exists('bbcode2html')) {
             }
         }
 
-        if(!$bbcodeoff && $allowbbcode) {
+        if(!$bbcodeoff && $allowbbcode ) {
 
-//            if(strpos($msglower, '[/url]') !== FALSE) {
-//                $message = preg_replace("/\[url(=((https?|ftp|gopher|news|telnet|rtsp|mms|callto|bctp|thunder|qqdl|synacast){1}:\/\/|www\.|mailto:)?([^\r\n\[\"']+?))?\](.+?)\[\/url\]/ies", "parseurl('\\1', '\\5', '\\2')", $message);
-//            }
+            if(strpos($msglower, '[/url]') !== FALSE) {
+//                $message = preg_replace("/\[url(=((https?|ftp|gopher|news|telnet|rtsp|mms|callto|bctp|thunder|qqdl|synacast){1}:\/\/|www\.|mailto:)?([^\r\n\[\"']+?))?\](.+?)\[\/url\]/ies",
+////                    "parseurl('\\1', '\\5', '\\2')",
+//                "<a src='$1'>$2</a>",
+//                    $message);
+//                var_dump($message);
+                $message = preg_replace("/\[url=([\w\W]+?)\]([\w\W]+?)\[\/url\]/","<a href=\"$1\">$2</a>",$message);
+                $message = preg_replace("/\[img\]([\w\W]+?)\[\/img\]/","<img src='$1'>",$message);
+            }
 //            if(strpos($msglower, '[/email]') !== FALSE) {
 //                $message = preg_replace("/\[email(=([a-z0-9\-_.+]+)@([a-z0-9\-_]+[.][a-z0-9\-_.]+))?\](.+?)\[\/email\]/ies", "parseemail('\\1', '\\4')", $message);
 //            }
@@ -1108,8 +1148,9 @@ if (! function_exists('bbcode2html')) {
                 }
             }
         }
-        return $message;
-        if(!$bbcodeoff) {
+
+        if(!$bbcodeoff ) {
+
             if($parsetype != 1 && strpos($msglower, '[swf]') !== FALSE) {
                 $message = preg_replace("/\[swf\]\s*([^\[\<\r\n]+?)\s*\[\/swf\]/ies", "bbcodeurl('\\1', ' <img src=\"'.STATICURL.'image/filetype/flash.gif\" align=\"absmiddle\" alt=\"\" /> <a href=\"{url}\" target=\"_blank\">Flash: {url}</a> ')", $message);
             }
@@ -1118,19 +1159,7 @@ if (! function_exists('bbcode2html')) {
                 $allowimgcode = false;
                 $viewimg = lang('template', 'viewimg');
             }
-            $attrsrc = !IS_ROBOT && $lazyload ? 'file' : 'src';
-            if(strpos($msglower, '[/img]') !== FALSE) {
-                $message = preg_replace(array(
-                    "/\[img\]\s*([^\[\<\r\n]+?)\s*\[\/img\]/ies",
-                    "/\[img=(\d{1,4})[x|\,](\d{1,4})\]\s*([^\[\<\r\n]+?)\s*\[\/img\]/ies"
-                ), $allowimgcode ? array(
-                    "parseimg(0, 0, '\\1', ".intval($lazyload).", ".intval($pid).", 'onmouseover=\"img_onmouseoverfunc(this)\" onload=\"thumbImg(this)\"')",
-                    "parseimg('\\1', '\\2', '\\3', ".intval($lazyload).", ".intval($pid).")"
-                ) : array(
-                    (!defined('IN_MOBILE') ? "bbcodeurl('\\1', '<a href=\"{url}\" target=\"_blank\">{url}</a>')" : "bbcodeurl('\\1', '<a href=\"{url}\" target=\"_blank\">[$viewimg]</a>')"),
-                    (!defined('IN_MOBILE') ? "bbcodeurl('\\3', '<a href=\"{url}\" target=\"_blank\">{url}</a>')" : "bbcodeurl('\\3', '<a href=\"{url}\" target=\"_blank\">[$viewimg]</a>')"),
-                ), $message);
-            }
+
         }
 
         for($i = 0; $i <= $_G['forum_discuzcode']['pcodecount']; $i++) {
@@ -1142,8 +1171,22 @@ if (! function_exists('bbcode2html')) {
         if($jammer) {
             $message = preg_replace("/\r\n|\n|\r/e", "jammer()", $message);
         }
-
-        return $htmlon ? $message : nl2br(str_replace(array("\t", '   ', '  '), array('&nbsp; &nbsp; &nbsp; &nbsp; ', '&nbsp; &nbsp;', '&nbsp;&nbsp;'), $message));
+//        var_dump($message);
+        return nl2br(str_replace(array("", '   ', '  '), array('&nbsp; &nbsp; &nbsp; &nbsp; ', '&nbsp; &nbsp;', '&nbsp;&nbsp;'), $message));
+        return $htmlon ? $message : nl2br(str_replace(array("", '   ', '  '), array('&nbsp; &nbsp; &nbsp; &nbsp; ', '&nbsp; &nbsp;', '&nbsp;&nbsp;'), $message));
     }
-
+    function pages($allPages,$fid,$where,$page)
+    {
+        $maxShow = 11;//最大显示页数10页 
+        $getLinks = function ($page) use ($fid,$where) {
+            return "/$where-$fid-$page.html";
+        };
+        $html = "<ul>";
+        for ($i=1;$i<$maxShow;$i++)
+        {
+            $html .= "<li><a href='{$getLinks($page)}'>{$i}</a></li>";
+        }
+        $html .= "</ul>";
+        echo $html;
+    }
 }

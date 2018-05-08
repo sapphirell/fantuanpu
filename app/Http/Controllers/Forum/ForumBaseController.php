@@ -44,7 +44,9 @@ class ForumBaseController extends Controller
     }
     public function ThreadList(Request $request,$fid,$page)
     {
-        $this->data['list'] = $this->threadModel->getThreadList($fid);
+        $this->data['list'] = $this->threadModel->getThreadList($fid,$page);
+//        dd($this->data);
+//        $request->input('page') = $page;
         return view('PC/Forum/ThreadList')->with('data',$this->data);
     }
     public function ForumIndex(Request $request)

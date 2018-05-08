@@ -22,7 +22,10 @@ class UserBaseController extends Controller
 
         return view('PC/User/Login')->with('data',$this->data);
     }
-
+    public function Register()
+    {
+        return view('PC/User/Register')->with('data',$this->data);
+    }
     public function DoLogin(Request $request){
         $messages = [
             'email.required' => '邮箱不能为空',

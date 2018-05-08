@@ -1,6 +1,9 @@
 @include('PC.Common.Header')
 <link rel="stylesheet" type="text/css" href="/Static/Style/Web/forum.css">
 <script src="/Static/Script/Web/forum.js"></script>
+{{--<script type="text/javascript" src="/Static/Script/xheditor/xheditor-1.2.2.min.js"></script>--}}
+{{--<script type="text/javascript" src="/Static/Script/xheditor/xheditor_lang/zh-cn.js"></script>--}}
+<script type="text/javascript" src="/Static/Script/wangEditor/wangEditor.js"></script>
 <style>
     .fourm_thread_items {    padding: 5px 8px;background: #ffffff}
     .wp {
@@ -12,6 +15,12 @@
     }
     .wp .fourm_thread_items {
         margin: 0px;
+    }
+    #new_thread
+    {
+        /*width: 95%;*/
+        /*margin: 0px auto;*/
+        background-color: #fff;
     }
 </style>
 <script>
@@ -49,10 +58,44 @@
 
             </p>
         @endforeach
+
+        <form action="/new-thread" style="margin: 10px 10px">
+            <p style="margin: 10px 0px;">
+                <input type="text" name="subject" class="form-control" style="" name="subject">
+            </p>
+            {{ csrf_field('new_thread_token') }}
+            <div id="new_thread"></div>
+            <textarea id="message" name="message" style="display:none;"></textarea>
+            <span style="    cursor: pointer;border: 1px solid #ccc;padding: 5px 10px;box-sizing: border-box;margin: 15px 0px;display: inline-block;background: #fff;" id="post_thread">发新帖</span>
+        </form>
+
         <div style="float: right;margin: 15px;">
-            {{ $data['list']->links() }}
+            {{--{{ $data['list']->links() }}--}}
+            {!! pages(12,2,'forum',1) !!}
         </div>
 
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+        var E = window.wangEditor
+        var editor = new E('#new_thread')
+        editor.create();
+        $('#post_thread').click(function () {
+            var edHtml = html2ubb(editor.txt.html())
+            var subject = $('#subject').text()
+            var _token = $('#new_thread_token').val()
+            var postData = {
+                'subject' : subject,
+                'message' : edHtml,
+                '_token'  : _token
+            };
+            console.log(postData)
+            $.post('/new-thread',postData,function (data) {
+                alert(data)
+            })
+        })
+    })
+</script>
 @include('PC.Common.Footer')

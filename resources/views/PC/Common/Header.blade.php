@@ -82,13 +82,13 @@
                     <li class="trans"><a href="/admincp">管理后台</a></li>
                 @endif
             @else
-            <li class="trans"><a href="">加入饭团扑?<i class="fa fa-sign-in fa-lg"></i></a></li>
+            <li class="trans"><a href="/register">加入饭团扑?<i class="fa fa-sign-in fa-lg"></i></a></li>
             @endif
         </ul>
     </div>
     <div style="position: fixed;bottom: 0px;width: inherit">
-        <p class="statement">Powered by Laravel ∈ PHP</p>
-        <p class="statement">Thinks Ruri</p>
+        <p class="statement">Powered by Ran</p>
+        <p class="statement">Used <a href="http://php.net">PHP</a> & <a href="https://laravel.com/docs/5.2">Laravel</a> & <a href="https://www.swoole.com">Swoole</a></p>
     </div>
 
 

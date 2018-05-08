@@ -259,9 +259,9 @@ if (! function_exists('csrf_field')) {
      *
      * @return \Illuminate\Support\HtmlString
      */
-    function csrf_field()
+    function csrf_field($id)
     {
-        return new HtmlString('<input type="hidden" name="_token" value="'.csrf_token().'">');
+        return new HtmlString('<input type="hidden" id="'.$id.'" name="_token" value="'.csrf_token().'">');
     }
 }
 

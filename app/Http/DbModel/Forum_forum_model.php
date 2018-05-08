@@ -40,7 +40,7 @@ class Forum_forum_model extends Model
         return $f;
 
     }
-    public static function get_nodes_by_fid($fid)
+    public static function get_nodes_by_fid($fid,$page)
     {
         $configCacheKey = CoreController::NODES_INFO;
         $cacheKey       = $configCacheKey['keys'] . $fid;
