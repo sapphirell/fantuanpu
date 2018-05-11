@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 class UCenter_member_model extends Model
 {
+    public $primaryKey = 'uid';
     public $table='pre_ucenter_members';
     public $timestamps = false;
 

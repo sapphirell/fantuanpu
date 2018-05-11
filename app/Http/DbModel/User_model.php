@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class User_model extends Model
 {
+    public $primaryKey = 'uid';
     public $table='pre_common_member';
     public $timestamps = false;
     public static function getUserListByUsername($usrname)

@@ -1175,16 +1175,21 @@ if (! function_exists('bbcode2html')) {
         return nl2br(str_replace(array("", '   ', '  '), array('&nbsp; &nbsp; &nbsp; &nbsp; ', '&nbsp; &nbsp;', '&nbsp;&nbsp;'), $message));
         return $htmlon ? $message : nl2br(str_replace(array("", '   ', '  '), array('&nbsp; &nbsp; &nbsp; &nbsp; ', '&nbsp; &nbsp;', '&nbsp;&nbsp;'), $message));
     }
-    function pages($allPages,$fid,$where,$page)
+    function threadListPages($allPages,$fid,$page)
     {
         $maxShow = 11;//最大显示页数10页 
-        $getLinks = function ($page) use ($fid,$where) {
-            return "/$where-$fid-$page.html";
+        $getLinks = function ($page) use ($fid) {
+            return "/forum-$fid-$page.html";
         };
-        $html = "<ul>";
-        for ($i=1;$i<$maxShow;$i++)
+        $html = "<ul class='pager'>";
+        for ($i=1;$i<$page;$i++)
         {
-            $html .= "<li><a href='{$getLinks($page)}'>{$i}</a></li>";
+            $html .= "<li><a href='{$getLinks($page+$i)}'>{$i}</a></li>";
+        }
+        $html .= "<li><a href='{$getLinks($page)}'>{$page}</a></li>";
+        for ($i=$page;$i<$maxShow;$i++)
+        {
+            $html .= "<li><a href='{$getLinks($page+$i)}'>".($page+$i)."</a></li>";
         }
         $html .= "</ul>";
         echo $html;

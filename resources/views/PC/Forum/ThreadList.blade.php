@@ -58,7 +58,10 @@
 
             </p>
         @endforeach
-
+        <div style="float: right;margin: 15px;">
+            {{--{{ $data['list']->links() }}--}}
+            {!! threadListPages(12,2,1) !!}
+        </div>
         <form action="/new-thread" style="margin: 10px 10px">
             <p style="margin: 10px 0px;">
                 <input type="text" name="subject" class="form-control" style="" name="subject" id="subject">
@@ -70,10 +73,7 @@
             <span style="    cursor: pointer;border: 1px solid #ccc;padding: 5px 10px;box-sizing: border-box;margin: 15px 0px;display: inline-block;background: #fff;" id="post_thread">发新帖</span>
         </form>
 
-        <div style="float: right;margin: 15px;">
-            {{--{{ $data['list']->links() }}--}}
-            {!! pages(12,2,'forum',1) !!}
-        </div>
+
 
     </div>
 </div>

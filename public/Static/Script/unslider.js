@@ -1,4 +1,4 @@
-window.console && console.warn("This version of Unslider is due to be deprecated by December 1. Please visit unslider.com for details on how to upgrade."),
+window.console ,
     function(t, s) {
         if (!t) return s;
         var i = function() {

@@ -18,11 +18,35 @@
                         <button type="submit" class="btn  btn-info" style="margin: 10px;box-sizing: border-box;float: right;">给上述email发送验证邮件</button>
                     </div>
                 </div>
-                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
             </form>
         </div>
     </div>
 
 </div>
+<script>
+    $(document).ready(function () {
+        $(".btn-info").click(function (e) {
+            e.preventDefault();
+            if ($(this).text()=='请等待…')
+            {
+                return false;
+            }
+            else
+            {
+                $(this).text('请等待…')
+            }
 
+            var token = $("#token").val()
+            var email = $("#inputEmail3").val()
+            $.post('/get-email',{'_token':token,email:email},function (event) {
+                alert(event.msg)
+                if (event.data.status == true)
+                {
+                    window.location.href = '/new-password?email='+email
+                }
+            })
+        })
+    })
+</script>
 {{--@include('PC.Common.Footer')--}}
