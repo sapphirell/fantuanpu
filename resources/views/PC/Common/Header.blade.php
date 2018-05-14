@@ -75,7 +75,7 @@
 
         <ul >
             @if(session('user_info')->uid)
-            <li class="trans"><a href="">设置资料<i class="fa fa-pencil-square-o fa-lg"></i></a></li>
+            <li class="trans"><a href="/user-center?source=web">设置资料<i class="fa fa-pencil-square-o fa-lg"></i></a></li>
             <li class="trans"><a href="">团菌动态<i class="fa fa-sticky-note-o fa-lg"></i></a></li>
             <li class="trans"><a href="/logout">离开<i class="fa fa-sign-in fa-lg"></i></a></li>
                 @if(session('user_info')->gid > 0)
@@ -96,7 +96,7 @@
 
 <script>
     $(document).ready(function () {
-        @if(!session('user_info')->id)
+        @if(!session('user_info')->uid)
         layer.tips('点这里登录哦', '.memuBtn',{
             tips: [3, 'rgb(255, 136, 175)'],
             time: 4000

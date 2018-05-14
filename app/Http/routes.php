@@ -73,6 +73,15 @@ use App\Http\UserAgent;
         Route::get('/new-password', ['uses' => 'UserBaseController@ResetPassword', 'as' => 'ResetPassword']);#修改密码,根据验证邮件
         Route::post('/do-repassword', ['uses' => 'UserBaseController@DoResetPassword', 'as' => 'DoResetPassword']);#post修改密码
     });
+    //用户-必须登录的
+    Route::group([
+        'namespace' => 'User',
+        'middleware' => [
+            'need.login'
+        ]
+    ], function () {
+        Route::get('/user-center', ['uses' => 'UserBaseController@UserCenter', 'as' => 'UserCenter']);#用户中心
+    });
     //管理后台 IndexCp
     Route::group([
         'namespace' => 'Admincp',

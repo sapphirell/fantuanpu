@@ -145,4 +145,8 @@ class UserBaseController extends Controller
         $user->save();
         return self::response();
     }
+    public function UserCenter(Request $request)
+    {
+        return view('PC/User/UserCenterView')->with('data',$this->data);
+    }
 }
