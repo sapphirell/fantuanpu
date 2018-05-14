@@ -104,7 +104,7 @@
     <div class="thread_left" style="width: 70%;float: left">
         <div class="forum_subject" style="    background: #FFFFFF;margin: 15px;padding: 15px;border-radius: 5px;box-shadow: 2px 3px 3px #e4e4e4;position: relative;padding-bottom: 200px;">
             <div>
-                <span>当前位置</span> > <span class="thread_position">{{$data['forum']->name}}</span>
+                <span>当前位置</span> > <a href="/forum-{{$data['fid']}}-1.html" class="thread_position">{{$data['forum']->name}}</a>
                 <p>
                     <span class="post_tab">帖子标签</span>
                     <a class="post_tab_add">添加标签 +</a>
@@ -236,7 +236,7 @@ box-shadow: 2px 3px 3px #e4e4e4;">右边放点啥好呢</div>
             alert(event.msg);
             if (event.ret == 200)
             {
-//                location.reload();
+                location.reload();
             }
         })
     })

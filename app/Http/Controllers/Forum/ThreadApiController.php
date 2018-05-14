@@ -50,8 +50,26 @@ class ThreadApiController extends Controller
                 $this->threadModel->{$key} = $value;
             }
         }
+        $this->threadModel->replies = 1;
         $this->threadModel->save();
+        /**
+         * 添加post一楼数据
+         */
+        $tableId = new ForumPostTableidModel();
+        $tableId->save();
 
+        $postModel      = $this->postModel;
+        $postModel->fid = $request->input('fid');
+        $postModel->tid = $this->threadModel->tid;
+        $postModel->pid = $tableId->pid;
+        $postModel->first   = 0;
+        $postModel->author  = $user_info->username;
+        $postModel->authorid = $user_info->uid;
+        $postModel->subject = $request->input('subject');
+        $postModel->dateline = time();
+        $postModel->message = $request->input('message');
+        $postModel->useip   = $request->getClientIp();
+        $postModel->save();
         return self::response();
     }
     public function PostsThread(Request $request)
@@ -65,6 +83,7 @@ class ThreadApiController extends Controller
         {
             return self::response([],40002,'缺少参数');
         }
+
         /**
          * 获取帖子自增长id
          */
@@ -83,6 +102,16 @@ class ThreadApiController extends Controller
         $postModel->message = $request->input('message');
         $postModel->useip   = $request->getClientIp();
         $postModel->save();
+
+        /**
+         * 查找回帖所属的主题,并讲回复数+1
+         */
+        $thread = $this->threadModel->find($request->input('tid'));
+        if ($thread)
+        {
+            $thread->replies = $thread->replies +1;
+            $thread->save();
+        }
         return self::response();
     }
 }
