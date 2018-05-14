@@ -26,7 +26,7 @@ class Thread_model extends Model
         return DB::table($this->table_thread)
             ->where('fid',$fid)
             ->orderBy('lastpost','desc')
-            ->select()->offset($page-1)->limit(20)->get();
+            ->select()->offset(($page-1)*20)->limit(20)->get();
     }
 }
 

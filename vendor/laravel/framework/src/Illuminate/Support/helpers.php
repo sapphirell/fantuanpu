@@ -1177,19 +1177,32 @@ if (! function_exists('bbcode2html')) {
     }
     function threadListPages($allPages,$fid,$page)
     {
-        $maxShow = 11;//最大显示页数10页 
-        $getLinks = function ($page) use ($fid) {
+        $maxShow    = 11;//最大显示页数10页
+        $front_page = 4;//前面页数最多显示4页
+        if ($page <= 0)
+        {
+            $page = 1;
+        }
+        $front_list =  min($page,$front_page)-1; //当前$page前面显示多少个
+        $behind_page = 5;//前面页数最多显示5页
+        $getLinks = function ($page) use ($fid)
+        {
             return "/forum-$fid-$page.html";
         };
         $html = "<ul class='pager'>";
-        for ($i=1;$i<$page;$i++)
+        if ($page != 1)
         {
-            $html .= "<li><a href='{$getLinks($page+$i)}'>{$i}</a></li>";
+            $iStart = $front_list < $front_page-2 ? 1 :$page - $front_list;
+            for ($i=$iStart;$i < $page;$i++)
+            {
+                $html .= "<li><a href='{$getLinks($i)}'>{$i}</a></li>";
+            }
         }
-        $html .= "<li><a href='{$getLinks($page)}'>{$page}</a></li>";
-        for ($i=$page;$i<$maxShow;$i++)
+
+        $html .= "<li><a  style='background-color: #EEEEEE;' href='{$getLinks($page)}'>{$page}</a></li>";
+        for ($i=$page+1;$i<$page+$behind_page;$i++)
         {
-            $html .= "<li><a href='{$getLinks($page+$i)}'>".($page+$i)."</a></li>";
+            $html .= "<li><a href='{$getLinks($i)}'>".($i)."</a></li>";
         }
         $html .= "</ul>";
         echo $html;

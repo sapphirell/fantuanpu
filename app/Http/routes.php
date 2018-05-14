@@ -54,8 +54,8 @@ use App\Http\UserAgent;
          *@return App\Http\Controllers\Forum\ThreadController
          */
         Route::get('/thread-{tid}-{page}.html', ['uses' => 'ThreadController@viewThread', 'as' => 'thread']);#查看帖子
-        Route::post('/new-thread', ['uses' => 'ThreadApiController@NewThread', 'as' => 'new-thread']);#帖子首页
-        Route::post('/post-thread', ['uses' => 'ThreadController@StorePosts', 'as' => 'store-posts']);#存储发帖
+        Route::post('/new-thread', ['uses' => 'ThreadApiController@NewThread', 'as' => 'new-thread']);#发新帖
+        Route::post('/post-thread', ['uses' => 'ThreadApiController@PostsThread', 'as' => 'store-posts']);#回帖
         Route::get('/webim', ['uses' => 'ForumBaseController@webim', 'as' => 'webim']);#webim即时聊天
 
     });

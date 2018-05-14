@@ -57,4 +57,16 @@ class Controller extends BaseController
         return response(json_encode($res,JSON_UNESCAPED_UNICODE))->header('Content-Type', 'application/json')->header('Charset','UTF-8');
     }
 
+    public function checkRequest($Request,$param)
+    {
+        foreach ($param as $value)
+        {
+            if ($Request->input($value) === false || $Request->input($value) === null)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
 }

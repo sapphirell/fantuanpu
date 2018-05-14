@@ -8,4 +8,5 @@ class ForumThreadModel extends Model
 {
     public $table='pre_forum_thread';
     public $timestamps = false;
+    public $primaryKey = 'tid';
 }
