@@ -38,6 +38,18 @@ $(function() {
             content: ['/login', 'no']
         });
     })
+    $("#alert_ajax_reg").click(function (e)
+    {
+        e.preventDefault();
+        layer.open({
+            type: 2,
+            title:'注册饭团扑账号',
+            area: ['660px', '300px'],
+            offset: '100px',
+            // skin: 'layui-layer-rim', //加上边框
+            content: ['/register', 'no']
+        });
+    })
     $("#old_user").click(function (e)
     {
         e.preventDefault();

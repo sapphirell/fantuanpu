@@ -60,7 +60,7 @@
         @endforeach
         <div style="float: right;margin: 15px;">
             {{--{{ $data['list']->links() }}--}}
-            {!! threadListPages(12,2,$data['page']) !!}
+            {!! threadListPages(12,$data['fid'],$data['page']) !!}
         </div>
         <form action="/new-thread" style="margin: 10px 10px">
             <p style="margin: 10px 0px;">

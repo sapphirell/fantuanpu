@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Forum;
 
 use App\Http\Controllers\System\CoreController;
+use App\Http\DbModel\Forum_forum_model;
 use App\Http\DbModel\ForumPostModel;
 use App\Http\DbModel\ForumPostTableidModel;
 use App\Http\DbModel\ForumThreadModel;
@@ -70,6 +71,13 @@ class ThreadApiController extends Controller
         $postModel->message = $request->input('message');
         $postModel->useip   = $request->getClientIp();
         $postModel->save();
+        /**
+         *  论坛当日帖子+1
+         */
+        $forum              = Forum_forum_model::find($request->input('fid'));
+        $forum->todayposts  = $forum->todayposts +1;
+        $forum->threads     = $forum->threads +1;
+        $forum->save();
         return self::response();
     }
     public function PostsThread(Request $request)
@@ -112,6 +120,14 @@ class ThreadApiController extends Controller
             $thread->replies = $thread->replies +1;
             $thread->save();
         }
+
+        /**
+         *  论坛当日帖子+1
+         */
+        $forum = Forum_forum_model::find($request->input('fid'));
+        $forum->todayposts = $forum->todayposts +1;
+        $forum->posts = $forum->posts +1;
+        $forum->save();
         return self::response();
     }
 }

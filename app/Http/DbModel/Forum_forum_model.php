@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 
 class Forum_forum_model extends Model
 {
+    public $primaryKey = 'fid';
     public $table='pre_forum_forum';
     public $timestamps = false;
 

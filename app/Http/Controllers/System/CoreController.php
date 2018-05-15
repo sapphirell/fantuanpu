@@ -24,7 +24,7 @@ class CoreController extends Controller
     /**
      * 板块列表缓存key
      */
-    const NODES = ['key'=>'nodes_array_','time'=>3600000];
+    const NODES = ['key'=>'nodes_array_','time'=>3600];
     /**
      * 板块信息
      */

@@ -52,7 +52,11 @@
         {{ avatar(session('user_info')->uid,80,100,'left_memu_ava can_set_ava') }}
         <p style=''>
             @if(!session('user_info')->uid)
-            请<a id='alert_ajax_login' href='/login' style='color: #F09C9C;'>登录</a>您的账号
+            请
+                <a id='alert_ajax_login' href='/login' style='color: #F09C9C;'>登录</a>
+                /
+                <a id='alert_ajax_reg' href='/register' style='color: #F09C9C;'>注册</a>
+                您的账号
             @else
             <p>{{session('user_info')->username}}</p>
             @endif
@@ -87,7 +91,7 @@
         </ul>
     </div>
     <div style="position: fixed;bottom: 0px;width: inherit">
-        <p class="statement">Powered by Ran</p>
+        <p class="statement">Powered by <a href="/fantuanpuDevelopers">FantuanpuDevelopers</a>.</p>
         <p class="statement">Used <a href="http://php.net">PHP</a> & <a href="https://laravel.com/docs/5.2">Laravel</a> & <a href="https://www.swoole.com">Swoole</a></p>
     </div>
 
