@@ -6,6 +6,7 @@ use App\Http\Controllers\System\CoreController;
 use App\Http\Controllers\User\UserHelperController;
 use App\Http\DbModel\Forum_forum_model;
 use App\Http\DbModel\Thread_model;
+use App\Http\DbModel\UserNoticeModel;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -65,10 +66,16 @@ class ForumBaseController extends Controller
     }
     public function notice(Request $request)
     {
-        if ($request->input('username'))
+        if ($request->input('username') && $request->input('message') )
         {
-
+            $notice = new UserNoticeModel();
+            $notice->username = $request->input('username') ;
+            $notice->message = $request->input('message') ;
+            $notice->save();
+            redirect()->route('notice');
         }
+        $this->data['notice'] = UserNoticeModel::select()->get();
+
         return view('PC/Forum/Notice')->with('data',$this->data);
     }
     public function webim()

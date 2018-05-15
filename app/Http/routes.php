@@ -45,7 +45,7 @@ use App\Http\UserAgent;
         Route::get('/about', ['uses' => 'ForumBaseController@index', 'as' => 'about']);#about
         Route::get('/talk', ['uses' => 'ForumBaseController@talk', 'as' => 'talk']);#帖子首页
         Route::get('/notice', ['uses' => 'ForumBaseController@notice', 'as' => 'notice']);#声明
-        Route::post('/notice', ['uses' => 'ForumBaseController@notice', 'as' => 'notice']);#声明
+        Route::post('/dopost-notice', ['uses' => 'ForumBaseController@notice', 'as' => 'notice']);#声明
         Route::get('/forum-{id}-{page}.html', ['uses' => 'ForumBaseController@ThreadList', 'as' => 'thread']);#帖子首页
 
         /**

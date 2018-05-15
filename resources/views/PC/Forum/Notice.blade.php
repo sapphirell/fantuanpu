@@ -4,24 +4,33 @@
 <div class="wp" style="padding: 5px;margin-top: 29px;">
     <div class="bm">
         <div class="bm_h">告示</div>
-        <div class="bm_c">
-            前言:饭团扑动漫论坛于2013年1月使用discuz x2建站,共收录47282名会员。因疏忽大意,服务器被人提权黑掉了...
-            无论如何也拿不回来数据,仅存一份数据库备份文件。故决定抛弃discuz,自己重写一份论坛程序出来;目前正逐步恢复论坛原有的功能和数据,
-            并决定在之后会开发论坛app出来,现缺网站管理员、版主等数人,有意者加群192132637联系群主(我)
+        <div class="bm_c" style="padding: 8px">
+            饭团扑重新开张啦,旧版功能将会不断地开发恢复出来,目前人手紧缺,急需掌握以下超能力的强者帮助!!<br>
+            * 版主<br>
+            * UI设计(帮设计整体的页面布局)<br>
+            * 画师 (重新绘制站娘形象以及表情包)<br>
+            联系方式 QQ :363387628<br>
+            如果有更多意见反馈请留言
         </div>
     </div>
 
-    <div class="bm">
+    <div class="bm" style="margin-top: 8px">
+        <div style="padding: 8px">
+            @foreach($data['notice'] as $value)
+                <p>{{$value->username}}说 : {{$value->message}}</p>
+            @endforeach
+        </div>
         <div class="bm_h">留言</div>
-        <div class="bm_c">
-            <div style="padding: 5px">
+        <div class="bm_c" style="padding: 8px">
+            <div >
 
             </div>
-            <form action="/notice" method="post" >
+            <form action="/dopost-notice" method="post" >
                 <p>名字:</p>
                 <input type="text" name="username" class="form-control">
                 <p>留言:</p>
-                <textarea  class="form-control"></textarea>
+                <textarea  class="form-control" name="message"></textarea>
+                <input type="submit">
                 {{ csrf_field() }}
             </form>
         </div>
