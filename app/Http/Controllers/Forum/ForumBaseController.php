@@ -72,7 +72,7 @@ class ForumBaseController extends Controller
             $notice->username = $request->input('username') ;
             $notice->message = $request->input('message') ;
             $notice->save();
-            redirect()->route('notice');
+            return redirect()->route('notice');
         }
         $this->data['notice'] = UserNoticeModel::select()->get();
 
