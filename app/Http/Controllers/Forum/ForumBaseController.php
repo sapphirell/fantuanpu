@@ -78,6 +78,15 @@ class ForumBaseController extends Controller
 
         return view('PC/Forum/Notice')->with('data',$this->data);
     }
+    public function save_notice(Request $request)
+    {
+
+        $notice = new UserNoticeModel();
+        $notice->username = $request->input('username') ;
+        $notice->message = $request->input('message') ;
+        $notice->save();
+        return redirect()->route('notice');
+    }
     public function webim()
     {
         return view('PC/Forum/Webim')->with('data',$this->data);
