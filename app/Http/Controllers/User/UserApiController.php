@@ -18,7 +18,7 @@ class UserApiController extends Controller
 
     public static function Api_DoLogin(Request $request){
 
-        $User = UCenter_member_model::GetUserInfoByEmail( $request->input('email') );
+        $User = UCenter_member_model::where('email','=',$request->input('email'))->select()->first();
 
         return $User->password == md5(md5( $request->input('password') ). $User->salt)
 

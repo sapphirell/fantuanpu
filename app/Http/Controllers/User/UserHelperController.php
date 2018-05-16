@@ -26,10 +26,10 @@ class UserHelperController extends Controller
      */
     public static function SetLoginStatus($data)
     {
-        if( !$data->uid )
-        {
-            $data = \App\Http\DbModel\UCenter_member_model::GetUserInfoByEmail($data);
-        }
+
+        //用户信息需要取usermodel的
+        $data = \App\Http\DbModel\UCenter_member_model::GetUserInfoByEmail($data->email);
+
         //取用户组数据
         $cacheKey = CoreController::USER_GROUP;
 
