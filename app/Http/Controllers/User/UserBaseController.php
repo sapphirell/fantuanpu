@@ -186,6 +186,7 @@ class UserBaseController extends Controller
         $userModel->email   =  $request->input('email');
         $userModel->password =  $user->password ;
         $userModel->regdate =  time() ;
+        $userModel->groupid = 8;//等待验证会员
         $userModel->save();
 
         /**
