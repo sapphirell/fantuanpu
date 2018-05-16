@@ -45,4 +45,8 @@ class CoreController extends Controller
      * 60秒内有没有发送过任意邮件
      */
     const HAS_POST_MAIL = ['key' => 'has_post_mail_', 'time'=>1];
+    /**
+     * 用户组信息
+     */
+    const USER_GROUP = ['key' => 'group_', 'time'=>36000];
 }

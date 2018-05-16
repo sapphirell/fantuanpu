@@ -13,6 +13,6 @@ class UCenter_member_model extends Model
 
     public static function GetUserInfoByEmail($email){
 
-        return UCenter_member_model::where('email',$email)->select()->first();
+        return User_model::where('email',$email)->select()->first();
     }
 }

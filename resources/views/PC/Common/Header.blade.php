@@ -65,9 +65,10 @@
 
 
         <div class="user_info">
-
-            <span><i class="fa fa-coffee"></i>[用户组]</span>
+            @if(session('user_info')->uid)
+            <span><i class="fa fa-coffee"></i>[{{session('user_info')->group->grouptitle}}]</span>
             <span style=" color: #909090;">签名档</span>
+            @endif
         </div>
 
 
