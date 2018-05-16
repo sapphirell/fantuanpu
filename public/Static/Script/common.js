@@ -44,7 +44,7 @@ $(function() {
         layer.open({
             type: 2,
             title:'注册饭团扑账号',
-            area: ['660px', '300px'],
+            area: ['660px', '500px'],
             offset: '100px',
             // skin: 'layui-layer-rim', //加上边框
             content: ['/register', 'no']

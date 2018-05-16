@@ -47,10 +47,10 @@
                     <a class="no_attn"><?php echo "@";?>{{$value->author}}</a>
                     <span>view : {{$value->views}}</span>
                     <span style="color: #ccc">
-                    <span class="show_date" style="display: none;cursor: pointer;padding: 5px;">{{date('Y-m-d',$value->dateline)}}</span>
-                    <span class="show_time" style="cursor: pointer;padding: 5px;">{{date('H:i:s',$value->dateline)}}</span>
+                        <span class="show_date" style="display: none;cursor: pointer;padding: 5px;">{{date('Y-m-d',$value->dateline)}}</span>
+                        <span class="show_time" style="cursor: pointer;padding: 5px;">{{date('H:i:s',$value->dateline)}}</span>
 
-                </span>
+                    </span>
                 </span>
 
 

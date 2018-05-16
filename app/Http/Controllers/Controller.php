@@ -41,19 +41,6 @@ class Controller extends BaseController
         } else {
             $res =  ['ret'=>intval($ret),'msg'=>$msg,'data'=>$data];
         }
-        if (!empty($res['data']) && is_array($res['data'])) {
-            foreach ($res['data'] as  &$val) {
-                if ( is_numeric ( $val ) ) {
-                    $val = strval($val);
-                }
-                if (is_null($val)) {
-                    $val = '';
-                }
-                if (is_array ($val)) {
-                    $val = self::changeString($val);
-                }
-            }
-        }
         return response(json_encode($res,JSON_UNESCAPED_UNICODE))->header('Content-Type', 'application/json')->header('Charset','UTF-8');
     }
 
@@ -63,7 +50,7 @@ class Controller extends BaseController
         {
             if ($Request->input($value) === false || $Request->input($value) === null)
             {
-                return false;
+                return $value;
             }
         }
         return true;

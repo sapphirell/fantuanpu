@@ -237,3 +237,6 @@ ul{padding: 0px;margin: 0px}
 .memuBtn .glyphicon-cog:hover{color: #00CCFF}
 /*字体图标引用的css*/
 .fa-bg{    font-size: 1.75em;line-height: 1.75em;vertical-align: -15%;}
+
+.true_input {    border-color: #5eb7e2;}
+.false_input {  border-color: #e25e5e;  }

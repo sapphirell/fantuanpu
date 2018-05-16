@@ -149,4 +149,80 @@ class UserBaseController extends Controller
     {
         return view('PC/User/UserCenterView')->with('data',$this->data);
     }
+    public function DoRegister(Request $request)
+    {
+        $ck = $this->checkRequest($request,['username','email','password','repassword']);
+        if( $ck !== true)
+        {
+            return self::response([$request->input()],40001,'缺少参数'.$ck);
+        }
+        $userModel = UCenter_member_model
+                        ::where('username', $request->input('username'))
+                        ->where('email',    $request->input('email'))
+                        ->select()->first();
+        if ($userModel->uid)
+        {
+            return self::response([],40002,'用户已经注册');
+        }
+        if ($request->input('password') != $request->input('repassword'))
+        {
+            return self::response([],40003,'两次输入密码不等');
+        }
+        $user               = new UCenter_member_model();
+        $user->username     = $request->input('username');
+        $user->salt         = substr(md5(time()),0,6);
+        $user->password     = md5(md5( $request->input('password') ). $user->salt);
+        $user->email        = $request->input('email');
+        $user->regip        = $request->getClientIp();
+        $user->regdate        = time();
+        $user->save();
+        //检测用户名是否在userModel中存在,这种情况一般是因为usermodel中删号了uc中没删号
+
+        /**
+         * 同步userModel
+         */
+        $userModel = new User_model();
+        $userModel->username =  $request->input('username');
+        $userModel->email   =  $request->input('email');
+        $userModel->password =  $user->password ;
+        $userModel->regdate =  time() ;
+        $userModel->save();
+
+        /**
+         * 同步登陆状态
+         */
+        UserApiController::Api_DoLogin($request);
+        return self::response();
+    }
+
+    /**
+     *  检测用户名是否已经注册
+     */
+    public function checkUsername(Request $request)
+    {
+        $userinfo = UCenter_member_model::where('username',$request->input('username'))->select()->first();
+        if ($userinfo->uid)
+        {
+            return self::response(['exists'=>true],200);
+        }
+        else
+        {
+            return self::response(['exists'=>false],200);
+        }
+    }
+    /**
+     *  检测email是否被注册
+     */
+    public function checkEmail(Request $request)
+    {
+        $userinfo = UCenter_member_model::where('email',$request->input('email'))->select()->first();
+        if ($userinfo->id)
+        {
+            return self::response(['exists'=>true],200);
+        }
+        else
+        {
+            return self::response(['exists'=>false],200);
+        }
+    }
 }

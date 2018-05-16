@@ -87,7 +87,7 @@ class ThreadApiController extends Controller
         {
             return self::response([],40001,'请先登录');
         }
-        if (!$this->checkRequest($request,['fid','tid','subject','message']))
+        if ($this->checkRequest($request,['fid','tid','subject','message']) !== true)
         {
             return self::response([],40002,'缺少参数');
         }

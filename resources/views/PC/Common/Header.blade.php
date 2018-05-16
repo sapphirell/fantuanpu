@@ -65,7 +65,7 @@
 
 
         <div class="user_info">
-            <span><i class="fa fa-info"></i><?php echo $this->_G['username'];?></span>
+
             <span><i class="fa fa-coffee"></i>[用户组]</span>
             <span style=" color: #909090;">签名档</span>
         </div>
