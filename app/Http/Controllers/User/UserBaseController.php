@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\System\CoreController;
 use App\Http\Controllers\System\MailController;
+use App\Http\Controllers\System\PictureController;
 use App\Http\DbModel\UCenter_member_model;
 use App\Http\DbModel\User_model;
 use Illuminate\Http\Request;
@@ -29,12 +30,12 @@ class UserBaseController extends Controller
     }
     public function DoLogin(Request $request){
         $messages = [
-            'email.required' => '邮箱不能为空',
+            'email.required'    => '邮箱不能为空',
             'password.required' =>'密码不能为空'
         ];
         $rules = [
-            'email' => 'required',
-            'password' => 'required'
+            'email'     => 'required',
+            'password'  => 'required'
         ];
 
 
@@ -91,11 +92,11 @@ class UserBaseController extends Controller
             $data['url'] =  self::DOMAIN . "retrieve/?source=email&token=".$accessToken;
             $code = rand(1000,9999);
             $input = [
-                'email' => $userEmail,
-                'toUser' => "hentai@fantuanpu.com",
-                'subject' => "饭团扑动漫-密码找回邮件",
-                'msg' => '您的验证码为'.$code.',请在5分钟内填写~',
-                'view' => 'Default'
+                'email'     => $userEmail,
+                'toUser'    => "hentai@fantuanpu.com",
+                'subject'   => "饭团扑动漫-密码找回邮件",
+                'msg'       => '您的验证码为'.$code.',请在5分钟内填写~',
+                'view'      => 'Default'
             ];
             MailController::sendMail($input);
             Cache::put($userEmail, $code, 5);
@@ -225,5 +226,38 @@ class UserBaseController extends Controller
         {
             return self::response(['exists'=>false],200);
         }
+    }
+
+    /**
+     * 修改头像
+     * @param Request $request
+     * @返回 $this|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function DoUploadAvatar(Request $request)
+    {
+
+        if ($request->file('file'))
+        {
+            if ($request->file('file')->getSize() > 2000000){//图片大小
+                return back()->withErrors('图片过大');
+            }
+
+            $file       = $request->file('file');
+            $mimeType   = '.'.$file->getClientOriginalExtension();//文件后缀
+            $newFile    = $file->move(public_path('uploads/avatar/temporary'),md5(time()).$mimeType)->getRealPath();
+        }
+        else
+        {
+            //编辑已有头像
+        }
+
+        $canvas     = $request->input('position');
+
+        $CutResult  = PictureController::AvaCut($canvas,$newFile);
+
+        return back();
+
+
+
     }
 }

@@ -84,6 +84,7 @@ use App\Http\UserAgent;
         ]
     ], function () {
         Route::get('/user-center', ['uses' => 'UserBaseController@UserCenter', 'as' => 'UserCenter']);#用户中心
+        Route::post('/uc-do-upload-avatar', 'UserBaseController@DoUploadAvatar');#修改头像
     });
     //管理后台 IndexCp
     Route::group([
