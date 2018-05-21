@@ -35,7 +35,7 @@ $(function() {
             area: ['460px', '300px'],
             offset: '100px',
             // skin: 'layui-layer-rim', //加上边框
-            content: ['/login', 'no']
+            content: ['/login?form=layer', 'no']
         });
     })
     $("#alert_ajax_reg").click(function (e)

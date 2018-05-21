@@ -897,6 +897,11 @@ if (! function_exists('avatar')) {
     {
         //头像文件夹存储的头像分为三种，big、middle、small
         $src = \App\Http\Controllers\User\UserHelperController::GetAvatarUrl($uid,$type);
+        $user = session('user_info');
+        if ($uid == $user->uid)
+        {
+            $src .= "?rand=".rand(10000,99999);
+        }
         $img = "<img src = $src width='".$size."px' height='{$size}' style='border-radius:".$radius."%;overflow:hidden;' class='".$class."'>";
         echo $img;
 

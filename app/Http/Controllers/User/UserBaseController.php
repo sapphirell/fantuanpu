@@ -20,8 +20,9 @@ class UserBaseController extends Controller
         parent::__construct();
     }
 
-    public function LoginView(){
-
+    public function LoginView(Request $request)
+    {
+        $this->data['form'] = $request->input('form');
         return view('PC/User/Login')->with('data',$this->data);
     }
     public function Register()
@@ -41,11 +42,25 @@ class UserBaseController extends Controller
 
         self::validate($request, $rules, $messages);
 
-
+        $login_status = UserApiController::Api_DoLogin($request);
+        if (!$login_status)
+        {
+            return back()->withErrors('密码输入错误');
+        }
+        else
+        {
+            if ($request->input('form') == 'layer')
+            {
+                //layer提交特殊处理
+                return "<script>window.parent.location.reload();</script>";
+            }
+            else
+            {
+                return redirect('/');
+            }
+        }
         //redirect('/')
-        return UserApiController::Api_DoLogin($request)
-                                ? "<script>window.parent.location.reload();</script>"
-                                : back()->withErrors('密码输入错误');
+
     }
     public function LogOut(Request $request)
     {

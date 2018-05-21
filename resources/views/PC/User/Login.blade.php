@@ -21,6 +21,7 @@
                         <button type="submit" class="btn  btn-info">登录</button>
                     </div>
                 </div>
+                <input type="hidden" name="form" value="{{$data['form']}}">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
             </form>
         </div>
