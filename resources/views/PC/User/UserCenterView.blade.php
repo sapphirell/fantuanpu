@@ -14,7 +14,7 @@
         box-shadow: 0 3px 5px #ccc;
     }
     .user_info_table {
-        width:70%;
+        width:50%;
         margin: 0 auto;
     }
     .user_info_table .tr {
@@ -23,6 +23,9 @@
     .uc_table_left {
         text-align: center;
     }
+    td{
+        border-color: #FFFFFF!important;
+    }
 </style>
 <div class="wp" style="padding: 5px;margin-top: 29px;">
     <div class="bm">
@@ -30,7 +33,7 @@
         <div class="bm_c">
             <div class="avatar_block">
 
-                <form action="/uc-do-upload-avatar" method="post" enctype="multipart/form-data" style="width: 200px;text-align: center;">
+                <form action="/uc-do-upload-avatar" method="post" enctype="multipart/form-data" style="    margin: 0 auto;width: 200px;text-align: center;">
                     <div style="width: inherit;height: 200px;margin: 5px;box-shadow: 0px -1px 4px #ddd;">
                         {{avatar(session('user_info')->uid,150,100,'user_change_avatar','big')}}
                         {{--<img src="" id="user_change_avatar">--}}
@@ -76,16 +79,8 @@
                             </td>
                         </tr>
                     </table>
-                    <div style="width: inherit;height: 200px;margin: 5px;box-shadow: 0px -1px 4px #ddd;">
-                        <img id="image" src="">
-                    </div>
-                    <label class="btn btn-primary btn-upload" for="inputImage" title="Upload image file">
-                        <input type="file" class="sr-only" id="inputImage" name="file" accept="image/*">
-                        <span class="docs-tooltip" data-toggle="tooltip" title="" data-original-title="Import image with Blob URLs">
-                            选择
-                            <span class="fa fa-upload"></span>
-                        </span>
-                    </label>
+
+
                 </form>
             </div>
         </div>

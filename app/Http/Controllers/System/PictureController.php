@@ -35,9 +35,11 @@ class PictureController extends Controller
             $toSizeUrl      = public_path("Image/user_ava/images/".UserHelperController::GetAvatarPath($uid,$key));
 
             $img            = Image::make($imageURL);
+
 //            $img = \Intervention\Image\Image::make($imageURL);
             //删除已有的
             unlink($toSizeUrl);
+//            dd($toSizeUrl);
             //宽度、高度、起点x、起点y
             $img->crop($canvas->width, $canvas->height, $canvas->x, $canvas->y)->resize($value, $value)->save($toSizeUrl);
         }

@@ -249,6 +249,11 @@ class UserBaseController extends Controller
         else
         {
             //编辑已有头像
+            $user = session('user_info');
+            $newFile = public_path(UserHelperController::GetAvatarUrl($user->uid,'big'));
+            $cp     = public_path('uploads/avatar/temporary').md5($user->uid).'.gif';
+            copy($newFile,$cp);
+            $newFile = $cp;
         }
 
         $canvas     = $request->input('position');
