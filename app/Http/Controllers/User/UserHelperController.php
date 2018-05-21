@@ -43,7 +43,7 @@ class UserHelperController extends Controller
 
     public static function GetAvatarUrl($uid,$size = 'middle' )
     {
-        $usrAvatar      = self::GetAvatarDir($uid, $size);
+        $usrAvatar      = self::GetAvatarPath($uid, $size);
         //远程目录
 //        $avatar = 'images/'.$usrAvatar;
         //本地目录模式
@@ -60,8 +60,18 @@ class UserHelperController extends Controller
         }
 
     }
+    public static function GetAvatarDir($uid)
+    {
+        $uid = sprintf("%09d", abs(intval($uid)));
 
-    public static function GetAvatarDir($uid, $size)
+        $dir1 = substr($uid, 0, 3);
+
+        $dir2 = substr($uid, 3, 2);
+
+        $dir3 = substr($uid, 5, 2);
+        return  $dir1.'/'.$dir2.'/'.$dir3.'/';
+    }
+    public static function GetAvatarPath($uid, $size)
     {
 
         $size = in_array($size, array('big', 'middle', 'small')) ? $size : 'middle';

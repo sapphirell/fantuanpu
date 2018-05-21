@@ -27,7 +27,12 @@ class PictureController extends Controller
 
         foreach (['big'=>200, 'middle'=>120, 'small'=>48] as $key => $value)
         {
-            $toSizeUrl      = public_path("Image/user_ava/images/".UserHelperController::GetAvatarDir($uid,$key));
+            $dir = public_path("Image/user_ava/images/".UserHelperController::GetAvatarDir($uid));
+            if (!file_exists($dir))
+            {
+                mkdir($dir,0777,true);
+            }
+            $toSizeUrl      = public_path("Image/user_ava/images/".UserHelperController::GetAvatarPath($uid,$key));
 
             $img            = Image::make($imageURL);
 //            $img = \Intervention\Image\Image::make($imageURL);
