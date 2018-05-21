@@ -39,7 +39,12 @@ class ThreadController extends Controller
         $this->data['forum']    = Forum_forum_model::get_nodes_by_fid($this->data['thread']['thread_subject']->fid);
         $this->data['tid']  = $tid;
         $this->data['fid']  = $this->data['thread']['thread_subject']->fid;
-
+        /**
+         * 查看数+1
+         */
+        $thread = ForumThreadModel::find($tid);
+        $thread->views += 1;
+        $thread->save();
         return view('PC/Forum/ThreadView')->with('data',$this->data);
 
     }
