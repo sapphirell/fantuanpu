@@ -22,7 +22,7 @@ class PictureController extends Controller
          *  传递过来URL->检查用户是新上传头像还是第二次上传头像,第二次上传头像的话检查是原头像修改还是重新上传的头像
          *
          */
-        $uid = session('user_info');
+        $uid = session('user_info')->uid;
         $canvas         = json_decode($position);
 
         foreach (['big'=>200, 'middle'=>120, 'small'=>48] as $key => $value)
