@@ -280,4 +280,8 @@ class UserBaseController extends Controller
 
 
     }
+    public function live2d()
+    {
+        return view('PC/User/Live2d')->with('data',$this->data);
+    }
 }
