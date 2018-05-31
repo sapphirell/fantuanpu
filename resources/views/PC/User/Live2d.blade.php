@@ -4,17 +4,30 @@
 <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 <style>
     td{border-color: #FFFFFF!important;}
+    .talkingView {    position: fixed;
+        width: inherit;
+        background: #fff;
+
+        bottom: 200px;
+        top: 50px;
+        overflow: scroll;
+        border-radius: 5px;
+        box-shadow: 0 0 5px #8e9fff;}
+    .talkingView * {    font-size: 14px!important;}
 </style>
 <div class="wp" style="width: 960px">
     <p> 当前聊天房间人数: <span id="talking_num">0</span></p>
-    <table class="table">
-        <tr>
-            <td style="width: 280px">用户名</td>
-            <td style="width: 190px">时间</td>
-            <td>消息</td>
-        </tr>
+    <div class="talkingView">
+        <table class="table">
+            <tr>
+                <td style="width: 280px">用户名</td>
+                <td style="width: 190px">时间</td>
+                <td>消息</td>
+            </tr>
 
-    </table>
+        </table>
+    </div>
+
 
 </div>
 
@@ -34,6 +47,7 @@
 <script>
 //    $(document).ready(function () {
         var exampleSocket = new WebSocket("ws://47.91.214.27:8001");
+//        var exampleSocket = new WebSocket("ws://127.0.0.1:8001");
         var identify = {
             "type"      : "IM",
             "user_id"   : $('#uid').val(),
