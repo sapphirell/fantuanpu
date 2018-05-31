@@ -23,3 +23,5 @@
 <script src="/Static/Script/layer/layer.js"></script>
 
 <script src="/Static/Script/common.js"></script>
+<link rel="stylesheet" type="text/css" href="/Static/Style/mc.css">
+<link rel="stylesheet" type="text/css" href="/Static/Style/Web/style.css">
