@@ -34,11 +34,10 @@
 ._3_1_left .tab_a{height: 650px;margin-top:10px;margin-bottom: 20px;background: none;}
 .forum_img{background: #eee;width: 210px;height: 50px;}
 .forum_title {font-size: 15px;cursor: pointer}
-.forum_group{     background: #fff;
+.forum_group{    background: #fff;
     border-radius: 5px;
     margin-bottom: 10px;
-    /* box-shadow: 0 0 10px #fafafa; */
-    border: 1px solid #ccc;}
+    box-shadow: 0 0 10px #dedede;}
 .forum_description {
     font-size: 12px;
     color: #a5a5a5;

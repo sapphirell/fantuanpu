@@ -16,7 +16,13 @@
     transition: all 0.11s;
 }
 html ,body{font: 13px/1.5  'PingFang SC', 'Helvetica Neue', 'Helvetica', 'STHeitiSC-Light', 'Arial', sans-serif;color: #4C4C4C; margin: 0px;padding: 0px;overflow-x:hidden; }
-body {/*background: url(../fp-new/application/image/pattern1.jpg) repeat;*/ background: #fafafa;}
+body {
+
+    /*background: url(../fp-new/application/image/pattern1.jpg) repeat;*/
+    background: url('/Image/bg.jpg') repeat;
+
+    /*background: #fafafa;*/
+}
 a{color: #0084B4;}
 a.no_attn {    text-decoration: none;  color: #444;cursor: pointer}/*不引起注意的链接*/
 a:hover{}
@@ -138,7 +144,7 @@ ul{padding: 0px;margin: 0px}
 
 .notice{background-color: #e9faff;color: #337b92;padding: 8px;border: 1px solid;border-radius: 5px;margin: 3px;overflow: hidden;border-color: #74CDE7;}/*蓝色提醒框*/
 .alert{background-color: #FFF2E9;color: #7A9233;padding: 8px;border: 1px solid;border-radius: 5px;margin: 3px;overflow: hidden;border-color: #E7C774;}/*橘黄色提醒框*/
-.memuBtn{height: 25px;width: 25px;cursor: pointer;display: inline-block;float: left;margin: 9px}/*点击菜单*/
+.memuBtn{height: 25px;width: 25px;cursor: pointer;display: inline-block;float: left;margin: 7px}/*点击菜单*/
 #active{position: fixed;top:0px;left: -235px;background: #303A44;width: 235px;-webkit-transition: none!important;
     -moz-transition: none!important;
     -o-transition: none!important;
