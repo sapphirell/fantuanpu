@@ -7,11 +7,13 @@ use App\Http\DbModel\Forum_forum_model;
 use App\Http\DbModel\ForumPostModel;
 use App\Http\DbModel\ForumPostTableidModel;
 use App\Http\DbModel\ForumThreadModel;
+use App\Http\DbModel\HomeNotification;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Redis;
 
 class ThreadApiController extends Controller
 {
@@ -80,6 +82,12 @@ class ThreadApiController extends Controller
         $forum->save();
         return self::response();
     }
+
+    /**
+     * 回复帖子
+     * @param Request $request
+     * @返回 mixed
+     */
     public function PostsThread(Request $request)
     {
         $user_info = session('user_info');
@@ -128,6 +136,29 @@ class ThreadApiController extends Controller
         $forum->todayposts = $forum->todayposts +1;
         $forum->posts = $forum->posts +1;
         $forum->save();
+
+        /**
+         *  通知帖主帖子被回复
+         */
+        $notification = new HomeNotification();
+        $notification->uid = $thread->authorid;
+        $notification->type = 'post';//通知类型:"doing"记录,"friend"好友请求,"sharenotice"好友分享,"post"话题回复,
+        $notification->new = 1;
+        $notification->authorid = $user_info->uid;
+        $notification->author = $user_info->username;
+        $notification->note = " <a href=\"home.php?mod=space&uid=36\">{$user_info->username}</a> 回复了您的帖子 
+                                <a href=\"forum.php?mod=redirect&goto=findpost&ptid={$thread->tid}&pid={$tableId->pid}\" target=\"_blank\">{$request->input('subject')}</a> &nbsp; 
+                                <a href=\"forum.php?mod=redirect&goto=findpost&pid={$thread->tid}&ptid={$tableId->pid}\" target=\"_blank\" class=\"lit\">查看</a>";
+        $notification->dateline = time();
+        $notification->from_id = $tableId->pid;
+        $notification->from_idtype = 'quote';
+        $notification->from_num = '0';
+        $notification->save();
+
+        /**
+         *  写入消息通知队列
+         */
+        Redis::rpush('list',json_encode(['class'=>'common','action'=>'user_notice','to_uid'=>$thread->authorid,'msg'=> $user_info->username . '回复了您的帖子']));
         return self::response();
     }
 }

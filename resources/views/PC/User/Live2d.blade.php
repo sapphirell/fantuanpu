@@ -46,8 +46,9 @@
 <script type="text/javascript">initModel("/Static/Script/live2d/")</script>
 <script>
 //    $(document).ready(function () {
-        var exampleSocket = new WebSocket("ws://47.91.214.27:8002");
+//        var exampleSocket = new WebSocket("ws://47.91.214.27:8002");
 //        var exampleSocket = new WebSocket("ws://127.0.0.1:8001");
+        var exampleSocket = new WebSocket("ws://0.0.0.0:8002");
         var identify = {
             "type"      : "IM",
             "user_id"   : $('#uid').val(),

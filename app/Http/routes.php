@@ -41,6 +41,7 @@ use App\Http\UserAgent;
         'namespace' => 'Forum'
     ], function () {
         Route::get('/', ['uses' => 'ForumBaseController@index', 'as' => 'forum']);#论坛首页
+        Route::get('/forum.php', ['uses' => 'ForumBaseController@index', 'as' => 'forum-index']);#论坛首页
         Route::get('/forum', ['uses' => 'ForumBaseController@index', 'as' => 'forum-index']);#论坛首页
         Route::get('/about', ['uses' => 'ForumBaseController@index', 'as' => 'about']);#about
         Route::get('/talk', ['uses' => 'ForumBaseController@talk', 'as' => 'talk']);#帖子首页
@@ -86,6 +87,7 @@ use App\Http\UserAgent;
     ], function () {
         Route::get('/user-center', ['uses' => 'UserBaseController@UserCenter', 'as' => 'UserCenter']);#用户中心
         Route::post('/uc-do-upload-avatar', 'UserBaseController@DoUploadAvatar');#修改头像
+        Route::get('/get_my_message', 'UserBaseController@get_my_message');#获取我的消息
     });
     //管理后台 IndexCp
     Route::group([

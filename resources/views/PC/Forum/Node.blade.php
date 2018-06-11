@@ -1,7 +1,7 @@
 @include('PC.Common.Header')
 <link rel="stylesheet" type="text/css" href="/Static/Style/Web/forum.css">
 <script src="/Static/Script/Web/forum.js"></script>
-<div class="wp" style="padding: 5px;margin-top: 29px;">
+<div class="wp" style="padding: 5px;margin-top: 50px;">
     <!--头部banner-->
 
     <div class="banner quick">

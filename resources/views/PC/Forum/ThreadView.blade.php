@@ -85,21 +85,23 @@
     $(document).ready(function () {
         $(".show_date").mouseout(function () {
             $(this).hide().siblings('.show_time').show()
+
         })
         $(".show_time").hover(function(){
             $(this).hide().siblings('.show_date').show()
         });
         $(".post_item").hover(function () {
-
             $(this).children('.post_userinfo').css('left','550px')
+
         },function () {
             $(this).children('.post_userinfo').css('left','505px')
+
         })
     })
 </script>
 <body>
 
-<div class="wp" style="margin-top: 20px;">
+<div class="wp" style="margin-top: 50px;">
 
     <div class="thread_left" style="width: 70%;float: left">
         <div class="forum_subject" style="    background: #FFFFFF;margin: 15px;padding: 15px;border-radius: 5px;box-shadow: 2px 3px 3px #e4e4e4;position: relative;padding-bottom: 200px;">
@@ -145,11 +147,9 @@
                     <div class="post_item">
 
                         <div class="post_msg"  style="z-index: 1   ; position: relative;">
-                            <p> <span style="color: #5abdd4;">{{$value->author}}</span> <span style="color: #cccccc">Reply</span>: {{date("Y-m-d H:i:s",$value->dateline)}}</p>
-                            <p style="padding: 5px;">
-                                {!! bbcode2html($value->message) !!}
-                            </p>
-
+                            <p> <span style="color: #5abdd4;">{{$value->author}}</span> <span style="color: #cccccc"></span>{{date("Y-m-d H:i:s",$value->dateline)}}</p>
+                            <div id="{{$value->pid}}" style="padding: 5px;">{!! bbcode2html($value->message) !!}</div>
+                            <p onclick="reply({{$value->pid}})" class="reply" style="cursor: pointer;color: #ccc;position: absolute;right: 20px;bottom: 5px;">&lt;Reply&gt;</p>
                         </div>
                         <div class="post_userinfo trans" style="float: right;position: absolute;    left: 505px;background: #fff;padding: 8px;margin: 15px 15px 15px 0px;width: 17%;box-shadow: 2px 3px 3px #e4e4e4;z-index: 0;border-radius: 0px 5px 5px 0px;">
 
@@ -217,6 +217,18 @@ box-shadow: 2px 3px 3px #e4e4e4;">右边放点啥好呢</div>
         'redo'  // 重复
     ]
     editor.create();
+    function reply(pid)
+    {
+        var str = $("#"+pid).html();
+        console.log(str)
+//        var quote = $("#"+pid+" .quote").html()
+//        var blockquote = $("#"+pid+" blockquote").html()
+//        console.log(quote)
+//        var reg = new RegExp($("#"+pid+" .quote",blockquote).html());
+//        var Html = str.replace(reg,"");
+        var posts = "<blockquote>"+str+"</blockquote>";
+        editor.txt.html(posts)
+    }
     $('#post-thread').click(function () {
         var edHtml = html2ubb(editor.txt.html())
         var subject = $('#subject').val()

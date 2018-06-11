@@ -33,7 +33,7 @@
         });
     })
 </script>
-<div class="wp" style="padding: 5px;margin-top: 29px;    border: 1px solid #ddd;">
+<div class="wp" style="padding: 5px;margin-top: 50px;    border: 1px solid #ddd;">
     <!--头部banner-->
 
     <div>
@@ -82,6 +82,18 @@
     $(document).ready(function () {
         var E = window.wangEditor
         var editor = new E('#new_thread')
+        editor.customConfig.colors = [
+            '#000000',
+            '#eeece0',
+            '#1c487f',
+            '#4d80bf',
+            '#c24f4a',
+            '#8baa4a',
+            '#7b5ba1',
+            '#46acc8',
+            '#f9963b',
+            '#ffffff'
+        ]
         editor.customConfig.menus = [
             'head',  // 标题
             'bold',  // 粗体

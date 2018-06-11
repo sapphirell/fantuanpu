@@ -1069,11 +1069,11 @@ if (! function_exists('bbcode2html')) {
             $message = str_replace(array(
                 '[/color]', '[/backcolor]', '[/size]', '[/font]', '[/align]', '[b]', '[/b]', '[s]', '[/s]', '[hr]', '[/p]',
                 '[i=s]', '[i]', '[/i]', '[u]', '[/u]', '[list]', '[list=1]', '[list=a]',
-                '[list=A]', "\r\n[*]", '[*]', '[/list]', '[indent]', '[/indent]', '[/float]'
+                '[list=A]', "\r\n[*]", '[*]', '[/list]', '[indent]', '[/indent]','[blockquote]','[/blockquote]' ,'[/float]'
             ), array(
                 '</font>', '</font>', '</font>', '</font>', '</div>', '<strong>', '</strong>', '<strike>', '</strike>', '<hr class="l" />', '</p>', '<i class="pstatus">', '<i>',
                 '</i>', '<u>', '</u>', '<ul>', '<ul type="1" class="litype_1">', '<ul type="a" class="litype_2">',
-                '<ul type="A" class="litype_3">', '<li>', '<li>', '</ul>', '<blockquote>', '</blockquote>', '</span>'
+                '<ul type="A" class="litype_3">', '<li>', '<li>', '</ul>', '<blockquote>', '</blockquote>', '<blockquote>', '</blockquote>', '</span>'
             ), preg_replace(array(
                 "/\[color=([#\w]+?)\]/i",
                 "/\[color=((rgb|rgba)\([\d\s,]+?\))\]/i",
@@ -1176,8 +1176,9 @@ if (! function_exists('bbcode2html')) {
         if($jammer) {
             $message = preg_replace("/\r\n|\n|\r/e", "jammer()", $message);
         }
-//        var_dump($message);
-        return nl2br(str_replace(array("", '   ', '  '), array('&nbsp; &nbsp; &nbsp; &nbsp; ', '&nbsp; &nbsp;', '&nbsp;&nbsp;'), $message));
+
+        $message = nl2br(str_replace(array("", '   ', '  '), array('&nbsp; &nbsp; &nbsp; &nbsp; ', '&nbsp; &nbsp;', '&nbsp;&nbsp;'), $message));
+        return $message;
         return $htmlon ? $message : nl2br(str_replace(array("", '   ', '  '), array('&nbsp; &nbsp; &nbsp; &nbsp; ', '&nbsp; &nbsp;', '&nbsp;&nbsp;'), $message));
     }
     function threadListPages($allPages,$fid,$page)

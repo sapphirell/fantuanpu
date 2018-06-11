@@ -22,13 +22,13 @@ class TestController extends Controller
     }
 
     public function index(){
-        $user_info = session('user_info');
-        dd($user_info);
+//        $user_info = session('user_info');
+//        dd($user_info);
 //        return $this->forum_model ::GetForumList();
 //        return $this->mail->re();
 
         //return $this->mail;
-        //Redis::set('key123','value123');
+        Redis::lpush('list',json_encode(['class'=>'Common','action'=>'task']));
         echo Redis::get('key123');
     }
 }

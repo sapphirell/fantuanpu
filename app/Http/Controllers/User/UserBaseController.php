@@ -314,5 +314,7 @@ class UserBaseController extends Controller
         $last = ['兔娘','猫娘','小恶魔','史莱姆','小公举','骑士','穿越者','飞龙','冒险者','勇者','王子'];
         return $ornament[rand(0,count($ornament)-1)].$pre[rand(0,count($pre)-1)].$center[rand(0,count($center)-1)].$last[rand(0,count($last)-1)];
     }
+    public function get_my_message(Request $request)
+    {}
 
 }

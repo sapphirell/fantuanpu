@@ -29,8 +29,8 @@ class ForumBaseController extends Controller
 
     }
 
-    public function index(Request $request){
-
+    public function index(Request $request)
+    {
         switch ($mod = $request->input('mod')){
 
             case 'viewthread':
@@ -40,8 +40,6 @@ class ForumBaseController extends Controller
                 return $this->ForumIndex($request); break;
                 break;
         }
-
-
     }
     public function ThreadList(Request $request,$fid,$page)
     {

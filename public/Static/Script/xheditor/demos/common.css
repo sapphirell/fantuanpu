@@ -57,3 +57,9 @@ form{
 #header-nav a:hover span{
 	background-position:100% -42px;
 }
+.get-message
+{
+	background: #FFFFFF;
+	width: 100px;
+	height:100px;
+}

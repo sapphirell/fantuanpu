@@ -62,4 +62,22 @@ $(function() {
             content: ['/old-user', 'yes']
         });
     })
+    
+    $(".add-me").click(function () {
+        layer.closeAll()
+        var load = layer.load();
+        //此处用setTimeout演示ajax的回调
+        $.get("/get_my_message",null,function (event) {
+            layer.close(load);
+            layer.open({
+                type: 2,
+                title: 'iframe父子操作',
+                maxmin: true,
+                shadeClose: true, //点击遮罩关闭层
+                area : ['800px' , '520px'],
+                content: '<div>123</div>'
+            });
+        })
+
+    })
 });

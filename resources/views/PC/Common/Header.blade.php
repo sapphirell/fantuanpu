@@ -26,7 +26,7 @@
     <div style=" min-width: 900px ;  max-width: 960px;    margin: 0 auto;">
         <h1 style="display: inline;margin:0px;float:right;"></h1>
         <div class="search">
-            <a class="add-me"><i class="icon-plus"></i> Me</a>
+            <a class="add-me"><i class="icon-plus"></i> <span id="msg_num">0</span> Message</a>
             <from action="">
                 <input type="text" name="" class="in_text" placeholder="Searching..">
 

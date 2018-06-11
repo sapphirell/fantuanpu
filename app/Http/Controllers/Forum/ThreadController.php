@@ -23,7 +23,6 @@ class ThreadController extends Controller
 
     public function NewThreadView(Request $request)
     {
-
         return view('PC/Forum/NewThread');
     }
 
