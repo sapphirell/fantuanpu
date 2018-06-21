@@ -31,4 +31,8 @@ class TestController extends Controller
         Redis::lpush('list',json_encode(['class'=>'Common','action'=>'task']));
         echo Redis::get('key123');
     }
+    public function ping()
+    {
+        return 'ok';
+    }
 }

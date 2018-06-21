@@ -29,7 +29,7 @@ class Admin
         {
             return redirect()->route('login');
         }
-        if (session('user_info')->gid == 0)
+        if (session('user_info')->groupid !== 1)
         {
             return redirect()->route('/');
         }

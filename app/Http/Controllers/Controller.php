@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+//use App\Http\Requests\Request;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -29,21 +31,26 @@ class Controller extends BaseController
     {
         error_reporting(E_ERROR);
         date_default_timezone_set('Asia/Shanghai');
+        $request = new Request();
+        $this->data['request'] = $request->input();
     }
     public static function response($data = null,$ret='200',$msg='操作成功')
     {
-        if (!empty($data)&&!is_object($data)&&!is_array($data)){
-            throw new  \ErrorException('data类型错误');
-        }
-
-        if (empty($data)) {
+        if (empty($data))
+        {
             $res =  ['ret'=>intval($ret),'msg'=>$msg,'data'=>[]];
         } else {
             $res =  ['ret'=>intval($ret),'msg'=>$msg,'data'=>$data];
         }
         return response(json_encode($res,JSON_UNESCAPED_UNICODE))->header('Content-Type', 'application/json')->header('Charset','UTF-8');
     }
+    public function jsReturn($url,$msg='操作成功')
+    {
+        if (empty($url))
+            return false;
 
+        return "<script> alert('" . $msg ."');window.location.href='".$url."'</script>";
+    }
     public function checkRequest($Request,$param)
     {
         foreach ($param as $value)

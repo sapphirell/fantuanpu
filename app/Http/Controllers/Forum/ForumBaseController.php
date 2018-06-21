@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Forum;
 
 use App\Http\Controllers\System\CoreController;
+use App\Http\Controllers\System\RedisController;
 use App\Http\Controllers\User\UserHelperController;
 use App\Http\DbModel\Forum_forum_model;
 use App\Http\DbModel\Thread_model;
@@ -13,6 +14,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redis;
 
 class ForumBaseController extends Controller
 {
@@ -51,7 +53,9 @@ class ForumBaseController extends Controller
     public function ForumIndex(Request $request)
     {
         $cacheKey = CoreController::NODES;
-        $this->data['forumGroup']   = Cache::remember($cacheKey['keys'],$cacheKey['time'],function ()
+        $res = Redis::hgetall('asd');
+        dd($res);
+        $this->data['forumGroup']   = Cache::store('redis')->remember($cacheKey['keys'],$cacheKey['time'],function ()
         {
             return $this->forumModel->get_nodes();
         });

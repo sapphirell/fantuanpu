@@ -49,4 +49,8 @@ class CoreController extends Controller
      * 用户组信息
      */
     const USER_GROUP = ['key' => 'group_', 'time'=>36000];
+    /**
+     * 用户积分信息
+     */
+    const USER_COUNT = ['key' => 'user_count_', 'time'=>360];
 }

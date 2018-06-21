@@ -34,6 +34,8 @@ class ThreadApiController extends Controller
         {
             return self::response([],40002,'需要登录');
         }
+        if($user_info->groupid == 4 || $user_info->groupid == 5)
+            return self::response([],40003,'您的账户已被禁言');
         $data['fid']        = $request->input('fid');
         $data['author']     = $user_info->username;
         $data['lastposter']     = $user_info->username;
@@ -99,7 +101,8 @@ class ThreadApiController extends Controller
         {
             return self::response([],40002,'缺少参数');
         }
-
+        if($user_info->groupid == 4 || $user_info->groupid == 5)
+            return self::response([],40003,'您的账户已被禁言');
         /**
          * 获取帖子自增长id
          */

@@ -7,10 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class CommonMemberCount extends Model
 {
     //
-    public $table = 'pre_common_member';
+    public $table = 'pre_common_member_count';
     public $primaryKey = 'uid';
     public $timestamps = false;
-    public $extcredits = [
+    public static $extcredits = [
         'extcredits1' => '酸奶',
         'extcredits2' => '扑币',
         'extcredits3' => '项链',

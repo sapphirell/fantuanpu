@@ -5,6 +5,9 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\System\CoreController;
 use App\Http\Controllers\System\MailController;
 use App\Http\Controllers\System\PictureController;
+use App\Http\Controllers\System\RedisController;
+use App\Http\DbModel\CommonMemberCount;
+use App\Http\DbModel\CommonUsergroupModel;
 use App\Http\DbModel\ImModel;
 use App\Http\DbModel\UCenter_member_model;
 use App\Http\DbModel\User_model;
@@ -12,6 +15,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Redis;
 
 class UserBaseController extends Controller
 {
@@ -164,7 +168,37 @@ class UserBaseController extends Controller
     }
     public function UserCenter(Request $request)
     {
+        $user_info = session('user_info');
+        $this->GetUserCoin($user_info->uid);
         return view('PC/User/UserCenterView')->with('data',$this->data);
+    }
+
+    /**
+     * 获取用户积分,如果没有则会创建用户积分记录
+     */
+    public function GetUserCoin(int $uid)
+    {
+        $cache_key = CoreController::USER_COUNT;
+        $redisController = new RedisController();
+
+        //$cache_key['keys'],$cache_key['time']
+        Redis::hmset('member',['a'=>123,'b'=>123]);
+        $user_count  = $redisController->remember($cache_key['key'] .$uid,$cache_key['time'],function () use ($uid)
+        {
+            $user_count = CommonMemberCount::find($uid)->toArray();
+            if (empty($user_count))
+            {
+                $user_count = new CommonMemberCount();
+                $user_count->uid = $uid;
+                $user_count->save();
+            }
+            foreach ($user_count as $key => $value)
+                if (isset(CommonMemberCount::$extcredits[$key]))
+                    $user_count['count'][CommonMemberCount::$extcredits[$key]] = $value;
+            return $user_count;
+        });
+
+        return $user_count;
     }
     public function DoRegister(Request $request)
     {

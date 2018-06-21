@@ -33,6 +33,7 @@ use App\Http\UserAgent;
         Route::get('/ss', ['uses' => 'ServeController@ss', 'as' => 'ss']);#查看session
         Route::get('/info', ['uses' => 'ServeController@info', 'as' => 'info']);#phpinfo
         Route::get('/test', ['uses' => 'TestController@index', 'as' => 'test']);#test
+        Route::get('/ping', ['uses' => 'TestController@ping', 'as' => 'test']);#test
 
 
     });
@@ -96,7 +97,9 @@ use App\Http\UserAgent;
             'admin'
         ]
     ], function () {
-        Route::get('/admincp', ['uses' => 'AdmincpController@IndexCp', 'as' => 'admin']);#管理后台首页
+        Route::get('/admincp/', ['uses' => 'AdmincpController@IndexCp', 'as' => 'admin']);#管理后台首页
+        Route::get('/admincp/user_manager', ['uses' => 'AdmincpController@userManager', 'as' => 'userManager']);#用户管理面板
+        Route::get('/admincp/user-edit', ['uses' => 'AdmincpController@userEdit', 'as' => 'userManager']);#用户管理面板
 
     });
     //App 接口
