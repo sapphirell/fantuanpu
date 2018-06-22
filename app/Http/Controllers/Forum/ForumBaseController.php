@@ -53,9 +53,7 @@ class ForumBaseController extends Controller
     public function ForumIndex(Request $request)
     {
         $cacheKey = CoreController::NODES;
-        $res = Redis::hgetall('asd');
-
-        $this->data['forumGroup']   = Redis::remember($cacheKey['keys'],$cacheKey['time'],function ()
+        $this->data['forumGroup']   = Redis::remember($cacheKey['key'],$cacheKey['time'],function ()
         {
             return $this->forumModel->get_nodes();
         });
