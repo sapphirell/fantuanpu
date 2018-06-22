@@ -54,8 +54,8 @@ class ForumBaseController extends Controller
     {
         $cacheKey = CoreController::NODES;
         $res = Redis::hgetall('asd');
-        dd($res);
-        $this->data['forumGroup']   = Cache::store('redis')->remember($cacheKey['keys'],$cacheKey['time'],function ()
+
+        $this->data['forumGroup']   = Redis::remember($cacheKey['keys'],$cacheKey['time'],function ()
         {
             return $this->forumModel->get_nodes();
         });

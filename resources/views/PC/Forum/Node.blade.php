@@ -43,35 +43,35 @@
                     <div class="node_father">
                         @foreach($data['forumGroup'] as $group)
                             <div>
-                            <h3 style="    margin: 5px;font-size: 15px;font-weight: 300;color: #7d4a4a;text-shadow: 0 0 1px #bec7c4;">{{$group['name']}}</h3>
+                            <h3 style="    margin: 5px;font-size: 15px;font-weight: 300;color: #7d4a4a;text-shadow: 0 0 1px #bec7c4;">{{$group->name}}</h3>
                             {{--<div>分区版主:</div>--}}
                             </div>
                             <div class="forum_group">
-                                @foreach($group['bottomforum'] as $nodes)
-                                    @if($group['forumcolumns'] == '0')
+                                @foreach($group->bottomforum as $nodes)
+                                    @if($group->forumcolumns == '0')
                                         <div class="forum_block" style="display: inline-block;float: left;margin: 10px 30px 30px 30px;    width: 40%;">
-                                            <a href="/forum-{{$nodes['fid']}}-1.html"><h3 class="forum_title">{{$nodes['name']}}</h3></a>
+                                            <a href="/forum-{{$nodes->fid}}-1.html"><h3 class="forum_title">{{$nodes->name}}</h3></a>
                                             <div class="forum_img"></div>
                                             <p class="forum_description trans">
-                                                今日: <span>{{$nodes['todayposts']}}</span> · 主题: <span>{{$nodes['threads']}}</span> · 帖数: <span><?php echo round($nodes['posts']/10000,2)."万"; ?></span>
+                                                今日: <span>{{$nodes->todayposts}}</span> · 主题: <span>{{$nodes->threads}}</span> · 帖数: <span><?php echo round($nodes->posts/10000,2)."万"; ?></span>
                                             </p>
                                             <p>
-                                                <a class="forum_lastpost"  href="thread-{{explode("\t",$nodes['lastpost'])[0]}}-1.html">{{explode("\t",$nodes['lastpost'])[1]}}</a>
+                                                <a class="forum_lastpost"  href="thread-{{explode("\t",$nodes->lastpost)[0]}}-1.html">{{explode("\t",$nodes->lastpost)[1]}}</a>
                                             </p>
                                         </div>
-                                    @elseif($group['forumcolumns'] == '2')
+                                    @elseif($group->forumcolumns == '2')
 
                                         <div class="forum_block" style="display: inline-block;float: left;margin: 10px 30px 30px 30px;    width: 40%;">
-                                            <a href="/forum-{{$nodes['fid']}}-1.html"><h3 class="forum_title">{{$nodes['name']}}</h3></a>
+                                            <a href="/forum-{{$nodes->fid}}-1.html"><h3 class="forum_title">{{$nodes->name}}</h3></a>
                                             <div class="forum_img"></div>
                                             <p class="forum_description trans">
-                                                今日: <span class="forum_today trans">{{$nodes['todayposts']}}</span> · 主题: <span class="forum_threads trans">{{$nodes['threads']}}</span> · 帖数: <span class="forum_posts trans"><?php echo round($nodes['posts']/10000,2)."万"; ?></span>
+                                                今日: <span class="forum_today trans">{{$nodes->todayposts}}</span> · 主题: <span class="forum_threads trans">{{$nodes->threads}}</span> · 帖数: <span class="forum_posts trans"><?php echo round($nodes->posts/10000,2)."万"; ?></span>
                                             </p>
                                             <p>
-                                                <a class="forum_lastpost"  href="thread-{{explode("\t",$nodes['lastpost'])[0]}}-1.html">{{explode("\t",$nodes['lastpost'])[1]}}</a>
+                                                <a class="forum_lastpost"  href="thread-{{explode("\t",$nodes->lastpost)[0]}}-1.html">{{explode("\t",$nodes->lastpost)[1]}}</a>
                                             </p>
                                         </div>
-                                    @elseif($group['forumcolumns'] == '3')
+                                    @elseif($group->forumcolumns == '3')
                                     @else
                                     @endif
 

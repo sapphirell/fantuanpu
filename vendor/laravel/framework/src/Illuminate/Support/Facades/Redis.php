@@ -19,7 +19,13 @@ class  Redis extends Facade
 
     public static function remember($cacheKey,$cacheTime,\Closure $fn)
     {
-        return self::hgetall($cacheKey,);
+        $data = self::get($cacheKey);
+        if (empty($data))
+        {
+            $data = json_encode($fn());
+            Redis::set($cacheKey,$data);
+        }
+        return json_decode($data);
     }
 
 }
