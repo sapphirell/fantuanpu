@@ -2,7 +2,9 @@
 
 namespace App\Http\DbModel;
 
+use App\Http\Controllers\System\CoreController;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 class CommonMemberCount extends Model
 {
@@ -20,4 +22,30 @@ class CommonMemberCount extends Model
         'extcredits7' => '分享积分',
         'extcredits8' => '图点',
     ];
+    /**
+     * 获取用户积分,如果没有则会创建用户积分记录
+     * foreach ($user_count as $key => $value)
+     *      if (isset(self::$extcredits[$key]))
+     *      $user_count['count'][self::$extcredits[$key]] = $value;
+     * return $user_count;
+     */
+
+    public static function GetUserCoin($uid)
+    {
+        $cache_key = CoreController::USER_COUNT;
+        $user_count  = Cache::remember($cache_key['key'] .$uid,$cache_key['time'],function () use ($uid)
+        {
+            $user_count = self::find($uid)->toArray();
+            if (empty($user_count))
+            {
+                $user_count = new self();
+                $user_count->uid = $uid;
+                $user_count->save();
+            }
+            return $user_count;
+        });
+        $user_count['extcredits'] = self::$extcredits;
+
+        return $user_count;
+    }
 }

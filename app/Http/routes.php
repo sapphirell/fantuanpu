@@ -102,14 +102,15 @@ use App\Http\UserAgent;
         Route::get('/admincp/user-edit', ['uses' => 'AdmincpController@userEdit', 'as' => 'userManager']);#用户管理面板
 
     });
-    //App 接口
+    //App 接口(必须获取token的)
     Route::group([
         'namespace' => 'App',
-//        'middleware' => [
-//            'app'
-//        ]
+        'middleware' => [
+            'app'
+        ]
     ],function () {
         Route::get('/app/test', ['uses' => 'UserController@test', 'as' => 'app-user-test']);#app测试
+        Route::post('/app/user_center', ['uses' => 'UserController@user_center', 'as' => 'app-user-test']);#app测试
     });
 //}
 

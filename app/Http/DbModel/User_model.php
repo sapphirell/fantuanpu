@@ -18,4 +18,10 @@ class User_model extends Model
         $this->email = $email;
 //        $this->username =
     }
+    public static function getUserByEmial($mail)
+    {
+        $user = User_model::where('email',$mail)->select("username","email","uid")->first();
+        $user->avatar = config('app.online_url').\App\Http\Controllers\User\UserHelperController::GetAvatarUrl($user->uid);
+        return $user;
+    }
 }

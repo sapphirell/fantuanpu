@@ -35,14 +35,25 @@ class UserBaseController extends Controller
         return view('PC/User/Register')->with('data',$this->data);
     }
     public function DoLogin(Request $request){
-        $messages = [
-            'email.required'    => '邮箱不能为空',
-            'password.required' =>'密码不能为空'
-        ];
-        $rules = [
-            'email'     => 'required',
-            'password'  => 'required'
-        ];
+
+        $chk = $this->checkRequest($request,['email','password']);
+
+        if ($request->input('form') == 'app' && $chk !== true)
+        {
+            return self::response([],40001,'缺少参数'.$chk);
+        }
+        else
+        {
+            $messages = [
+                'email.required'    => '邮箱不能为空',
+                'password.required' =>'密码不能为空'
+            ];
+            $rules = [
+                'email'     => 'required',
+                'password'  => 'required'
+            ];
+        }
+
 
 
         self::validate($request, $rules, $messages);
@@ -50,20 +61,26 @@ class UserBaseController extends Controller
         $login_status = UserApiController::Api_DoLogin($request);
         if (!$login_status)
         {
+            if ($request->input('form') == 'app')
+                return self::response([],40002,'密码输入错误');
             return back()->withErrors('密码输入错误');
         }
-        else
+
+        if (!$request->input('form'))
+            return redirect('/');
+        if ($request->input('form') == 'layer') //layer提交特殊处理
+            return "<script>window.parent.location.reload();</script>";
+        if ($request->input('form') == 'app')
         {
-            if ($request->input('form') == 'layer')
-            {
-                //layer提交特殊处理
-                return "<script>window.parent.location.reload();</script>";
-            }
-            else
-            {
-                return redirect('/');
-            }
+            $data = User_model::getUserByEmial($request->input('email'));
+            //用户登录token
+            $data->token = md5( $data->uid. time());
+            $cacheKey = CoreController::USER_TOKEN;
+            $cacheKey = $cacheKey['key'] . $data->token ;
+
+            Redis::set($cacheKey,$data->uid);
         }
+            return self::response($data);
         //redirect('/')
 
     }
@@ -169,37 +186,11 @@ class UserBaseController extends Controller
     public function UserCenter(Request $request)
     {
         $user_info = session('user_info');
-        $this->GetUserCoin($user_info->uid);
+        CommonMemberCount::GetUserCoin($user_info->uid);
         return view('PC/User/UserCenterView')->with('data',$this->data);
     }
 
-    /**
-     * 获取用户积分,如果没有则会创建用户积分记录
-     */
-    public function GetUserCoin(int $uid)
-    {
-        $cache_key = CoreController::USER_COUNT;
-        $redisController = new RedisController();
 
-        //$cache_key['keys'],$cache_key['time']
-        Redis::hmset('member',['a'=>123,'b'=>123]);
-        $user_count  = $redisController->remember($cache_key['key'] .$uid,$cache_key['time'],function () use ($uid)
-        {
-            $user_count = CommonMemberCount::find($uid)->toArray();
-            if (empty($user_count))
-            {
-                $user_count = new CommonMemberCount();
-                $user_count->uid = $uid;
-                $user_count->save();
-            }
-            foreach ($user_count as $key => $value)
-                if (isset(CommonMemberCount::$extcredits[$key]))
-                    $user_count['count'][CommonMemberCount::$extcredits[$key]] = $value;
-            return $user_count;
-        });
-
-        return $user_count;
-    }
     public function DoRegister(Request $request)
     {
         $ck = $this->checkRequest($request,['username','email','password','repassword']);

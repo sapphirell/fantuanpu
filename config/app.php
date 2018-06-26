@@ -28,6 +28,10 @@ return [
 
     'debug' => env('APP_DEBUG', false),
 
+    /**
+     * app 线上URL
+     */
+    'online_url' =>  env('ONLINE_URL', false),
     /*
     |--------------------------------------------------------------------------
     | Application URL

@@ -53,4 +53,8 @@ class CoreController extends Controller
      * 用户积分信息
      */
     const USER_COUNT = ['key' => 'user_count_', 'time'=>360];
+    /**
+     *  用户token信息
+     */
+    const USER_TOKEN = ['key' => 'user_token_','time'=>360];
 }
