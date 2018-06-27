@@ -110,7 +110,8 @@ use App\Http\UserAgent;
         ]
     ],function () {
         Route::get('/app/test', ['uses' => 'UserController@test', 'as' => 'app-user-test']);#app测试
-        Route::post('/app/user_center', ['uses' => 'UserController@user_center', 'as' => 'app-user-test']);#app测试
+        Route::post('/app/user_center', ['uses' => 'UserController@user_center', 'as' => 'app-user-test']);#用户中心数据
+        Route::post('/app/forum_list', ['uses' => 'ForumController@forum_list', 'as' => 'forum_list']);#板块列表
     });
 //}
 
