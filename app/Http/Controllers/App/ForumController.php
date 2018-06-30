@@ -49,7 +49,7 @@ class ForumController extends Controller
         $data['user_like_forum'] = MemberLikeModel::where('uid',$uid)
                                     ->leftJoin('pre_forum_forum','pre_member_like.fid','=','pre_forum_forum.fid')
                                     ->select()->get();
-        $data['thread_list'] = ForumThreadModel::orderBy('lastpost','desc')->paginate(15)->toArray()['data'];
+        $data['thread_list'] = ForumThreadModel::get_new_thread();
         //用户的关注板块
         return self::response($data);
     }
