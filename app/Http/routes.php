@@ -120,6 +120,7 @@ use App\Http\UserAgent;
         'namespace' => 'App',
     ],function () {
         Route::post('/app/forum_list', ['uses' => 'ForumController@forum_list', 'as' => 'forum_list']);#板块列表
+        Route::post('/app/look_look', ['uses' => 'ForumController@look_look', 'as' => 'look_look']);#随便看看
     });
 //}
 
