@@ -55,7 +55,7 @@ class ForumController extends Controller
     }
     public function _logout_look()
     {
-        $data['thread_list'] = ForumThreadModel::orderBy('lastpost','desc')->paginate(15)->toArray()['data'];
+        $data['thread_list'] = ForumThreadModel::get_new_thread();
         return self::response($data);
     }
 }
