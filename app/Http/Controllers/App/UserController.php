@@ -5,6 +5,7 @@ namespace App\Http\Controllers\App;
 use App\Http\Controllers\System\CoreController;
 use App\Http\Controllers\User\UserBaseController;
 use App\Http\DbModel\CommonMemberCount;
+use App\Http\DbModel\FriendModel;
 use App\Http\DbModel\User_model;
 use Illuminate\Http\Request;
 
@@ -33,5 +34,14 @@ class UserController extends Controller
         $this->data['user_count'] = CommonMemberCount::GetUserCoin($this->data['uid']);
         $this->data['user_avatar'] = config('app.online_url').\App\Http\Controllers\User\UserHelperController::GetAvatarUrl($this->data['uid']);
         return self::response($this->data);
+    }
+
+    public function user_friends(Request $request)
+    {
+        $cacheKey = CoreController::USER_TOKEN;
+        $cacheKey = $cacheKey['key'] . $request->input('token');
+        $uid = Redis::get($cacheKey);
+        $data = FriendModel::where('uid',$uid)->get();
+        return self::response($data);
     }
 }
