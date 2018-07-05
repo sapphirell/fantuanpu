@@ -1,11 +1,13 @@
 {{--@include('PC.Common.Header')--}}
 @include('PC.Common.HtmlHead')
 <link rel="stylesheet" type="text/css" href="/Static/Style/Web/reg_login.style.css">
-
+<style>
+    body {    background: #fff;    padding: 8px;}
+</style>
 <div class="wp">
-    <div class="bm">
-        <div class="bm_h"><h1>账户寻回/回忆账号</h1></div>
-        <div class="bm_c">
+    <div>
+        <div class="bm_h"><h3>账户寻回/回忆账号</h3></div>
+        <div class="bm_c" style="padding: 8px">
             <p>输入您用户名中包含的字符! (*只显示30个相关用户)</p>
             <form action="/old-user" method="get">
                 <input type="text" name="username" class="form-control" value="{{$data['search-username']}}">

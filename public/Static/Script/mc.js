@@ -85,7 +85,7 @@ $(document).ready(function(){
             $active.animate({"left":"-235px"});
             mbtnNum--;
         };
-
+        $.layer.closeAll()
     });
     //选项卡
     $tab_h = $(".tab_h > div");

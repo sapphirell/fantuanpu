@@ -47,8 +47,10 @@ $(function() {
         e.preventDefault();
         layer.open({
             type: 2,
-            title:'注册饭团扑账号',
-            area: ['660px', '500px'],
+            title:false,
+            closeBtn: 0,
+            shadeClose: true,
+            area: ['460px', '400px'],
             offset: '100px',
             class : 'asd',
             // skin: 'layui-layer-rim', //加上边框
@@ -60,7 +62,11 @@ $(function() {
         e.preventDefault();
         parent.layer.open({
             type: 2,
-            title:'账号联想',
+            // title:'账号联想',
+            title: false,
+            closeBtn: 0, //不显示关闭按钮
+            shade: 0.8,
+            shadeClose: true,
             area: ['660px', '500px'],
             offset: '100px',
             // skin: 'layui-layer-rim', //加上边框

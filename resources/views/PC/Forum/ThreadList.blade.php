@@ -34,6 +34,7 @@
     })
 </script>
 <div class="wp" style="padding: 5px;margin-top: 50px;    border: 1px solid #ddd;">
+
     <!--头部banner-->
     <div>
         @foreach($data['list'] as $key => $value)
