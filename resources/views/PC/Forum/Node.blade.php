@@ -115,7 +115,9 @@
             </div>
             <!--3-1-left-->
         </div>
-        <div class="_3_1_right"></div>
+        <div class="_3_1_right">
+            <div style="width: 100%;height: 50px;background: #ffffff"></div>
+        </div>
         <div class="clear"></div>
         <!--3-1-->
     </div>

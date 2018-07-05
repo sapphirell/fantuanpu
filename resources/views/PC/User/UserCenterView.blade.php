@@ -29,6 +29,9 @@
 </style>
 <div class="wp" style="padding: 5px;margin-top: 29px;">
     <div class="bm">
+
+    </div>
+    <div class="bm">
         <div class="bm_h">编辑资料</div>
         <div class="bm_c">
             <div class="avatar_block">

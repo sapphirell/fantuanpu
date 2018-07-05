@@ -154,6 +154,7 @@ ul{padding: 0px;margin: 0px}
 .alert{background-color: #FFF2E9;color: #7A9233;padding: 8px;border: 1px solid;border-radius: 5px;margin: 3px;overflow: hidden;border-color: #E7C774;}/*橘黄色提醒框*/
 .memuBtn{height: 25px;width: 25px;cursor: pointer;display: inline-block;float: left;margin: 7px}/*点击菜单*/
 #active{position: fixed;top:0px;left: -235px;background: #303A44;width: 235px;-webkit-transition: none!important;
+    z-index: 10;
     -moz-transition: none!important;
     -o-transition: none!important;
     transition: none!important;}/*弹出左侧竖条*/
