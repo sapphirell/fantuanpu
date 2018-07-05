@@ -31,8 +31,12 @@ $(function() {
         e.preventDefault();
         layer.open({
             type: 2,
-            title:'登录',
-            area: ['460px', '300px'],
+            title: false,
+            closeBtn: 0, //不显示关闭按钮
+            shade: 0.8,
+            shadeClose: true,
+            // title:'登录',
+            area: ['300px', '460px'],
             offset: '100px',
             // skin: 'layui-layer-rim', //加上边框
             content: ['/login?form=layer', 'no']
@@ -46,6 +50,7 @@ $(function() {
             title:'注册饭团扑账号',
             area: ['660px', '500px'],
             offset: '100px',
+            class : 'asd',
             // skin: 'layui-layer-rim', //加上边框
             content: ['/register', 'no']
         });

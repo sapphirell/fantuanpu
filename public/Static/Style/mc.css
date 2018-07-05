@@ -215,7 +215,7 @@ ul{padding: 0px;margin: 0px}
 /**颜色描述*/
 .purple{    color: #A5A8BF;}
 /*被框架引用的css，这部分不需要使用*/
-
+.layui-layer-iframe {border-radius: 5px;overflow: hidden}
 
 .memuBtn > .across{background-color: #444;width: 23px;height: 4px;float: left;margin-bottom: 4px;webkit-transition: all 0.5s ease-in,all 0.3s ease-out;-moz-transition: all 0.5s ease-in,all 0.3s ease-out;-o-transition: all 0.5s ease-in,all 0.3s ease-out;transition: all 0.5s ease-in,all 0.3s ease-out;}
 
