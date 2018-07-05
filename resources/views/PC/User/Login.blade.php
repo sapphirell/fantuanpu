@@ -18,9 +18,9 @@
                     <input type="email" class="form-control" style="  box-shadow: 0 0 9999px #fff inset;  border-radius: 5px 5px 0 0;border-bottom-width: 0px;padding: 20px;" id="inputEmail3" placeholder="请输入邮箱" name="email">
                 </div>
                 <div  style="    padding: 10px;padding-top: 0;">
-                    <input type="password" class="form-control" style="    border-radius: 0 0 5px 5px;padding: 20px;"  id="inputPassword3" placeholder="请输入密码" name="password">
+                    <input type="password" class="form-control" style="   box-shadow: 0 0 9999px #fff inset;  border-radius: 0 0 5px 5px;padding: 20px;"  id="inputPassword3" placeholder="请输入密码" name="password">
                 </div>
-                <button type="submit" class="btn  btn-info" style=" box-shadow: 0 0 9999px #fff inset;width: 55px;height: 55px;border-radius: 100%;box-shadow: 0 3px 5px #ccc;margin: 50 auto;    display: inherit;">登录</button>
+                <button type="submit" class="btn  btn-info" style="width: 55px;height: 55px;border-radius: 100%;box-shadow: 0 3px 5px #ccc;margin: 50 auto;    display: inherit;">登录</button>
                 {{--<div class="form-group" style="float: right;margin-right: 10px;">--}}
 
                     {{--<div class="col-sm-offset-2 col-sm-10">--}}
