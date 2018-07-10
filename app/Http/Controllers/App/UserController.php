@@ -41,7 +41,12 @@ class UserController extends Controller
         $cacheKey = CoreController::USER_TOKEN;
         $cacheKey = $cacheKey['key'] . $request->input('token');
         $uid = Redis::get($cacheKey);
-        $data = FriendModel::where('uid',$uid)->get();
+//        $data = FriendModel::where('uid',$uid)->get();
+        $data = FriendModel::where('uid',$uid)->paginate(10)->toArray()['data'];
+        foreach ($data as &$value)
+        {
+            $value['favatar'] =  config('app.online_url').\App\Http\Controllers\User\UserHelperController::GetAvatarUrl($value['fuid']);
+        }
         return self::response($data);
     }
 }

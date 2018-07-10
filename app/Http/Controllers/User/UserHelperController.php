@@ -56,7 +56,7 @@ class UserHelperController extends Controller
             return $avadir . $usrAvatar;
         }else
         {
-            return $avadir .'/noavatar_middle.gif';
+            return $avadir .'noavatar_middle.gif';
         }
 
     }
