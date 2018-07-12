@@ -122,6 +122,7 @@ use App\Http\UserAgent;
     ],function () {
         Route::post('/app/forum_list', ['uses' => 'ForumController@forum_list', 'as' => 'forum_list']);#板块列表
         Route::post('/app/look_look', ['uses' => 'ForumController@look_look', 'as' => 'look_look']);#随便看看
+        Route::post('/app/view_thread', ['uses' => 'ForumController@viewThread', 'as' => 'view_thread']);#查看帖子
     });
 //}
 

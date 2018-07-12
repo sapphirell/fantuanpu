@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\App;
 
 use App\Http\Controllers\Api\ThreadApiController;
+use App\Http\Controllers\Forum\ThreadController;
 use App\Http\Controllers\System\CoreController;
 use App\Http\DbModel\ForumThreadModel;
 use App\Http\DbModel\MemberLikeModel;
@@ -56,6 +57,16 @@ class ForumController extends Controller
     public function _logout_look()
     {
         $data['thread_list'] = ForumThreadModel::get_new_thread();
+        return self::response($data);
+    }
+
+    public function viewThread(ThreadController $threadController,Request $request)
+    {
+        if (!$request->input('tid'))
+            return self::response([],40001,'缺少参数tid');
+
+        $data = $threadController->_viewThread($request->input('tid'));
+
         return self::response($data);
     }
 }
