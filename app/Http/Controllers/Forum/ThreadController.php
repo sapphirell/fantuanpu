@@ -48,7 +48,6 @@ class ThreadController extends Controller
             $thread->save();
         }
 
-
         return $this->data;
     }
     public function ViewThread(Request $request,$tid,$page){

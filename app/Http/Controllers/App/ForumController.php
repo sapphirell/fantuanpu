@@ -66,6 +66,46 @@ class ForumController extends Controller
             return self::response([],40001,'缺少参数tid');
 
         $data = $threadController->_viewThread($request->input('tid'));
+        //对帖子ubb进行处理
+        foreach ($data['thread']['thread_post'] as &$value)
+        {
+            $value->message = str_replace(array(
+                '[/color]', '[/backcolor]', '[/size]', '[/font]', '[/align]', '[b]', '[/b]', '[s]', '[/s]', '[hr]', '[/p]',
+                '[i=s]', '[i]', '[/i]', '[u]', '[/u]', '[list]', '[list=1]', '[list=a]',
+                '[list=A]', "\r\n[*]", '[*]', '[/list]', '[indent]', '[/indent]','[blockquote]','[/blockquote]' ,'[/float]'
+            ), array(
+                '', '', '', '', '', '', '', '', '', '', '', '', '',
+                '', '', '', '', '', '',
+                '', '', '', '', '', '', '', '', ''
+            ), preg_replace(array(
+                "/\[color=([#\w]+?)\]/i",
+                "/\[color=((rgb|rgba)\([\d\s,]+?\))\]/i",
+                "/\[backcolor=([#\w]+?)\]/i",
+                "/\[backcolor=((rgb|rgba)\([\d\s,]+?\))\]/i",
+                "/\[size=(\d{1,2}?)\]/i",
+                "/\[size=(\d{1,2}(\.\d{1,2}+)?(px|pt)+?)\]/i",
+                "/\[font=([^\[\<]+?)\]/i",
+                "/\[align=(left|center|right)\]/i",
+                "/\[p=(\d{1,2}|null), (\d{1,2}|null), (left|center|right)\]/i",
+                "/\[float=left\]/i",
+                "/\[float=right\]/i"
+
+            ), array(
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ), $value->message));
+//            dd( $value->message);
+        }
+
 
         return self::response($data);
     }
