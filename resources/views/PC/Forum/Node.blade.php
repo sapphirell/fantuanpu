@@ -22,7 +22,7 @@
 
 
     </div>
-    <div class="_3_1" style="    overflow: hidden;min-height: 1200px;">
+    <div class="_3_1" style="  min-height: 1200px;">
         <div class="_3_1_left">
             <div class="mod_tab">
                 <ul>
@@ -116,7 +116,7 @@
             <!--3-1-left-->
         </div>
         <div class="_3_1_right">
-            <div style="width: 100%;height: 50px;background: #ffffff"></div>
+            <div class="forum_group" style="width: 100%;height: 200px;background: #ffffff;margin-top: 77px"></div>
         </div>
         <div class="clear"></div>
         <!--3-1-->
