@@ -2,3 +2,4 @@
 ./public/Image/
 .env
 ./public/uploads/avatar/temporary/
+./public/mobile/node_modules
