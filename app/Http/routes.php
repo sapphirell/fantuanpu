@@ -12,18 +12,31 @@
 */
 use App\Http\UserAgent;
 
+//App 接口(必须获取token的)
+Route::group([
+    'namespace' => 'App',
+    'middleware' => [
+        'app'
+    ]
+],function () {
+    Route::get('/app/test', ['uses' => 'UserController@test', 'as' => 'app-user-test']);#app测试
+    Route::post('/app/user_center', ['uses' => 'UserController@user_center', 'as' => 'app-user-test']);#用户中心数据
+    Route::post('/app/user_friends', ['uses' => 'UserController@user_friends', 'as' => 'app-user_friends']);#user_friends
+
+});
+//App 接口(非token)
+Route::group([
+    'namespace' => 'App',
+],function () {
+    Route::post('/app/forum_list', ['uses' => 'ForumController@forum_list', 'as' => 'forum_list']);#板块列表
+    Route::post('/app/look_look', ['uses' => 'ForumController@look_look', 'as' => 'look_look']);#随便看看
+    Route::post('/app/view_thread', ['uses' => 'ForumController@viewThread', 'as' => 'view_thread']);#查看帖子
+    Route::get('/app/hitokoto', ['uses' => 'ForumController@hitokoto', 'as' => 'hitokoto']);#一句话静态
+});
+
 //if( UserAgent::isMobile() ){
 //    //移动端
-//    Route::get('/', function () {
-//        return '移动端界面还未写好…';
-//    });
-//    //移动端
-//    Route::group([
-//        'namespace' => 'User'
-//    ], function () {
-//
-//    });
-//
+//    Route::get('/', ['uses' => 'Controller@mobile', 'as' => 'mobile']);
 //}else{
     //pc端
     //服务
@@ -102,28 +115,7 @@ use App\Http\UserAgent;
         Route::get('/admincp/user-edit', ['uses' => 'AdmincpController@userEdit', 'as' => 'userManager']);#用户管理面板
 
     });
-    //App 接口(必须获取token的)
-    Route::group([
-        'namespace' => 'App',
-        'middleware' => [
-            'app'
-        ]
-    ],function () {
-        Route::get('/app/test', ['uses' => 'UserController@test', 'as' => 'app-user-test']);#app测试
-        Route::post('/app/user_center', ['uses' => 'UserController@user_center', 'as' => 'app-user-test']);#用户中心数据
-        Route::post('/app/user_friends', ['uses' => 'UserController@user_friends', 'as' => 'app-user_friends']);#user_friends
-
-    });
-
-
-    //App 接口(非token)
-    Route::group([
-        'namespace' => 'App',
-    ],function () {
-        Route::post('/app/forum_list', ['uses' => 'ForumController@forum_list', 'as' => 'forum_list']);#板块列表
-        Route::post('/app/look_look', ['uses' => 'ForumController@look_look', 'as' => 'look_look']);#随便看看
-        Route::post('/app/view_thread', ['uses' => 'ForumController@viewThread', 'as' => 'view_thread']);#查看帖子
-    });
+//
 //}
-
-
+//
+//
