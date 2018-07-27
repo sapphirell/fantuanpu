@@ -15,10 +15,10 @@
 <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
 {{--<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>--}}
 {{--<script src="/Static/Script/jquery.min.js"></script>--}}
-<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 {{--<script src="/Static/Script/bootstrap.min.js"></script>--}}
-<script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 {{--<script src="http://cdn.static.runoob.com/libs/angular.js/1.4.6/angular.min.js"></script>--}}
 <script src="/Static/Script/mc.js"></script>
 <script src="/Static/Script/unslider.js"></script>
