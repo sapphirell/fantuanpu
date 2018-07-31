@@ -10,8 +10,8 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
 {{--<link  rel="stylesheet" type="text/css"   href="/Static/Style/bootstrap.min.css">--}}
 <!-- FONTAWESOME字体图标-->
-{{--<link rel="stylesheet" type="text/css"  href="/Static/Font/Font-Awesome-3.2.1/css/font-awesome.min.css">--}}
-<link rel="stylesheet" type="text/css"  href="https://apps.bdimg.com/libs/fontawesome/4.4.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css"  href="/Static/Font/Font-Awesome-3.2.1/css/font-awesome.min.css">
+{{--<link rel="stylesheet" type="text/css"  href="https://apps.bdimg.com/libs/fontawesome/4.4.0/css/font-awesome.min.css">--}}
 <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
 {{--<script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>--}}
 {{--<script src="/Static/Script/jquery.min.js"></script>--}}

@@ -34,7 +34,7 @@
 
         </div>
         <ul class='hd'>
-            <li><a href="/forum"  class="header_items"><p class="none_960">板块 <span>Forums</span></p><i class="inline_block_960 fa fa-code-fork fa-2x"></i></a></li>
+            <li><a href="/forum.php"  class="header_items"><p class="none_960">板块 <span>Forums</span></p><i class="inline_block_960 fa fa-code-fork fa-2x"></i></a></li>
             <li><a href="/notice"  class="header_items"><p class="none_960" style="    color: #ec5757;">公告/招募</p></a></li>
         </ul>
 

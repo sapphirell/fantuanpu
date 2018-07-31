@@ -54,9 +54,9 @@ Route::group([
     Route::group([
         'namespace' => 'Forum'
     ], function () {
-        Route::get('/', ['uses' => 'ForumBaseController@index', 'as' => 'forum']);#论坛首页
-        Route::get('/forum.php', ['uses' => 'ForumBaseController@index', 'as' => 'forum-index']);#论坛首页
-        Route::get('/forum', ['uses' => 'ForumBaseController@index', 'as' => 'forum-index']);#论坛首页
+        Route::get('/',             ['uses' => 'ForumBaseController@index', 'as' => 'forum']);#论坛首页
+        Route::get('/forum.php',    ['uses' => 'ForumBaseController@index', 'as' => 'forum-index']);#论坛首页
+        Route::get('/forum',        ['uses' => 'ForumBaseController@index', 'as' => 'forum-index']);#论坛首页
         Route::get('/about', ['uses' => 'ForumBaseController@index', 'as' => 'about']);#about
         Route::get('/talk', ['uses' => 'ForumBaseController@talk', 'as' => 'talk']);#帖子首页
         Route::get('/notice', ['uses' => 'ForumBaseController@notice', 'as' => 'notice']);#声明

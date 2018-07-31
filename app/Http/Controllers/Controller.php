@@ -62,5 +62,9 @@ class Controller extends BaseController
         }
         return true;
     }
-
+    //
+    public function mobile()
+    {
+        return view("Mobile/index");
+    }
 }

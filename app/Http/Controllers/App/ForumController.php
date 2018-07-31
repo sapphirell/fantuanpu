@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Redis;
 
 class ForumController extends Controller
 {
-    //
+
     public function forum_list(Request $request)
     {
         $cacheKey = CoreController::NODES;
@@ -72,11 +72,11 @@ class ForumController extends Controller
             $value->message = str_replace(array(
                 '[/color]', '[/backcolor]', '[/size]', '[/font]', '[/align]', '[b]', '[/b]', '[s]', '[/s]', '[hr]', '[/p]',
                 '[i=s]', '[i]', '[/i]', '[u]', '[/u]', '[list]', '[list=1]', '[list=a]',
-                '[list=A]', "\r\n[*]", '[*]', '[/list]', '[indent]', '[/indent]','[blockquote]','[/blockquote]' ,'[/float]'
+                '[list=A]', "\r\n[*]", '[*]', '[/list]', '[indent]', '[/indent]' ,'[/float]',
             ), array(
                 '', '', '', '', '', '', '', '', '', '', '', '', '',
                 '', '', '', '', '', '',
-                '', '', '', '', '', '', '', '', ''
+                '', '', '', '', '', '',  ''
             ), preg_replace(array(
                 "/\[color=([#\w]+?)\]/i",
                 "/\[color=((rgb|rgba)\([\d\s,]+?\))\]/i",
@@ -88,7 +88,8 @@ class ForumController extends Controller
                 "/\[align=(left|center|right)\]/i",
                 "/\[p=(\d{1,2}|null), (\d{1,2}|null), (left|center|right)\]/i",
                 "/\[float=left\]/i",
-                "/\[float=right\]/i"
+                "/\[float=right\]/i",
+                "/\[url=[\w\W]*?\][\w\W]*?\[\/url\]/i"
 
             ), array(
                 "",
@@ -104,9 +105,16 @@ class ForumController extends Controller
                 ""
             ), $value->message));
 //            dd( $value->message);
+            $value->avatar = config('app.online_url').\App\Http\Controllers\User\UserHelperController::GetAvatarUrl($value->authorid);
+            $value->postdate = date("m-d",$value->dateline);
         }
 
 
         return self::response($data);
+    }
+    public function hitokoto()
+    {
+        $hitokoto = \GuzzleHttp\json_decode(file_get_contents(public_path('/hitokoto.json')));
+        return self::response($hitokoto[array_rand($hitokoto,1)]);
     }
 }

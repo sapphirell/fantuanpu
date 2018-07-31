@@ -19,8 +19,12 @@ module.exports = {
 		,{
 			test: /\.css$/,
 			loader: 'style-loader!css-loader'
-		}]
-
+		}
+		,{
+			test: /\.(eot|woff|woff2|svg|ttf)([\?]?.*)$/,
+				loader: "file-loader"
+		}
+		]
 	},
     	watch:true //热更新
 }
