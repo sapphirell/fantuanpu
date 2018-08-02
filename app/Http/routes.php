@@ -22,6 +22,7 @@ Route::group([
     Route::get('/app/test', ['uses' => 'UserController@test', 'as' => 'app-user-test']);#app测试
     Route::post('/app/user_center', ['uses' => 'UserController@user_center', 'as' => 'app-user-test']);#用户中心数据
     Route::post('/app/user_friends', ['uses' => 'UserController@user_friends', 'as' => 'app-user_friends']);#user_friends
+    Route::post('/app/new_thread', ['uses' => 'ForumController@new_thread', 'as' => 'new_thread']);#app发新帖
 
 });
 //App 接口(非token)
@@ -31,6 +32,7 @@ Route::group([
     Route::post('/app/forum_list', ['uses' => 'ForumController@forum_list', 'as' => 'forum_list']);#板块列表
     Route::post('/app/look_look', ['uses' => 'ForumController@look_look', 'as' => 'look_look']);#随便看看
     Route::post('/app/view_thread', ['uses' => 'ForumController@viewThread', 'as' => 'view_thread']);#查看帖子
+    Route::post('/app/all_forum', ['uses' => 'ForumController@all_forum', 'as' => 'all_forum']);#所有版块
     Route::get('/app/hitokoto', ['uses' => 'ForumController@hitokoto', 'as' => 'hitokoto']);#一句话静态
 });
 

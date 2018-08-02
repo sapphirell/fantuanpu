@@ -6,6 +6,7 @@ use App\Http\Controllers\System\CoreController;
 use App\Http\Controllers\System\RedisController;
 use App\Http\Controllers\User\UserHelperController;
 use App\Http\DbModel\Forum_forum_model;
+use App\Http\DbModel\ForumThreadModel;
 use App\Http\DbModel\Thread_model;
 use App\Http\DbModel\UserNoticeModel;
 use Illuminate\Http\Request;
@@ -57,8 +58,13 @@ class ForumBaseController extends Controller
         {
             return $this->forumModel->get_nodes();
         });
-
+        $this->data['hot'] = $this->hot_thread();
         return view('PC/Forum/Node')->with('data',$this->data);
+    }
+    public function hot_thread()
+    {
+        $thread = ForumThreadModel::orderBy('replies','desc')->offset(0)->limit(10)->get();
+        
     }
     public function talk(Request $request,Forum_forum_model $forum_model)
     {

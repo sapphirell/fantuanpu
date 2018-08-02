@@ -28,19 +28,40 @@ class ThreadApiController extends Controller
     //
     public function NewThread(Request $request)
     {
-
         $user_info      = session('user_info');
+
         if (empty($user_info))
-        {
             return self::response([],40002,'需要登录');
-        }
         if($user_info->groupid == 4 || $user_info->groupid == 5)
             return self::response([],40003,'您的账户已被禁言');
-        $data['fid']        = $request->input('fid');
+
+        $checkParams = $this->checkRequest($request,['subject','message']);
+        if($checkParams !== true)
+        {
+            return self::response([],40001,'缺少参数'.$checkParams);
+        }
+
+        $fid    = $request->input('fname')
+                ? Forum_forum_model::where('name',"=",$request->input('fname'))->first()->fid
+                : $request->input('fid');
+        if (!$fid)
+            return self::response([],40004,'fid为空,至少需要传输fname或fid');
+
+        $this->_newThread(
+                            $fid,
+                            $request->input('subject'),
+                            $request->input('message'),
+                            $user_info
+                        );
+        return self::response();
+    }
+    public  function _newThread($fid,$subject,$message,$ip,$user_info)
+    {
+        $data['fid']        = $fid;
         $data['author']     = $user_info->username;
         $data['lastposter']     = $user_info->username;
         $data['authorid']   = $user_info->uid;
-        $data['subject']    = $request->input('subject');
+        $data['subject']    = $subject;
         $data['dateline']   = time();
         $data['lastpost']   = time();
 
@@ -64,27 +85,25 @@ class ThreadApiController extends Controller
         $tableId->save();
 
         $postModel      = $this->postModel;
-        $postModel->fid = $request->input('fid');
+        $postModel->fid = $fid;
         $postModel->tid = $this->threadModel->tid;
         $postModel->pid = $tableId->pid;
         $postModel->first   = 0;
         $postModel->author  = $user_info->username;
         $postModel->authorid = $user_info->uid;
-        $postModel->subject = $request->input('subject');
+        $postModel->subject = $subject;
         $postModel->dateline = time();
-        $postModel->message = $request->input('message');
-        $postModel->useip   = $request->getClientIp();
+        $postModel->message = $message;
+        $postModel->useip   = $ip;
         $postModel->save();
         /**
          *  论坛当日帖子+1
          */
-        $forum              = Forum_forum_model::find($request->input('fid'));
+        $forum              = Forum_forum_model::find($fid);
         $forum->todayposts  = $forum->todayposts +1;
         $forum->threads     = $forum->threads +1;
         $forum->save();
-        return self::response();
     }
-
     /**
      * 回复帖子
      * @param Request $request

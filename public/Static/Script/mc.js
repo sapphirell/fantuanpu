@@ -88,8 +88,8 @@ $(document).ready(function(){
         $.layer.closeAll()
     });
     //选项卡
-    $tab_h = $(".tab_h > div");
-    $tab_m = $(".tab_m > div");
+    $tab_h = $(".tab_h > *");
+    $tab_m = $(".tab_m > *");
     $tab_h.click(function(){
         var tab_h_num = $tab_h.index(this);
         $(this).addClass("onchange").siblings().removeClass("onchange");
