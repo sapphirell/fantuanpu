@@ -152,4 +152,19 @@ class ForumController extends Controller
         $threadApiController->_newThread($fid,$request->input('title'),$request->input('content'),$request->getClientIp(),$user_info);
         return self::response();
     }
+    //app回复帖子
+    public function reply_thread(Request $request,ThreadApiController $threadApiController)
+    {
+        $token      = $request->input('token');
+        $uid        = Redis::get( CoreController::USER_TOKEN['key'] . $token );
+
+        $user_info  = User_model::find($uid);
+
+
+        if (empty($user_info))
+            return self::response([],40002,'需要登录');
+        if($user_info->groupid == 4 || $user_info->groupid == 5)
+            return self::response([],40003,'您的账户已被禁言');
+        return $threadApiController->PostsThread($request,$user_info);
+    }
 }

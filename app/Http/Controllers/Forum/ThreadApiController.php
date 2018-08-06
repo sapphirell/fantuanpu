@@ -109,9 +109,9 @@ class ThreadApiController extends Controller
      * @param Request $request
      * @返回 mixed
      */
-    public function PostsThread(Request $request)
+    public function PostsThread(Request $request,$user_info = false)
     {
-        $user_info = session('user_info');
+        $user_info = $user_info ? : session('user_info');
         if(empty($user_info))
         {
             return self::response([],40001,'请先登录');
