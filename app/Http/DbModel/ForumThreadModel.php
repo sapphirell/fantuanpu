@@ -11,7 +11,7 @@ class ForumThreadModel extends Model
     public $primaryKey = 'tid';
     public static function get_new_thread()
     {
-        $data =ForumThreadModel::orderBy('lastpost','desc')->where('fid','!=','63')->paginate(30)->toArray()['data'];
+        $data =ForumThreadModel::orderBy('lastpost','desc')->where('fid','!=','63')->paginate(15)->toArray()['data'];
         foreach ($data as &$value)
         {
             $value['avatar'] = config('app.online_url')
