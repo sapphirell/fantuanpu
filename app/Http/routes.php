@@ -24,6 +24,7 @@ Route::group([
     Route::post('/app/user_friends', ['uses' => 'UserController@user_friends', 'as' => 'app-user_friends']);#user_friends
     Route::post('/app/new_thread', ['uses' => 'ForumController@new_thread', 'as' => 'new_thread']);#app发新帖
     Route::post('/app/reply_thread', ['uses' => 'ForumController@reply_thread', 'as' => 'reply_thread']);#app回复帖子
+    Route::post('/app/get_notice', ['uses' => 'ForumController@get_notice', 'as' => 'get_notice']);#获取消息列表
 
 });
 //App 接口(非token)

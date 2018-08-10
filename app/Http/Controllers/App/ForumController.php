@@ -7,6 +7,7 @@ use App\Http\Controllers\Forum\ThreadController;
 use App\Http\Controllers\System\CoreController;
 use App\Http\DbModel\Forum_forum_model;
 use App\Http\DbModel\ForumThreadModel;
+use App\Http\DbModel\HomeNotification;
 use App\Http\DbModel\MemberLikeModel;
 use App\Http\DbModel\Thread_model;
 use App\Http\DbModel\User_model;
@@ -166,5 +167,24 @@ class ForumController extends Controller
         if($user_info->groupid == 4 || $user_info->groupid == 5)
             return self::response([],40003,'您的账户已被禁言');
         return $threadApiController->PostsThread($request,$user_info);
+    }
+    //获取用户消息
+    public function get_notice(Request $request)
+    {
+        $token      = $request->input('token');
+        $uid        = Redis::get( CoreController::USER_TOKEN['key'] . $token );
+
+        $data = HomeNotification::where('uid',$uid)->orderBy('id','desc')->paginate(15);
+        if (!empty($data))
+        {
+            $data = $data->toArray()['data'];
+
+            foreach ($data as &$value)
+            {
+                $value['renote'] = preg_replace("\<a.*?\>|\<\/a\>",'',$value['note'] );
+//                $value['renote'] = preg_replace('','', $value['note'] ) ;
+            }
+        }
+        return self::response($data);
     }
 }
