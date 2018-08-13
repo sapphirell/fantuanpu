@@ -182,9 +182,12 @@ class ForumController extends Controller
             foreach ($data as &$value)
             {
                 $value['renote'] = preg_replace("\<a.*?\>|\<\/a\>",'',$value['note'] );
+                $value['date'] = date("Y-m-d H:i",$value['dateline']);
 //                $value['renote'] = preg_replace('','', $value['note'] ) ;
+                $value['poster_avatar'] = $value['authorid'] ? config('app.online_url').\App\Http\Controllers\User\UserHelperController::GetAvatarUrl($value['authorid']) : '';
             }
         }
         return self::response($data);
     }
+
 }
