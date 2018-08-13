@@ -76,7 +76,7 @@ class ForumController extends Controller
             return self::response([],40001,'缺少参数tid和pid,必须含有其中之一');
 
         if ($request->input('pid'))
-            $tid = ForumPostModel::find($request->input('pid'))->tid;
+            $tid = ForumPostModel::where('pid',$request->input('pid'))->tid;
         else
             $tid = $request->input('tid');
 
