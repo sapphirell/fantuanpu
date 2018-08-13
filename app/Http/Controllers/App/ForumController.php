@@ -6,6 +6,7 @@ use App\Http\Controllers\Forum\ThreadApiController;
 use App\Http\Controllers\Forum\ThreadController;
 use App\Http\Controllers\System\CoreController;
 use App\Http\DbModel\Forum_forum_model;
+use App\Http\DbModel\ForumPostModel;
 use App\Http\DbModel\ForumThreadModel;
 use App\Http\DbModel\HomeNotification;
 use App\Http\DbModel\MemberLikeModel;
@@ -70,10 +71,16 @@ class ForumController extends Controller
 
     public function viewThread(ThreadController $threadController,Request $request)
     {
-        if (!$request->input('tid'))
-            return self::response([],40001,'缺少参数tid');
 
-        $data = $threadController->_viewThread($request->input('tid'));
+        if (!$request->input('tid') && !$request->input('pid'))
+            return self::response([],40001,'缺少参数tid和pid,必须含有其中之一');
+
+        if ($request->input('pid'))
+            $tid = ForumPostModel::find($request->input('pid'))->tid;
+        else
+            $tid = $request->input('tid');
+
+        $data = $threadController->_viewThread($tid);
         //对帖子ubb进行处理
         foreach ($data['thread']['thread_post'] as &$value)
         {
