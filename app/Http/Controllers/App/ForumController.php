@@ -189,5 +189,9 @@ class ForumController extends Controller
         }
         return self::response($data);
     }
+    public function version(Request $request)
+    {
+        return self::response("1.0");
+    }
 
 }

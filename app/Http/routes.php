@@ -35,6 +35,7 @@ Route::group([
     Route::post('/app/look_look', ['uses' => 'ForumController@look_look', 'as' => 'look_look']);#随便看看
     Route::post('/app/view_thread', ['uses' => 'ForumController@viewThread', 'as' => 'view_thread']);#查看帖子
     Route::post('/app/all_forum', ['uses' => 'ForumController@all_forum', 'as' => 'all_forum']);#所有版块
+    Route::post('/app/version', ['uses' => 'ForumController@version', 'as' => 'version']);#获取App最新版本号
     Route::get('/app/hitokoto', ['uses' => 'ForumController@hitokoto', 'as' => 'hitokoto']);#一句话静态
 });
 
