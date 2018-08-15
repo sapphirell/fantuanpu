@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Forum;
 
 use App\Http\Controllers\System\CoreController;
+use App\Http\DbModel\CommonMemberCount;
 use App\Http\DbModel\Forum_forum_model;
 use App\Http\DbModel\ForumPostModel;
 use App\Http\DbModel\ForumPostTableidModel;
@@ -103,6 +104,12 @@ class ThreadApiController extends Controller
         $forum->todayposts  = $forum->todayposts +1;
         $forum->threads     = $forum->threads +1;
         $forum->save();
+        /**
+         * 用户统计更新
+         */
+        $count = CommonMemberCount::find($user_info->uid);
+        $count->threads += 1;
+        $count->save();
     }
     /**
      * 回复帖子
@@ -176,7 +183,12 @@ class ThreadApiController extends Controller
         $notification->from_idtype = 'quote';
         $notification->from_num = '0';
         $notification->save();
-
+        /**
+         * 用户统计更新
+         */
+        $count = CommonMemberCount::find($user_info->uid);
+        $count->posts += 1;
+        $count->save();
         /**
          *  写入消息通知队列
          */

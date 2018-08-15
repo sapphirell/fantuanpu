@@ -37,6 +37,7 @@ Route::group([
     Route::post('/app/all_forum', ['uses' => 'ForumController@all_forum', 'as' => 'all_forum']);#所有版块
     Route::post('/app/version', ['uses' => 'ForumController@version', 'as' => 'version']);#获取App最新版本号
     Route::get('/app/hitokoto', ['uses' => 'ForumController@hitokoto', 'as' => 'hitokoto']);#一句话静态
+    Route::post('/app/user_report', ['uses' => 'UserController@user_report', 'as' => 'user_report']);#用户反馈
 });
 
 //if( UserAgent::isMobile() ){

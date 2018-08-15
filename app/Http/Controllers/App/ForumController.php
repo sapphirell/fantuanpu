@@ -79,7 +79,7 @@ class ForumController extends Controller
             $tid = ForumPostModel::where('pid',$request->input('pid'))->first()->tid;
         else
             $tid = $request->input('tid');
-        
+
         $data = $threadController->_viewThread($tid);
         //对帖子ubb进行处理
         foreach ($data['thread']['thread_post'] as &$value)

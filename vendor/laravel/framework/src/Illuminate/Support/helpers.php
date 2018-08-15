@@ -1047,15 +1047,16 @@ if (! function_exists('bbcode2html')) {
 
         if(!$bbcodeoff && $allowbbcode ) {
 
-            if(strpos($msglower, '[/url]') !== FALSE) {
+//            if(strpos($msglower, '[/url]') !== FALSE) {
 //                $message = preg_replace("/\[url(=((https?|ftp|gopher|news|telnet|rtsp|mms|callto|bctp|thunder|qqdl|synacast){1}:\/\/|www\.|mailto:)?([^\r\n\[\"']+?))?\](.+?)\[\/url\]/ies",
 ////                    "parseurl('\\1', '\\5', '\\2')",
 //                "<a src='$1'>$2</a>",
 //                    $message);
 //                var_dump($message);
                 $message = preg_replace("/\[url=([\w\W]+?)\]([\w\W]+?)\[\/url\]/","<a href=\"$1\">$2</a>",$message);
-                $message = preg_replace("/\[img\]([\w\W]+?)\[\/img\]/","<img src='$1'>",$message);
-            }
+                $message = preg_replace("/\[img\]([\w\W]*?)\[\/img\]/","<img src='$1'>",$message);
+
+//            }
 //            if(strpos($msglower, '[/email]') !== FALSE) {
 //                $message = preg_replace("/\[email(=([a-z0-9\-_.+]+)@([a-z0-9\-_]+[.][a-z0-9\-_.]+))?\](.+?)\[\/email\]/ies", "parseemail('\\1', '\\4')", $message);
 //            }

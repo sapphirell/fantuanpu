@@ -7,6 +7,7 @@ use App\Http\Controllers\User\UserBaseController;
 use App\Http\DbModel\CommonMemberCount;
 use App\Http\DbModel\FriendModel;
 use App\Http\DbModel\User_model;
+use App\Http\DbModel\UserReportModel;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -48,5 +49,19 @@ class UserController extends Controller
             $value['favatar'] =  config('app.online_url').\App\Http\Controllers\User\UserHelperController::GetAvatarUrl($value['fuid']);
         }
         return self::response($data);
+    }
+    public function user_report(Request $request)
+    {
+        $uid = Redis::get(CoreController::USER_TOKEN['key'] . $request->input('token'));
+        $user = User_model::find($uid);
+        $userReport = New UserReportModel();
+        $userReport->title      = $request->input('title');
+        $userReport->message    = $request->input('content');
+        $userReport->type       = $request->input('type');
+        $userReport->uid        = $user->uid;
+        $userReport->user_name  = $user->username;
+
+        $userReport->save();
+        return self::response();
     }
 }
