@@ -25,6 +25,7 @@ Route::group([
     Route::post('/app/new_thread', ['uses' => 'ForumController@new_thread', 'as' => 'new_thread']);#app发新帖
     Route::post('/app/reply_thread', ['uses' => 'ForumController@reply_thread', 'as' => 'reply_thread']);#app回复帖子
     Route::post('/app/get_notice', ['uses' => 'ForumController@get_notice', 'as' => 'get_notice']);#获取消息列表
+    Route::post('/app/read_letter', ['uses' => 'UserController@read_letter', 'as' => 'read_letter']);#阅读消息
 
 });
 //App 接口(非token)

@@ -1215,3 +1215,22 @@ if (! function_exists('bbcode2html')) {
         echo $html;
     }
 }
+if (! function_exists('getposttablename'))
+{
+    //获取getposttablenameid
+    function getposttablename($plid) {
+        $id = substr((string)$plid, -1, 1);
+        return 'pm_messages_'.intval($id);
+    }
+}
+if (! function_exists('common_unserialize'))
+{
+    function common_unserialize($serial_str) {
+        $serial_str = preg_replace_callback('/s:(\d+):"([\s\S]*?)";/', function($matches) {
+            return 's:'.strlen($matches[2]).':"'.$matches[2].'";';
+        }, $serial_str);
+        return unserialize($serial_str);
+    }
+}
+
+

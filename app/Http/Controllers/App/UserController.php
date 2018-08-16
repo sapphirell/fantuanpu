@@ -6,6 +6,8 @@ use App\Http\Controllers\System\CoreController;
 use App\Http\Controllers\User\UserBaseController;
 use App\Http\DbModel\CommonMemberCount;
 use App\Http\DbModel\FriendModel;
+use App\Http\DbModel\PmListsModel;
+use App\Http\DbModel\PmMessageModel;
 use App\Http\DbModel\User_model;
 use App\Http\DbModel\UserReportModel;
 use Illuminate\Http\Request;
@@ -34,9 +36,30 @@ class UserController extends Controller
         $this->data['user_info'] = User_model::find($this->data['uid']);
         $this->data['user_count'] = CommonMemberCount::GetUserCoin($this->data['uid']);
         $this->data['user_avatar'] = config('app.online_url').\App\Http\Controllers\User\UserHelperController::GetAvatarUrl($this->data['uid']);
+
+        /**
+         * 用户私信
+         */
+        $this->data['letter'] = PmListsModel::where('min_max','like',$this->data['uid']."_%")->where('min_max','like',"%_".$this->data['uid'])->get();
+        foreach ($this->data['letter'] as &$value)
+        {
+            $value->avatar =  config('app.online_url').\App\Http\Controllers\User\UserHelperController::GetAvatarUrl($value->authorid);
+//            $value->lastmessage= preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.strlen('$2').':\"$2\";'", $value->lastmessage );
+//            $value->lastmessage= str_replace("\r", "", $value->lastmessage);
+            $value->lastmessage = common_unserialize($value->lastmessage);
+        }
         return self::response($this->data);
     }
 
+    //查看私信
+    public function read_letter(Request $request)
+    {
+        if(!$request->input('plid'))
+            return self::response([],40001,'缺少参数plid');
+        $pmMessage = new PmMessageModel();
+        $this->data['message'] = $pmMessage->find_message_by_plid($request->input('plid'));
+        return self::response($this->data);
+    }
     public function user_friends(Request $request)
     {
         $cacheKey = CoreController::USER_TOKEN;
