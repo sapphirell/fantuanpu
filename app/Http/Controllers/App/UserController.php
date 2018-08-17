@@ -40,12 +40,21 @@ class UserController extends Controller
         /**
          * 用户私信
          */
-        $this->data['letter'] = PmListsModel::where('min_max','like',$this->data['uid']."_%")->where('min_max','like',"%_".$this->data['uid'])->get();
-        foreach ($this->data['letter'] as &$value)
+        $this->data['letter'] = PmListsModel::where('min_max','like',$this->data['uid']."\_%")->orwhere('min_max','like',"%\_".$this->data['uid'])
+            ->orderBy('dateline','desc')
+            ->get();
+
+        foreach ($this->data['letter'] as $value)
         {
-            $value->avatar =  config('app.online_url').\App\Http\Controllers\User\UserHelperController::GetAvatarUrl($value->authorid);
-//            $value->lastmessage= preg_replace('!s:(\d+):"(.*?)";!se', "'s:'.strlen('$2').':\"$2\";'", $value->lastmessage );
-//            $value->lastmessage= str_replace("\r", "", $value->lastmessage);
+            //获取往来私信用户的uid
+            $value->to_uid = preg_replace("/^{$this->data['uid']}\_/",'',$value->min_max);
+            $value->to_uid = preg_replace("/\_{$this->data['uid']}$/",'',$value->to_uid);
+
+            $value->avatar =  config('app.online_url').\App\Http\Controllers\User\UserHelperController::GetAvatarUrl($value->to_uid);
+
+            $value->dateline = date("Y-m-d H:i:s",$value->dateline );
+//            $pmMessage = new PmMessageModel();
+//            $value->message = $pmMessage->find_message_by_plid($value->plid);
             $value->lastmessage = common_unserialize($value->lastmessage);
         }
         return self::response($this->data);
@@ -58,6 +67,11 @@ class UserController extends Controller
             return self::response([],40001,'缺少参数plid');
         $pmMessage = new PmMessageModel();
         $this->data['message'] = $pmMessage->find_message_by_plid($request->input('plid'));
+        foreach ($this->data['message'] as &$value)
+        {
+            $value->avatar = config('app.online_url').\App\Http\Controllers\User\UserHelperController::GetAvatarUrl($value->authorid);
+            $value->dateline = date("Y-m-d H:i:s",$value->dateline );
+        }
         return self::response($this->data);
     }
     public function user_friends(Request $request)
