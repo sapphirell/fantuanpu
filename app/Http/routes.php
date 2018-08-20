@@ -27,6 +27,8 @@ Route::group([
     Route::post('/app/get_notice', ['uses' => 'ForumController@get_notice', 'as' => 'get_notice']);#获取消息列表
     Route::post('/app/read_letter', ['uses' => 'UserController@read_letter', 'as' => 'read_letter']);#阅读消息
 
+    Route::post('/app/send_letter', ['uses' => 'UserController@send_letter', 'as' => 'send_letter']);#发送私信
+
 });
 //App 接口(非token)
 Route::group([
@@ -39,6 +41,7 @@ Route::group([
     Route::post('/app/version', ['uses' => 'ForumController@version', 'as' => 'version']);#获取App最新版本号
     Route::get('/app/hitokoto', ['uses' => 'ForumController@hitokoto', 'as' => 'hitokoto']);#一句话静态
     Route::post('/app/user_report', ['uses' => 'UserController@user_report', 'as' => 'user_report']);#用户反馈
+    Route::post('/app/test', ['uses' => 'UserController@test', 'as' => 'test']);#test
 });
 
 //if( UserAgent::isMobile() ){
@@ -79,6 +82,7 @@ Route::group([
         Route::post('/new-thread', ['uses' => 'ThreadApiController@NewThread', 'as' => 'new-thread']);#发新帖
         Route::post('/post-thread', ['uses' => 'ThreadApiController@PostsThread', 'as' => 'store-posts']);#回帖
         Route::get('/webim', ['uses' => 'ForumBaseController@webim', 'as' => 'webim']);#webim即时聊天
+        Route::get('/fantuanpuDevelopers', ['uses' => 'ForumBaseController@fantuanpuDevelopers', 'as' => 'fantuanpuDevelopers']);#饭团扑开发者列表
 
     });
     //用户

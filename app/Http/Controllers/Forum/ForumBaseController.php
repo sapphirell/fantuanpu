@@ -100,4 +100,8 @@ class ForumBaseController extends Controller
     public function about()
     {
     }
+    public function fantuanpuDevelopers()
+    {
+
+    }
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\System\CoreController;
 use App\Http\Controllers\User\UserBaseController;
 use App\Http\DbModel\CommonMemberCount;
 use App\Http\DbModel\FriendModel;
+use App\Http\DbModel\PmIndexesModel;
 use App\Http\DbModel\PmListsModel;
 use App\Http\DbModel\PmMessageModel;
 use App\Http\DbModel\User_model;
@@ -21,12 +22,14 @@ class UserController extends Controller
     //
     public function test()
     {
-        for($i=0;$i<10;$i++){
-            $this->data[] = ['name'=>aa123a.rand(10000000,99999999),'time'=>123];
+        //修改pm_lists lastmessage
+        foreach (PmListsModel::all() as $value)
+        {
+            $lastmessage = json_encode(common_unserialize($value->lastmessage));
+            $pl = PmListsModel::find($value->plid);
+            $pl->lastmessage = $lastmessage;
+            $pl->save();
         }
-
-
-        return json_encode($this->data);
     }
     public function user_center(Request $request)
     {
@@ -55,25 +58,125 @@ class UserController extends Controller
             $value->dateline = date("Y-m-d H:i:s",$value->dateline );
 //            $pmMessage = new PmMessageModel();
 //            $value->message = $pmMessage->find_message_by_plid($value->plid);
-            $value->lastmessage = common_unserialize($value->lastmessage);
+//            $value->lastmessage = common_unserialize($value->lastmessage);
+            $value->lastmessage = json_decode($value->lastmessage);
         }
         return self::response($this->data);
     }
 
-    //查看私信
+    //查看私信接口
     public function read_letter(Request $request)
     {
-        if(!$request->input('plid'))
+        if(!$request->input('plid') && !$request->input('to_uid'))
+            return self::response([],40001,'缺少参数plid或to_uid');
+        $uid = Redis::get(CoreController::USER_TOKEN['key'] . $request->input('token'));
+        $plid = $request->input('plid');
+        if ($request->input('to_uid'))
+        {
+
+            //拼接min_max uid组合
+            $min_max = $uid < $request->input('to_uid') ? $uid ."_". $request->input('to_uid') : $request->input('to_uid') ."_".$uid ;
+            $letter = PmListsModel::where('min_max',$min_max)->first();
+
+            if (!$letter->plid)
+                return self::response();
+
+            $plid = $letter->plid;
+            $to_uid = $request->input('to_uid');
+        }
+        else
+        {
+            $letter = PmListsModel::find($plid);
+            //提供聊天对方的信息
+            $to_uid = preg_replace("/^{$uid}\_/",'',$letter->min_max);
+            $to_uid = preg_replace("/\_{$uid}$/",'',$to_uid);
+        }
+        $this->data['to_uid'] = $to_uid;
+        $data = $this->_read_letter($plid);
+
+
+//
+
+//        dd($data);
+        return $data;
+    }
+    //查看私信
+    public function _read_letter($plid)
+    {
+        if(!$plid)
             return self::response([],40001,'缺少参数plid');
         $pmMessage = new PmMessageModel();
-        $this->data['message'] = $pmMessage->find_message_by_plid($request->input('plid'));
+        $this->data['message'] = $pmMessage->find_message_by_plid($plid);
         foreach ($this->data['message'] as &$value)
         {
             $value->avatar = config('app.online_url').\App\Http\Controllers\User\UserHelperController::GetAvatarUrl($value->authorid);
             $value->dateline = date("Y-m-d H:i:s",$value->dateline );
         }
+
         return self::response($this->data);
     }
+    //发送私信
+    public function send_letter(Request $request)
+    {
+        if (!$request->input('to_uid'))
+            return self::response([],40001,'缺少参数to_uid');
+        if (!$request->input('message'))
+            return self::response([],40001,'缺少参数message');
+        //检查以前是否有私信往来
+        $uid        = Redis::get(CoreController::USER_TOKEN['key'] . $request->input('token'));
+        $user       = User_model::find($uid);
+//        $to_user    = User_model::find($request->input('to_uid'));
+        //拼接min_max uid组合
+        $min_max    = $uid < $request->input('to_uid') ? $uid ."_". $request->input('to_uid') : $request->input('to_uid') ."_".$uid ;
+        $pmlist     = PmListsModel::where('min_max',$min_max)->first();
+        if ($pmlist->plid)
+        {
+            //有的话更新lists
+            $pmlist->dateline = time();
+            $pmlist->lastmessage = json_encode([
+                'lastauthorid'  => $uid,
+                'lastauthor'    => $user->username,
+                'lastsummary'   => $request->input('message'),
+            ]);
+            $pmlist->save();
+        }
+        else
+        {
+            //没有的话则新建一条私信lists
+            $pmlist = new PmListsModel();
+            $pmlist->authorid = $uid;
+            $pmlist->pmtype = 1;
+            $pmlist->subject = $request->input('message');
+            $pmlist->members = 2;
+            $pmlist->min_max = $min_max;
+            $pmlist->dateline = time();
+            $pmlist->lastmessage = json_encode([
+                'lastauthorid'  => $uid,
+                'lastauthor'    => $user->username,
+                'lastsummary'   => $request->input('message'),
+            ]);
+            $pmlist->save();
+
+        }
+        //更新pm_indexs获取到分表的index主键 (-_-这表到底干嘛用的
+        $index = new PmIndexesModel();
+        $index->plid = $pmlist->plid;
+        $index->save();
+        //插入一个message
+        $pmMessage = new PmMessageModel();
+        $pmMessage->table = $pmMessage->get_table($pmlist->plid);
+        $pmMessage->plid = $pmlist->plid;
+        $pmMessage->pmid = $index->pmid;
+        $pmMessage->authorid = $uid;
+        $pmMessage->message = $request->input('message');
+        $pmMessage->delstatus = 0;
+        $pmMessage->dateline = time();
+        $pmMessage->save();
+
+
+        return self::response();
+    }
+
     public function user_friends(Request $request)
     {
         $cacheKey = CoreController::USER_TOKEN;
@@ -101,4 +204,5 @@ class UserController extends Controller
         $userReport->save();
         return self::response();
     }
+
 }
