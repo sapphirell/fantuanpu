@@ -97,7 +97,7 @@ class UserBaseController extends Controller
             $cacheKey = CoreController::OLD_USER;
             $this->data['user-list'] = Cache::remember($cacheKey['key'].$UserName, $cacheKey['time'],
                 function () use ($UserName){
-                    return User_model::getUserListByUsername($UserName);
+                    return User_model::getUserListByNameOrMail($UserName);
                 });
         }
         $this->data['search-username'] = $UserName;

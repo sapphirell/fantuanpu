@@ -5,6 +5,7 @@ namespace App\Http\Controllers\App;
 use App\Http\Controllers\System\CoreController;
 use App\Http\Controllers\User\UserBaseController;
 use App\Http\DbModel\CommonMemberCount;
+use App\Http\DbModel\ForumThreadModel;
 use App\Http\DbModel\FriendModel;
 use App\Http\DbModel\PmIndexesModel;
 use App\Http\DbModel\PmListsModel;
@@ -204,5 +205,44 @@ class UserController extends Controller
         $userReport->save();
         return self::response();
     }
+    public function user_view(Request $request)
+    {
+        if (!$request->input('uid'))
+            return self::response([],40001,'未传参数uid');
 
+        $this->data['user'] = User_model::find($request->input('uid'));
+        if (!$this->data['user']->uid)
+            return self::response([],40001,'用户不存在');
+
+        $this->data['user']->avatar = config('app.online_url').\App\Http\Controllers\User\UserHelperController::GetAvatarUrl($this->data['user']->uid);
+
+        //查询用户最近发的帖子
+        $this->data['thread'] = ForumThreadModel::where('authorid',$request->input('uid'))->orderBy('dateline','desc')->paginate(15)->toArray()['data'];
+        foreach ($this->data['thread'] as &$value)
+        {
+            $value['dateline'] = date('Y-m-d H:i', $value['dateline']);
+
+        }
+        //如果登录用户,则需要获得用户关系
+        if ($request->input('token'))
+        {
+            $mine_uid = Redis::get(CoreController::USER_TOKEN['key'] . $request->input('token'));
+            $relation = FriendModel::where('uid',$mine_uid)->where('fuid',$request->input('uid'))->first();
+
+        }
+        $this->data['relation'] = $relation->uid ? true : false;
+        return self::response($this->data);
+    }
+    //查询用户最近发的帖子
+    public function get_user_thread(Request $request)
+    {
+        //查询用户最近发的帖子
+        $this->data['thread'] = ForumThreadModel::where('authorid',$request->input('uid'))->orderBy('dateline','desc')->paginate(15)->toArray()['data'];
+        foreach ($this->data['thread'] as &$value)
+        {
+            $value['dateline'] = date('Y-m-d H:i', $value['dateline']);
+
+        }
+        return self::response($this->data);
+    }
 }

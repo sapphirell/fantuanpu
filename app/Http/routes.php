@@ -28,6 +28,7 @@ Route::group([
     Route::post('/app/read_letter', ['uses' => 'UserController@read_letter', 'as' => 'read_letter']);#阅读消息
 
     Route::post('/app/send_letter', ['uses' => 'UserController@send_letter', 'as' => 'send_letter']);#发送私信
+    Route::post('/app/user_view', ['uses' => 'UserController@user_view', 'as' => 'user_view']);#其它用户主页
 
 });
 //App 接口(非token)
@@ -42,6 +43,8 @@ Route::group([
     Route::get('/app/hitokoto', ['uses' => 'ForumController@hitokoto', 'as' => 'hitokoto']);#一句话静态
     Route::post('/app/user_report', ['uses' => 'UserController@user_report', 'as' => 'user_report']);#用户反馈
     Route::post('/app/test', ['uses' => 'UserController@test', 'as' => 'test']);#test
+    Route::post('/app/user_view', ['uses' => 'UserController@user_view', 'as' => 'user_view']);#其它用户主页
+    Route::post('/app/get_user_thread', ['uses' => 'UserController@get_user_thread', 'as' => 'user_view']);#获取用户发的帖子
 });
 
 //if( UserAgent::isMobile() ){

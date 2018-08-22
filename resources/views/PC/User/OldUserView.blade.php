@@ -8,7 +8,7 @@
     <div>
         <div class="bm_h"><h3>账户寻回/回忆账号</h3></div>
         <div class="bm_c" style="padding: 8px">
-            <p>输入您用户名中包含的字符! (*只显示30个相关用户)</p>
+            <p>输入您用户名中包含的字符,或完整的邮箱账户! (*只显示30个相关用户)</p>
             <form action="/old-user" method="get">
                 <input type="text" name="username" class="form-control" value="{{$data['search-username']}}">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">

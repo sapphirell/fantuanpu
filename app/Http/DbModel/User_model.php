@@ -13,6 +13,10 @@ class User_model extends Model
     {
         return User_model::where('username','like',"%$usrname%")->select("username","email","uid")->paginate(30);
     }
+    public static function getUserListByNameOrMail($input)
+    {
+        return User_model::where('username','like',"%$input%")->orWhere('email','=',$input)->select("username","email","uid")->paginate(30);
+    }
     public function createUser($email,$password)
     {
         $this->email = $email;
