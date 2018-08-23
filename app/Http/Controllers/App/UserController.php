@@ -211,11 +211,12 @@ class UserController extends Controller
             return self::response([],40001,'未传参数uid');
 
         $this->data['user'] = User_model::find($request->input('uid'));
+        $this->data['user']->regdate = date("Y-m-d H:i",$this->data['user']->regdate);
         if (!$this->data['user']->uid)
             return self::response([],40001,'用户不存在');
 
         $this->data['user']->avatar = config('app.online_url').\App\Http\Controllers\User\UserHelperController::GetAvatarUrl($this->data['user']->uid);
-
+        $this->data['user_count'] = CommonMemberCount::GetUserCoin($request->input('uid'));
         //查询用户最近发的帖子
         $this->data['thread'] = ForumThreadModel::where('authorid',$request->input('uid'))->orderBy('dateline','desc')->paginate(15)->toArray()['data'];
         foreach ($this->data['thread'] as &$value)
@@ -242,6 +243,17 @@ class UserController extends Controller
         {
             $value['dateline'] = date('Y-m-d H:i', $value['dateline']);
 
+        }
+        return self::response($this->data);
+    }
+    //我发的帖子
+    public function get_my_thread(Request $request)
+    {
+        $uid    = Redis::get(CoreController::USER_TOKEN['key'] . $request->input('token'));
+        $thread = ForumThreadModel::where('authorid',$uid)->orderBy('tid','desc')->paginate(15);
+        foreach ($thread as $value)
+        {
+            $this->data['thread'][date("Ymd",$value->dateline)][] = $value;
         }
         return self::response($this->data);
     }
