@@ -180,11 +180,14 @@ class UserController extends Controller
 
     public function user_friends(Request $request)
     {
-        $cacheKey = CoreController::USER_TOKEN;
-        $cacheKey = $cacheKey['key'] . $request->input('token');
-        $uid = Redis::get($cacheKey);
+        $cacheKey   = CoreController::USER_TOKEN['key'] . $request->input('token');
+        $uid        = Redis::get($cacheKey);
 //        $data = FriendModel::where('uid',$uid)->get();
-        $data = FriendModel::where('uid',$uid)->paginate(10)->toArray()['data'];
+        $data       = FriendModel::where('uid',$uid);
+        if($request->input('keywords'))
+            $data   = $data->where('fusername','like',"%{$request->input('keywords')}%");
+
+        $data       = $data->paginate(10)->toArray()['data'];
         foreach ($data as &$value)
         {
             $value['favatar'] =  config('app.online_url').\App\Http\Controllers\User\UserHelperController::GetAvatarUrl($value['fuid']);
@@ -210,19 +213,19 @@ class UserController extends Controller
         if (!$request->input('uid'))
             return self::response([],40001,'未传参数uid');
 
-        $this->data['user'] = User_model::find($request->input('uid'));
-        $this->data['user']->regdate = date("Y-m-d H:i",$this->data['user']->regdate);
+        $this->data['user']             = User_model::find($request->input('uid'));
+        $this->data['user']->regdate    = date("Y-m-d H:i",$this->data['user']->regdate);
+
         if (!$this->data['user']->uid)
             return self::response([],40001,'用户不存在');
 
-        $this->data['user']->avatar = config('app.online_url').\App\Http\Controllers\User\UserHelperController::GetAvatarUrl($this->data['user']->uid);
-        $this->data['user_count'] = CommonMemberCount::GetUserCoin($request->input('uid'));
+        $this->data['user']->avatar     = config('app.online_url').\App\Http\Controllers\User\UserHelperController::GetAvatarUrl($this->data['user']->uid);
+        $this->data['user_count']       = CommonMemberCount::GetUserCoin($request->input('uid'));
         //查询用户最近发的帖子
-        $this->data['thread'] = ForumThreadModel::where('authorid',$request->input('uid'))->orderBy('dateline','desc')->paginate(15)->toArray()['data'];
+        $this->data['thread']           = ForumThreadModel::where('authorid',$request->input('uid'))->orderBy('dateline','desc')->paginate(15)->toArray()['data'];
         foreach ($this->data['thread'] as &$value)
         {
             $value['dateline'] = date('Y-m-d H:i', $value['dateline']);
-
         }
         //如果登录用户,则需要获得用户关系
         if ($request->input('token'))
@@ -253,7 +256,7 @@ class UserController extends Controller
         $thread = ForumThreadModel::where('authorid',$uid)->orderBy('tid','desc')->paginate(15);
         foreach ($thread as $value)
         {
-            $this->data['thread'][date("Ymd",$value->dateline)][] = $value;
+            $this->data['thread'][date("Y / m / d",$value->dateline)][] = $value;
         }
         return self::response($this->data);
     }

@@ -104,4 +104,8 @@ class ForumBaseController extends Controller
     {
 
     }
+    public function app_download()
+    {
+        return view('PC/Forum/AppDownload')->with('data',$this->data);
+    }
 }

@@ -36,8 +36,14 @@ class ThreadController extends Controller
     {
         $this->data['thread']   = $this->threadModel->getThread($tid);
         $this->data['forum']    = Forum_forum_model::get_nodes_by_fid($this->data['thread']['thread_subject']->fid);
+
         $this->data['tid']  = $tid;
         $this->data['fid']  = $this->data['thread']['thread_subject']->fid;
+        foreach ($this->data['thread'] as &$value)
+        {
+            $value->dateline = date("Y-m-d H:i",$value->dateline );
+            $value->lastpost = date("Y-m-d H:i",$value->lastpost);
+        }
         /**
          * 查看数+1
          */

@@ -41,8 +41,9 @@ class Forum_forum_model extends Model
         return $f;
 
     }
-    public static function get_nodes_by_fid($fid,$page)
+    public static function get_nodes_by_fid($fid,$page=1)
     {
+
         $configCacheKey = CoreController::NODES_INFO;
         $cacheKey       = $configCacheKey['key'] . $fid;
 

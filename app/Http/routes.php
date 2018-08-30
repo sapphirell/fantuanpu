@@ -87,6 +87,7 @@ Route::group([
         Route::post('/post-thread', ['uses' => 'ThreadApiController@PostsThread', 'as' => 'store-posts']);#回帖
         Route::get('/webim', ['uses' => 'ForumBaseController@webim', 'as' => 'webim']);#webim即时聊天
         Route::get('/fantuanpuDevelopers', ['uses' => 'ForumBaseController@fantuanpuDevelopers', 'as' => 'fantuanpuDevelopers']);#饭团扑开发者列表
+        Route::get('/app_download', ['uses' => 'ForumBaseController@app_download', 'as' => 'app_download']);#下载App页面
 
     });
     //用户

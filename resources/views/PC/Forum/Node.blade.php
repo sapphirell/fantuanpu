@@ -116,7 +116,12 @@
             <!--3-1-left-->
         </div>
         <div class="_3_1_right">
-            <div class="forum_group" style="width: 100%;height: 200px;background: #ffffff;margin-top: 77px"></div>
+            <div class="forum_group" style="width: 100%;height: 200px;background: #ffffff;margin-top: 77px;overflow:hidden">
+                <a href="/app_download" style="width: inherit">
+                    <img src="http://image.fantuanpu.com/upload/20180830/be00ce9d8724be6b370dd69e1090d535.png" style="width: inherit">
+                </a>
+
+            </div>
         </div>
         <div class="clear"></div>
         <!--3-1-->
