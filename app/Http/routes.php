@@ -118,6 +118,7 @@ Route::group([
         Route::get('/user-center', ['uses' => 'UserBaseController@UserCenter', 'as' => 'UserCenter']);#用户中心
         Route::post('/uc-do-upload-avatar', 'UserBaseController@DoUploadAvatar');#修改头像
         Route::get('/get_my_message', 'UserBaseController@get_my_message');#获取我的消息
+        Route::get('/update_user_avatar', 'UserBaseController@update_user_avatar');#修改用户头像
     });
     //管理后台 IndexCp
     Route::group([

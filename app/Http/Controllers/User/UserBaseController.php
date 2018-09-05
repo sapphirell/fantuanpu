@@ -185,8 +185,8 @@ class UserBaseController extends Controller
     }
     public function UserCenter(Request $request)
     {
-        $user_info = session('user_info');
-        CommonMemberCount::GetUserCoin($user_info->uid);
+        $this->data['user_info'] = session('user_info');
+        $this->data['user_count'] = CommonMemberCount::GetUserCoin($this->data['user_info']->uid);
         return view('PC/User/UserCenterView')->with('data',$this->data);
     }
 
@@ -341,5 +341,8 @@ class UserBaseController extends Controller
     }
     public function get_my_message(Request $request)
     {}
-
+    public function update_user_avatar(Request $request)
+    {
+        return view("PC/User/UpdateUserAvatar");
+    }
 }

@@ -129,6 +129,7 @@ ul{padding: 0px;margin: 0px}
 .posre{position: relative;}/*设置主体为相对定位，但下一层默认为绝对定位*/
 .posre > *{position: absolute;}
 .comic{font-family: Comic Sans MS;}
+.shadow {box-shadow:0 0 5px #d4cfd4;  }
 /*
 *	次要的应用模块
 *
