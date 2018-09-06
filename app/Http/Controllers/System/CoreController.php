@@ -57,4 +57,8 @@ class CoreController extends Controller
      *  用户token信息
      */
     const USER_TOKEN = ['key' => 'user_token_','time'=>360];
+    /**
+     * 用户论坛信息(签名档、自定义头衔、勋章)
+     */
+    const USER_FIELD  = ['key' => 'user_field_','time'=>360];
 }

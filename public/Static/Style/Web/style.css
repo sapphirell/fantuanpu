@@ -41,10 +41,10 @@
     width: 83px;
     float: left;
     font-family: 'PingFang SC', 'Helvetica Neue', 'Helvetica', 'STHeitiSC-Light', 'Arial', sans-serif;
-    background-color: rgba(255, 255, 255, 0.92);
+    /*background-color: rgba(255, 255, 255, 0.92);*/
     font-weight: 200;
     line-height: 2.6;
-    color: #a78484;
+    color: #ffffff;
     padding: 2px;
     font-size: 12px;
     margin: 1px;}

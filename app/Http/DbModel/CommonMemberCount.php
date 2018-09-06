@@ -48,4 +48,19 @@ class CommonMemberCount extends Model
 
         return $user_count;
     }
+
+    /**
+     * 更新用户统计表数据
+     * @param $uid
+     * @param $field 更新哪个字段
+     * @param $value 更新的值,可正可负
+     */
+    public function SetUserCount($uid,$field,$value)
+    {
+        $cache_key = CoreController::USER_COUNT;
+        $count = new self();
+        $count->$field = $value;
+        $count->save();
+        Cache::forget($cache_key['key'] .$uid);
+    }
 }

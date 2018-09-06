@@ -9,6 +9,7 @@ use App\Http\Controllers\System\RedisController;
 use App\Http\DbModel\CommonMemberCount;
 use App\Http\DbModel\CommonUsergroupModel;
 use App\Http\DbModel\ImModel;
+use App\Http\DbModel\MemberFieldForumModel;
 use App\Http\DbModel\UCenter_member_model;
 use App\Http\DbModel\User_model;
 use Illuminate\Http\Request;
@@ -185,8 +186,14 @@ class UserBaseController extends Controller
     }
     public function UserCenter(Request $request)
     {
+        $cacheKey = CoreController::USER_FIELD;
         $this->data['user_info'] = session('user_info');
+        $this->data['field_forum'] =  Cache::remember($cacheKey['key'],$cacheKey['time'],function ()
+        {
+            return MemberFieldForumModel::find($this->data['user_info']->uid);
+        });
         $this->data['user_count'] = CommonMemberCount::GetUserCoin($this->data['user_info']->uid);
+//        dd($this->data);
         return view('PC/User/UserCenterView')->with('data',$this->data);
     }
 

@@ -1,4 +1,5 @@
-@include('PC.Common.Header')
+{{--@include('PC.Common.Header')--}}
+@include('PC.Common.HtmlHead')
 <link rel="stylesheet" type="text/css" href="/Static/Style/Web/forum.css">
 <link rel="stylesheet" type="text/css" href="/Static/Script/cropper/cropper.css">
 
@@ -26,26 +27,30 @@
     td{
         border-color: #FFFFFF!important;
     }
+    body {background: #ffffff}
 </style>
-<div class="wp shadow" style="padding: 5px;margin-top: 70px;background: #ffffff">
+<div class="" style="background: #ffffff">
 
 
                 <form action="/uc-do-upload-avatar" method="post" enctype="multipart/form-data" style="    margin: 0 auto;width: 200px;text-align: center;">
-                    <div style="width: inherit;height: 200px;margin: 5px;box-shadow: 0px -1px 4px #ddd;">
-                        {{avatar(session('user_info')->uid,150,0,'user_change_avatar','big')}}
+                    <div style="width: inherit;height: 200px;box-shadow: 0px -1px 4px #ddd;">
+                        {{avatar(session('user_info')->uid,200,0,'user_change_avatar','big')}}
                         {{--<img src="" id="user_change_avatar">--}}
                     </div>
-                    <label class="btn btn-primary btn-upload" for="inputImage" title="Upload image file">
-                        <input type="file" class="sr-only" id="inputImage" name="file" accept="image/*">
-                        <span class="docs-tooltip" data-toggle="tooltip" title="" data-original-title="Import image with Blob URLs">
+                    <div style="margin-top: 20px;">
+                        <label class="btn btn-primary btn-upload"  style="padding: 4px 12px;"  for="inputImage" title="Upload image file">
+                            <input type="file" class="sr-only" id="inputImage" name="file" accept="image/*">
+                            <span class="docs-tooltip" data-toggle="tooltip" title="" data-original-title="Import image with Blob URLs">
                         选择
                         <span class="fa fa-upload"></span>
                         </span>
-                    </label>
+                        </label>
 
-                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                    <input type="submit" class="btn btn-default" value="确定头像">
-                    <input id="setCanvasData" type="hidden" name="position">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        <input type="submit" class="btn btn-default" value="确定头像">
+                        <input id="setCanvasData" type="hidden" name="position">
+                    </div>
+
                 </form>
 
         </div>

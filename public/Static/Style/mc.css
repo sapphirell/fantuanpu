@@ -48,7 +48,7 @@ input[type="button"],input[type="submit"]{    color: #FFFFFF;background-color: r
 /*input[type="button"]:active, input[type="submit"]:active{position: relative;top: 1px}*/
 
 /*input[type="text"],input[type="password"],textarea{outline: none;padding: 8px 15px;padding:8px 15px 8px 15px\0;height:16px;border:1px solid #eee;margin: 3px 0;  border-radius: 2px;!*box-shadow: 0 0 3px #efefef inset;*!}*/
-input[type="text"]:focus,textarea:focus,input[type="password"]:focus,input[type="email"]:focus{outline: none;border:1px solid #ccc;/*box-shadow: 0 0 3px #dfdfdf inset;-moz-box-shadow: 0 0 3px #dfdfdf inset;-webkit-box-shadow: 0 0 3px #dfdfdf inset;*/}
+input[type="text"]:focus,textarea:focus,input[type="password"]:focus,input[type="email"]:focus{outline: none;border:1px solid #66afe9;/*box-shadow: 0 0 3px #dfdfdf inset;-moz-box-shadow: 0 0 3px #dfdfdf inset;-webkit-box-shadow: 0 0 3px #dfdfdf inset;*/}
 input[type="checkbox"]{width: 14px;height: 14px;cursor: pointer;}
 input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
     background-color: #fff!important;
@@ -100,7 +100,7 @@ ul{padding: 0px;margin: 0px}
 */
 .wp{width: 960px;margin: 0 auto;}/*wp为页面居中的正文内容*/
 
-.header{height: 40px;background: #fff;  overflow: hidden;   box-shadow: 0 0 15px #ccc;   border-top: 2px solid #303A44;position: fixed;z-index: 10;width: 100%}
+.header{height: 40px;background:#303a44;  overflow: hidden;   box-shadow: 0 0 15px #ccc;   border-top: 2px solid #303A44;position: fixed;z-index: 10;width: 100%}
 .header a {text-decoration: none;font-size: 15px;margin: 8px;display: inline-block;float:left;    color: #3E3C3C;}
 
 .footer{margin-top: 20px;position: fixed;bottom: 0px;width: 100%}
@@ -158,7 +158,8 @@ ul{padding: 0px;margin: 0px}
     z-index: 10;
     -moz-transition: none!important;
     -o-transition: none!important;
-    transition: none!important;}/*弹出左侧竖条*/
+    transition: none!important;
+    box-shadow: 0 0 50px #0000008a;}/*弹出左侧竖条*/
 
 /*实现选项卡、两侧圆角、间隔线不重复等功能*/
 .tab{}
@@ -247,7 +248,7 @@ ul{padding: 0px;margin: 0px}
     background: #fff;
     cursor: default;
 }
-#active{box-shadow: 0 0 50px #7c7c7c}
+
 #active * {color: #fff;}
 .memuBtn .glyphicon-cog{font-size: 18px;}
 .memuBtn .glyphicon-cog:hover{color: #00CCFF}

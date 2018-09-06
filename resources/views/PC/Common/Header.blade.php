@@ -34,8 +34,8 @@
 
         </div>
         <ul class='hd'>
-            <li><a href="/forum.php"  class="header_items"><p class="none_960">板块 <span>Forums</span></p><i class="inline_block_960 fa fa-code-fork fa-2x"></i></a></li>
-            <li><a href="/notice"  class="header_items"><p class="none_960" style="    color: #ec5757;">公告/招募</p></a></li>
+            <li><a href="/forum.php"  class="header_items"><p class="none_960" style="color: #fff;">板块 <span>Forums</span></p><i class="inline_block_960 fa fa-code-fork fa-2x"></i></a></li>
+            <li><a href="/notice"  class="header_items"><p class="none_960" style="color: #ff9999;">公告/招募</p></a></li>
         </ul>
 
 
@@ -80,7 +80,7 @@
 
         <ul >
             @if(session('user_info')->uid)
-            <li class="trans"><a href="/user-center?source=web">设置资料<i class="fa fa-pencil-square-o fa-lg"></i></a></li>
+            <li class="trans"><a href="/user-center?source=web">用户中心<i class="fa fa-pencil-square-o fa-lg"></i></a></li>
             <li class="trans"><a href="">团菌动态<i class="fa fa-sticky-note-o fa-lg"></i></a></li>
             <li class="trans"><a href="/logout">离开<i class="fa fa-sign-in fa-lg"></i></a></li>
                 @if(session('user_info')->gid > 0)
