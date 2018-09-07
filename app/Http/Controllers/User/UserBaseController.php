@@ -8,6 +8,7 @@ use App\Http\Controllers\System\PictureController;
 use App\Http\Controllers\System\RedisController;
 use App\Http\DbModel\CommonMemberCount;
 use App\Http\DbModel\CommonUsergroupModel;
+use App\Http\DbModel\ForumThreadModel;
 use App\Http\DbModel\ImModel;
 use App\Http\DbModel\MemberFieldForumModel;
 use App\Http\DbModel\UCenter_member_model;
@@ -15,6 +16,7 @@ use App\Http\DbModel\User_model;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redis;
 
@@ -193,11 +195,41 @@ class UserBaseController extends Controller
             return MemberFieldForumModel::find($this->data['user_info']->uid);
         });
         $this->data['user_count'] = CommonMemberCount::GetUserCoin($this->data['user_info']->uid);
-//        dd($this->data);
+
+//                dd($this->data);
         return view('PC/User/UserCenterView')->with('data',$this->data);
     }
 
+    public function my_thread(Request $request)
+    {
+        $this->data['user_info'] = session('user_info');
+        //查询用户最近发的帖子
+        $this->data['my_thread'] = ForumThreadModel::where('authorid',$this->data['user_info']->uid)->orderBy('dateline','desc')->paginate(15);
+        return view('PC/UserCenter/MyThread')->with('data',$this->data);
+    }
+    public function my_medal(Request $request)
+    {
+        $this->data['user_info'] = session('user_info');
+        $this->data['extcredits_name'] = CommonMemberCount::$extcredits;
+        //查询我的旧勋章
+        if ($this->data['user_info']->sellmedal == 1)
+        {
+            $this->data['my_old_medal'] = DB::table('pre_forum_medalmybox')->leftJoin('pre_forum_medal','pre_forum_medalmybox.medalid','=','pre_forum_medal.medalid')->where('uid',$this->data['user_info']->uid)->get();
+            foreach ( $this->data['my_old_medal'] as &$value)
+            {
+                $value->permission = common_unserialize($value->permission);
+                if (strpos($value->permission[0], "extcredits") !== false)
+                {
+                    //统计所有可贩卖价格
+                    $this->data['old_score'][explode(" ",$value->permission[0])[0]] += explode(" ",$value->permission[0])[2];
+                    $value->price = ['type'=>explode(" ",$value->permission[0])[0] , 'num'=>explode(" ",$value->permission[0])[2]];
+                }
+            }
+        }
+//        dd( $this->data['old_score']);
+        return view('PC/UserCenter/MyMedal')->with('data',$this->data);
 
+    }
     public function DoRegister(Request $request)
     {
         $ck = $this->checkRequest($request,['username','email','password','repassword']);
@@ -223,7 +255,8 @@ class UserBaseController extends Controller
         $user->password     = md5(md5( $request->input('password') ). $user->salt);
         $user->email        = $request->input('email');
         $user->regip        = $request->getClientIp();
-        $user->regdate        = time();
+        $user->regdate      = time();
+        $user->sellmedal    = 2;
         $user->save();
         //检测用户名是否在userModel中存在,这种情况一般是因为usermodel中删号了uc中没删号
 

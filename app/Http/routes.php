@@ -31,6 +31,7 @@ Route::group([
     Route::post('/app/user_view', ['uses' => 'UserController@user_view', 'as' => 'user_view']);#其它用户主页
     Route::post('/app/get_my_thread', ['uses' => 'UserController@get_my_thread', 'as' => 'get_my_thread']);#我发的帖子
 
+
 });
 //App 接口(非token)
 Route::group([
@@ -119,6 +120,8 @@ Route::group([
         Route::post('/uc-do-upload-avatar', 'UserBaseController@DoUploadAvatar');#修改头像
         Route::get('/get_my_message', 'UserBaseController@get_my_message');#获取我的消息
         Route::get('/update_user_avatar', 'UserBaseController@update_user_avatar');#修改用户头像
+        Route::get('/my_thread', ['uses' => 'UserBaseController@my_thread', 'as' => 'get_my_thread']);#我发的帖子
+        Route::get('/my_medal', ['uses' => 'UserBaseController@my_medal', 'as' => 'my_medal']);# 我的勋章
     });
     //管理后台 IndexCp
     Route::group([

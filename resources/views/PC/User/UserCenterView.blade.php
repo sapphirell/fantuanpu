@@ -95,9 +95,13 @@
     </div>
     <div style="width:700px;float: right;height: 100%;box-shadow: 0px 0 15px #e6e6e6;">
         <div class="panel" style="display: block;height: 100%">@include('PC.UserCenter.EditUserData')</div>
-        <div class="panel" style="display: none;height: 100%"></div>
-        <div class="panel" style="display: none;height: 100%"></div>
-        <div class="panel" style="display: none;height: 100%"></div>
+        <div class="panel" style="display: none;height: 100%"><iframe src="/my_thread?" style="width: 100%;height: 80%;border-width: 0px;overflow: hidden"></iframe></div>
+        <div class="panel" style="display: none;height: 100%">
+            <div class="notice">功能暂缺</div>
+        </div>
+        <div class="panel" style="display: none;height: 100%">
+            <iframe src="/my_medal" style="width: 100%;border-width: 0px;overflow: hidden"></iframe>
+        </div>
     </div>
     <div class="clear"></div>
     <script src="/Static/Script/cropper/cropper.js"></script>
