@@ -1,6 +1,8 @@
 @include('PC.Common.HtmlHead')
 <style>
-
+    html {
+        height: 612px;
+    }
     .fourm_thread_items {
         padding: 5px 8px;
     }

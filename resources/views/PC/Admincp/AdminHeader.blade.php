@@ -7,6 +7,8 @@
 </head>
 <style>
     header a{color: #fff;}
+    body {background: #ffffff}
+    .admin.wp {margin-top: 50px}
 </style>
 <body>
 <header class="navbar navbar-static-top bs-docs-nav" id="top" style="  position: fixed;width: 100%;  background-color: #000;box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);">

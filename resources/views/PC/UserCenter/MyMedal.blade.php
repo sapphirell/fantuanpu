@@ -1,7 +1,7 @@
 @include('PC.Common.HtmlHead')
 <style>
     html {
-        height: 600px;
+        height: 612px;
     }
     .fourm_thread_items {
         padding: 5px 8px;
@@ -11,14 +11,18 @@
 <div class="bm_h">我的勋章</div>
 <div class="bm_c" style="background: #ffffff;height: 100%;overflow: hidden">
     @if(session('user_info')->sellmedal == 1)
-        <div class="notice">尊贵的饭团扑老会员,您有<span style="color: #47d1ff;">{{count($data['my_old_medal'])}}</span>枚旧版勋章,它可以由您当初的购买价格兑换为
+        <div class="notice">&nbsp;尊贵的饭团扑老会员,您有<span style="color: #47d1ff;">{{count($data['my_old_medal'])}}</span>枚旧版勋章,它可以由您当初的购买价格兑换为
             @foreach($data['old_score'] as $key=>$value)
                 <span>{{ $data['extcredits_name'][$key] }}</span>
-                <span style="color: #47d1ff;">{{$value}}&nbsp;&nbsp;</span>
+                <span style="color: #47d1ff;">{{$value}}&nbsp;</span>
             @endforeach
-            <a href="">我要兑换。</a>
-            &nbsp;&nbsp;
-            <a href="" class="toggle_list_btn">是哪些勋章?</a>
+            <br />
+            <p>
+                <a style="cursor: pointer">我要兑换。</a>
+                &nbsp;&nbsp;
+                <a class="toggle_list_btn" style="color: #00AA88;cursor: pointer" >是哪些勋章?</a>
+            </p>
+
         </div>
         <div class="toggle_list">
             @foreach($data['my_old_medal'] as  $key => $value)
@@ -41,10 +45,9 @@
 </div>
 
 <script>
-    $(document).read(function () {
+    $(document).ready(function () {
         $(".toggle_list_btn").click(function (e) {
             e.preventDefault();
-            alert(1)
             $(".toggle_list").toggle();
         })
     })

@@ -18,7 +18,16 @@
                         {{--<textarea class="form-control">{!!  $data['field_forum']->sightml !!}</textarea>--}}
                     </td>
                 </tr>
-
+                {{--{{dd($data['user_count']['extcredits'])}}--}}
+                @foreach($data['user_count']['extcredits'] as $key=>$value)
+                <tr>
+                    <td class="uc_table_left">{{ $value }}</td>
+                    <td class="uc_table_right">
+                        {{$data['user_count'][$key]}}
+                        {{--<textarea class="form-control">{!!  $data['field_forum']->sightml !!}</textarea>--}}
+                    </td>
+                </tr>
+                @endforeach
             </table>
 
 

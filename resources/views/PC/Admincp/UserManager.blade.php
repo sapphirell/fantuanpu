@@ -1,6 +1,6 @@
 @include('PC.Admincp.AdminHeader')
 
-    <div class="wp" style="min-height: 200px;">
+    <div class="wp admin" style="min-height: 200px;">
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel panel-default">
