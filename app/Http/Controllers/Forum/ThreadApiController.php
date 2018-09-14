@@ -52,6 +52,7 @@ class ThreadApiController extends Controller
                             $fid,
                             $request->input('subject'),
                             $request->input('message'),
+                            $request->getClientIp(),
                             $user_info
                         );
         return self::response();

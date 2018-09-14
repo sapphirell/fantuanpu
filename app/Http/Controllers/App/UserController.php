@@ -260,4 +260,11 @@ class UserController extends Controller
         }
         return self::response($this->data);
     }
+
+    /**
+     * 添加我喜欢的帖子
+     * @param Request $request
+     */
+    public function add_my_like(Request $request)
+    {}
 }

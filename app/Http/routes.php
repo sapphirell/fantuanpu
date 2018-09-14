@@ -30,6 +30,8 @@ Route::group([
     Route::post('/app/send_letter', ['uses' => 'UserController@send_letter', 'as' => 'send_letter']);#发送私信
     Route::post('/app/user_view', ['uses' => 'UserController@user_view', 'as' => 'user_view']);#其它用户主页
     Route::post('/app/get_my_thread', ['uses' => 'UserController@get_my_thread', 'as' => 'get_my_thread']);#我发的帖子
+    Route::post('/app/add_my_like', ['uses' => 'UserController@add_my_like', 'as' => 'add_my_like']);#添加我喜欢的帖子
+    Route::post('/app/show_my_like', ['uses' => 'UserController@show_my_like', 'as' => 'show_my_like']);#显示我喜欢的帖子
 
 
 });

@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>饭团扑.com | 二次元萌腐宅的聚居地。</title>
+    <title>饭团扑 | 兴趣不再小众</title>
 
     <meta name="keywords" content="饭团扑,二次元,动漫,Lolita,jk">
     <meta name="description" content="饭团扑,一个二次元社交社区">

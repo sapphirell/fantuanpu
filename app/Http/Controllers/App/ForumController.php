@@ -81,6 +81,7 @@ class ForumController extends Controller
             $tid = $request->input('tid');
 
         $data = $threadController->_viewThread($tid);
+        $data['thread']['thread_subject']->avatar =  config('app.online_url').\App\Http\Controllers\User\UserHelperController::GetAvatarUrl($data['thread']['thread_subject']->authorid);
         //对帖子ubb进行处理
         foreach ($data['thread']['thread_post'] as &$value)
         {
