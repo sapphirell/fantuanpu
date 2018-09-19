@@ -7,6 +7,7 @@ use App\Http\Controllers\User\UserBaseController;
 use App\Http\DbModel\CommonMemberCount;
 use App\Http\DbModel\ForumThreadModel;
 use App\Http\DbModel\FriendModel;
+use App\Http\DbModel\MyLikeModel;
 use App\Http\DbModel\PmIndexesModel;
 use App\Http\DbModel\PmListsModel;
 use App\Http\DbModel\PmMessageModel;
@@ -75,7 +76,7 @@ class UserController extends Controller
         if ($request->input('to_uid'))
         {
 
-            //拼接min_max uid组合
+            //拼接min_max uid组合 -_-discuz为毛要这样拼啊!!
             $min_max = $uid < $request->input('to_uid') ? $uid ."_". $request->input('to_uid') : $request->input('to_uid') ."_".$uid ;
             $letter = PmListsModel::where('min_max',$min_max)->first();
 
@@ -266,5 +267,31 @@ class UserController extends Controller
      * @param Request $request
      */
     public function add_my_like(Request $request)
-    {}
+    {
+        if (!$request->input('like_id'))
+            return self::response([],40001,'缺少参数tid');
+        $uid    = Redis::get(CoreController::USER_TOKEN['key'] . $request->input('token'));
+        //是否已经有记录了
+        $haslike = MyLikeModel::where('uid',$uid)->where('like_id',$request->input('like_id'))->where('like_type',1)->first();
+        if($haslike->id)
+            return self::response([],40002,'已经喜欢该帖子了!');
+
+        $likeModel = new MyLikeModel();
+        $likeModel->uid         = $uid;
+        $likeModel->like_id     = $request->input('like_id');
+        $likeModel->like_type   = 1;
+        $likeModel->save();
+
+        return self::response();
+    }
+
+    /**
+     * 显示我喜欢的帖子
+     * @param Request $request
+     * @返回 mixed
+     */
+    public function show_my_like(Request $request)
+    {
+        return self::response();
+    }
 }
