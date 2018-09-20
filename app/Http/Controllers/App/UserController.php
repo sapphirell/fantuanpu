@@ -280,6 +280,7 @@ class UserController extends Controller
         $likeModel->uid         = $uid;
         $likeModel->like_id     = $request->input('like_id');
         $likeModel->like_type   = 1;
+        $likeModel->create_at   = time();
         $likeModel->save();
 
         return self::response();
@@ -292,6 +293,16 @@ class UserController extends Controller
      */
     public function show_my_like(Request $request)
     {
-        return self::response();
+        $uid    = Redis::get(CoreController::USER_TOKEN['key'] . $request->input('token'));
+        $data   = MyLikeModel::leftJoin('pre_forum_thread','pre_my_like.like_id','=','pre_forum_thread.tid')
+                    ->where('uid',$uid)
+                    ->where('like_type',1)
+                    ->get();
+        foreach ($data as &$value)
+        {
+            $value->avatar  = config('app.online_url').\App\Http\Controllers\User\UserHelperController::GetAvatarUrl($value->authorid);
+            $value->date    = date("Y-m-d",$value->create_at);
+        }
+        return self::response($data);
     }
 }

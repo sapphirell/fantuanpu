@@ -34,7 +34,11 @@ class ForumController extends Controller
     public function all_forum(Request $request)
     {
         return self::response(['红茶馆','腐女小窝','绘图交流','美图分享','签名作坊','萌化资源','情报专区','动漫讨论',
-        '个人原创文发表','轻小说','微文区','单机游戏','联机游戏','幻想乡','手办模型','VOCALOID','视频分享','音乐分享']);
+        '个人原创文发表','轻小说','微文区',
+//            '单机游戏','联机游戏',
+            '幻想乡','手办模型','VOCALOID',
+//            '视频分享','音乐分享'
+        ]);
     }
     //随便看看
     public function look_look(Request $request)
@@ -199,7 +203,7 @@ class ForumController extends Controller
     }
     public function version(Request $request)
     {
-        return self::response("1.0");
+        return self::response(['version'=>'1.0']);
     }
 
 }
