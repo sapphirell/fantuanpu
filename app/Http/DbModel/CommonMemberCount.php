@@ -22,6 +22,10 @@ class CommonMemberCount extends Model
         'extcredits7' => '分享积分',
         'extcredits8' => '图点',
     ];
+    public static function find($primaryKey)
+    {
+        return self::GetUserCoin($primaryKey);
+    }
     /**
      * 获取用户积分,如果没有则会创建用户积分记录
      * foreach ($user_count as $key => $value)
@@ -35,7 +39,7 @@ class CommonMemberCount extends Model
         $cache_key = CoreController::USER_COUNT;
         $user_count  = Cache::remember($cache_key['key'] .$uid,$cache_key['time'],function () use ($uid)
         {
-            $user_count = self::find($uid)->toArray();
+            $user_count = self::where('uid',$uid)->first()->toArray();
             if (empty($user_count))
             {
                 $user_count = new self();
@@ -59,7 +63,7 @@ class CommonMemberCount extends Model
     {
         $cache_key = CoreController::USER_COUNT;
         $count = new self();
-        $count->$field = $value;
+        $count->{$field} = $value;
         $count->save();
         Cache::forget($cache_key['key'] .$uid);
     }

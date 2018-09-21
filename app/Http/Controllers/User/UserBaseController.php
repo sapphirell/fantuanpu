@@ -207,29 +207,7 @@ class UserBaseController extends Controller
         $this->data['my_thread'] = ForumThreadModel::where('authorid',$this->data['user_info']->uid)->orderBy('dateline','desc')->paginate(15);
         return view('PC/UserCenter/MyThread')->with('data',$this->data);
     }
-    public function my_medal(Request $request)
-    {
-        $this->data['user_info'] = session('user_info');
-        $this->data['extcredits_name'] = CommonMemberCount::$extcredits;
-        //查询我的旧勋章
-        if ($this->data['user_info']->sellmedal == 1)
-        {
-            $this->data['my_old_medal'] = DB::table('pre_forum_medalmybox')->leftJoin('pre_forum_medal','pre_forum_medalmybox.medalid','=','pre_forum_medal.medalid')->where('uid',$this->data['user_info']->uid)->get();
-            foreach ( $this->data['my_old_medal'] as &$value)
-            {
-                $value->permission = common_unserialize($value->permission);
-                if (strpos($value->permission[0], "extcredits") !== false)
-                {
-                    //统计所有可贩卖价格
-                    $this->data['old_score'][explode(" ",$value->permission[0])[0]] += explode(" ",$value->permission[0])[2];
-                    $value->price = ['type'=>explode(" ",$value->permission[0])[0] , 'num'=>explode(" ",$value->permission[0])[2]];
-                }
-            }
-        }
-//        dd( $this->data['old_score']);
-        return view('PC/UserCenter/MyMedal')->with('data',$this->data);
 
-    }
     public function DoRegister(Request $request)
     {
         $ck = $this->checkRequest($request,['username','email','password','repassword']);
@@ -384,5 +362,59 @@ class UserBaseController extends Controller
     public function update_user_avatar(Request $request)
     {
         return view("PC/User/UpdateUserAvatar");
+    }
+    public function sell_old_medal(Request $request)
+    {
+        $user_session = session('user_info');
+        if ($user_session->sellmedal != 1)
+            return self::response([],40002,'已经兑换过了!');
+
+        $my_old_medal = DB::table('pre_forum_medalmybox')
+                    ->leftJoin('pre_forum_medal','pre_forum_medalmybox.medalid','=','pre_forum_medal.medalid')
+                    ->where('uid',$user_session->uid)->get();
+        $user_score = [];
+        foreach ($my_old_medal as &$value)
+        {
+            $value->permission = common_unserialize($value->permission);
+            if (strpos($value->permission[0], "extcredits") !== false)
+            {
+                //统计所有可贩卖价格
+                $user_score[explode(" ",$value->permission[0])[0]] += explode(" ",$value->permission[0])[2];
+                $value->price = ['type'=>explode(" ",$value->permission[0])[0] , 'num'=>explode(" ",$value->permission[0])[2]];
+            }
+        }
+        $user = User_model::find($user_session->uid);
+        $user->sellmedal = 2;
+        $user->save();
+        $user_count = CommonMemberCount::find($user_session->uid);
+        foreach ($user_score as $key=>$value)
+        {
+            $user_count->{$key} += $value;
+        }
+
+        return self::response();
+    }
+    public function my_medal(Request $request)
+    {
+        $this->data['user_info'] = session('user_info');
+        $this->data['extcredits_name'] = CommonMemberCount::$extcredits;
+        //查询我的旧勋章
+        if ($this->data['user_info']->sellmedal == 1)
+        {
+            $this->data['my_old_medal'] = DB::table('pre_forum_medalmybox')->leftJoin('pre_forum_medal','pre_forum_medalmybox.medalid','=','pre_forum_medal.medalid')->where('uid',$this->data['user_info']->uid)->get();
+            foreach ( $this->data['my_old_medal'] as &$value)
+            {
+                $value->permission = common_unserialize($value->permission);
+                if (strpos($value->permission[0], "extcredits") !== false)
+                {
+                    //统计所有可贩卖价格
+                    $this->data['old_score'][explode(" ",$value->permission[0])[0]] += explode(" ",$value->permission[0])[2];
+                    $value->price = ['type'=>explode(" ",$value->permission[0])[0] , 'num'=>explode(" ",$value->permission[0])[2]];
+                }
+            }
+        }
+        //        dd( $this->data['old_score']);
+        return view('PC/UserCenter/MyMedal')->with('data',$this->data);
+
     }
 }

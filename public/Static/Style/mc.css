@@ -102,7 +102,7 @@ ul{padding: 0px;margin: 0px}
 
 .header{height: 40px;background:#303a44;  overflow: hidden;   box-shadow: 0 0 15px #ccc;   border-top: 2px solid #303A44;position: fixed;z-index: 10;width: 100%}
 .header a {text-decoration: none;font-size: 15px;margin: 8px;display: inline-block;float:left;    color: #3E3C3C;}
-
+.header a:hover {filter: blur(0px);}
 .footer{margin-top: 20px;position: fixed;bottom: 0px;width: 100%}
 .footer ul{}
 .footer li{float: left;  float: right;background: #eee;border: 1px solid #ccc;border-width: 1px 1px 0px 1px;margin: 0px 8px;padding: 8px;border-radius: 5px 5px 0 0;cursor: pointer;}
