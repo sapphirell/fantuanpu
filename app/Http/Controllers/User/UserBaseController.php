@@ -38,7 +38,6 @@ class UserBaseController extends Controller
         return view('PC/User/Register')->with('data',$this->data);
     }
     public function DoLogin(Request $request){
-
         $chk = $this->checkRequest($request,['email','password']);
 
         if ($request->input('form') == 'app' && $chk !== true)
@@ -79,9 +78,9 @@ class UserBaseController extends Controller
             //用户登录token
             $data->token = md5( $data->uid. time());
             $cacheKey = CoreController::USER_TOKEN;
-            $cacheKey = $cacheKey['key'] . $data->token ;
+            $user_token = $cacheKey['key'] . $data->token ;
 
-            Redis::set($cacheKey,$data->uid);
+            Redis::setex($user_token,$cacheKey['time']*60,$data->uid);
         }
             return self::response($data);
         //redirect('/')

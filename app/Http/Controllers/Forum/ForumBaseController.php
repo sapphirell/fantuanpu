@@ -63,8 +63,11 @@ class ForumBaseController extends Controller
     }
     public function hot_thread()
     {
-        $thread = ForumThreadModel::orderBy('replies','desc')->offset(0)->limit(10)->get();
-        
+        $cacheKey = CoreController::HOT_THREAD;
+        $thread = Cache::remember($cacheKey['key'],$cacheKey['time'],function () {
+            return  ForumThreadModel::orderBy('replies','desc')->offset(0)->limit(10)->get();
+        });
+        return $thread;
     }
     public function talk(Request $request,Forum_forum_model $forum_model)
     {

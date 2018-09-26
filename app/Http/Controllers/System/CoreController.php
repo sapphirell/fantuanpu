@@ -54,11 +54,15 @@ class CoreController extends Controller
      */
     const USER_COUNT = ['key' => 'user_count_', 'time'=>360];
     /**
-     *  用户token信息
+     *  用户token信息,储存一年
      */
-    const USER_TOKEN = ['key' => 'user_token_','time'=>360];
+    const USER_TOKEN = ['key' => 'user_token_','time'=>1008084812];
     /**
      * 用户论坛信息(签名档、自定义头衔、勋章)
      */
     const USER_FIELD  = ['key' => 'user_field_','time'=>360];
+    /**
+     * 最热帖子
+     */
+    const HOT_THREAD = ['key' => 'hot_thread','time'=>360];
 }
