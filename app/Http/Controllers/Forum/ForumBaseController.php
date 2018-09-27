@@ -59,13 +59,31 @@ class ForumBaseController extends Controller
             return $this->forumModel->get_nodes();
         });
         $this->data['hot'] = $this->hot_thread();
+        $this->data['new_reply'] = $this->new_reply();
+        $this->data['new_thread'] = $this->new_thread();
+
         return view('PC/Forum/Node')->with('data',$this->data);
+    }
+    public function new_reply()
+    {
+        $cacheKey = CoreController::NEW_REPLY;
+
+        return Cache::remember($cacheKey['key'],$cacheKey['time'],function () {
+            return  ForumThreadModel::where('fid','<>','63')->orderBy('lastpost','desc')->offset(0)->limit(20)->get();
+        });
+    }
+    public function new_thread()
+    {
+        $cacheKey = CoreController::NEW_THREAD;
+        return Cache::remember($cacheKey['key'],$cacheKey['time'],function () {
+            return  ForumThreadModel::where('fid','<>','63')->orderBy('dateline','desc')->offset(0)->limit(20)->get();
+        });
     }
     public function hot_thread()
     {
         $cacheKey = CoreController::HOT_THREAD;
         $thread = Cache::remember($cacheKey['key'],$cacheKey['time'],function () {
-            return  ForumThreadModel::orderBy('replies','desc')->offset(0)->limit(10)->get();
+            return  ForumThreadModel::orderBy('replies','desc')->offset(0)->limit(20)->get();
         });
         return $thread;
     }

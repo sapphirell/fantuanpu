@@ -65,4 +65,12 @@ class CoreController extends Controller
      * 最热帖子
      */
     const HOT_THREAD = ['key' => 'hot_thread','time'=>360];
+    /**
+     * 最新回复
+     */
+    const NEW_REPLY = ['key' => 'new_reply','time'=>15];
+    /**
+     * 最新主题
+     */
+    const NEW_THREAD = ['key' => 'new_thread','time'=>15];
 }

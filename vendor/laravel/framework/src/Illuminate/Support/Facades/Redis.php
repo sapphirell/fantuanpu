@@ -23,7 +23,7 @@ class  Redis extends Facade
         if (empty($data))
         {
             $data = json_encode($fn());
-            Redis::set($cacheKey,$data);
+            Redis::setex($cacheKey,$cacheTime,$data);
         }
         return json_decode($data);
     }

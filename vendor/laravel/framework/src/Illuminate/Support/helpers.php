@@ -893,7 +893,7 @@ if (! function_exists('with')) {
 if (! function_exists('avatar')) {
 
 
-    function avatar($uid,$size,$radius,$class,$type='big')
+    function avatar($uid,$size='50',$radius=0,$class='',$type='big')
     {
         //头像文件夹存储的头像分为三种，big、middle、small
         $src = \App\Http\Controllers\User\UserHelperController::GetAvatarUrl($uid,$type);

@@ -26,7 +26,6 @@
         <div class="_3_1_left">
             <div class="mod_tab">
                 <ul>
-
                     <li><span>最新主题</span></li>
                     <li><span>最近回复</span></li>
                     <li><span>最热主题</span></li>
@@ -36,9 +35,15 @@
             </div>
             <div class="clear"></div>
             <div class="tab_body">
-                <div class="tab_a">最新主题</div>
-                <div class="tab_a">最近回复</div>
-                <div class="tab_a">最热主题</div>
+                <div class="tab_a">
+                    @include('PC.Forum.TopNews')
+                </div>
+                <div class="tab_a">
+                    @include('PC.Forum.TopPosts')
+                </div>
+                <div class="tab_a">
+                    @include('PC.Forum.HotThread')
+                </div>
                 <div class="tab_a on">
                     <div class="node_father">
                         @foreach($data['forumGroup'] as $group)
