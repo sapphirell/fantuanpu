@@ -130,6 +130,7 @@ ul{padding: 0px;margin: 0px}
 .posre > *{position: absolute;}
 .comic{font-family: Comic Sans MS;}
 .shadow {box-shadow:0 0 5px #d4cfd4;  }
+.shadow-purple {box-shadow:0 0 5px #e8d8e8;}
 /*
 *	次要的应用模块
 *
