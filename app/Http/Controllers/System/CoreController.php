@@ -32,7 +32,11 @@ class CoreController extends Controller
     /**
      * 帖子详情缓存
      */
-    const THREAD_VIEW = ['key'=>'thread_view_','time'=>600];
+    const THREAD_VIEW = ['key'=>'thread_view_','time'=>60];
+    /**
+     * 帖子的回帖缓存
+     */
+    const POSTS_VIEW = ['key'=>'post_view_','time'=>60];
     /**
      * 取得老用户查询缓存
      */
@@ -73,4 +77,5 @@ class CoreController extends Controller
      * 最新主题
      */
     const NEW_THREAD = ['key' => 'new_thread','time'=>15];
+
 }

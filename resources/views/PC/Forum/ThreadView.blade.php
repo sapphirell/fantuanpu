@@ -131,9 +131,8 @@
 
 
             </div>
-            <div style="">
-
-                <p>{!! bbcode2html($data['thread']['thread_post'][0]->message) !!}</p>
+            <div class="bbcode_container">
+                {!! bbcode2html($data['thread']['thread_post'][0]->message) !!}
             </div>
             <div class="clear"></div>
         </div>
@@ -209,7 +208,7 @@ box-shadow: 2px 3px 3px #e4e4e4;">右边放点啥好呢</div>
         'justify',  // 对齐方式
         'quote',  // 引用
 //        'emoticon',  // 表情
-//        'image',  // 插入图片
+        'image',  // 插入图片
 //        'table',  // 表格
 //        'video',  // 插入视频
         'code',  // 插入代码

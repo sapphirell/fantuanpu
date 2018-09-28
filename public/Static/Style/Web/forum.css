@@ -83,6 +83,7 @@ h1.thread_title{    padding-top: 27px;}
 .avatar-tab {
     margin-right: 10px;
 }
+.bbcode_container img {max-width:100%;}
 /***自适应***/
 @media screen and (max-width: 960px) {
     .banner,.banner img{width: 100%!important;}

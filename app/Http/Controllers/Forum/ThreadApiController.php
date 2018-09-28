@@ -187,13 +187,14 @@ class ThreadApiController extends Controller
         /**
          * 用户统计更新
          */
-        $count = CommonMemberCount::find($user_info->uid);
-        $count->posts += 1;
-        $count->save();
+        CommonMemberCount::AddUserCount($user_info->uid,'posts',1);
         /**
-         *  写入消息通知队列
+         *  通知用户帖子被回复
          */
-        Redis::rpush('list',json_encode(['class'=>'common','action'=>'user_notice','to_uid'=>$thread->authorid,'msg'=> $user_info->username . '回复了您的帖子']));
+        self::call_message_queue('common','user_notice',[
+                'to_uid'=>$thread->authorid,
+                'msg'=> $user_info->username . '回复了您的帖子'
+            ]);
         return self::response();
     }
 }

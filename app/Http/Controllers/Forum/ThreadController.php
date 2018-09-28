@@ -32,9 +32,9 @@ class ThreadController extends Controller
 //        dd($request->getClientIp());
 
     }
-    public function _viewThread($tid)
+    public function _viewThread($tid,$page)
     {
-        $this->data['thread']   = $this->threadModel->getThread($tid);
+        $this->data['thread']   = $this->threadModel->getThread($tid,$page);
         $this->data['forum']    = Forum_forum_model::get_nodes_by_fid($this->data['thread']['thread_subject']->fid);
 
         $this->data['tid']  = $tid;
@@ -57,7 +57,7 @@ class ThreadController extends Controller
         return $this->data;
     }
     public function ViewThread(Request $request,$tid,$page){
-        $this->_viewThread($tid);
+        $this->_viewThread($tid,$page);
         return view('PC/Forum/ThreadView')->with('data',$this->data);
 
     }

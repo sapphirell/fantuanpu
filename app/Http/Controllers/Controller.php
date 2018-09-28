@@ -9,6 +9,7 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesResources;
+use Illuminate\Support\Facades\Redis;
 
 class Controller extends BaseController
 {
@@ -34,14 +35,23 @@ class Controller extends BaseController
         $request = new Request();
         $this->data['request'] = $request->input();
     }
+
+    /**
+     *  调起swoole消息队列
+     */
+    public function call_message_queue($class,$action,$data)
+    {
+        $data['class']  = $class;
+        $data['action'] = $action;
+        return Redis::rpush('list',json_encode($data));
+    }
     public static function response($data = null,$ret='200',$msg='操作成功')
     {
         if (empty($data))
-        {
             $res =  ['ret'=>intval($ret),'msg'=>$msg,'data'=>[]];
-        } else {
+        else
             $res =  ['ret'=>intval($ret),'msg'=>$msg,'data'=>$data];
-        }
+
         return response(json_encode($res,JSON_UNESCAPED_UNICODE))->header('Content-Type', 'application/json')->header('Charset','UTF-8');
     }
     public function jsReturn($url,$msg='操作成功')
@@ -56,9 +66,7 @@ class Controller extends BaseController
         foreach ($param as $value)
         {
             if ($Request->input($value) === false || $Request->input($value) === null)
-            {
                 return $value;
-            }
         }
         return true;
     }
