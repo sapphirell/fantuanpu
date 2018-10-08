@@ -29,7 +29,7 @@ class Thread_model extends Model
     public function getPostOfThread($tid,$page)
     {
         $posts_cache_key    = CoreController::POSTS_VIEW;
-        return Cache::remember(
+        $cache =  Cache::remember(
             $posts_cache_key['key']."{$tid}_{$page}",
             $posts_cache_key['time'],
             function () use ($tid,$page) {
@@ -37,11 +37,13 @@ class Thread_model extends Model
                     ->select()
                     ->where(['tid'=>$tid])
                     ->orderBy('pid')
-                    ->offset(10 * $page)
-                    ->limit(10)
+                    ->offset(CoreController::THREAD_REPLY_PAGE *  ($page-1))
+                    ->limit(CoreController::THREAD_REPLY_PAGE)
                     ->get();
             }
         );
+
+        return $cache;
     }
     /**
     * @path

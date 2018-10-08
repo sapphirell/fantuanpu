@@ -39,7 +39,7 @@
     <div>
         @foreach($data['list'] as $key => $value)
             <p class="fourm_thread_items" @if($key%2==0) style="background: #f5f5f5;" @endif >
-                <a href="thread-{{$value->tid}}-1-1.html">
+                <a href="thread-{{$value->tid}}-1.html">
                     {{$value->subject}}
                     <span style="color: #000000">(+{{$value->replies}})</span>
                 </a>

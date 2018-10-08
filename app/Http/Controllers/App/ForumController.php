@@ -201,6 +201,22 @@ class ForumController extends Controller
         }
         return self::response($data);
     }
+
+    /**
+     * 获取帖子回帖的其它页数的信息
+     * @param Request $request
+     */
+    public function post_next_page(Request $request,Thread_model $thread_model)
+    {
+        if (empty($request->input('tid')))
+            return self::response([],40001,'缺少tid');
+        if (empty($request->input('page')))
+        return self::response([],40001,'缺少page');
+
+        $data = $thread_model->getPostOfThread($request->input('tid'),$request->input('page'));
+
+        return $request->input('need') == 'html' ? view("PC/Forum/Reply")->with('data',['thread_post'=>$data]): self::response($data);
+    }
     public function version(Request $request)
     {
         return self::response(['version'=>'1.0']);

@@ -32,11 +32,11 @@ class CoreController extends Controller
     /**
      * 帖子详情缓存
      */
-    const THREAD_VIEW = ['key'=>'thread_view_','time'=>60];
+    const THREAD_VIEW = ['key'=>'thread_view_','time'=>60*24];
     /**
-     * 帖子的回帖缓存
+     * 帖子的回帖缓存 ,回帖不经常修改,缓存1个月
      */
-    const POSTS_VIEW = ['key'=>'post_view_','time'=>60];
+    const POSTS_VIEW = ['key'=>'post_view_','time'=>60*24*30];
     /**
      * 取得老用户查询缓存
      */
@@ -77,5 +77,8 @@ class CoreController extends Controller
      * 最新主题
      */
     const NEW_THREAD = ['key' => 'new_thread','time'=>15];
-
+    /**
+     * 帖子回帖分页数量
+     */
+    const THREAD_REPLY_PAGE = 20;
 }

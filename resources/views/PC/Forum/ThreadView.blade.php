@@ -1,6 +1,6 @@
 @include('PC.Common.Header')
 <link rel="stylesheet" type="text/css" href="/Static/Style/Web/forum.css">
-<title>饭团扑动漫网-{{$data['thread_subject']->subject}}</title>
+<title>饭团扑-{{$data['thread_subject']->subject}}</title>
 
 <script src="/Static/Script/Web/forum.js"></script>
 <script type="text/javascript" src="/Static/Script/wangEditor/wangEditor.js"></script>
@@ -80,6 +80,27 @@
         display: inline-block;
         background: #fff;
     }
+    .get_more_posts {
+        padding: 0px;
+        color: #EEEEEE;
+        border: 4px dashed;
+        width: 538px;
+        margin-left: 15px;
+        text-align: center;
+        font-size: 50px;
+        display: inline-block;
+        background: #ffffff29;
+        text-decoration: none;
+        cursor: pointer;
+        border-radius: 5px;
+        line-height: 50px;
+        padding-bottom: 10px;
+    }
+    .get_more_posts:hover
+    {
+        color: #b3aae0!important;
+        text-decoration: none;
+    }
 </style>
 <script>
     $(document).ready(function () {
@@ -121,10 +142,10 @@
                 </div>
                 <div style="    position: relative;bottom: 73px;    margin-left: 15px;">
                     <p>
-                        用户名:{{$data['thread']['thread_subject']->author}}
-                        发帖时间:{{date("Y-m-d H:i:s",$data['thread']['thread_subject']->dateline)}}
-                        查看数:{{$data['thread']['thread_subject']->views}}
-                        回复数:{{$data['thread']['thread_subject']->replies}}
+                        <span style="">{{$data['thread']['thread_subject']->author}}</span>
+                        {{$data['thread']['thread_subject']->dateline}}
+                        查看数 : {{$data['thread']['thread_subject']->views}}
+                        回复数 : {{$data['thread']['thread_subject']->replies}}
                     </p>
                     <div style="background: #EEEEEE;color: black;height: 76px;width: 100%;text-align: center;color: #fff;">这里留着放签名档吧…</div>
                 </div>
@@ -167,6 +188,12 @@
 
                 @endif
             @endforeach
+            @if(count($data['thread']['thread_post']) < \App\Http\Controllers\System\CoreController::THREAD_REPLY_PAGE)
+                <div style="    padding: 20px;color: #bfbfbf;border: 4px dashed;width: 538px;margin-left: 15px;text-align: center;">暂无更多</div>
+            @else
+                <span class="get_more_posts trans">+</span>
+            @endif
+
             <form style="margin: 15px;">
                 <textarea name="message" style="display: none"></textarea>
 
@@ -228,28 +255,42 @@ box-shadow: 2px 3px 3px #e4e4e4;">右边放点啥好呢</div>
         var posts = "<blockquote>"+str+"</blockquote>";
         editor.txt.html(posts)
     }
-    $('#post-thread').click(function () {
-        var edHtml = html2ubb(editor.txt.html())
+    $(document).ready(function () {
         var subject = $('#subject').val()
-        var _token = $('#post_thread_token').val()
         var fid     = $('#fid').val()
         var tid     = $('#tid').val()
-        var subject = $('#subject').val()
-        var postData = {
-            'message' : edHtml,
-            '_token'  : _token ,
-            'fid'     : fid,
-            'tid'     : tid,
-            'subject' : subject
-        };
-        console.log(postData)
-        $.post('/post-thread',postData,function (event) {
-            alert(event.msg);
-            if (event.ret == 200)
-            {
-                location.reload();
-            }
+        $('#post-thread').click(function () {
+            var edHtml = html2ubb(editor.txt.html())
+
+            var _token = $('#post_thread_token').val()
+
+            var subject = $('#subject').val()
+            var postData = {
+                'message' : edHtml,
+                '_token'  : _token ,
+                'fid'     : fid,
+                'tid'     : tid,
+                'subject' : subject
+            };
+            console.log(postData)
+            $.post('/post-thread',postData,function (event) {
+                alert(event.msg);
+                if (event.ret == 200)
+                {
+                    location.reload();
+                }
+            })
+
+        });
+        var next_page = 2;
+        $(".get_more_posts").click(function (e) {
+            $.post('/app/post_next_page',{page:next_page,tid:tid,need:"html"},function (event) {
+                $(".post_item:last").append(event);
+                console.log(event)
+                next_page += 1;
+            })
         })
     })
+
 </script>
 @include('PC.Common.Footer')

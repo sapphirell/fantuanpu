@@ -193,6 +193,13 @@ class ThreadApiController extends Controller
                 'to_uid'=>$thread->authorid,
                 'msg'=> $user_info->username . '回复了您的帖子'
             ]);
+
+        /**
+         * 清理帖子回帖缓存 ,获取当前回帖所在页数,并删除该页的缓存(咕咕)
+         */
+        ;
+        $posts_cache_key    = CoreController::POSTS_VIEW;
+        Cache::forget( $posts_cache_key['key'].$request->input('tid') ."_" . ceil($postModel->position/20));
         return self::response();
     }
 }
