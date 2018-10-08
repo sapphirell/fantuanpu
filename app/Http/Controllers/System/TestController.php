@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redis;
 
@@ -22,14 +23,9 @@ class TestController extends Controller
     }
 
     public function index(){
-//        $user_info = session('user_info');
-//        dd($user_info);
-//        return $this->forum_model ::GetForumList();
-//        return $this->mail->re();
+        $posts_cache_key    = CoreController::POSTS_VIEW;
 
-        //return $this->mail;
-        Redis::lpush('list',json_encode(['class'=>'Common','action'=>'task']));
-        echo Redis::get('key123');
+        Cache::forget($posts_cache_key['key'] ."80121_" . ceil(1/20));
     }
     public function ping()
     {
