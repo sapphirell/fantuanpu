@@ -197,9 +197,11 @@ class ThreadApiController extends Controller
         /**
          * 清理帖子回帖缓存 ,获取当前回帖所在页数,并删除该页的缓存(咕咕)
          */
-        ;
+        $post = $postModel->where('pid',$postModel->pid)->first();
+
         $posts_cache_key    = CoreController::POSTS_VIEW;
-        Cache::forget( $posts_cache_key['key'].$request->input('tid') ."_" . ceil($postModel->position/20));
+//        dd($posts_cache_key['key'].$request->input('tid') ."_" . ceil($post->position/20));
+        Cache::forget( $posts_cache_key['key'].$request->input('tid') ."_" . ceil($post->position/20));
         return self::response();
     }
 }
