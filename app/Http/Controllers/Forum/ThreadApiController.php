@@ -108,9 +108,7 @@ class ThreadApiController extends Controller
         /**
          * 用户统计更新
          */
-        $count = CommonMemberCount::find($user_info->uid);
-        $count->threads += 1;
-        $count->save();
+        $count = CommonMemberCount::AddUserCount($user_info->uid,"threads",1);
     }
     /**
      * 回复帖子

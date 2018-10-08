@@ -62,9 +62,14 @@ class CommonMemberCount extends Model
     public static function AddUserCount($uid,$field,$value)
     {
         $cache_key = CoreController::USER_COUNT;
-        $count = new self();
-        $count->{$field} += $value;
-        $count->save();
+        $user = self::where('uid',$uid)->first() ;
+        if (empty($user))
+        {
+            $user = new self();
+            $user->uid      = $uid;
+        }
+        $user->{$field}    += $value;
+        $user->save();
         Cache::forget($cache_key['key'] .$uid);
     }
 }
