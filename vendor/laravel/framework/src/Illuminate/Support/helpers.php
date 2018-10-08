@@ -1062,10 +1062,10 @@ if (! function_exists('bbcode2html')) {
 //            }
 
             $nest = 0;
-            while(strpos($msglower, '[table') !== FALSE && strpos($msglower, '[/table]') !== FALSE){
-                $message = preg_replace("/\[table(?:=(\d{1,4}%?)(?:,([\(\)%,#\w ]+))?)?\]\s*(.+?)\s*\[\/table\]/ies", "parsetable('\\1', '\\2', '\\3')", $message);
-                if(++$nest > 4) break;
-            }
+//            while(strpos($msglower, '[table') !== FALSE && strpos($msglower, '[/table]') !== FALSE){
+//                $message = preg_replace("/\[table(?:=(\d{1,4}%?)(?:,([\(\)%,#\w ]+))?)?\]\s*(.+?)\s*\[\/table\]/ies", "parsetable('\\1', '\\2', '\\3')", $message);
+//                if(++$nest > 4) break;
+//            }
 
             $message = str_replace(array(
                 '[/color]', '[/backcolor]', '[/size]', '[/font]', '[/align]', '[b]', '[/b]', '[s]', '[/s]', '[hr]', '[/p]',
