@@ -991,6 +991,50 @@ function parseimg($width, $height, $src, $lazyload, $pid, $extra = '') {
     return bbcodeurl($src, '<img id="aimg_'.$rimg_id.'" onclick="zoom(this, this.src, 0, 0, '.($_G['setting']['showexif'] ? 1 : 0).')" class="zoom"'.($width > 0 ? ' width="'.$width.'"' : '').($height > 0 ? ' height="'.$height.'"' : '').' '.$attrsrc.'="{url}" '.($extra ? $extra.' ' : '').'border="0" alt="" />');
 }
 
+function parsetable($width, $bgcolor, $message) {
+    if(strpos($message, '[/tr]') === FALSE && strpos($message, '[/td]') === FALSE) {
+        $rows = explode("\n", $message);
+        $s = '<table cellspacing="0" class="t_table" '.
+            ($width == '' ? NULL : 'style="width:'.$width.'"').
+            ($bgcolor ? ' bgcolor="'.$bgcolor.'">' : '>');
+        foreach($rows as $row) {
+            $s .= '<tr><td>'.str_replace(array('\|', '|', '\n'), array('&#124;', '</td><td>', "\n"), $row).'</td></tr>';
+        }
+        $s .= '</table>';
+        return $s;
+    } else {
+        if(!preg_match("/^\[tr(?:=([\(\)\s%,#\w]+))?\]\s*\[td([=\d,%]+)?\]/", $message) && !preg_match("/^<tr[^>]*?>\s*<td[^>]*?>/", $message)) {
+            return str_replace('\\"', '"', preg_replace("/\[tr(?:=([\(\)\s%,#\w]+))?\]|\[td([=\d,%]+)?\]|\[\/td\]|\[\/tr\]/", '', $message));
+        }
+        if(substr($width, -1) == '%') {
+            $width = substr($width, 0, -1) <= 98 ? intval($width).'%' : '98%';
+        } else {
+            $width = intval($width);
+            $width = $width ? ($width <= 560 ? $width.'px' : '98%') : '';
+        }
+        return '<table cellspacing="0" class="t_table" '.
+        ($width == '' ? NULL : 'style="width:'.$width.'"').
+        ($bgcolor ? ' bgcolor="'.$bgcolor.'">' : '>').
+        str_replace('\\"', '"', preg_replace(array(
+                "/\[tr(?:=([\(\)\s%,#\w]+))?\]\s*\[td(?:=(\d{1,4}%?))?\]/ie",
+                "/\[\/td\]\s*\[td(?:=(\d{1,4}%?))?\]/ie",
+                "/\[tr(?:=([\(\)\s%,#\w]+))?\]\s*\[td(?:=(\d{1,2}),(\d{1,2})(?:,(\d{1,4}%?))?)?\]/ie",
+                "/\[\/td\]\s*\[td(?:=(\d{1,2}),(\d{1,2})(?:,(\d{1,4}%?))?)?\]/ie",
+                "/\[\/td\]\s*\[\/tr\]\s*/i"
+            ), array(
+                "parsetrtd('\\1', '0', '0', '\\2')",
+                "parsetrtd('td', '0', '0', '\\1')",
+                "parsetrtd('\\1', '\\2', '\\3', '\\4')",
+                "parsetrtd('td', '\\1', '\\2', '\\3')",
+                '</td></tr>'
+            ), $message)
+        ).'</table>';
+    }
+}
+
+function parsetrtd($bgcolor, $colspan, $rowspan, $width) {
+    return ($bgcolor == 'td' ? '</td>' : '<tr'.($bgcolor ? ' style="background-color:'.$bgcolor.'"' : '').'>').'<td'.($colspan > 1 ? ' colspan="'.$colspan.'"' : '').($rowspan > 1 ? ' rowspan="'.$rowspan.'"' : '').($width ? ' width="'.$width.'"' : '').'>';
+}
 function bbcodeurl($url, $tags) {
     if(!preg_match("/<.+?>/s", $url)) {
         if(!in_array(strtolower(substr($url, 0, 6)), array('http:/', 'https:', 'ftp://', 'rtsp:/', 'mms://')) && !preg_match('/^static\//', $url) && !preg_match('/^data\//', $url)) {
