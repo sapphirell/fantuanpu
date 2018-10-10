@@ -23,11 +23,11 @@ body {
 
     /*background: #fafafa;*/
 }
-a{color: #0084B4;}
+a{color: #0084B4;cursor: pointer}
 a.no_attn {    text-decoration: none;  color: #444;cursor: pointer}/*不引起注意的链接*/
 a:hover{}
 p{margin: 0 5px;    font-family: "Hiragino Sans GB","futura-pt",Helvetica,Arial,"Hiragino Sans GB W3","Microsoft YaHei",sans-serif;
-    line-height: 1.8em;    word-wrap: break-word;}
+    line-height: 1.8em;    word-wrap: break-word;color: #777}
 div {word-wrap:break-word;}
 h1{margin: 5px;font-weight: 100;text-align: center;}
 h2{margin: 5px}
@@ -163,7 +163,7 @@ ul{padding: 0px;margin: 0px}
 .alert{background-color: #FFF2E9;color: #7A9233;padding: 8px;border: 1px solid;border-radius: 5px;margin: 3px;overflow: hidden;border-color: #E7C774;}/*橘黄色提醒框*/
 .memuBtn{height: 25px;width: 25px;cursor: pointer;display: inline-block;float: left;margin: 7px}/*点击菜单*/
 #active{position: fixed;top:0px;left: -235px;background: #303A44;width: 235px;-webkit-transition: none!important;
-    z-index: 10;
+    z-index: 2000000;
     -moz-transition: none!important;
     -o-transition: none!important;
     transition: none!important;

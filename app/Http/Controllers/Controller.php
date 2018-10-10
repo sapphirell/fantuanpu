@@ -34,6 +34,7 @@ class Controller extends BaseController
         date_default_timezone_set('Asia/Shanghai');
         $request = new Request();
         $this->data['request'] = $request->input();
+        $this->data['title'] = false;
     }
 
     /**

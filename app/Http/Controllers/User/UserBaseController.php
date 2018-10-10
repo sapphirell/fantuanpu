@@ -233,7 +233,6 @@ class UserBaseController extends Controller
         $user->email        = $request->input('email');
         $user->regip        = $request->getClientIp();
         $user->regdate      = time();
-        $user->sellmedal    = 2;
         $user->save();
         //检测用户名是否在userModel中存在,这种情况一般是因为usermodel中删号了uc中没删号
 
@@ -246,6 +245,7 @@ class UserBaseController extends Controller
         $userModel->password =  $user->password ;
         $userModel->regdate =  time() ;
         $userModel->groupid = 8;//等待验证会员
+        $user->sellmedal    = 2;
         $userModel->save();
 
         /**

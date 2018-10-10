@@ -35,6 +35,8 @@ class ThreadController extends Controller
     public function _viewThread($tid,$page)
     {
         $this->data['thread']   = $this->threadModel->getThread($tid,$page);
+        $this->data['title'] = $this->data['thread']['thread_subject']->subject;
+//        dd($this->data['thread']['thread_subject'] );
         $this->data['forum']    = Forum_forum_model::get_nodes_by_fid($this->data['thread']['thread_subject']->fid);
 
         $this->data['tid']  = $tid;

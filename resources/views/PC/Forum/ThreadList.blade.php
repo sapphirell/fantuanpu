@@ -6,9 +6,10 @@
 <script type="text/javascript" src="/Static/Script/wangEditor/wangEditor.js"></script>
 <style>
     .fourm_thread_items {    padding: 5px 8px;background: #ffffff}
+    .avatar {float: left}
     .wp {
         margin-top: 29px;
-        box-shadow: 0 0 11px #e6e6e6;
+
         border-radius: 5px 5px 0px 0px;
         overflow: hidden;
         padding: 0px!important;
@@ -33,46 +34,64 @@
         });
     })
 </script>
-<div class="wp" style="padding: 5px;margin-top: 50px;    border: 1px solid #ddd;">
+<div class="wp" style="padding: 5px;margin-top: 50px;    ">
 
     <!--头部banner-->
-    <div>
-        @foreach($data['list'] as $key => $value)
-            <p class="fourm_thread_items" @if($key%2==0) style="background: #f5f5f5;" @endif >
-                <a href="thread-{{$value->tid}}-1.html">
-                    {{$value->subject}}
-                    <span style="color: #000000">(+{{$value->replies}})</span>
-                </a>
-                <span style="float: right">
-                    <a class="no_attn"><?php echo "@";?>{{$value->author}}</a>
-                    <span>view : {{$value->views}}</span>
-                    <span style="color: #ccc">
-                        <span class="show_date" style="display: none;cursor: pointer;padding: 5px;">{{date('Y-m-d',$value->dateline)}}</span>
-                        <span class="show_time" style="cursor: pointer;padding: 5px;">{{date('H:i:s',$value->dateline)}}</span>
+    <div class="3-1" >
+        <div class="_3_1_left" style="border: 1px solid #ddd;  box-shadow: 0 0 11px #e6e6e6;background: #ffffff">
+            @foreach($data['list'] as $key => $value)
+                <div class="fourm_thread_items" @if($key%2==0) style="background: #f9f9f9;" @endif >
 
+                    {{avatar($value->authorid,$size='50',30,'avatar',$type='small')}}
+                    <div style="display: inline-block;float: left; margin-left: 20px;">
+                        <a href="thread-{{$value->tid}}-1.html" style="font-size: 15px;margin-bottom: 3px;display: inline-block;">
+                            {{$value->subject}}
+                            <span style="color: #000000">(+{{$value->replies}})</span>
+                        </a>
+                        <br>
+                        <span style="">
+                        <a class="no_attn"><?php echo "@";?>{{$value->author}}</a>
+                        <span>view : {{$value->views}}</span>
+                        <span style="color: #ccc">
+                            <span class="show_date" style="display: none;cursor: pointer;padding: 5px;">{{date('Y-m-d',$value->dateline)}}</span>
+                            <span class="show_time" style="cursor: pointer;padding: 5px;">{{date('H:i:s',$value->dateline)}}</span>
+
+                        </span>
                     </span>
-                </span>
+                    </div>
+                    <div class="clear"></div>
 
 
-                {{--<a href="/" style="color: red;float: right" > 完全清理</a>--}}
+                    {{--<a href="/" style="color: red;float: right" > 完全清理</a>--}}
 
-            </p>
-        @endforeach
-        <div style="float: right;margin: 15px;">
-            {{--{{ $data['list']->links() }}--}}
-            {!! threadListPages(12,$data['fid'],$data['page']) !!}
+                </div>
+            @endforeach
+            <div style="float: right;margin: 15px;">
+                {{--{{ $data['list']->links() }}--}}
+                {!! threadListPages(12,$data['fid'],$data['page']) !!}
+            </div>
+            <form action="/new-thread" style="margin: 10px 10px">
+                <p style="margin: 10px 0px;">
+                    <input type="text" name="subject" class="form-control" style="" name="subject" id="subject">
+                </p>
+                <input type="hidden" value="{{$data['fid']}}" id="fid">
+                {{ csrf_field('new_thread_token') }}
+                <div id="new_thread"></div>
+                <textarea id="message" name="message" style="display:none;"></textarea>
+                <span style="    cursor: pointer;border: 1px solid #ccc;padding: 5px 10px;box-sizing: border-box;margin: 15px 0px;display: inline-block;background: #fff;" id="post_thread">发新帖</span>
+            </form>
+
         </div>
-        <form action="/new-thread" style="margin: 10px 10px">
-            <p style="margin: 10px 0px;">
-                <input type="text" name="subject" class="form-control" style="" name="subject" id="subject">
-            </p>
-            <input type="hidden" value="{{$data['fid']}}" id="fid">
-            {{ csrf_field('new_thread_token') }}
-            <div id="new_thread"></div>
-            <textarea id="message" name="message" style="display:none;"></textarea>
-            <span style="    cursor: pointer;border: 1px solid #ccc;padding: 5px 10px;box-sizing: border-box;margin: 15px 0px;display: inline-block;background: #fff;" id="post_thread">发新帖</span>
-        </form>
-
+        <div class="_3_1_right">
+            <div>
+                <a>关注板块</a>
+                <a>返回</a>
+            </div>
+            <div class="bm">
+                <div class="bm_h">板块简介</div>
+                <div class="bm_c" style="color: #545454;padding: 10px;">板块</div>
+            </div>
+        </div>
 
 
     </div>

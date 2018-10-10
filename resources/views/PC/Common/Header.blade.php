@@ -1,8 +1,14 @@
 <html>
 <head>
-    <title>饭团扑 | 兴趣不再小众</title>
+    <title>饭团扑 |
+        @if($data['title'])
+            {{$data['title']}}
+        @else
+            兴趣不再小众
+        @endif
+    </title>
 
-    <meta name="keywords" content="饭团扑,二次元,动漫,Lolita,jk">
+    <meta name="keywords" content="饭团扑,二次元,动漫论坛,宅论坛">
     <meta name="description" content="饭团扑,一个二次元社交社区">
     @include('PC.Common.HtmlHead')
 </head>

@@ -39,14 +39,14 @@ class CommonMemberCount extends Model
         $cache_key = CoreController::USER_COUNT;
         $user_count  = Cache::remember($cache_key['key'] .$uid,$cache_key['time'],function () use ($uid)
         {
-            $user_count = self::where('uid',$uid)->first()->toArray();
+            $user_count = self::where('uid',$uid)->first();
             if (empty($user_count))
             {
                 $user_count = new self();
                 $user_count->uid = $uid;
                 $user_count->save();
             }
-            return $user_count;
+            return $user_count->toArray();
         });
         $user_count['extcredits'] = self::$extcredits;
 
