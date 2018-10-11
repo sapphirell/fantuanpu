@@ -5,7 +5,7 @@
 {{--<script type="text/javascript" src="/Static/Script/xheditor/xheditor_lang/zh-cn.js"></script>--}}
 <script type="text/javascript" src="/Static/Script/wangEditor/wangEditor.js"></script>
 <style>
-    .fourm_thread_items {    padding: 5px 8px;background: #ffffff}
+    .fourm_thread_items {    padding: 5px 8px;background: #ffffff;    box-shadow: 0 0 5px #ddd;}
     .avatar {float: left}
     .wp {
         margin-top: 29px;
@@ -15,7 +15,8 @@
         padding: 0px!important;
     }
     .wp .fourm_thread_items {
-        margin: 0px;
+        margin: 10px;
+        border-radius: 5px;
     }
     #new_thread
     {
@@ -38,9 +39,16 @@
 
     <!--头部banner-->
     <div class="3-1" >
-        <div class="_3_1_left" style="border: 1px solid #ddd;  box-shadow: 0 0 11px #e6e6e6;background: #ffffff">
+        <div class="_3_1_left" style="
+        /*box-shadow: 0 0 11px #e6e6e6;background: #ffffff;*/
+        border-radius: 5px;overflow: hidden">
             @foreach($data['list'] as $key => $value)
-                <div class="fourm_thread_items" @if($key%2==0) style="background: #f9f9f9;" @endif >
+                <div class="fourm_thread_items" style="
+                @if($key%2==0)
+                        background: #f9f9f9;
+                @endif
+
+                "  >
 
                     {{avatar($value->authorid,$size='50',30,'avatar',$type='small')}}
                     <div style="display: inline-block;float: left; margin-left: 20px;">
