@@ -208,13 +208,17 @@ class ForumController extends Controller
      */
     public function post_next_page(Request $request,Thread_model $thread_model)
     {
+//        return self::response(json_encode($request->input()));
         if (empty($request->input('tid')))
             return self::response([],40001,'缺少tid');
         if (empty($request->input('page')))
         return self::response([],40001,'缺少page');
 
         $data = $thread_model->getPostOfThread($request->input('tid'),$request->input('page'));
-
+        foreach ($data as &$value)
+        {
+            $value->avatar = config('app.online_url').\App\Http\Controllers\User\UserHelperController::GetAvatarUrl($value>authorid);
+        }
         return $request->input('need') == 'html' ? view("PC/Forum/Reply")->with('data',['thread_post'=>$data]): self::response($data);
     }
     public function version(Request $request)
