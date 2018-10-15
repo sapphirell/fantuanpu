@@ -13,7 +13,11 @@ class Forum_forum_model extends Model
     public $table='pre_forum_forum';
     public $timestamps = false;
 
-
+    /**
+     * 新版的获取板块,这将指定的获取一些板块,并且忽视上下级关系-_-(上下级并无卵用啊)
+     */
+    public function get_nodes_new()
+    {}
     public function get_nodes()
     {
         //默认10条
@@ -22,7 +26,8 @@ class Forum_forum_model extends Model
         *   @ 一级板块分类的上级fid都是0，且类型是group
         *
         */
-        $topMod = $this->get_bottom_nodes(0,'group',1);
+//        $topMod = $this->get_bottom_nodes(0,'group',1);
+        $topMod = Forum_forum_model::whereIn('fid',[1,3,4,36,41,49,52,56,64])->orderBy('displayorder')->get()->toArray();
         foreach ($topMod as $key => &$value) {
             # 找出每一个归属上级版块的板块来
             $value['bottomforum'] = $this->get_bottom_nodes($value['fid'],'forum',1);
