@@ -23,10 +23,23 @@
                 <div>开发日志</div>
             </div>
             <div class="tab_m">
+
                 <div>
-                    <a href="https://image.fantuanpu.com/upload/20180830/app-release.apk">
-                        2018-08-30 Release-version 1.0版 12MB
-                    </a>
+                    <ul>
+                        <li>
+                            <a href="https://www.pgyer.com/fantuanpu-android">
+                                2018-10-15 Release-version 1.1版 12MB
+                            </a>
+                            <span>修复不能发帖问题等等一大堆bug,界面适配等问题。</span>
+                        </li>
+                        <li>
+                            <a href="https://image.fantuanpu.com/upload/20180830/app-release.apk">
+                                2018-08-30 Release-version 1.0版 12MB
+                            </a>
+                        </li>
+                    </ul>
+
+
                 </div>
                 <div>IOS因暂时未通过App Store审核,暂时无法提供下载,如果有兴趣提前参与测试,可以联系我的QQ(363387628)提供设备UDID进行第三方平台安装。</div>
                 <div>
