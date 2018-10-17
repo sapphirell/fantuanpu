@@ -48,35 +48,44 @@
                     <div class="node_father">
                         @foreach($data['forumGroup'] as $group)
                             <div>
-                            <h3 style="    margin: 5px;font-size: 15px;font-weight: 300;color: #7d4a4a;text-shadow: 0 0 1px #bec7c4;">{{$group->name}}</h3>
+                            <h3 style="    margin: 15px 5px 15px 5px;font-size: 15px;font-weight: 300;color: #7d4a4a;text-shadow: 0 0 1px #bec7c4;">{{$group->name}}</h3>
                             {{--<div>分区版主:</div>--}}
                             </div>
                             <div class="forum_group">
                                 @foreach($group->bottomforum as $nodes)
                                     @if($group->forumcolumns == '0')
-                                        <div class="forum_block" style="display: inline-block;float: left;margin: 10px 30px 30px 30px;    width: 40%;">
-                                            <a href="/forum-{{$nodes->fid}}-1.html"><h3 class="forum_title">{{$nodes->name}}</h3></a>
-                                            @if($nodes->forumimage)
-                                                <img src="{{$nodes->forumimage}}">
-                                            @else
-                                                <div class="forum_img"></div>
-                                            @endif
-                                            <p class="forum_description trans">
-                                                今日: <span>{{$nodes->todayposts}}</span> · 主题: <span>{{$nodes->threads}}</span> · 帖数: <span><?php echo round($nodes->posts/10000,2)."万"; ?></span>
-                                            </p>
-                                            <p>
+                                        <div class="forum_block" style="display: inline-block;float: left;margin: 10px 30px 30px 30px;    width: 90%;padding-top: 10px">
+
+                                            <a href="/forum-{{$nodes->fid}}-1.html" style="float: left">
+                                                @if($nodes->forumimage)
+                                                    <img src="{{$nodes->forumimage}}">
+                                                @else
+                                                    <div class="forum_img"></div>
+                                                @endif
+                                            </a>
+                                            <div  style="float: left">
+                                                <a href="/forum-{{$nodes->fid}}-1.html"><h3 class="forum_title">{{$nodes->name}}</h3></a>
+                                                <p class="forum_description trans" style="    width: 203px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                                                    今日: <span>{{$nodes->todayposts}}</span> · 主题: <span>{{$nodes->threads}}</span> · 帖数: <span><?php echo round($nodes->posts/10000,2)."万"; ?></span>
+                                                </p>
+                                            </div>
+
+                                            <p  style="margin: 0px;float: left;display: inline-block;width: 200px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;margin-top: 25px;margin-left: 14px;">
                                                 <a class="forum_lastpost"  href="thread-{{explode("\t",$nodes->lastpost)[0]}}-1.html">{{explode("\t",$nodes->lastpost)[1]}}</a>
                                             </p>
+                                            <div class="clear"></div>
                                         </div>
                                     @elseif($group->forumcolumns == '2')
 
                                         <div class="forum_block" style="display: inline-block;float: left;margin: 10px 30px 30px 30px;    width: 40%;">
                                             <a href="/forum-{{$nodes->fid}}-1.html"><h3 class="forum_title">{{$nodes->name}}</h3></a>
-                                            @if($nodes->forumimage)
-                                                <img src="{{$nodes->forumimage}}">
-                                            @else
-                                                <div class="forum_img"></div>
-                                            @endif
+                                            <a href="/forum-{{$nodes->fid}}-1.html">
+                                                @if($nodes->forumimage)
+                                                    <img src="{{$nodes->forumimage}}">
+                                                @else
+                                                    <div class="forum_img"></div>
+                                                @endif
+                                            </a>
                                             <p class="forum_description trans">
                                                 今日: <span class="forum_today trans">{{$nodes->todayposts}}</span> · 主题: <span class="forum_threads trans">{{$nodes->threads}}</span> · 帖数: <span class="forum_posts trans"><?php echo round($nodes->posts/10000,2)."万"; ?></span>
                                             </p>
@@ -129,7 +138,7 @@
             <!--3-1-left-->
         </div>
         <div class="_3_1_right">
-            <div class="forum_group" style="width: 100%;height: 200px;background: #ffffff;margin-top: 77px;overflow:hidden">
+            <div class="forum_group" style="width: 100%;height: 200px;background: #ffffff;margin-top: 92px;overflow:hidden">
                 <a href="/app_download" style="width: inherit">
                     <img src="http://image.fantuanpu.com/upload/20180830/be00ce9d8724be6b370dd69e1090d535.png" style="width: inherit">
                 </a>

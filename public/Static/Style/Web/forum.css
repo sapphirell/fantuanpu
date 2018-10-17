@@ -36,8 +36,10 @@
 .forum_title {font-size: 15px;cursor: pointer}
 .forum_group{    background: #fff;
     border-radius: 5px;
-    margin-bottom: 10px;
-    box-shadow: 0 0 10px #dedede;}
+    margin-bottom: 20px;
+    box-shadow: 0 0 10px #dedede;
+    border: 2px solid #868686;
+}
 .forum_description {
     cursor: pointer;
     font-size: 12px;
