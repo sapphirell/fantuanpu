@@ -4,6 +4,7 @@
     <meta name="keywords" content="">
     <meta name="description" content="">
     @include('PC.Common.HtmlHead')
+    <script src="/Static/Script/laydate/laydate.js"></script>
 </head>
 <style>
     header a{color: #fff;}
@@ -63,4 +64,4 @@
 </div>
 
 
-@include('PC.Common.Footer')
+{{--@include('PC.Common.Footer')--}}

@@ -82,10 +82,34 @@
                                 <span type="button" class="btn btn-link add-action" style="font-size: 30px;  float: right;   line-height: 13px;">+</span>
                             </div>
                         </div>
+
+                        {{--设置起始时间--}}
+                        <div class="form-group">
+                            <div class="" style="margin-bottom: 10px">
+                                <label for="inputPassword" class="col-sm-2 control-label">售卖起始时间</label>
+                                <div class="col-sm-3">
+                                    <input type="text" id="start" class="form-control">
+                                </div>
+                                <div class="col-sm-3">
+                                    <input type="text" id="end" class="form-control">
+
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+                        {{--设置售卖剩余个数--}}
+                        <div class="form-group">
+                            <div class="" style="margin-bottom: 10px">
+                                <label for="inputPassword" class="col-sm-2 control-label">剩余个数</label>
+                                <div class="col-sm-3">
+                                    <input type="text" id="num" class="form-control">
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                        </div>
                         <div class="col-sm-2 control-label">
                             <span class="btn btn-primary submit">提交</span>
                         </div>
-
                         {{csrf_field('csrf')}}
                     </form>
 
@@ -102,7 +126,15 @@
 
 <script>
     $(document).ready(function () {
-
+        laydate.render({
+            elem: '#start',
+//            done: function(value, date){
+//                alert('你选择的日期是：' + value + '\n获得的对象是' + JSON.stringify(date));
+//            }
+        });
+        laydate.render({
+            elem: '#end',
+        });
         $(".add-price").click(function () {
             var price = $(".price_group:first").clone();
             $(".price_group:last").after(price)
@@ -114,6 +146,10 @@
         });
         $(".btn.submit").click(function () {
             var sendData = {
+                medal_name : $('.medal_name').val(),
+                sell_start : $('#start').val(),
+                sell_end : $('#end').val(),
+                limit : $('#num').val(),
                 medal_name : $('.medal_name').val(),
                 csrf : $('#csrf').val()
             }
@@ -145,7 +181,9 @@
             sendData.price = price;
             console.log(sendData)
 
-            $.post('')
+            $.post('/admincp/store_medal',sendData,function (res) {
+                console.log(res)
+            });
         });
     });
 </script>

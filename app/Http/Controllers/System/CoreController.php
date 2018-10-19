@@ -81,4 +81,12 @@ class CoreController extends Controller
      * 帖子回帖分页数量
      */
     const THREAD_REPLY_PAGE = 20;
+    /**
+     * 用户佩戴的勋章
+     */
+    const USER_MEDAL = ['key' => 'user_medal_','time'=>360];
+    /**
+     * 勋章信息,存储一年
+     */
+    const MEDAL_INFO = ['key' => 'medal_info' , 'time' => 1008084812];
 }

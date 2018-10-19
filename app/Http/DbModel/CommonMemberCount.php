@@ -72,4 +72,24 @@ class CommonMemberCount extends Model
         $user->save();
         Cache::forget($cache_key['key'] .$uid);
     }
+
+    /**
+     *  一次更新用户多个字段的值
+     */
+    public static function BatchAddUserCount($uid ,$data)
+    {
+        $cache_key = CoreController::USER_COUNT;
+        $user = self::where('uid', $uid)->first();
+        if (empty($user))
+        {
+            $user = new self();
+            $user->uid = $uid;
+        }
+        foreach ($data as $key => $value)
+        {
+            $user->{$key}    += $value;
+        }
+        $user->save();
+        Cache::forget($cache_key['key'] .$uid);
+    }
 }
