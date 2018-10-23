@@ -6,6 +6,9 @@
     .fourm_thread_items {
         padding: 5px 8px;
     }
+    .bm_c{
+        height: 99.9%!important;
+    }
 </style>
 <div class="bm_h">我发的帖子</div>
 <div class="bm_c" style="background: #ffffff;height: 100%;overflow: hidden">

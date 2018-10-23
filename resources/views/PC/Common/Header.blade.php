@@ -105,6 +105,11 @@
 
 </div>
 
+<div class="server-alert trans" style="">
+    <svg class="icon" style="display: inline-block;margin: 3px;float:left;"  width="20px" height="20px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M473.8 607.4c6.4 19.1 19.1 31.8 38.2 31.8s31.8-12.7 38.2-31.8l25.4-349.9c0-38.2-31.8-63.6-63.6-63.6-38.2 0-63.6 31.8-63.6 70l25.4 343.5z m38.2 95.5c-38.2 0-63.6 25.4-63.6 63.6s25.4 63.6 63.6 63.6 63.6-25.4 63.6-63.6-25.4-63.6-63.6-63.6z" fill="#ffffff" /></svg>
+    {{--<svg class="icon" style="display: inline-block" width="20px" height="20.00px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M512 32C246.912 32 32 246.912 32 512c0 265.088 214.912 480 480 480 265.088 0 480-214.912 480-480 0-265.088-214.912-480-480-480z m0 896C282.24 928 96 741.76 96 512S282.24 96 512 96s416 186.24 416 416-186.24 416-416 416z" fill="#d44e89" /><path d="M512 384a32 32 0 0 0-32 32v352a32 32 0 0 0 64 0V416a32 32 0 0 0-32-32z" fill="#d44e89" /><path d="M512 272m-48 0a48 48 0 1 0 96 0 48 48 0 1 0-96 0Z" fill="#d44e89" /></svg>--}}
+    <p style="display: inline-block;color: #ffffff;float: left;margin: 3px">即时通讯未建立</p>
+</div>
 <script>
     $(document).ready(function () {
         @if(!session('user_info')->uid)

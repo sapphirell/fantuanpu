@@ -364,10 +364,15 @@ class UserBaseController extends Controller
     }
     public function sell_old_medal(Request $request)
     {
-        $user_session = session('user_info');
+
+        $user_session = User_model::find(session('user_info')->uid);
+
         if ($user_session->sellmedal != 1)
             return self::response([],40002,'已经兑换过了!');
 
+        $user_session->sellmedal = 2;
+        $user_session->save();
+        UserHelperController::SetLoginStatus($user_session);
         $my_old_medal = DB::table('pre_forum_medalmybox')
                     ->leftJoin('pre_forum_medal','pre_forum_medalmybox.medalid','=','pre_forum_medal.medalid')
                     ->where('uid',$user_session->uid)->get();
@@ -385,11 +390,9 @@ class UserBaseController extends Controller
         $user = User_model::find($user_session->uid);
         $user->sellmedal = 2;
         $user->save();
-        $user_count = CommonMemberCount::find($user_session->uid);
-        foreach ($user_score as $key=>$value)
-        {
-            $user_count->{$key} += $value;
-        }
+        CommonMemberCount::BatchAddUserCount($user_session->uid,$user_score);
+        //标记用户为已经兑换
+
 
         return self::response();
     }

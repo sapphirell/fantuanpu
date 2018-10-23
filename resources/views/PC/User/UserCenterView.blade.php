@@ -60,8 +60,18 @@
     tr {
         width: inherit;
     }
+    .panel
+    {
+        border:0px;
+    }
+    .bm_h {
+        background: #85a8ca;
+    }
+    .bm_c{
+        height: 99.9%;
+    }
 </style>
-<div class="shadow center" style="margin-top: 70px;background: #ffffff;width: 960px;overflow: hidden;height: 650px;">
+<div class="shadow center" style="margin-top: 70px;background: #ffffff;width: 960px;overflow: hidden;border-radius:5px;height: 650px;border: 2px solid #868686;">
     <div style="width: 250px;float: left;">
         <div style="padding: 10px;">
             <div class="center" style="width: 150px">
@@ -99,7 +109,7 @@
         <div class="panel" style="display: none;height: 100%">
             <div class="notice">功能暂缺</div>
         </div>
-        <div class="panel" style="display: none;height: 100%">
+        <div class="panel" style="display: none;    height: 99.9%;">
             <iframe src="/my_medal" style="width: 100%;height: 100%;border-width: 0px;overflow: hidden"></iframe>
         </div>
     </div>

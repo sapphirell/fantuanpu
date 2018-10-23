@@ -24,6 +24,13 @@
         /*margin: 0px auto;*/
         background-color: #fff;
     }
+    .pager li>a, .pager li>span
+    {
+        border:0px;
+        padding: 6px 12px;
+        margin: 5px;
+        color: #ab5e5e;
+    }
 </style>
 <script>
     $(document).ready(function () {

@@ -101,7 +101,7 @@ ul{padding: 0px;margin: 0px}
 */
 .wp{width: 960px;margin: 0 auto;}/*wp为页面居中的正文内容*/
 
-.header{height: 40px;background:#303a44;  overflow: hidden;   box-shadow: 0 0 15px #ccc;   border-top: 2px solid #303A44;position: fixed;z-index: 1000000;width: 100%}
+.header{height: 40px;background:#303a44;  overflow: hidden;       box-shadow: 0 0 15px #00000094; border-top: 2px solid #303A44;position: fixed;z-index: 1000000;width: 100%}
 .header a {text-decoration: none;font-size: 15px;margin: 8px;display: inline-block;float:left;    color: #3E3C3C;}
 .header a:hover {filter: blur(0px);}
 .footer{margin-top: 20px;position: fixed;bottom: 0px;width: 100%}
@@ -266,3 +266,86 @@ ul{padding: 0px;margin: 0px}
 .true_input {    border-color: #5eb7e2;}
 .false_input {  border-color: #e25e5e;  }
 
+/*论坛本地化*/
+.server-alert {z-index:99999;position: fixed;right: 20px;top: 50px;     background: #c7b7e8b3; border-radius: 5px;    padding: 5px 10px 5px 5px;cursor:pointer;}
+.server-alert:hover{ background: #ff9dc7b3; }
+
+/*动画 变型入场**/
+@-webkit-keyframes rubberBand {
+    from {
+        -webkit-transform: scale3d(1, 1, 1);
+        transform: scale3d(1, 1, 1);
+    }
+
+    30% {
+        -webkit-transform: scale3d(1.25, 0.75, 1);
+        transform: scale3d(1.25, 0.75, 1);
+    }
+
+    40% {
+        -webkit-transform: scale3d(0.75, 1.25, 1);
+        transform: scale3d(0.75, 1.25, 1);
+    }
+
+    50% {
+        -webkit-transform: scale3d(1.15, 0.85, 1);
+        transform: scale3d(1.15, 0.85, 1);
+    }
+
+    65% {
+        -webkit-transform: scale3d(0.95, 1.05, 1);
+        transform: scale3d(0.95, 1.05, 1);
+    }
+
+    75% {
+        -webkit-transform: scale3d(1.05, 0.95, 1);
+        transform: scale3d(1.05, 0.95, 1);
+    }
+
+    to {
+        -webkit-transform: scale3d(1, 1, 1);
+        transform: scale3d(1, 1, 1);
+    }
+}
+
+@keyframes rubberBand {
+    from {
+        -webkit-transform: scale3d(1, 1, 1);
+        transform: scale3d(1, 1, 1);
+    }
+
+    30% {
+        -webkit-transform: scale3d(1.25, 0.75, 1);
+        transform: scale3d(1.25, 0.75, 1);
+    }
+
+    40% {
+        -webkit-transform: scale3d(0.75, 1.25, 1);
+        transform: scale3d(0.75, 1.25, 1);
+    }
+
+    50% {
+        -webkit-transform: scale3d(1.15, 0.85, 1);
+        transform: scale3d(1.15, 0.85, 1);
+    }
+
+    65% {
+        -webkit-transform: scale3d(0.95, 1.05, 1);
+        transform: scale3d(0.95, 1.05, 1);
+    }
+
+    75% {
+        -webkit-transform: scale3d(1.05, 0.95, 1);
+        transform: scale3d(1.05, 0.95, 1);
+    }
+
+    to {
+        -webkit-transform: scale3d(1, 1, 1);
+        transform: scale3d(1, 1, 1);
+    }
+}
+
+.rubberBand {
+    -webkit-animation-name: rubberBand;
+    animation-name: rubberBand;
+}

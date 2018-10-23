@@ -1,3 +1,8 @@
+<style>
+    .bm_h {
+        background: #85a8ca;
+    }
+</style>
 <div class="bm_h">编辑资料</div>
 <div class="bm_c">
     <div class="user_info">

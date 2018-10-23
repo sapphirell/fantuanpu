@@ -14,9 +14,9 @@ use Illuminate\Support\Facades\Redirect;
 
 class AdmincpController extends Controller
 {
-    //
     public function IndexCp()
     {
+        $this->data['left_nav'] = ['websocket管理','同步代码','备份静态资源'];
         return view('PC/Admincp/Index')->with('data',$this->data);
     }
     public function webSocketManager()

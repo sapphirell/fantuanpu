@@ -9,7 +9,7 @@
 <style>
     header a{color: #fff;}
     body {background: #ffffff}
-    .admin.wp {margin-top: 50px;    margin-left: 230px;}
+    .admin.wp {margin-top:90px;    margin-left: 230px;}
 
 </style>
 <body>
@@ -36,7 +36,7 @@
                     <a  class=" trans" href="">节点</a>
                 </li>
                 <li>
-                    <a  class=" trans" href="">运营</a>
+                    <a  class=" trans" href="/admincp/medal_list">运营</a>
                 </li>
 
             </ul>
@@ -44,24 +44,6 @@
         </nav>
     </div>
 </header>
-<div style="
-    background: #000;
-    width: 200px;
-    height: 100%;
-    top: 50px;
-    position: fixed;
-    color: #fff;
-    z-index: 9;">
-    <div class="operation">
-
-        <ul>
-            <li class="trans"><a href="">websocket管理<i class="fa fa-pencil-square-o fa-lg"></i></a></li>
-            <li class="trans"><a href="">同步代码<i class="fa fa-sticky-note-o fa-lg"></i></a></li>
-            <li class="trans"><a href="">备份静态资源<i class="fa fa-sticky-note-o fa-lg"></i></a></li>
-            <li class="trans"><a href="/logout">离开<i class="fa fa-sign-in fa-lg"></i></a></li>
-        </ul>
-    </div>
-</div>
 
 
-{{--@include('PC.Common.Footer')--}}
+@include('PC.Admincp.LeftNav')

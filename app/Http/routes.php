@@ -132,6 +132,7 @@ Route::group([
     //管理后台 IndexCp
     Route::group([
         'namespace' => 'Admincp',
+        'namespace' => 'Admincp',
         'middleware' => [
             'admin'
         ]
@@ -139,8 +140,9 @@ Route::group([
         Route::get('/admincp/', ['uses' => 'AdmincpController@IndexCp', 'as' => 'admin']);#管理后台首页
         Route::get('/admincp/user_manager', ['uses' => 'AdmincpController@userManager', 'as' => 'userManager']);#用户管理面板
         Route::get('/admincp/user-edit', ['uses' => 'AdmincpController@userEdit', 'as' => 'userManager']);#用户管理面板
-        Route::get('/admincp/add_medal', ['uses' => 'MedalController@add_medal', 'as' => 'add_medal']);#添加新的勋章页面
-        Route::post('/admincp/store_medal', ['uses' => 'MedalController@store_medal', 'as' => 'store_medal']);#添加新的勋章
+        Route::get('/admincp/add_medal', ['uses' => 'OperateController@add_medal', 'as' => 'add_medal']);#添加新的勋章页面
+        Route::get('/admincp/medal_list', ['uses' => 'OperateController@medal_list', 'as' => 'medal_list']);#勋章列表
+        Route::post('/admincp/store_medal', ['uses' => 'OperateController@store_medal', 'as' => 'store_medal']);#添加新的勋章
 
     });
 //

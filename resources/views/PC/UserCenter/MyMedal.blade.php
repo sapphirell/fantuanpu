@@ -6,7 +6,15 @@
     .fourm_thread_items {
         padding: 5px 8px;
     }
-    .toggle_list {display: none}
+    .toggle_list {display: none;    height: inherit;
+        overflow: scroll;
+        padding-bottom: 57px;}
+    .bm_h {
+        background: #85a8ca;
+    }
+    .bm_c{
+        height: 99.9%!important;
+    }
 </style>
 <div class="bm_h">我的勋章</div>
 <div class="bm_c" style="background: #ffffff;height: 100%;overflow: hidden">
@@ -18,7 +26,7 @@
             @endforeach
             <br />
             <p>
-                <a style="cursor: pointer">我要兑换。</a>
+                <span class="now_sell" href="" style="cursor: pointer">现在兑换。</span>
                 &nbsp;&nbsp;
                 <a class="toggle_list_btn" style="color: #00AA88;cursor: pointer" >是哪些勋章?</a>
             </p>
@@ -49,6 +57,12 @@
         $(".toggle_list_btn").click(function (e) {
             e.preventDefault();
             $(".toggle_list").toggle();
+        })
+
+        $(".now_sell").click(function () {
+            $.get('/sell_old_medal','',function (e) {
+                alert(e.msg)
+            })
         })
     })
 </script>
