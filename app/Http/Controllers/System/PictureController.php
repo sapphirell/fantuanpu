@@ -16,6 +16,10 @@ class PictureController extends Controller
 
         parent::__construct();
     }
+    public function show_avatar(Request $request)
+    {
+        return config('app.online_url').\App\Http\Controllers\User\UserHelperController::GetAvatarUrl($request->input('uid'));
+    }
     //
     public static function AvaCut($position,$imageURL){
         /**

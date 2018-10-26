@@ -187,8 +187,8 @@ class UserBaseController extends Controller
     }
     public function UserCenter(Request $request)
     {
-        $cacheKey = CoreController::USER_FIELD;
         $this->data['user_info'] = session('user_info');
+        $cacheKey = CoreController::USER_FIELD . $this->data['user_info']->uid;
         $this->data['field_forum'] =  Cache::remember($cacheKey['key'],$cacheKey['time'],function ()
         {
             return MemberFieldForumModel::find($this->data['user_info']->uid);
@@ -323,37 +323,33 @@ class UserBaseController extends Controller
 
 
     }
-    public function live2d()
+    public function get_im_message()
     {
         //查询10条历史消息
         $this->data['msg'] = ImModel::orderBy('id','desc')->paginate(15);
         $user = session('user_info');
-        $this->data['im_username'] = $user->username;
         if (!session('im_username'))
         {
-            session(['im_username' => ['name'=>$this->rand_name(),'show_im_name'=>true,'id'=>  md5(microtime(true)) ]]);
+            //未生成虚拟名称时候生成一次
+            session(['im_username' => ['name'=>$this->rand_name(),'show_im_name'=>true,'id'=> session('access_id') ]]);
         }
-        //决定是否显示im名字
-        $im = session('im_username');
-        if (!$im['show_im_name'] && $user->username)
-        {
-            //只有登录并且设置为不显示im名字时候才显示username
-            $this->data['username']  = $user->username;
-        }
-        else
-        {
-            $this->data['username']  = $im['name'];
-        }
-        $this->data['im_userid'] = $im['id'];
 
+        $this->data['im_username'] = $user->username ?: session('im_username')['name'];
+
+
+        return $this->data;
+    }
+    public function live2d()
+    {
+        $this->get_im_message();
         return view('PC/User/Live2d')->with('data',$this->data);
     }
     public function rand_name()
     {
         $ornament = ['头戴草帽','手持巨剑','身负重甲','膝盖中箭','穿遇到异世界','擅长魔法','被qb选中'];
-        $pre = ['蓝头发的','粉头发的','红头发的','长尾巴的','有一对猫耳的','赤瞳的','貌若天仙的','肌肉发达的','家财万贯的'];
+        $pre = ['蓝头发的','粉头发的','红头发的','长尾巴的','有一对猫耳的','赤瞳的','貌若天仙的','肌肉发达的','家财万贯的','短路的'];
         $center = ['痴呆','怨念','元气','弱气','弱渣','强气','笨蛋','机智','可爱','呆萌','凶猛','卑鄙'];
-        $last = ['兔娘','猫娘','小恶魔','史莱姆','小公举','骑士','穿越者','飞龙','冒险者','勇者','王子'];
+        $last = ['兔娘','猫娘','小恶魔','史莱姆','小公举','骑士','穿越者','飞龙','冒险者','勇者','王子','智者','先知','国王','机器人','人气偶像','过气偶像','魔法师','死宅'];
         return $ornament[rand(0,count($ornament)-1)].$pre[rand(0,count($pre)-1)].$center[rand(0,count($center)-1)].$last[rand(0,count($last)-1)];
     }
     public function get_my_message(Request $request)

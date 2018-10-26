@@ -142,8 +142,9 @@
                 <a href="/app_download" style="width: inherit">
                     <img src="http://image.fantuanpu.com/upload/20180830/be00ce9d8724be6b370dd69e1090d535.png" style="width: inherit">
                 </a>
-
             </div>
+            @include('PC.Forum.NodeTalkRoom')
+
         </div>
         <div class="clear"></div>
         <!--3-1-->

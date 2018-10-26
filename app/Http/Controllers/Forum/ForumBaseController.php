@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Forum;
 
 use App\Http\Controllers\System\CoreController;
 use App\Http\Controllers\System\RedisController;
+use App\Http\Controllers\User\UserBaseController;
 use App\Http\Controllers\User\UserHelperController;
 use App\Http\DbModel\Forum_forum_model;
 use App\Http\DbModel\ForumThreadModel;
@@ -16,6 +17,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redis;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class ForumBaseController extends Controller
 {
@@ -32,18 +34,18 @@ class ForumBaseController extends Controller
 
     }
 
-    public function index(Request $request)
-    {
-        switch ($mod = $request->input('mod')){
-
-            case 'viewthread':
-                return $this->ViewThread($request); break;
-
-            default:
-                return $this->ForumIndex($request); break;
-                break;
-        }
-    }
+//    public function index(Request $request)
+//    {
+//        switch ($mod = $request->input('mod')){
+//
+//            case 'viewthread':
+//                return $this->ViewThread($request); break;
+//
+//            default:
+//                return $this->ForumIndex($request); break;
+//                break;
+//        }
+//    }
     public function ThreadList(Request $request,$fid,$page)
     {
         $this->data['list'] = $this->threadModel->getThreadList($fid,$page);
@@ -51,7 +53,7 @@ class ForumBaseController extends Controller
         $this->data['page']  = $page;
         return view('PC/Forum/ThreadList')->with('data',$this->data);
     }
-    public function ForumIndex(Request $request)
+    public function ForumIndex(Request $request,UserBaseController $userBaseController)
     {
         $cacheKey = CoreController::NODES;
         $this->data['forumGroup']   = Redis::remember($cacheKey['key'],$cacheKey['time'],function ()
@@ -61,7 +63,9 @@ class ForumBaseController extends Controller
         $this->data['hot'] = $this->hot_thread();
         $this->data['new_reply'] = $this->new_reply();
         $this->data['new_thread'] = $this->new_thread();
-
+        //获取IM
+        $this->data = array_merge($this->data,$userBaseController->get_im_message());
+        $this->data['avatar'] = config('app.online_url').\App\Http\Controllers\User\UserHelperController::GetAvatarUrl(session('user_info')->uid);
         return view('PC/Forum/Node')->with('data',$this->data);
     }
     public function new_reply()

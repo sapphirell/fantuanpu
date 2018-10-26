@@ -65,6 +65,7 @@ Route::group([
         Route::get('/info', ['uses' => 'ServeController@info', 'as' => 'info']);#phpinfo
         Route::get('/test', ['uses' => 'TestController@index', 'as' => 'test']);#test
         Route::get('/ping', ['uses' => 'TestController@ping', 'as' => 'test']);#test
+        Route::get('/avatar', ['uses' => 'PictureController@show_avatar', 'as' => 'show_avatar']);#传uid返回头像链接
 
 
     });
@@ -72,9 +73,9 @@ Route::group([
     Route::group([
         'namespace' => 'Forum'
     ], function () {
-        Route::get('/',             ['uses' => 'ForumBaseController@index', 'as' => 'forum']);#论坛首页
-        Route::get('/forum.php',    ['uses' => 'ForumBaseController@index', 'as' => 'forum-index']);#论坛首页
-        Route::get('/forum',        ['uses' => 'ForumBaseController@index', 'as' => 'forum-index']);#论坛首页
+        Route::get('/',             ['uses' => 'ForumBaseController@ForumIndex', 'as' => 'forum']);#论坛首页
+        Route::get('/forum.php',    ['uses' => 'ForumBaseController@ForumIndex', 'as' => 'forum-index']);#论坛首页
+        Route::get('/forum',        ['uses' => 'ForumBaseController@ForumIndex', 'as' => 'forum-index']);#论坛首页
         Route::get('/about', ['uses' => 'ForumBaseController@index', 'as' => 'about']);#about
         Route::get('/talk', ['uses' => 'ForumBaseController@talk', 'as' => 'talk']);#帖子首页
         Route::get('/notice', ['uses' => 'ForumBaseController@notice', 'as' => 'notice']);#声明

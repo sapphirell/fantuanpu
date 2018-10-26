@@ -59,7 +59,7 @@ class CommonMemberCount extends Model
      * @param $field 更新哪个字段
      * @param $value 更新的值,可正可负
      */
-    public static function AddUserCount($uid,$field,$value)
+    public static function AddUserCount($uid,$field,$value,$operation=false,$relatedid=1)
     {
         $cache_key = CoreController::USER_COUNT;
         $user = self::where('uid',$uid)->first() ;
@@ -70,13 +70,24 @@ class CommonMemberCount extends Model
         }
         $user->{$field}    += $value;
         $user->save();
+        //如果是变更积分,则记录积分变更日志
+        if (in_array($field,self::$extcredits))
+        {
+            $log = new CreditLogModel();
+            $log->operation = $operation;
+            $log->$relatedid = $relatedid;
+            $log->dateline = time();
+            $log->{$field}    = $value;
+            $log->save();
+        }
+
         Cache::forget($cache_key['key'] .$uid);
     }
 
     /**
      *  一次更新用户多个字段的值
      */
-    public static function BatchAddUserCount($uid ,$data)
+    public static function BatchAddUserCount($uid ,$data,$operation='RPR',$relatedid=1)
     {
         $cache_key = CoreController::USER_COUNT;
         $user = self::where('uid', $uid)->first();
@@ -85,10 +96,22 @@ class CommonMemberCount extends Model
             $user = new self();
             $user->uid = $uid;
         }
+        #j积分变更日志
+        $log = new CreditLogModel();
+        $log->operation = $operation;
+        $log->$relatedid = $relatedid;
+        $log->dateline = time();
+
         foreach ($data as $key => $value)
         {
             $user->{$key}    += $value;
+            if (in_array($key,self::$extcredits))
+            {
+                $log_update     = true;
+                $log->{$key}    = $value;
+            }
         }
+        $log_update && $log->save();
         $user->save();
         Cache::forget($cache_key['key'] .$uid);
     }

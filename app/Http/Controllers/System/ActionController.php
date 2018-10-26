@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Cache;
 
 class ActionController extends Controller
 {
-    public static function complete_action(string $action_name,int $uid)
+    public static function complete_action(string $action_name,int $uid,int $relatedid=0)
     {
         $to_do = [];
         //触发勋章
@@ -43,6 +43,6 @@ class ActionController extends Controller
         //TODO:触发任务
 
         //把todo里的积分加给用户
-        CommonMemberCount::BatchAddUserCount($uid,$to_do);
+        !empty($to_do) && CommonMemberCount::BatchAddUserCount($uid,$to_do,$action_name,$relatedid);
     }
 }
