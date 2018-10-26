@@ -29,7 +29,7 @@
 
 <script>
 $(document).ready(function () {
-    fantuanpuSocket = new WebSocket("ws://47.91.214.27:8002");
+    fantuanpuSocket = new WebSocket("wss://ws.fantuanpu.com:8002");//http://testgua.fantuanpu.com:8002
     var identify = {
         "type"      : "IM",
         "user_name" : $('#username').val(),
