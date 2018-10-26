@@ -23,13 +23,14 @@
         <input type="text" id="msg" style="width: 100%;border: 0px;padding: 10px;color: #4288a7;box-shadow: 0 3px 5px #cadaef inset;    border-top: 2px solid #919191;">
     </div>
     <input type="hidden" id="username" class="form-control" disabled value="{{$data['im_username']}}" style="width: 250px;margin-bottom: 5px;">
-    <input type="hidden" id="uid" disabled value="{{session('user_info')->uid ? : $data['im_userid']}}">
+    <input type="hidden" id="uid" disabled value="{{session('user_info')->uid ? : session('access_id')}}">
     <input type="hidden" id="avatar" disabled value="{{$data['avatar']}}">
 </div>
 
 <script>
 $(document).ready(function () {
     fantuanpuSocket = new WebSocket("wss://ws.fantuanpu.com:8002");//http://testgua.fantuanpu.com:8002
+//    fantuanpuSocket = new WebSocket("ws://47.91.214.27:8002");//http://testgua.fantuanpu.com:8002
     var identify = {
         "type"      : "IM",
         "user_name" : $('#username').val(),
