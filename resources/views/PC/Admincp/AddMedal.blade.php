@@ -107,6 +107,16 @@
                                 <div class="clear"></div>
                             </div>
                         </div>
+                        {{--勋章稀有度--}}
+                        <div class="form-group">
+                            <div class="" style="margin-bottom: 10px">
+                                <label for="inputPassword" class="col-sm-2 control-label">稀有度</label>
+                                <div class="col-sm-3">
+                                    <input type="text" id="rarity" class="form-control">
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                        </div>
                         <div class="col-sm-2 control-label">
                             <span class="btn btn-primary submit">提交</span>
                         </div>
@@ -151,6 +161,7 @@
                 sell_end : $('#end').val(),
                 limit : $('#num').val(),
                 medal_name : $('.medal_name').val(),
+                rarity : $('#rarity').val(),
                 csrf : $('#csrf').val()
             }
             var price_group = $(".price_group").length

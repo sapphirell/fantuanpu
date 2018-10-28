@@ -89,4 +89,8 @@ class CoreController extends Controller
      * 勋章信息,存储一年
      */
     const MEDAL_INFO = ['key' => 'medal_info' , 'time' => 1008084812];
+    /**
+     *  动作信息,储存一年
+     */
+    const ACTION_INFO = ['key' => 'action_info_' , 'time' => 1008084812];
 }
