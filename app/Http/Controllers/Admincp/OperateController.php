@@ -43,8 +43,10 @@ class OperateController extends Controller
         $medal->sell_start = $request->input('sell_start');
         $medal->sell_end = $request->input('sell_end');
         $medal->limit   =  $request->input('limit');
+        $medal->limit   =  $request->input('limit');
 
         $medal->save();
+        return self::response();
     }
     public function medal_list(Request $request)
     {

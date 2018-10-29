@@ -15,6 +15,20 @@
     .bm_c{
         height: 99.9%!important;
     }
+    .medal_swich{
+        list-style: none;
+        float: right;
+        background: #fff;
+        padding: 9px 4px;
+        margin: 5px;
+        border-radius: 5px;
+        box-shadow: 1px 2px 1px #ccc;
+        cursor: pointer;
+        border: 2px dashed #ccc;
+        padding: 4px 20px;
+        border-radius: 8px;
+        font-weight: 800;
+    }
 </style>
 <div class="bm_h">我的勋章</div>
 <div class="bm_c" style="background: #ffffff;height: 100%;overflow: hidden">
@@ -46,6 +60,11 @@
 
 
     @endif
+    <div>
+        <span class="medal_swich">佩戴中</span>
+        <span class="medal_swich">保管箱</span>
+        <span class="medal_swich">寄售中</span>
+    </div>
     <div style="float: right;margin: 15px;">
 
 {{--        {{ $data['my_thread']->links() }}--}}

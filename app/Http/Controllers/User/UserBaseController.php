@@ -10,9 +10,11 @@ use App\Http\DbModel\CommonMemberCount;
 use App\Http\DbModel\CommonUsergroupModel;
 use App\Http\DbModel\ForumThreadModel;
 use App\Http\DbModel\ImModel;
+use App\Http\DbModel\MedalModel;
 use App\Http\DbModel\MemberFieldForumModel;
 use App\Http\DbModel\UCenter_member_model;
 use App\Http\DbModel\User_model;
+use App\Http\DbModel\UserMedalModel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
@@ -412,7 +414,76 @@ class UserBaseController extends Controller
             }
         }
         //        dd( $this->data['old_score']);
+        UserMedalModel::flush_user_medal(session('user_info')->uid);
+        //查询我佩戴的勋章,我的保管箱等
+        $this->data['my_medal'] = UserMedalModel::get_user_medal(session('user_info')->uid);
+
+
         return view('PC/UserCenter/MyMedal')->with('data',$this->data);
 
+    }
+
+    /**
+     * 购买勋章
+     * @param Request $request
+     */
+    public function buy_medal(Request $request)
+    {
+        if($request->input('source') == 'medal_shop')
+        {
+            //购买一手勋章
+            //勋章是否存在
+            $medal = MedalModel::find($request->input('medal_id'));
+            if (empty($medal))
+                return self::response([],40001,'勋章不存在');
+            //库存是否足够
+            if ($medal->limit < 1)
+                return self::response([],40002,'勋章库存不足');
+            //是否在售
+            if (time() < strtotime($medal->sell_start))
+                return self::response([],40003,'勋章还未开售');
+            if (time() > strtotime($medal->sell_end))
+                return self::response([],40003,'勋章已经截止出售');
+            //积分是否足够
+            $need_score = json_decode($medal->medal_sell,true);
+            $user_count = CommonMemberCount::find(session('user_info')->uid);
+            $pay = [];
+
+            foreach ($need_score as $value)
+            {
+                if ($user_count[$value['score_type']] < $value['score_value'])
+                    return self::response([],40004,'您的'.CommonMemberCount::$extcredits[$value['score_type']]
+                        .'不足,需要'.$value['score_value'].',您有'.$user_count[$value['score_type']] );
+                $pay[$value['score_type']] +=  $value['score_value'];
+            }
+
+//            CommonMemberCount::BatchAddUserCount();
+
+        }
+        DB::transaction(function () use ($pay,$request,$medal) {
+            //用户扣钱
+            CommonMemberCount::BatchAddUserCount(session('user_info')->uid,$pay,'BNM',$request->input('medal_id'));
+            //用户加勋章
+            $userMedal = new UserMedalModel();
+            $userMedal->uid = session('user_info')->uid;
+            $userMedal->mid = $request->input('medal_id');
+            $userMedal->status = 2;
+            $userMedal->save();
+            if ($request->input('source') == 'medal_shop')
+            {
+                //买一手勋章,要扣除库存
+                $medal->limit -= 1;
+                $medal->save();
+            }
+            else{
+                //TODO:如果是买二手,还需要扣除勋章
+            }
+
+        });
+
+        //更新用户佩戴勋章缓存
+        UserMedalModel::flush_user_medal(session('user_info')->uid);
+
+        return self::response([],200,'购买成功,请查看保管箱');
     }
 }

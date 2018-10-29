@@ -6,6 +6,7 @@
 <script type="text/javascript" src="/Static/Script/wangEditor/wangEditor.js"></script>
 <style>
     .fourm_thread_items {    padding: 5px 8px;background: #ffffff;    box-shadow: 0 0 5px #ddd;}
+    .medal_item *{    color: #36567d; font-size: 14px;}
     .avatar {float: left}
     .wp {
         margin-top: 29px;
@@ -35,8 +36,14 @@
         float: left;
         margin:5px;
     }
+    .medal_info {
+        margin:10px;
+    }
     .alert_span {
         color: #00A0FF;
+    }
+    .medal_item {
+        padding: 5px;
     }
     .N , .R , .SR ,.UR{
         font-weight: bold;
@@ -65,7 +72,7 @@
         <div class="_3_1_left" style="
         /*box-shadow: 0 0 11px #e6e6e6;background: #ffffff;*/
         border-radius: 5px;overflow: hidden;padding: 8px">
-            <div style="background: #eee;border: 1px solid #ccc;padding: 5px;" class="screen-boday">
+            <div style="background: #eee;border: 1px solid #ccc;padding: 5px;    box-shadow: 0 0 11px #cacaca;margin-top: 5px;border: 2px solid #868686;border-radius: 5px;" class="screen-boday">
                 <div>
                     <span class="screen-head">稀有度</span>
                     <select>
@@ -96,34 +103,53 @@
                 <div class="clear"></div>
             </div>
 
-            <div style="background: #ffffff;border: 2px solid #EEEEEE;">
+            <div style="background: #ffffff;    box-shadow: 0 0 11px #cacaca;margin-top: 5px;border: 2px solid #868686;border-radius: 5px;">
                 @foreach($data['medal'] as $value)
-                    <div>
+                    <div class="medal_item" style="float: left">
                         <p>
+                            <img src="{{$value->medal_image}}">
                             <span class="{{$value->rarity}}">{{$value->medal_name}}</span>
-
+                            <a href="">购买</a>
                         </p>
                         {{ $action = json_decode($value->medal_action,true) }}
-                        <label>勋章属性</label>
-                        <ol>
-                            <li>
-                                @foreach($action as $action_value)
-                                    <?php
-                                    $act_info = \App\Http\DbModel\ActionModel::name($action_value['action_name']);
-                                    ?>
-                                    <span class="alert_span">{{ $act_info->action_name }}</span> 中,有
-                                    <span  class="alert_span">{{ $action_value['rate'] * 100}} %</span>
-                                    概率获得
-
-                                    <span  class="alert_span">{{ $action_value['score_value'] }}</span>
-                                    枚
-                                    <span  class="alert_span">{{ \App\Http\DbModel\CommonMemberCount::$extcredits[$action_value['score_type']] }}</span>
+                        {{ $sell = json_decode($value->medal_sell,true) }}
+                        <div class="medal_info">
+                            <label style="    margin: 0px;">库存</label>
+                            <p style="margin-left: 45px;">{{$value->limit}}</p>
+                            <label>贩售日期</label>
+                            <p style="margin-left: 45px;    ">{{$value->sell_start}} —— {{$value->sell_end}}</p>
+                            <label>勋章售价</label>
+                            <ul>
+                                @foreach($sell as $sell_value)
+                                    <li style="    margin-left: 45px;">
+                                        <p>{{$sell_value['score_value']}}枚{{\App\Http\DbModel\CommonMemberCount::$extcredits[$sell_value['score_type']]}}</p>
+                                    </li>
                                 @endforeach
-                            </li>
-                        </ol>
+                            </ul>
+                            <label>勋章属性</label>
+                            <ul>
+                                @foreach($action as $action_value)
+                                    <li style="    margin-left: 45px;">
+                                        <?php
+                                        $act_info = \App\Http\DbModel\ActionModel::name($action_value['action_name']);
+                                        ?>
+                                        <span class="alert_span">{{ $act_info->action_name }}</span> 时,有
+                                        <span  class="alert_span">{{ $action_value['rate'] * 100}} %</span>
+                                        概率获得
+
+                                        <span  class="alert_span">{{ $action_value['score_value'] }}</span>
+                                        枚
+                                        <span  class="alert_span">{{ \App\Http\DbModel\CommonMemberCount::$extcredits[$action_value['score_type']] }}</span>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+
 
                     </div>
+
                 @endforeach
+                <div class="clear"></div>
             </div>
         </div>
         <div class="_3_1_right">

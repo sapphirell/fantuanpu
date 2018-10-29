@@ -13,8 +13,8 @@ class ActionModel extends Model
     public $timestamps = false;
     public static function name($name)
     {
-        $cachekey = CoreController::ACTION_INFO . $name;
-        return Cache::remember($cachekey['key'],$cachekey['time'],function () use ($name){
+        $cachekey = CoreController::ACTION_INFO;
+        return Cache::remember($cachekey['key'] . $name,$cachekey['time'],function () use ($name){
             return self::where('action_key',$name)->first();
         });
     }

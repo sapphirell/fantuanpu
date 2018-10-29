@@ -112,7 +112,13 @@
                             <div class="" style="margin-bottom: 10px">
                                 <label for="inputPassword" class="col-sm-2 control-label">稀有度</label>
                                 <div class="col-sm-3">
-                                    <input type="text" id="rarity" class="form-control">
+                                    <select class="rarity">
+                                        <option>请选择</option>
+                                        <option value="N">N</option>
+                                        <option value="R">R</option>
+                                        <option value="SR">SR</option>
+                                        <option value="UR">UR</option>
+                                    </select>
                                 </div>
                                 <div class="clear"></div>
                             </div>
@@ -161,7 +167,7 @@
                 sell_end : $('#end').val(),
                 limit : $('#num').val(),
                 medal_name : $('.medal_name').val(),
-                rarity : $('#rarity').val(),
+                rarity : $('.rarity').val(),
                 csrf : $('#csrf').val()
             }
             var price_group = $(".price_group").length
@@ -194,6 +200,7 @@
 
             $.post('/admincp/store_medal',sendData,function (res) {
                 console.log(res)
+                alert(res.msg)
             });
         });
     });

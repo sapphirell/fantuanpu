@@ -130,6 +130,7 @@ Route::group([
         Route::get('/my_thread', ['uses' => 'UserBaseController@my_thread', 'as' => 'get_my_thread']);#我发的帖子
         Route::get('/my_medal', ['uses' => 'UserBaseController@my_medal', 'as' => 'my_medal']);# 我的勋章
         Route::get('/sell_old_medal', ['uses' => 'UserBaseController@sell_old_medal', 'as' => 'my_medal']);# 卖掉旧版勋章
+        Route::get('/buy_medal', ['uses' => 'UserBaseController@buy_medal', 'as' => 'buy_medal']);# 购买勋章
     });
     //管理后台 IndexCp
     Route::group([
