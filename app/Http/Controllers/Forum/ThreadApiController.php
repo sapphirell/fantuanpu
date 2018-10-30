@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Forum;
 
+use App\Http\Controllers\System\ActionController;
 use App\Http\Controllers\System\CoreController;
 use App\Http\DbModel\CommonMemberCount;
 use App\Http\DbModel\Forum_forum_model;
@@ -109,6 +110,10 @@ class ThreadApiController extends Controller
          * 用户统计更新
          */
         $count = CommonMemberCount::AddUserCount($user_info->uid,"threads",1);
+        /**
+         *  完成动作 发帖
+         */
+        return ActionController::complete_action('PNT',$user_info->uid,$this->threadModel->tid);
     }
     /**
      * 回复帖子

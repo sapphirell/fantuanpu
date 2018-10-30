@@ -90,6 +90,7 @@ class CommonMemberCount extends Model
     public static function BatchAddUserCount($uid ,$data,$operation='RPR',$relatedid=1)
     {
         $cache_key = CoreController::USER_COUNT;
+        $log_update = false;
         $user = self::where('uid', $uid)->first();
         if (empty($user))
         {

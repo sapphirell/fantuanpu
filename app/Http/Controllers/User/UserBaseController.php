@@ -414,15 +414,66 @@ class UserBaseController extends Controller
             }
         }
         //        dd( $this->data['old_score']);
-        UserMedalModel::flush_user_medal(session('user_info')->uid);
+//        UserMedalModel::flush_user_medal(session('user_info')->uid);
         //查询我佩戴的勋章,我的保管箱等
         $this->data['my_medal'] = UserMedalModel::get_user_medal(session('user_info')->uid);
-
+//        dd($this->data['my_medal']);
 
         return view('PC/UserCenter/MyMedal')->with('data',$this->data);
 
     }
 
+    /**
+     * 戴起勋章
+     * @param Request $
+     */
+    public function adorn_mine(Request $request)
+    {
+        //检查是否有该勋章
+        $medal = UserMedalModel::find($request->input('mid'));
+        if (empty($medal))
+            return self::response([],40002,'勋章记录不存在');
+        //勋章归属
+        if ($medal->uid != session('user_info')->uid )
+            return self::response([],40003,'该勋章不属于你');
+        //该勋章是否在保管箱中
+        if ($medal->status != 2)
+            return self::response([],40004,'勋章必须存储于保管箱中');
+        //佩戴数目是否少于4
+        $count = count(UserMedalModel::get_user_medal(session('user_info')->uid)['in_adorn']);
+        if ($count > 3)
+            return self::response([],40005,'同一时间佩戴的勋章最多4枚');
+
+        $medal->status = 1;
+        $medal->save();
+        //刷新用户佩戴缓存
+        UserMedalModel::flush_user_medal(session('user_info')->uid);
+        return self::response([],200,'佩戴成功');
+    }
+
+    /**
+     * 放入保管箱
+     * @param Request $request
+     */
+    public function put_in_box(Request $request)
+    {
+        //检查是否有该勋章
+        $medal = UserMedalModel::find($request->input('mid'));
+        if (empty($medal))
+            return self::response([],40002,'勋章记录不存在');
+        //勋章归属
+        if ($medal->uid != session('user_info')->uid )
+            return self::response([],40003,'该勋章不属于你');
+        //该勋章是否佩戴中
+        if ($medal->status != 1)
+            return self::response([],40004,'勋章必须佩戴中');
+
+        $medal->status = 2;
+        $medal->save();
+        //刷新用户佩戴缓存
+        UserMedalModel::flush_user_medal(session('user_info')->uid);
+        return self::response([],200,'成功取下');
+    }
     /**
      * 购买勋章
      * @param Request $request
@@ -460,7 +511,7 @@ class UserBaseController extends Controller
 //            CommonMemberCount::BatchAddUserCount();
 
         }
-        DB::transaction(function () use ($pay,$request,$medal) {
+        $res = DB::transaction(function () use ($pay,$request,$medal) {
             //用户扣钱
             CommonMemberCount::BatchAddUserCount(session('user_info')->uid,$pay,'BNM',$request->input('medal_id'));
             //用户加勋章
@@ -481,9 +532,11 @@ class UserBaseController extends Controller
 
         });
 
+
         //更新用户佩戴勋章缓存
         UserMedalModel::flush_user_medal(session('user_info')->uid);
-
+        //更新勋章缓存
+        MedalModel::flush_medal($request->input('medal_id'));
         return self::response([],200,'购买成功,请查看保管箱');
     }
 }

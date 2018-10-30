@@ -162,7 +162,8 @@ class ForumController extends Controller
         if (!$fid)
             return self::response([],40004,'fid为空,至少需要传输fname或fid');
 
-        $threadApiController->_newThread($fid,$request->input('title'),$request->input('content'),$request->getClientIp(),$user_info);
+        $result = $threadApiController->_newThread($fid,$request->input('title'),$request->input('content'),$request->getClientIp(),$user_info);
+
         return self::response();
     }
     //app回复帖子

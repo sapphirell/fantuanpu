@@ -16,7 +16,12 @@ class MedalModel extends Model
     {
 
     }
-    public function find($mid)
+    public static function flush_medal($mid)
+    {
+        $cachekey = CoreController::MEDAL_INFO;
+        Cache::forget($cachekey['key'].$mid);
+    }
+    public static function find($mid)
     {
         $cachekey = CoreController::MEDAL_INFO;
         return Cache::remember($cachekey['key'].$mid,$cachekey['time'],function () use ($mid){

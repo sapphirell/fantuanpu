@@ -25,11 +25,11 @@ class UserMedalModel extends Model
             foreach ($user_medal as $value)
             {
                 if ($value->status == 1)
-                    $data['in_adorn'][] = $value;
+                    $data['in_adorn'][$value->id] = MedalModel::find($value->mid) ;
                 elseif ($value->status == 2)
-                    $data['in_box'][] = $value;
+                    $data['in_box'][$value->id] =  MedalModel::find($value->mid) ;
                 elseif($value->status == 3)
-                    $data['in_store'][] = $value;
+                    $data['in_store'][$value->id] =  MedalModel::find($value->mid) ;
             }
             return $data;
         });

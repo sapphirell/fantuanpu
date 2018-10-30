@@ -73,34 +73,29 @@
         /*box-shadow: 0 0 11px #e6e6e6;background: #ffffff;*/
         border-radius: 5px;overflow: hidden;padding: 8px">
             <div style="background: #eee;border: 1px solid #ccc;padding: 5px;    box-shadow: 0 0 11px #cacaca;margin-top: 5px;border: 2px solid #868686;border-radius: 5px;" class="screen-boday">
-                <div>
-                    <span class="screen-head">稀有度</span>
-                    <select>
-                        <option>N</option>
-                        <option>R</option>
-                        <option>SR</option>
-                        <option>UR</option>
-                    </select>
-                </div>
+                <form>
+                    <div style="float:left;">
+                        <span class="screen-head">稀有度</span>
+                        <select>
+                            <option value="all">全部</option>
+                            <option value="N">N</option>
+                            <option value="N">R</option>
+                            <option value="N">SR</option>
+                            <option value="N">UR</option>
+                        </select>
+                    </div>
+                    <div style="float:left;margin-left: 10px">
+                        <span class="screen-head">库存</span>
+                        <select>
+                            <option>全部</option>
+                            <option>只看在售有货</option>
+                        </select>
+                    </div>
 
-                <div>
-                    <span class="screen-head">稀有度</span>
-                    <select>
-                        <option>N</option>
-                        <option>R</option>
-                        <option>SR</option>
-                        <option>UR</option>
-                    </select>
-                </div>
+                </form>
 
-                <div>
-                    <span class="screen-head">库存</span>
-                    <select>
-                        <option>全部</option>
-                        <option>只看在售有货</option>
-                    </select>
-                </div>
                 <div class="clear"></div>
+
             </div>
 
             <div style="background: #ffffff;    box-shadow: 0 0 11px #cacaca;margin-top: 5px;border: 2px solid #868686;border-radius: 5px;">
@@ -109,7 +104,7 @@
                         <p>
                             <img src="{{$value->medal_image}}">
                             <span class="{{$value->rarity}}">{{$value->medal_name}}</span>
-                            <a href="">购买</a>
+                            <a class="buy_medal" key="{{$value->id}}">购买</a>
                         </p>
                         {{ $action = json_decode($value->medal_action,true) }}
                         {{ $sell = json_decode($value->medal_sell,true) }}
@@ -161,14 +156,28 @@
                 </div>
             </div>
         </div>
-
+        {{csrf_field('csrf')}}
 
     </div>
 </div>
 
 <script>
     $(document).ready(function () {
-
+        //放入保管箱 put-in-box
+        var csrf = $("#csrf").val()
+        $(".buy_medal").click(function (e) {
+            e.preventDefault();
+            var data = {
+                "csrf"  : csrf,
+                source   : "medal_shop",
+                medal_id : $(this).attr('key')
+            };
+            console.log('data')
+            $.post("/buy_medal",data,function (e) {
+                alert(e.msg);
+                window.location.reload()
+            })
+        })
     })
 </script>
 @include('PC.Common.Footer')

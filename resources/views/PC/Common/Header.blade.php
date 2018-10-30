@@ -88,6 +88,7 @@
             @if(session('user_info')->uid)
             <li class="trans"><a href="/user-center?source=web">用户中心<i class="fa fa-pencil-square-o fa-lg"></i></a></li>
             <li class="trans"><a href="">团菌动态<i class="fa fa-sticky-note-o fa-lg"></i></a></li>
+            <li class="trans"><a href="/medal_shop">勋章商城<i class="fa fa-sticky-note-o fa-lg"></i></a></li>
             <li class="trans"><a href="/logout">离开<i class="fa fa-sign-in fa-lg"></i></a></li>
                 @if(session('user_info')->gid > 0)
                     <li class="trans"><a href="/admincp">管理后台</a></li>

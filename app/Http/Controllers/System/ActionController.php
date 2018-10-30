@@ -24,7 +24,7 @@ class ActionController extends Controller
             //查用户勋章可能的触发条件
             foreach ($user_medal as $value)
             {
-                $medal_info = MedalModel::find($value->mid);
+                $medal_info = MedalModel::find($value->id);
                 foreach ($medal_action = json_decode($medal_info->medal_action,false) as $value)
                 {
                     if ($value->action_name == $action_name)
@@ -32,7 +32,9 @@ class ActionController extends Controller
                         //被触发
                         if ( rand(1,10000) < $value->rate * 10000) // 中奖,给用户加币
                         {
-                            $to_do[$value->score_type] += $value->score_value;
+                            isset($to_do[$value->score_type])
+                                ? $to_do[$value->score_type] += $value->score_value
+                                : $to_do[$value->score_type] = $value->score_value;
                         }
                     }
                 }
@@ -44,5 +46,6 @@ class ActionController extends Controller
 
         //把todo里的积分加给用户
         !empty($to_do) && CommonMemberCount::BatchAddUserCount($uid,$to_do,$action_name,$relatedid);
+        return $to_do;
     }
 }
