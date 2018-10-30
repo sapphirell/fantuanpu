@@ -28,7 +28,7 @@
 
 <div class="header">
     <div class="memuBtn"></div>
-    <p class="title"><a href="/about" style="">饭团扑.com</a></p>
+    <p class="title"><a href="/" style="">饭团扑.com</a></p>
     <div style=" min-width: 900px ;  max-width: 960px;    margin: 0 auto;">
         <h1 style="display: inline;margin:0px;float:right;"></h1>
         <div class="search">
