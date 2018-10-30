@@ -45,6 +45,30 @@
     .medal_item {
         padding: 5px;
     }
+    .medal_img.N {
+        width: 50px;
+        border-radius: 100%;
+        border: 2px solid #232831;
+        box-shadow: 0 2px 8px #69c2ef;
+    }
+    .medal_img.R {
+        width: 50px;
+        border-radius: 100%;
+        border: 2px solid #8da7ff;
+        box-shadow: 0 2px 8px #8798b4;
+    }
+    .medal_img.SR {
+        width: 50px;
+        border-radius: 100%;
+        border: 2px solid #9d79ad;
+        box-shadow: 0 2px 8px #8da7ff;
+    }
+    .medal_img.UR {
+        width: 50px;
+        border-radius: 100%;
+        border: 2px solid #ffb26f;
+        box-shadow: 0 2px 8px #fde487;
+    }
     .N , .R , .SR ,.UR{
         font-weight: bold;
         text-shadow: 0 0 3px #0202024f;
@@ -102,7 +126,7 @@
                 @foreach($data['medal'] as $value)
                     <div class="medal_item" style="float: left">
                         <p>
-                            <img src="{{$value->medal_image}}">
+                            <img class="medal_img {{$value->rarity}}" src="{{$value->medal_image}}">
                             <span class="{{$value->rarity}}">{{$value->medal_name}}</span>
                             <a class="buy_medal" key="{{$value->id}}">购买</a>
                         </p>
