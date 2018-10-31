@@ -365,8 +365,8 @@ class UserBaseController extends Controller
 
         $user_session = User_model::find(session('user_info')->uid);
 
-        if ($user_session->sellmedal != 1)
-            return self::response([],40002,'已经兑换过了!');
+//        if ($user_session->sellmedal != 1)
+//            return self::response([],40002,'已经兑换过了!');
 
         $user_session->sellmedal = 2;
         $user_session->save();
@@ -374,20 +374,28 @@ class UserBaseController extends Controller
         $my_old_medal = DB::table('pre_forum_medalmybox')
                     ->leftJoin('pre_forum_medal','pre_forum_medalmybox.medalid','=','pre_forum_medal.medalid')
                     ->where('uid',$user_session->uid)->get();
-        $user_score = [];
+        $user_score =[];
+        foreach (CommonMemberCount::$extcredits as $key => $value)
+        {
+            $user_score[$key] = 0;
+        }
+
         foreach ($my_old_medal as &$value)
         {
             $value->permission = common_unserialize($value->permission);
             if (strpos($value->permission[0], "extcredits") !== false)
             {
                 //统计所有可贩卖价格
-                $user_score[explode(" ",$value->permission[0])[0]] += explode(" ",$value->permission[0])[2];
+//                echo "\{ ".$value->permission[0] ."\}" ."<br>";
+                if (explode(" ",$value->permission[0])[0])
+                    $user_score[explode(" ",$value->permission[0])[0]] += explode(" ",$value->permission[0])[2];
                 $value->price = ['type'=>explode(" ",$value->permission[0])[0] , 'num'=>explode(" ",$value->permission[0])[2]];
             }
         }
         $user = User_model::find($user_session->uid);
         $user->sellmedal = 2;
         $user->save();
+//        dd($user_score);
         CommonMemberCount::BatchAddUserCount($user_session->uid,$user_score);
         //标记用户为已经兑换
 

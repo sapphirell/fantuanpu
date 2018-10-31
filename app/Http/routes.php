@@ -75,7 +75,7 @@ Route::group([
     ], function () {
         Route::get('/',             ['uses' => 'ForumBaseController@ForumIndex', 'as' => 'forum']);#论坛首页
         Route::get('/forum.php',    ['uses' => 'ForumBaseController@ForumIndex', 'as' => 'forum-index']);#论坛首页
-        Route::get('/forum',        ['uses' => 'ForumBaseController@ForumIndex', 'as' => 'forum-index']);#论坛首页
+        Route::get('/index',        ['uses' => 'ForumBaseController@ForumIndex', 'as' => 'forum-index']);#论坛首页
         Route::get('/about', ['uses' => 'ForumBaseController@index', 'as' => 'about']);#about
         Route::get('/talk', ['uses' => 'ForumBaseController@talk', 'as' => 'talk']);#帖子首页
         Route::get('/notice', ['uses' => 'ForumBaseController@notice', 'as' => 'notice']);#声明
