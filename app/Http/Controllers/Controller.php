@@ -50,7 +50,8 @@ class Controller extends BaseController
     {
         $data['class']  = $class;
         $data['action'] = $action;
-        return Redis::rpush('list',json_encode($data));
+        $redis = Redis::connection('socket');
+        return $redis->rpush('list',json_encode($data));
     }
     public static function response($data = null,$ret='200',$msg='操作成功')
     {

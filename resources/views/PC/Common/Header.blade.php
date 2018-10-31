@@ -119,5 +119,13 @@
             time: 4000
         });
         @endif
+
+        //全局连接websocket
+
+        if(!window.fantuanpuSocket)
+        {
+            window.fantuanpuSocket = new WebSocket("wss://ws.fantuanpu.com:8002");//
+            //    window.fantuanpuSocket = new WebSocket("ws://47.91.214.27:8002");//
+        }
     })
 </script>

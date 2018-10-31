@@ -30,8 +30,7 @@
 
 <script>
 $(document).ready(function () {
-    fantuanpuSocket = new WebSocket("wss://ws.fantuanpu.com:8002");//http://testgua.fantuanpu.com:8002
-//    fantuanpuSocket = new WebSocket("ws://47.91.214.27:8002");//http://testgua.fantuanpu.com:8002
+
     var identify = {
         "type"      : "IM",
         "user_name" : $('#username').val(),
@@ -39,8 +38,8 @@ $(document).ready(function () {
         "user_id"   : $('#uid').val()
     };
 
-    fantuanpuSocket.onopen = function (event) {
-        fantuanpuSocket.send(JSON.stringify(identify));
+    window.fantuanpuSocket.onopen = function (event) {
+        window.fantuanpuSocket.send(JSON.stringify(identify));
         $('#msg').bind('keypress',function(event)
         {
             if(event.keyCode == "13")
@@ -54,12 +53,12 @@ $(document).ready(function () {
                 @if(session('user_info')->uid)
                         msg.user_id  = $('#uid').val()
                 @endif
-                fantuanpuSocket.send(JSON.stringify(msg));
+                window.fantuanpuSocket.send(JSON.stringify(msg));
                 $('#msg').val(' ');
             }
         });
     };
-    fantuanpuSocket.onmessage = function (event) {
+    window.fantuanpuSocket.onmessage = function (event) {
         wsMsg = JSON.parse(event.data);
 //            if (data.indexOf('heart') > 0) {
 //                exampleSocket.send(data);

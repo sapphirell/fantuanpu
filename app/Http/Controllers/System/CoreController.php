@@ -93,4 +93,9 @@ class CoreController extends Controller
      *  动作信息,储存一年
      */
     const ACTION_INFO = ['key' => 'action_info_' , 'time' => 1008084812];
+    /**
+     *  今日是否签到,储存2天,需要拼接uid和YMD
+     */
+    const USER_SIGN = ['key' => 'user_sign_','time' => 60*24*2];
+
 }

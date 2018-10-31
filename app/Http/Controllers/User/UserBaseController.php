@@ -548,4 +548,5 @@ class UserBaseController extends Controller
         MedalModel::flush_medal($request->input('medal_id'));
         return self::response([],200,'购买成功,请查看保管箱');
     }
+
 }

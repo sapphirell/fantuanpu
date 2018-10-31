@@ -114,6 +114,14 @@ return [
             'port' => env('REDIS_PORT', 6379),
             'database' => 0,
         ],
+        'socket' => [
+            'host' => '47.91.214.27',
+            'parameters'=>[
+                'password' => 'fantuanpu_sw233',
+            ],
+            'port' => 6379,
+            'database' => 1,
+        ]
 
     ],
 
