@@ -207,8 +207,8 @@ class ThreadApiController extends Controller
         $posts_cache_key    = CoreController::POSTS_VIEW;
 //        dd($posts_cache_key['key'].$request->input('tid') ."_" . ceil($post->position/20));
         Cache::forget( $posts_cache_key['key'].$request->input('tid') ."_" . ceil($post->position/20));
-
-        ActionController::complete_action('RCT',$user_info->uid,$this->threadModel->tid);
+        
+        ActionController::complete_action('RCT',$user_info->uid,$request->input('tid'));
         return self::response();
     }
 }
