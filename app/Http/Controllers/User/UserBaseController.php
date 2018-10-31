@@ -365,8 +365,8 @@ class UserBaseController extends Controller
 
         $user_session = User_model::find(session('user_info')->uid);
 
-//        if ($user_session->sellmedal != 1)
-//            return self::response([],40002,'已经兑换过了!');
+        if ($user_session->sellmedal != 1)
+            return self::response([],40002,'已经兑换过了!');
 
         $user_session->sellmedal = 2;
         $user_session->save();
@@ -387,8 +387,9 @@ class UserBaseController extends Controller
             {
                 //统计所有可贩卖价格
 //                echo "\{ ".$value->permission[0] ."\}" ."<br>";
-                if (explode(" ",$value->permission[0])[0])
-                    $user_score[explode(" ",$value->permission[0])[0]] += explode(" ",$value->permission[0])[2];
+                $extcredits = explode(" ",$value->permission[0])[0];
+                if ($extcredits && CommonMemberCount::$extcredits[$extcredits])
+                    $user_score[$extcredits] += explode(" ",$value->permission[0])[2];
                 $value->price = ['type'=>explode(" ",$value->permission[0])[0] , 'num'=>explode(" ",$value->permission[0])[2]];
             }
         }
