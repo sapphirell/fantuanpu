@@ -103,8 +103,10 @@
         text-decoration: none;
     }
     .post-avatar {
-        margin: 0 5px;
+        /*margin: 0 5px;*/
         display: block;
+        width: 70px !important;
+        height: 70px !important;
     }
     .user_medal {
         width: 200px;
@@ -250,7 +252,7 @@
                                                 </li>
                                             @endforeach
                                         </div>
-                                        <img class="trans medal_img {{$value->rarity}}" style="width: 30px;" src="{{$value->medal_image}}" key="{{$key}}">
+                                        <img class="trans medal_img {{$value->rarity}}" style="width: 30px;height: 30px" src="{{$value->medal_image}}" key="{{$key}}">
 
                                     @endforeach
                                 </div>
