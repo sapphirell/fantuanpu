@@ -20,7 +20,8 @@
     </div>
     <div>
         <span></span>
-        <input type="text" id="msg" style="width: 100%;border: 0px;padding: 10px;color: #4288a7;box-shadow: 0 3px 5px #cadaef inset;    border-top: 2px solid #919191;">
+        <input type="text" id="msg" style="width: 100%;border: 0px;padding: 10px;color: #4288a7;box-shadow: 0 3px 5px #cadaef inset;
+           border-top: 1px solid #919191;">
     </div>
     <input type="hidden" id="username" class="form-control" disabled value="{{$data['im_username']}}" style="width: 250px;margin-bottom: 5px;">
     <input type="hidden" id="uid" disabled value="{{session('user_info')->uid ? : session('access_id')}}">

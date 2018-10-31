@@ -42,7 +42,11 @@ class Thread_model extends Model
                     ->get();
             }
         );
+        //寻获当前用户佩戴的勋章
+        foreach ($cache as &$value)
+            $value->medal = UserMedalModel::get_user_medal($value->authorid);
 
+//        dd($value);
         return $cache;
     }
     /**

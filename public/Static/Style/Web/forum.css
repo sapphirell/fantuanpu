@@ -38,7 +38,7 @@
     border-radius: 5px;
     margin-bottom: 20px;
     box-shadow: 0 0 10px #dedede;
-    border: 2px solid #868686;
+    /*border: 2px solid #868686;*/
 }
 .forum_description {
     cursor: pointer;
