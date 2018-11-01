@@ -33,6 +33,7 @@
         <h1 style="display: inline;margin:0px;float:right;"></h1>
         <div class="search">
             <a class="add-me"><i class="icon-plus"></i> <span id="msg_num">0</span> Message</a>
+            <a>签到</a>
             <from action="">
                 <input type="text" name="" class="in_text" placeholder="Searching..">
 
@@ -121,11 +122,6 @@
         @endif
 
         //全局连接websocket
-
-        if(!window.fantuanpuSocket)
-        {
-            window.fantuanpuSocket = new WebSocket("wss://ws.fantuanpu.com:8002");//
-            //    window.fantuanpuSocket = new WebSocket("ws://47.91.214.27:8002");//
-        }
+        window.fantuanpuSocket = new WebSocket("wss://ws.fantuanpu.com:8002");//
     })
 </script>

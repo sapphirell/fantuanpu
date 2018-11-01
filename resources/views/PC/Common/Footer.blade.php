@@ -2,73 +2,90 @@
 
 
 <div class="wp footer_cut"></div>
-@if(session('user_info'))
+
     <div>
-        <input type="hidden" id="uid" value="{{session('user_info')->uid}}">
-        <input type="hidden" id="username" value="{{session('user_info')->username}}">
+        <input type="hidden" id="username" class="form-control" disabled value="{{$data['im_username']}}" style="width: 250px;margin-bottom: 5px;">
+        <input type="hidden" id="uid" disabled value="{{session('user_info')->uid ? : session('access_id')}}">
+        <input type="hidden" id="avatar" disabled value="{{$data['avatar']}}">
     </div>
     <script>
         $(document).ready(function () {
-            var identify = {
-                "type"      : "Forum",
-                "user_id"   : $('#uid').val(),
-                "user_name" : $('#username').val(),
-                "action"    : "identify"
-            };
 
 
             window.fantuanpuSocket.onopen = function (event) {
-                window.fantuanpuSocket.send(JSON.stringify(identify));
-//            $('#msg').bind('keypress',function(event)
-//            {
-//                if(event.keyCode == "13")
-//                {
-//                    $msg = {
-//                        "type"      : "IM",
-//                        "action"    : "talking",
-//                        "msg"       : $('#msg').val()
-//                    };
-//                    exampleSocket.send(JSON.stringify($msg));
-//                    $('#msg').val(' ');
-//                }
-//
-//            });
-            };
-            window.fantuanpuSocket.onmessage = function (event) {
-                wsMsg = JSON.parse(event.data);
-                switch(wsMsg.code)
+                @if(session('user_info'))
+                        //如果登录,鉴定一次论坛
+                    var identify = {
+                        "type"      : "Forum",
+                        "user_id"   : $('#uid').val(),
+                        "user_name" : $('#username').val(),
+                        "action"    : "identify"
+                    };
+                    window.fantuanpuSocket.send(JSON.stringify(identify));
+                @endif
+
+                if (window.socketPage == 'node_talk_room')
                 {
-                    case 200:
-                        alert(wsMsg.data.msg)
-                        break;
-                    case 20001:
-                        //有人回复帖子
-                        layer.tips(wsMsg.data.msg, '.add-me', {
-                            tips: [3, '#3595CC'],
-                            fixed: true,
-                            time: 6000
-                        });
-                        var num = parseInt($("#msg_num").text()) + 1 ;
-                        $("#msg_num").text(num);
-                        break;
-                    case 10002:
-                        $("tr:last").after("<tr> "+
-                                "<td>"+wsMsg.data.username+"</td>"+
-                                "<td>"+wsMsg.data.date+"</td>"+
-                                "<td>"+wsMsg.data.msg+"</td>"+
-                                "</tr>")
-                        break;
-                    default:
-
+                    //首页聊天室多发一次身份鉴定
+                    var identify = {
+                        "type"      : "IM",
+                        "user_name" : $('#username').val(),
+                        "action"    : "identify",
+                        "user_id"   : $('#uid').val()
+                    };
+                    window.fantuanpuSocket.send(JSON.stringify(identify));
                 }
-//            console.log(wsMsg.data.talking_num);
-            }
+                window.fantuanpuSocket.onmessage = function (event) {
+                    wsMsg = JSON.parse(event.data);
+                    switch(wsMsg.code)
+                    {
+                        case 200:
+                            alert(wsMsg.data.msg)
+                            break;
+                        case 200:
+                            alert(wsMsg.data.msg)
+                            break;
+                        case 10001: //首页聊天室
+                            $(".talking_num").text(wsMsg.data.talking_num)
 
+                            break;
+                        case 10002: //首页聊天室
+
+                            var html = "<div class='message-item'>";
+                            if ( wsMsg.data.username != '\u7cfb\u7edf\u6d88\u606f')
+                            {
+                                html += "<p><img src='"+wsMsg.data.avatar+"' style='width: 30px;border-radius: 100%;'><span>"+wsMsg.data.username+"</span></p>";
+                            }
+                            html += "<span class='talk_message'>"+wsMsg.data.msg+"</span></div>";
+                            $(".message-item:first").before(html);
+                            break;
+                        case 20001:
+                            //有人回复帖子
+                            layer.tips(wsMsg.data.msg, '.add-me', {
+                                tips: [3, '#3595CC'],
+                                fixed: true,
+                                time: 6000
+                            });
+                            var num = parseInt($("#msg_num").text()) + 1 ;
+                            $("#msg_num").text(num);
+                            break;
+                        case 10002:
+                            $("tr:last").after("<tr> "+
+                                    "<td>"+wsMsg.data.username+"</td>"+
+                                    "<td>"+wsMsg.data.date+"</td>"+
+                                    "<td>"+wsMsg.data.msg+"</td>"+
+                                    "</tr>")
+                            break;
+                        default:
+
+                    }
+                }
+            }
         })
 
 
     </script>
-@endif
+
 
 </body>
 </html>

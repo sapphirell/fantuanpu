@@ -41,9 +41,9 @@
         color: #000000;
     }
     .user_info {
-        width: 100%;
-        position: absolute;
-        bottom: -73px;}
+        float: left;
+        width:200px;
+    }
     .user_info > * {
         float: left;
     }
@@ -63,7 +63,7 @@
         width: 641px;
         float: left;
         min-height: 100px;
-        border-radius: 3px;
+        border-radius: 20px;
     }
     .w-e-text-container{
         height:200px!important;
@@ -107,6 +107,10 @@
         display: block;
         width: 70px !important;
         height: 70px !important;
+        border-radius: 50%;
+        overflow: hidden;
+        padding: 2px;
+        box-shadow: 0 2px 5px #c3def7;
     }
     .user_medal {
         width: 200px;
@@ -154,9 +158,13 @@
         background: #ffffffb5;
         color: #6fb4bd;
         border: 1px solid;
-        padding: 5px;
+        padding: 10px;
         z-index: 1000;
         width: 300px;
+        border-radius: 5px;
+    }
+    .author-avatar {
+
     }
 </style>
 <script>
@@ -180,40 +188,46 @@
 <body>
 
 <div class="wp" style="margin-top: 50px;">
-
-    <div class="thread_left" style="width: 70%;float: left">
-        <div class="forum_subject" style="    background: #FFFFFF;margin: 15px;padding: 15px;border-radius: 5px;box-shadow: 2px 3px 3px #e4e4e4;position: relative;padding-bottom: 200px;">
-            <div>
-                <span>当前位置</span> > <a href="/forum-{{$data['fid']}}-1.html" class="thread_position">{{$data['forum']->name}}</a>
-                <p>
-                    <span class="post_tab">帖子标签</span>
-                    <a class="post_tab_add">添加标签 +</a>
-                </p>
-
-            </div>
-            <h1 style="    font-size: 20px;font-family: 微软雅黑;font-weight: 500;text-align: left;">{{$data['thread']['thread_subject']->subject}}</h1>
-
-            <div class="user_info"  style="">
-                <div style="    position: relative;bottom: 73px;margin: 5px">
-                    {{avatar($data['thread']['thread_subject']->authorid,100,5,'post-avatar','normal')}}
-                </div>
-                <div style="    position: relative;bottom: 73px;    margin-left: 15px;">
-                    <p>
-                        <span style="">{{$data['thread']['thread_subject']->author}}</span>
-                        {{$data['thread']['thread_subject']->dateline}}
-                        查看数 : {{$data['thread']['thread_subject']->views}}
-                        回复数 : {{$data['thread']['thread_subject']->replies}}
-                    </p>
-                    <div style="background: #EEEEEE;color: black;height: 76px;width: 100%;text-align: center;color: #fff;">这里留着放签名档吧…</div>
-                </div>
-
-
-            </div>
-            <div class="bbcode_container">
-                {!! bbcode2html($data['thread']['thread_post'][0]->message) !!}
-            </div>
-            <div class="clear"></div>
+    <span>当前位置</span> ><a href="/forum-{{$data['fid']}}-1.html" class="thread_position">{{$data['forum']->name}}</a>
+    <div style="background: #FFFFFF;margin: 15px;padding: 15px;border-radius: 5px;box-shadow: 2px 3px 3px #e4e4e4;position: relative;padding-bottom: 200px;">
+        <div class="user_info">
+            <span style="">{{$data['thread']['thread_subject']->author}}</span>
+            {{avatar($data['thread']['thread_subject']->authorid,150,5,'author-avatar','big')}}
         </div>
+    </div>
+    <div class="thread_left" style="width: 70%;float: left">
+
+        {{--<div class="forum_subject" style="    background: #FFFFFF;margin: 15px;padding: 15px;border-radius: 5px;box-shadow: 2px 3px 3px #e4e4e4;position: relative;padding-bottom: 200px;">--}}
+            {{--<div>--}}
+                {{--<p>--}}
+                    {{--<span class="post_tab">帖子标签</span>--}}
+                    {{--<a class="post_tab_add">添加标签 +</a>--}}
+                {{--</p>--}}
+
+            {{--</div>--}}
+            {{--<h1 style="    font-size: 20px;font-family: 微软雅黑;font-weight: 500;text-align: left;">{{$data['thread']['thread_subject']->subject}}</h1>--}}
+
+            {{--<div class="user_info"  style="">--}}
+                {{--<div style="    position: relative;bottom: 73px;margin: 5px">--}}
+                    {{--{{avatar($data['thread']['thread_subject']->authorid,100,5,'post-avatar','normal')}}--}}
+                {{--</div>--}}
+                {{--<div style="    position: relative;bottom: 73px;    margin-left: 15px;">--}}
+                    {{--<p>--}}
+                        {{--<span style="">{{$data['thread']['thread_subject']->author}}</span>--}}
+                        {{--{{$data['thread']['thread_subject']->dateline}}--}}
+                        {{--查看数 : {{$data['thread']['thread_subject']->views}}--}}
+                        {{--回复数 : {{$data['thread']['thread_subject']->replies}}--}}
+                    {{--</p>--}}
+                    {{--<div style="background: #EEEEEE;color: black;height: 76px;width: 100%;text-align: center;color: #fff;">这里留着放签名档吧…</div>--}}
+                {{--</div>--}}
+
+
+            {{--</div>--}}
+            {{--<div class="bbcode_container">--}}
+                {{--{!! bbcode2html($data['thread']['thread_post'][0]->message) !!}--}}
+            {{--</div>--}}
+            {{--<div class="clear"></div>--}}
+        {{--</div>--}}
         <div>
 
 
@@ -222,14 +236,18 @@
                     {{--帖子一楼--}}
                 @else
                     <div class="post_item">
-
-                        <div class="post_msg"  style="z-index: 1   ; position: relative;">
+                        <?php $rand_border = ['#bbb0ff','#e7b0ff','#dbffb0','#b5ecff','#ffb5b5']; ?>
+                        <div class="post_msg"  style="z-index: 1; position: relative;    margin-right: 20px;
+                                border-bottom: 3px solid {{$rand_border[rand(0,4)]}};">
 
                             <div style="width: 80px;display: inline-block;float: left">
-                                {{avatar($value->authorid,50,10,'post-avatar','normal')}}
+
+                                {{avatar($value->authorid,80,100,'post-avatar','normal')}}
+                                <span style="color: #5abdd4;width: 80px;text-align: center;display: inline-block;margin-top: 5px">{{$value->author}}</span>
+
                             </div>
                             <div style="width: 435px;display: inline-block;float:left;">
-                                <span style="color: #5abdd4;">{{$value->author}}</span> <span style="color: #cccccc">{{date("Y m-d H:i:s",$value->dateline)}}</span>
+                                <span style="color: #cccccc">{{date("Y m-d H:i:s",$value->dateline)}}</span>
                                 <div id="{{$value->pid}}" style="padding: 5px;">{!! bbcode2html($value->message) !!}</div>
                                 <div class="user_medal">
                                     @foreach($value->medal['in_adorn'] as $medal_key=>$medal_value)
@@ -261,7 +279,7 @@
                             <div class="clear"></div>
 
                             <div style="    width: 100%;display: inline-block;float: left;position: absolute;bottom: 0;">
-
+                                {{--<img src="/Static/daimeng.gif">--}}
 
                                 <p onclick="reply({{$value->pid}})" class="reply" style="cursor: pointer;color: #ccc;position: absolute;right: 20px;bottom: 5px;">&lt;Reply&gt;</p>
                             </div>
@@ -392,9 +410,7 @@ box-shadow: 2px 3px 3px #e4e4e4;">右边放点啥好呢</div>
             var key = $(this).attr('key');
             var position = $(this).attr('position');
             $("#"+position+"_"+key).show();
-//            console.log(position)
-//            $(".user_medal").eq(position-1).children(".medal_info."+key).show()
-//            $(".medal_info."+key).show();
+
         })
         $(".medal_img").mouseleave(function () {
             $(".medal_info").hide();
