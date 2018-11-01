@@ -232,12 +232,12 @@
                                 <span style="color: #5abdd4;">{{$value->author}}</span> <span style="color: #cccccc">{{date("Y m-d H:i:s",$value->dateline)}}</span>
                                 <div id="{{$value->pid}}" style="padding: 5px;">{!! bbcode2html($value->message) !!}</div>
                                 <div class="user_medal">
-                                    @foreach($value->medal['in_adorn'] as $key=>$value)
-                                        <div class="medal_info {{$key}}">
+                                    @foreach($value->medal['in_adorn'] as $medal_key=>$medal_value)
+                                        <div class="medal_info {{$key}}" id="{{$value->position .'_'. $medal_key}}">
                                             <p style="border-left: 3px solid #00A0FF;line-height: 13px;padding-left: 5px">
-                                                {{$value->medal_name}}
+                                                {{$medal_value->medal_name}}
                                             </p>
-                                            @foreach(json_decode($value->medal_action,true) as $action_value)
+                                            @foreach(json_decode($medal_value->medal_action,true) as $action_value)
                                                 <li style="    margin-left: 8px;">
                                                     <?php
                                                     $act_info = \App\Http\DbModel\ActionModel::name($action_value['action_name']);
@@ -252,7 +252,7 @@
                                                 </li>
                                             @endforeach
                                         </div>
-                                        <img class="trans medal_img {{$value->rarity}}" style="width: 30px;height: 30px" src="{{$value->medal_image}}" key="{{$key}}">
+                                        <img class="trans medal_img {{$medal_value->rarity}}" style="width: 30px;height: 30px" src="{{$medal_value->medal_image}}" position="{{$value->position}}" key="{{$medal_key}}">
 
                                     @endforeach
                                 </div>
@@ -388,8 +388,13 @@ box-shadow: 2px 3px 3px #e4e4e4;">右边放点啥好呢</div>
         })
         //勋章详情显示
         $(".medal_img").hover(function () {
+
             var key = $(this).attr('key');
-            $(".medal_info."+key).show();
+            var position = $(this).attr('position');
+            $("#"+position+"_"+key).show();
+//            console.log(position)
+//            $(".user_medal").eq(position-1).children(".medal_info."+key).show()
+//            $(".medal_info."+key).show();
         })
         $(".medal_img").mouseleave(function () {
             $(".medal_info").hide();

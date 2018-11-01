@@ -17,8 +17,8 @@
             };
 
 
-            exampleSocket.onopen = function (event) {
-                exampleSocket.send(JSON.stringify(identify));
+            window.fantuanpuSocket.onopen = function (event) {
+                window.fantuanpuSocket.send(JSON.stringify(identify));
 //            $('#msg').bind('keypress',function(event)
 //            {
 //                if(event.keyCode == "13")
@@ -34,7 +34,7 @@
 //
 //            });
             };
-            exampleSocket.onmessage = function (event) {
+            window.fantuanpuSocket.onmessage = function (event) {
                 wsMsg = JSON.parse(event.data);
                 switch(wsMsg.code)
                 {

@@ -79,7 +79,7 @@
                 @endif
                 @foreach($data['my_medal']['in_adorn'] as $key => $value)
                     <div class="medal_info_item" style="">
-                        <img style="margin: 0 auto;display: inherit;" src="{{$value->medal_image}}">
+                        <img style="margin: 0 auto;display: inherit;    width: 60px;border-radius: 100%;" src="{{$value->medal_image}}">
                         <p>
                             <span style="font-weight: 900;    text-align: center;display: inline-block;width: 100%">{{$value->medal_name}}</span>
                         </p>
@@ -114,7 +114,7 @@
                 @endif
                 @foreach($data['my_medal']['in_box'] as $key => $value)
                     <div class="medal_info_item" style="">
-                        <img style="margin: 0 auto;display: inherit;" src="{{$value->medal_image}}">
+                        <img style="margin: 0 auto;display: inherit; width: 60px;border-radius: 100%;" src="{{$value->medal_image}}">
                         <p>
                             <span style="font-weight: 900;    text-align: center;display: inline-block;width: 100%">{{$value->medal_name}}</span>
                         </p>
@@ -148,7 +148,7 @@
                 @endif
                 @foreach($data['my_medal']['in_store'] as $value)
                     <div>
-                        <img src="{{$value->medal_image}}">
+                        <img src="{{$value->medal_image}}" style=" width: 60px;border-radius: 100%;">
                         <p>
                             <span>[{{$value->rarity}}]</span>
                             <span>{{$value->medal_name}}</span>
