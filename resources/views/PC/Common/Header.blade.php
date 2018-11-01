@@ -35,7 +35,7 @@
             <a class="add-me"><i class="icon-plus"></i> <span id="msg_num">0</span> Message</a>
             <a>签到</a>
             <from action="">
-                <input type="text" name="" class="in_text" placeholder="Searching..">
+                <input type="text" name="" class="in_text trans" placeholder="Searching..">
 
             </from>
 

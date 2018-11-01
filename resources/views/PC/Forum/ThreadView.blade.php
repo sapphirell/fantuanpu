@@ -43,6 +43,7 @@
     .user_info {
         float: left;
         width:200px;
+        position: relative;
     }
     .user_info > * {
         float: left;
@@ -64,6 +65,7 @@
         float: left;
         min-height: 100px;
         border-radius: 20px;
+        padding-bottom: 20px;
     }
     .w-e-text-container{
         height:200px!important;
@@ -103,7 +105,7 @@
         text-decoration: none;
     }
     .post-avatar {
-        /*margin: 0 5px;*/
+        margin: 0 5px;
         display: block;
         width: 70px !important;
         height: 70px !important;
@@ -164,7 +166,8 @@
         border-radius: 5px;
     }
     .author-avatar {
-
+        border: 1px dashed #ddd;
+        padding: 3px;
     }
 </style>
 <script>
@@ -188,12 +191,53 @@
 <body>
 
 <div class="wp" style="margin-top: 50px;">
-    <span>当前位置</span> ><a href="/forum-{{$data['fid']}}-1.html" class="thread_position">{{$data['forum']->name}}</a>
-    <div style="background: #FFFFFF;margin: 15px;padding: 15px;border-radius: 5px;box-shadow: 2px 3px 3px #e4e4e4;position: relative;padding-bottom: 200px;">
-        <div class="user_info">
-            <span style="">{{$data['thread']['thread_subject']->author}}</span>
-            {{avatar($data['thread']['thread_subject']->authorid,150,5,'author-avatar','big')}}
+    <span style="    line-height: 12px;display: inline-block;padding-bottom: 5px;margin-left: 20px;font-weight: 900; text-shadow: 0 0 5px #adadad;">当前位置</span> ><a href="/forum-{{$data['fid']}}-1.html" class="thread_position">{{$data['forum']->name}}</a>
+    <div style="background: #FFFFFF;margin: 15px;padding: 15px;border-radius: 5px;box-shadow: 2px 3px 3px #e4e4e4;position: relative;">
+        <div>
+            <span style="width: 150px;text-align: center;display: inline-block;font-size: 14px;font-weight: 900;margin-bottom: 10px;color: #6abdd6;">{{$data['thread']['thread_subject']->author}}</span>
+            <a style="text-decoration-line: none;">
+                <img src="/Static/image/common/collection.png" style="line-height: 12px;display: inline-block;padding-bottom: 5px;">
+            </a>
+            <h1 style="display:inline-block;font-size: 15px;font-family: 微软雅黑;font-weight: 900;text-align: left;">{{$data['thread']['thread_subject']->subject}}</h1>
+
         </div>
+        <div class="user_info" style="display: inline-block;width: 160px">
+
+            {{avatar($data['thread']['thread_subject']->authorid,150,5,'author-avatar','big')}}
+            <p style="width: inherit;width: inherit;margin: 8px;color: #b7b7b7;">未设置用户签名</p>
+            @foreach($data['thread']['thread_post'][0]->medal['in_adorn'] as $medal_key=>$medal_value)
+                <div style="position: relative;margin-left: 5px">
+                    <div class="medal_info {{$key}}" id="{{ '0_'. $medal_key}}" style="">
+                        <p style="border-left: 3px solid #00A0FF;line-height: 13px;padding-left: 5px">
+                            {{$medal_value->medal_name}}
+                        </p>
+                        @foreach(json_decode($medal_value->medal_action,true) as $action_value)
+                            <li style="    margin-left: 8px;">
+                                <?php
+                                $act_info = \App\Http\DbModel\ActionModel::name($action_value['action_name']);
+                                ?>
+                                <span class="alert_span">{{ $act_info->action_name }}</span> 时,有
+                                <span  class="alert_span">{{ $action_value['rate'] * 100}} %</span>
+                                概率获得
+
+                                <span  class="alert_span">{{ $action_value['score_value'] }}</span>
+                                枚
+                                <span  class="alert_span">{{ \App\Http\DbModel\CommonMemberCount::$extcredits[$action_value['score_type']] }}</span>
+                            </li>
+                        @endforeach
+                    </div>
+                    <img class="trans medal_img {{$medal_value->rarity}}" style="width: 30px;height: 30px" src="{{$medal_value->medal_image}}" position="0" key="{{$medal_key}}">
+
+                </div>
+
+            @endforeach
+        </div>
+        <div class="author_message" style="width: 700px;float:left;">
+            <div class="bbcode_container">
+            {!! bbcode2html($data['thread']['thread_post'][0]->message) !!}
+            </div>
+        </div>
+        <div class="clear"></div>
     </div>
     <div class="thread_left" style="width: 70%;float: left">
 
@@ -247,7 +291,7 @@
 
                             </div>
                             <div style="width: 435px;display: inline-block;float:left;">
-                                <span style="color: #cccccc">{{date("Y m-d H:i:s",$value->dateline)}}</span>
+                                <span style="color: #cccccc;    padding-left: 5px;">{{date("Y m d H:i:s",$value->dateline)}}</span>
                                 <div id="{{$value->pid}}" style="padding: 5px;">{!! bbcode2html($value->message) !!}</div>
                                 <div class="user_medal">
                                     @foreach($value->medal['in_adorn'] as $medal_key=>$medal_value)
@@ -285,18 +329,6 @@
                             </div>
 
                         </div>
-                        {{--<div class="post_userinfo trans" style="float: right;position: absolute;    left: 505px;background: #fff;padding: 8px;margin: 15px 15px 15px 0px;width: 17%;box-shadow: 2px 3px 3px #e4e4e4;z-index: 0;border-radius: 0px 5px 5px 0px;">--}}
-
-                            {{--<div style="float: left;width: 45px   ;">--}}
-                                {{--<a>加关注</a>--}}
-                                {{--<a>加好友</a>--}}
-                                {{--<a>发消息</a>--}}
-                            {{--</div>--}}
-                            {{--<div>--}}
-                                {{--{{avatar($value->authorid,50,100,'post-avatar','normal')}}--}}
-                            {{--</div>--}}
-                            {{----}}
-                        {{--</div>--}}
                         <div class="clear"></div>
                     </div>
 
@@ -321,12 +353,10 @@
         </div>
     </div>
     <div>
-        <div style="    float: right;
-    width: 260px;
-    height: 400px;
-    background: #fff;
-    margin-top: 15px;
-box-shadow: 2px 3px 3px #e4e4e4;">右边放点啥好呢</div>
+        <div style="    float: right;width: 250px;    background: #80f5ff;margin-top: 15px;box-shadow: 2px 3px 3px #e4e4e4;margin-right: 18px;">
+            <a href="/app_download" style="    text-align: center;color: #ffffff;display: inline-block;cursor: pointer;width: inherit;text-decoration-line: none;">下载饭团扑App!</a>
+            
+        </div>
     </div>
 
 </div>

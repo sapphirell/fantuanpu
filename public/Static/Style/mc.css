@@ -28,7 +28,7 @@ a.no_attn {    text-decoration: none;  color: #444;cursor: pointer}/*不引起�
 a:hover{}
 p{margin: 0 5px;    font-family: "Hiragino Sans GB","futura-pt",Helvetica,Arial,"Hiragino Sans GB W3","Microsoft YaHei",sans-serif;
     line-height: 1.8em;    word-wrap: break-word;color: #777}
-div {word-wrap:break-word;}
+div {word-wrap:break-word;    color: #484848;}
 h1{margin: 5px;font-weight: 100;text-align: center;}
 h2{margin: 5px}
 h3{margin: 5px}

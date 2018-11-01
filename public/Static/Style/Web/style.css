@@ -27,15 +27,22 @@
 
 .search{float: right;}
 
-.header .search .in_text{    padding: 0px 4px;
+.header .search .in_text{
     background: #303A44;
     border: 0px;
     color: #fff2e9;
-    height: 40px;
-    font-size: 18px;
+    height: 22px;
+    font-size: 15px;
     font-family: 'PingFang SC', 'Helvetica Neue', 'Helvetica', 'STHeitiSC-Light', 'Arial', sans-serif;
-    font-weight: 100;}
-
+    font-weight: 100;
+    border: 1px solid #8c8c8c;
+    margin-top: 5px;
+    border-radius: 14px;
+    padding: 13px;
+}
+.header .search .in_text:focus,.header .search .in_text:hover{
+    border:1px solid #fdff6d;
+}
 .header .title a {
     display: inline-block;
     width: 83px;
