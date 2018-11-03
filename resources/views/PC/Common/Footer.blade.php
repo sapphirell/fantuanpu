@@ -23,7 +23,8 @@
                     };
                     window.fantuanpuSocket.send(JSON.stringify(identify));
                 @endif
-
+                //当websocket连接时,可以签到
+                $(".sign").show();
                 if (window.socketPage == 'node_talk_room')
                 {
                     //首页聊天室多发一次身份鉴定

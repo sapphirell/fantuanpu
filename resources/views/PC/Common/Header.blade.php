@@ -37,7 +37,7 @@
                 @if($data['user_has_sign'])
                 <span style="font-size: 12px;margin-right: 10px">已签到</span>
                 @else
-                <a class="sign" style="color: #ffffff;font-size: 12px;margin-right: 10px"> 签到 </a>
+                <a class="sign" style="color: #ffffff;font-size: 12px;margin-right: 10px;    margin-top: 11px;display: none;"> 签到 </a>
                 @endif
             @endif
             <from action="">
