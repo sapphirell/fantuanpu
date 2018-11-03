@@ -27,7 +27,14 @@ class Controller extends BaseController
      *
      */
     const DOMAIN = 'http://www.fantuanpu.com/';
-
+    /**
+     * 帖子回帖分页数量
+     */
+    const THREAD_REPLY_PAGE = 20;
+    /**
+     * swoole 验证token
+     */
+    const SWOOLE_TOKEN = 'OHMYJXY_hahaha';
     public function __construct()
     {
         error_reporting(E_ERROR);
@@ -51,7 +58,9 @@ class Controller extends BaseController
         $data['class']  = $class;
         $data['action'] = $action;
         $redis = Redis::connection('socket');
-        return $redis->rpush('list',json_encode($data));
+        $push = $redis->rpush('list',json_encode($data));
+//        dd($redis->keys('*'));
+        return $push;
     }
     public static function response($data = null,$ret='200',$msg='操作成功')
     {
@@ -82,5 +91,24 @@ class Controller extends BaseController
     public function mobile()
     {
         return view("Mobile/index");
+    }
+    /**
+     * 求两个日期之间相差的天数
+     * (针对1970年1月1日之后，求之前可以采用泰勒公式)
+     * @param string $day1
+     * @param string $day2
+     * @return number
+     */
+    function diffBetweenTwoDays ($day1, $day2)
+    {
+        $second1 = strtotime($day1);
+        $second2 = strtotime($day2);
+
+        if ($second1 < $second2) {
+            $tmp = $second2;
+            $second2 = $second1;
+            $second1 = $tmp;
+        }
+        return ($second1 - $second2) / 86400;
     }
 }

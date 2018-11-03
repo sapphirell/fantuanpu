@@ -117,7 +117,7 @@
     .user_medal {
         width: 200px;
         position: absolute;
-        top: 0;
+        top: -5px;
         right: 10px;
         margin: 5px;
     }

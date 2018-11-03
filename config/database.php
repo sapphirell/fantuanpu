@@ -117,10 +117,11 @@ return [
         'socket' => [
             'host' => '47.91.214.27',
             'parameters'=>[
-                'password' => 'fantuanpu_sw233',
+                'password' => 'fantuanpu_sw233',//如果database不等于0...
             ],
+            'password' => 'fantuanpu_sw233', //如果database等于0...
             'port' => 6379,
-            'database' => 1,
+            'database' => 0,
         ]
 
     ],

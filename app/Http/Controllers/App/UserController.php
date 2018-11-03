@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\App;
 
+use App\Http\Controllers\System\ActionController;
 use App\Http\Controllers\System\CoreController;
 use App\Http\Controllers\User\UserBaseController;
 use App\Http\DbModel\CommonMemberCount;
@@ -304,5 +305,20 @@ class UserController extends Controller
             $value->date    = date("Y-m-d",$value->create_at);
         }
         return self::response($data);
+    }
+
+    /**
+     * 用户完成动作
+     * @param Request $request
+     */
+    public function complete_action(Request $request)
+    {
+        if (!$request->input('swoole_token'))
+            return self::response([],40001,'未传入验证token');
+        if ($request->input('swoole_token') !== CoreController::SWOOLE_TOKEN)
+            return self::response([],40001,'验证token失败');
+
+        $act = ActionController::complete_action($request->input('act'),$request->input('uid'),$request->input('rid'));
+        return self::response($act);
     }
 }

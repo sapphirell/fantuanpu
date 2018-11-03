@@ -269,7 +269,20 @@ ul{padding: 0px;margin: 0px}
 /*论坛本地化*/
 .server-alert {z-index:99999;position: fixed;right: 20px;top: 50px;     background: #c7b7e8b3; border-radius: 5px;    padding: 5px 10px 5px 5px;cursor:pointer;}
 .server-alert:hover{ background: #ff9dc7b3; }
-
+.window_gift_alert{
+    position: fixed;
+    top: 200px;
+    background: #e37bff61;
+    width: 100%;
+    text-align: center;
+    color: #fff;
+    padding: 20px;
+    cursor: pointer;
+    filter: blur(100px);
+}
+.window_gift_alert.hover{
+    filter: blur(0px);
+}
 /*动画 变型入场**/
 @-webkit-keyframes rubberBand {
     from {

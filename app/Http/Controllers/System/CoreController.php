@@ -77,10 +77,7 @@ class CoreController extends Controller
      * 最新主题
      */
     const NEW_THREAD = ['key' => 'new_thread','time'=>15];
-    /**
-     * 帖子回帖分页数量
-     */
-    const THREAD_REPLY_PAGE = 20;
+
     /**
      * 用户佩戴的勋章
      */

@@ -1,6 +1,6 @@
 
-
-
+<div class="window_gift_alert trans" style="display: none">
+</div>
 <div class="wp footer_cut"></div>
 
     <div>
@@ -69,14 +69,11 @@
                             var num = parseInt($("#msg_num").text()) + 1 ;
                             $("#msg_num").text(num);
                             break;
-                        case 10002:
-                            $("tr:last").after("<tr> "+
-                                    "<td>"+wsMsg.data.username+"</td>"+
-                                    "<td>"+wsMsg.data.date+"</td>"+
-                                    "<td>"+wsMsg.data.msg+"</td>"+
-                                    "</tr>")
+                        case 30001:
+                            //显示系统奖励提示
+                            $(".window_gift_alert").text(wsMsg.data.msg).show().addClass("hover")
+
                             break;
-                        default:
 
                     }
                 }

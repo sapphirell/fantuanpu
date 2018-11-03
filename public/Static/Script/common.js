@@ -91,4 +91,11 @@ $(function() {
         })
 
     })
+    //签到
+    $(".sign").click(function () {
+        $.get("/sign",function (e) {
+           console.log(e);
+        });
+    })
+
 });

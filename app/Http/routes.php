@@ -50,6 +50,7 @@ Route::group([
     Route::post('/app/test', ['uses' => 'UserController@test', 'as' => 'test']);#test
     Route::post('/app/user_view', ['uses' => 'UserController@user_view', 'as' => 'user_view']);#其它用户主页
     Route::post('/app/get_user_thread', ['uses' => 'UserController@get_user_thread', 'as' => 'user_view']);#获取用户发的帖子
+    Route::post('/app/complete_action', ['uses' => 'UserController@complete_action', 'as' => 'complete_action']);#用户完成动作
 });
 
 //if( UserAgent::isMobile() ){
