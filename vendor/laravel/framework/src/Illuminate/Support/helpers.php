@@ -1099,7 +1099,10 @@ if (! function_exists('bbcode2html')) {
 //                var_dump($message);
                 $message = preg_replace("/\[url=([\w\W]+?)\]([\w\W]+?)\[\/url\]/","<a href=\"$1\">$2</a>",$message);
                 $message = preg_replace("/\[img\]([\w\W]*?)\[\/img\]/","<img src='$1'>",$message);
-
+                if (!session('user_info')->uid)
+                    $message = preg_replace("/\[hide\]([\w\W]*?)\[\/hide\]/","<a href='/login'target=\"_Blank\"><隐藏内容登录可看></a>",$message);
+                else
+                    $message = preg_replace("/\[hide\]([\w\W]*?)\[\/hide\]/","<p style='font-size: 14px;font-weight: 900;border: 3px dashed #a7a7a7;padding: 15px;'>$1</p>",$message);
 //            }
 //            if(strpos($msglower, '[/email]') !== FALSE) {
 //                $message = preg_replace("/\[email(=([a-z0-9\-_.+]+)@([a-z0-9\-_]+[.][a-z0-9\-_.]+))?\](.+?)\[\/email\]/ies", "parseemail('\\1', '\\4')", $message);

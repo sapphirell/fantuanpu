@@ -514,7 +514,7 @@ class UserBaseController extends Controller
                 if ($user_count[$value['score_type']] < $value['score_value'])
                     return self::response([],40004,'您的'.CommonMemberCount::$extcredits[$value['score_type']]
                         .'不足,需要'.$value['score_value'].',您有'.$user_count[$value['score_type']] );
-                $pay[$value['score_type']] +=  $value['score_value'];
+                $pay[$value['score_type']] -=  $value['score_value'];
             }
 
 //            CommonMemberCount::BatchAddUserCount();
