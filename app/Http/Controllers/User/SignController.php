@@ -22,7 +22,7 @@ class SignController extends Controller
             return self::response([],40001,'需要登录');
         $cacheKey = CoreController::USER_SIGN;
         UserSignModel::find($user_info->uid);
-        if(Cache::add($cacheKey . $user_info->uid, '1', $cacheKey['time']))
+        if(Cache::add($cacheKey['key'] . $user_info->uid, '1', $cacheKey['time']))
         {
             $call_res = self::call_message_queue('Common','user_sign',[
                 'uid'=>$user_info->uid,
