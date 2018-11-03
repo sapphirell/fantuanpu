@@ -25,6 +25,7 @@
                 @endif
                 //当websocket连接时,可以签到
                 $(".sign").show();
+                $(".server-alert").hide("slow")
                 if (window.socketPage == 'node_talk_room')
                 {
                     //首页聊天室多发一次身份鉴定
