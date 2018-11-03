@@ -72,7 +72,7 @@
                         case 30001:
                             //显示系统奖励提示
                             $(".window_gift_alert").text(wsMsg.data.msg).show().addClass("hover")
-
+                            $(".sign").text("已签到");
                             break;
 
                     }

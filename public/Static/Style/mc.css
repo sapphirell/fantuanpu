@@ -272,13 +272,14 @@ ul{padding: 0px;margin: 0px}
 .window_gift_alert{
     position: fixed;
     top: 200px;
-    background: #e37bff61;
+    background: #fb747461;
     width: 100%;
     text-align: center;
     color: #fff;
     padding: 20px;
     cursor: pointer;
     filter: blur(100px);
+
 }
 .window_gift_alert.hover{
     filter: blur(0px);

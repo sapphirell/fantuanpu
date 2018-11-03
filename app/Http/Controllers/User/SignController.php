@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\System\ActionController;
+use App\Http\Controllers\System\CoreController;
 use App\Http\DbModel\CommonMemberCount;
 use App\Http\DbModel\UserSignModel;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Redis;
 
 class SignController extends Controller
@@ -16,11 +18,18 @@ class SignController extends Controller
     public function sign(Request $request)
     {
         $user_info = session('user_info');
+        if (!$user_info->uid)
+            return self::response([],40001,'需要登录');
+        $cacheKey = CoreController::USER_SIGN;
         UserSignModel::find($user_info->uid);
-        $call_res = self::call_message_queue('Common','user_sign',[
-            'uid'=>$user_info->uid,
-        ]);
-        dd($call_res);
+        if(Cache::add($cacheKey . $user_info->uid, '1', $cacheKey['time']))
+        {
+            $call_res = self::call_message_queue('Common','user_sign',[
+                'uid'=>$user_info->uid,
+            ]);
+            return self::response();
+        }
+        return self::response([],40002,'签到失败');
     }
 
     /**

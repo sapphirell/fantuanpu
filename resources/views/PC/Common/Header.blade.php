@@ -32,8 +32,14 @@
     <div style=" min-width: 900px ;  max-width: 960px;    margin: 0 auto;">
         <h1 style="display: inline;margin:0px;float:right;"></h1>
         <div class="search">
-            <a class="add-me"><i class="icon-plus"></i> <span id="msg_num">0</span> Message</a>
-            <a class="sign">签到</a>
+            {{--<a class="add-me"><i class="icon-plus"></i> <span id="msg_num">0</span> Message</a>--}}
+            @if(session('user_info')->uid)
+                @if($data['user_has_sign'])
+                <span style="font-size: 12px;margin-right: 10px">已签到</span>
+                @else
+                <a class="sign" style="color: #ffffff;font-size: 12px;margin-right: 10px"> 签到 </a>
+                @endif
+            @endif
             <from action="">
                 <input type="text" name="" class="in_text trans" placeholder="Searching..">
 

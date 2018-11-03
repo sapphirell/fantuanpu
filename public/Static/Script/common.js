@@ -91,11 +91,15 @@ $(function() {
         })
 
     })
+
     //签到
     $(".sign").click(function () {
+        $(this).text('请等待...')
         $.get("/sign",function (e) {
            console.log(e);
         });
     })
-
+    $(".window_gift_alert").click(function () {
+        $(".window_gift_alert").hide("fast");
+    })
 });

@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 //use App\Http\Requests\Request;
+use App\Http\Controllers\System\CoreController;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesResources;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Redis;
 
 class Controller extends BaseController
@@ -48,6 +50,15 @@ class Controller extends BaseController
         $request = new Request();
         $this->data['request'] = $request->input();
         $this->data['title'] = false;
+        $user_info = session('user_info');
+        if ($user_info->uid)
+        {
+            $user_has_sign = CoreController::USER_SIGN;
+            $this->data['user_has_sign'] = Cache::get($user_has_sign . $user_info->uid);
+
+        }
+
+
     }
 
     /**
