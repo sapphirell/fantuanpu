@@ -51,6 +51,7 @@ Route::group([
     Route::post('/app/user_view', ['uses' => 'UserController@user_view', 'as' => 'user_view']);#其它用户主页
     Route::post('/app/get_user_thread', ['uses' => 'UserController@get_user_thread', 'as' => 'user_view']);#获取用户发的帖子
     Route::post('/app/complete_action', ['uses' => 'UserController@complete_action', 'as' => 'complete_action']);#用户完成动作
+    Route::post('/app/add_user_coin', ['uses' => 'UserController@add_user_coin', 'as' => 'add_user_coin']);#用户修改资金
 });
 
 //if( UserAgent::isMobile() ){

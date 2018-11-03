@@ -321,4 +321,23 @@ class UserController extends Controller
         $act = ActionController::complete_action($request->input('act'),$request->input('uid'),$request->input('rid'));
         return self::response($act);
     }
+
+    /**
+     * swoole 修改用户的资金
+     * @param Request $request
+     */
+    public function add_user_coin(Request $request)
+    {
+        if (!$request->input('swoole_token'))
+            return self::response([],40001,'未传入验证token');
+        if ($request->input('swoole_token') !== CoreController::SWOOLE_TOKEN)
+            return self::response([],40001,'验证token失败');
+
+        if (!$request->input('uid'))
+            return self::response([],40001,'未传入uid');
+        if (!$request->input('ext'))
+            return self::response([],40001,'未传入ext');
+        CommonMemberCount::BatchAddUserCount($request->input('uid'),json_decode($request->input('ext'),true));
+        return self::response();
+    }
 }
