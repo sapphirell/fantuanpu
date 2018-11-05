@@ -56,10 +56,23 @@ class Controller extends BaseController
             $user_has_sign = CoreController::USER_SIGN;
             $this->data['user_has_sign'] = Cache::get($user_has_sign['key'] . $user_info->uid .'_'. date("Ymd"));
         }
-
+        //获取IM
+        $this->data = array_merge($this->data,$this->get_im_message());
 
     }
-
+    public function get_im_message()
+    {
+        //查询10条历史消息
+        $this->data['msg'] = ImModel::orderBy('id','desc')->paginate(15);
+        $user = session('user_info');
+        if (!session('im_username'))
+        {
+            //未生成虚拟名称时候生成一次
+            session(['im_username' => ['name'=>$this->rand_name(),'show_im_name'=>true,'id'=> session('access_id') ]]);
+        }
+        $this->data['im_username'] = $user->username ?: session('im_username')['name'];
+        return $this->data;
+    }
     /**
      *  调起swoole消息队列
      */

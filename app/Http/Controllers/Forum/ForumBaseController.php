@@ -63,8 +63,8 @@ class ForumBaseController extends Controller
         $this->data['hot'] = $this->hot_thread();
         $this->data['new_reply'] = $this->new_reply();
         $this->data['new_thread'] = $this->new_thread();
-        //获取IM
-        $this->data = array_merge($this->data,$userBaseController->get_im_message());
+//        //获取IM
+//        $this->data = array_merge($this->data,$userBaseController->get_im_message());
         $this->data['avatar'] = config('app.online_url').\App\Http\Controllers\User\UserHelperController::GetAvatarUrl(session('user_info')->uid);
         return view('PC/Forum/Node')->with('data',$this->data);
     }

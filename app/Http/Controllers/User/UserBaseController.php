@@ -325,22 +325,22 @@ class UserBaseController extends Controller
 
 
     }
-    public function get_im_message()
-    {
-        //查询10条历史消息
-        $this->data['msg'] = ImModel::orderBy('id','desc')->paginate(15);
-        $user = session('user_info');
-        if (!session('im_username'))
-        {
-            //未生成虚拟名称时候生成一次
-            session(['im_username' => ['name'=>$this->rand_name(),'show_im_name'=>true,'id'=> session('access_id') ]]);
-        }
-
-        $this->data['im_username'] = $user->username ?: session('im_username')['name'];
-
-
-        return $this->data;
-    }
+//    public function get_im_message()
+//    {
+//        //查询10条历史消息
+//        $this->data['msg'] = ImModel::orderBy('id','desc')->paginate(15);
+//        $user = session('user_info');
+//        if (!session('im_username'))
+//        {
+//            //未生成虚拟名称时候生成一次
+//            session(['im_username' => ['name'=>$this->rand_name(),'show_im_name'=>true,'id'=> session('access_id') ]]);
+//        }
+//
+//        $this->data['im_username'] = $user->username ?: session('im_username')['name'];
+//
+//
+//        return $this->data;
+//    }
     public function live2d()
     {
         $this->get_im_message();
