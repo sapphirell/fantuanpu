@@ -54,7 +54,7 @@ class Controller extends BaseController
         if ($user_info->uid)
         {
             $user_has_sign = CoreController::USER_SIGN;
-            $this->data['user_has_sign'] = Cache::get($user_has_sign['key'] . $user_info->uid);
+            $this->data['user_has_sign'] = Cache::get($user_has_sign['key'] . $user_info->uid .'_'. date("Ymd"));
         }
 
 

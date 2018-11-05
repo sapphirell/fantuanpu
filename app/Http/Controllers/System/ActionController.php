@@ -21,9 +21,15 @@ class ActionController extends Controller
         {
             //检测用户佩戴了什么勋章
             $user_medal = UserMedalModel::get_user_medal($uid)['in_adorn'];
+            //用户佩戴的勋章种类,以免佩戴一堆一样的勋章
+            $user_medal_tmparr = [];
             //查用户勋章可能的触发条件
             foreach ($user_medal as $value)
             {
+                if (in_array($value->id,$user_medal_tmparr))
+                    break;
+                array_push($user_medal_tmparr,$value->id);
+
                 $medal_info = MedalModel::find($value->id);
                 foreach ($medal_action = json_decode($medal_info->medal_action,false) as $value)
                 {
