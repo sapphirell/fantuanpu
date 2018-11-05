@@ -10,6 +10,7 @@
         {{--<div class="bm_h">登录</div>--}}
         <div style="margin: 20px">
             <a id="old_user" href="/old-user">忘记账户 / 密码?</a>
+            <a href="/register" style="float: right;">注册一个新账户</a>
         </div>
 
         <div class="bm_c">

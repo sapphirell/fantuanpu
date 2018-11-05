@@ -59,7 +59,7 @@
 
                     {{avatar($value->authorid,$size='50',30,'avatar',$type='small')}}
                     <div style="display: inline-block;float: left; margin-left: 20px;">
-                        <a href="thread-{{$value->tid}}-1.html" style="font-size: 15px;margin-bottom: 3px;display: inline-block;">
+                        <a href="thread-{{$value->tid}}-1.html" style="font-size: 15px;margin-bottom: 3px;display: inline-block;"  target="_blank">
                             {{$value->subject}}
                             <span style="color: #000000">(+{{$value->replies}})</span>
                         </a>

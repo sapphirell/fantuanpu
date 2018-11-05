@@ -28,6 +28,7 @@
     }
     .my_avatar {
         cursor: pointer;
+        margin: 15px;
     }
     .user-score-block {
         width: 30%;
@@ -71,11 +72,16 @@
         height: 99.9%;
     }
 </style>
-<div class="shadow center" style="margin-top: 70px;background: #ffffff;width: 960px;overflow: hidden;border-radius:5px;height: 650px;border: 2px solid #868686;">
+<div class="shadow center" style="margin-top: 70px;background: #ffffff;width: 960px;overflow: hidden;border-radius:5px;height: 650px;
+/*border: 2px solid #868686;*/
+">
+    <div style="background-color: #ddd;height: 180px" class="wp">
+        {{avatar(session('user_info')->uid,150,100,'shadow my_avatar','big')}}
+    </div>
     <div style="width: 250px;float: left;">
         <div style="padding: 10px;">
-            <div class="center" style="width: 150px">
-                {{avatar(session('user_info')->uid,150,100,'shadow my_avatar','big')}}
+            <div class="center" style="width: 20px">
+
             </div>
             <h1 style="font-size: 17px;color: #60bcc3;width: inherit;text-align: center;margin-top: 10px;font-weight: 500">{{$data['user_info']->username}}</h1>
             <div style="width: inherit">

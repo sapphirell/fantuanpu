@@ -2,6 +2,11 @@
     .bm_h {
         background: #85a8ca;
     }
+    .uc_table_left{    width: 100px;
+        text-align: left;
+        font-size: 13px;
+        color: #6f6f6f;}
+    .uc_table_right{}
 </style>
 <div class="bm_h">编辑资料</div>
 <div class="bm_c">
