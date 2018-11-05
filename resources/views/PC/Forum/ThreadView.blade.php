@@ -67,6 +67,9 @@
         border-radius: 20px;
         padding-bottom: 20px;
     }
+    .post_msg img {
+        max-width: 100%;
+    }
     .w-e-text-container{
         height:200px!important;
         border-color: #eee!important;

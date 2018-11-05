@@ -72,13 +72,18 @@
         height: 99.9%;
     }
 </style>
-<div class="shadow center" style="margin-top: 70px;background: #ffffff;width: 960px;overflow: hidden;border-radius:5px;height: 650px;
-/*border: 2px solid #868686;*/
-">
-    <div style="background-color: #ddd;height: 180px" class="wp">
-        {{avatar(session('user_info')->uid,150,100,'shadow my_avatar','big')}}
+<div class="center" style="margin-top: 35px;width: 960px;border-radius:5px;">
+    <div style="background: url('/Image/transparent.png');height: 180px;margin-bottom: 20px" class="wp shadow ">
+
+        <div class="my_avatar shadow" style="margin-top: 10px;    display: inline-block;">
+            <div class="ava_glass" style="display:none;background: url('/Image/real-trans.png');width: 150px;height: 150px;position: absolute;border-radius: 100%;">
+                <span style="position: absolute;bottom: 60px;width: 150px;display: inline-block;text-align: center;color: #fff;font-size: 16px;">更换</span>
+            </div>
+            {{avatar(session('user_info')->uid,150,100,' ','big')}}
+        </div>
+
     </div>
-    <div style="width: 250px;float: left;">
+    <div class="shadow " style="width: 250px;float: left;background: #ffffff;">
         <div style="padding: 10px;">
             <div class="center" style="width: 20px">
 
@@ -120,34 +125,39 @@
         </div>
     </div>
     <div class="clear"></div>
-    <script src="/Static/Script/cropper/cropper.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $(".my_avatar").click(function (e) {
-                e.preventDefault();
-                layer.open({
-                    type: 2,
-                    title: false,
-                    closeBtn: 0, //不显示关闭按钮
-                    shade: 0.8,
-                    shadeClose: true,
-                    // title:'登录',
-                    area: ['200px', '260px'],
-                    offset: '100px',
-                    // skin: 'layui-layer-rim', //加上边框
-                    content: ['/update_user_avatar', 'no']
-                });
-            })
-            //切换表单
-            $(".uc_button li a").click(function (e) {
-                e.preventDefault();
-                var index = $(this).parent().index();
-//                alert(index)
-                $(".panel").hide().eq(index).show()
-            });
-
-        })
-
-    </script>
 </div>
+<script src="/Static/Script/cropper/cropper.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".my_avatar").click(function (e) {
+            e.preventDefault();
+            layer.open({
+                type: 2,
+                title: false,
+                closeBtn: 0, //不显示关闭按钮
+                shade: 0.8,
+                shadeClose: true,
+                // title:'登录',
+                area: ['200px', '260px'],
+                offset: '100px',
+                // skin: 'layui-layer-rim', //加上边框
+                content: ['/update_user_avatar', 'no']
+            });
+        })
+        //切换表单
+        $(".uc_button li a").click(function (e) {
+            e.preventDefault();
+            var index = $(this).parent().index();
+//                alert(index)
+            $(".panel").hide().eq(index).show()
+        });
+        //头像蒙版
+        $(".my_avatar").hover(function (event) {
+            console.log("hover1次")
+            $(".ava_glass").fadeToggle("fast");
+            event.stopPropagation();
+        })
+    })
+
+</script>
 @include('PC.Common.Footer')

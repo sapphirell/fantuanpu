@@ -2,7 +2,9 @@
 <div class="window_gift_alert trans" style="display: none">
 </div>
 <div class="wp footer_cut"></div>
-
+<div class="wp" style="margin-bottom: 10px">
+    <p style="padding: 10px;color: #d0d0d0;">fantuanpu.com</p>
+</div>
     <div>
         <input type="hidden" id="username" class="form-control" disabled value="{{$data['im_username']}}" style="width: 250px;margin-bottom: 5px;">
         <input type="hidden" id="uid" disabled value="{{session('user_info')->uid ? : session('access_id')}}">

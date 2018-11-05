@@ -105,7 +105,7 @@
                         </ul>
                     </div>
                 @endforeach
-
+                <div class="clear"></div>
             </div>
 
             <div class="medal_body">
