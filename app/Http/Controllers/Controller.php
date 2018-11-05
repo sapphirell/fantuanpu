@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 //use App\Http\Requests\Request;
 use App\Http\Controllers\System\CoreController;
+use App\Http\DbModel\ImModel;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
