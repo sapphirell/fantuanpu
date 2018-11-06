@@ -28,9 +28,10 @@
             {{--<a class="add-me"><i class="icon-plus"></i> <span id="msg_num">0</span> Message</a>--}}
             @if(session('user_info')->uid)
                 @if($data['user_has_sign'])
-                <span style="font-size: 12px;margin-right: 10px">已签到</span>
+                    <i class="fa fa-pencil-square-o fa-lg"></i>
                 @else
-                <a class="sign" style="color: #ffffff;font-size: 12px;margin-right: 10px;    margin-top: 11px;display: none;"> 签到 </a>
+                <a class="sign" style="color: #ffffff;font-size: 12px;margin-right: 10px;    margin-top: 12px;display: none;"> <i class="fa fa-pencil-square-o fa-lg"></i> </a>
+
                 @endif
             @endif
             <from action="">
@@ -40,8 +41,20 @@
 
         </div>
         <ul class='hd'>
-            <li><a href="/index"  class="header_items"><p class="none_960" style="color: #fff;">板块</p><i class="inline_block_960 fa fa-code-fork fa-2x"></i></a></li>
-            <li><a href="/notice"  class="header_items"><p class="none_960" style="color: #ff9999;">公告</p></a></li>
+            <li>
+                <a href="/index"  class="header_items">
+                    <i class="fa fa-home fa-fw fa-lg" style="color: #ffffff;line-height: 23px"></i>
+                    <p class="none_960" style="color: #fff;display: inline-block">板块</p>
+
+                </a>
+            </li>
+            <li>
+                <a href="/notice"  class="header_items">
+                    <i class="fa fa-comments-o fa-fw fa-lg"  style="color: #ffffff;line-height: 23px"></i>
+                    <p class="none_960" style="color: #ff9999;display: inline-block">公告</p>
+                </a>
+            </li>
+
         </ul>
 
 
@@ -87,7 +100,7 @@
         <ul >
             @if(session('user_info')->uid)
             <li class="trans"><a href="/user-center?source=web">用户中心<i class="fa fa-pencil-square-o fa-lg"></i></a></li>
-            <li class="trans"><a href="">团菌动态<i class="fa fa-sticky-note-o fa-lg"></i></a></li>
+            <li class="trans"><a href="">团菌动态<i class="fa fa-sticky-note-o fa-lg"></i><i class="fa fa-eercast" aria-hidden="true"></i></a></li>
             <li class="trans"><a href="/medal_shop">勋章商城<i class="fa fa-sticky-note-o fa-lg"></i></a></li>
             <li class="trans"><a href="/logout">离开<i class="fa fa-sign-in fa-lg"></i></a></li>
                 @if(session('user_info')->gid > 0)

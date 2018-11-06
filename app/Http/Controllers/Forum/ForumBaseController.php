@@ -7,6 +7,7 @@ use App\Http\Controllers\System\RedisController;
 use App\Http\Controllers\User\UserBaseController;
 use App\Http\Controllers\User\UserHelperController;
 use App\Http\DbModel\Forum_forum_model;
+use App\Http\DbModel\ForumPlusModel;
 use App\Http\DbModel\ForumThreadModel;
 use App\Http\DbModel\Thread_model;
 use App\Http\DbModel\UserNoticeModel;
@@ -53,6 +54,11 @@ class ForumBaseController extends Controller
         $this->data['forum']  = Forum_forum_model::get_nodes_by_fid($fid);
 //        dd($this->data['forum']);
         $this->data['page']  = $page;
+        //帖子置顶信息以及板块版主
+        $this->data['forum_plus'] = ForumPlusModel::get_forum_plus($fid);
+        //合并置顶帖进去
+        $this->data['list'] = array_merge($this->data['forum_plus']['top'],$this->data['list']);
+
         return view('PC/Forum/ThreadList')->with('data',$this->data);
     }
     public function ForumIndex(Request $request,UserBaseController $userBaseController)

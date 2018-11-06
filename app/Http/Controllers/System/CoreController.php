@@ -94,5 +94,8 @@ class CoreController extends Controller
      *  今日是否签到,储存2天,需要拼接uid和YMD
      */
     const USER_SIGN = ['key' => 'user_sign_','time' => 60*24*2];
-
+    /**
+     *  获取板块的附加信息,存两天
+     */
+    const FORUM_PLUS = ['key' => 'forum_plus_','time' => 60*24*2 ];
 }

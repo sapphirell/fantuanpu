@@ -31,6 +31,10 @@
         margin: 5px;
         color: #ab5e5e;
     }
+    .top.fourm_thread_items{
+        border-left: 3px solid #ec78a3;
+        padding-left: 5px;
+    }
 </style>
 <script>
     $(document).ready(function () {
@@ -44,13 +48,12 @@
 </script>
 <div class="wp web_body" style="padding: 5px;margin-top: 50px;    ">
 
-    <!--头部banner-->
     <div class="3-1" >
         <div class="_3_1_left" style="
         /*box-shadow: 0 0 11px #e6e6e6;background: #ffffff;*/
         border-radius: 5px;overflow: hidden">
             @foreach($data['list'] as $key => $value)
-                <div class="fourm_thread_items" style="
+                <div class="fourm_thread_items @if($value->top)top @endif" style="
                 @if($key%2==0)
                         background: #f9f9f9;
                 @endif
@@ -65,14 +68,15 @@
                         </a>
                         <br>
                         <span style="">
-                        <a class="no_attn"><?php echo "@";?>{{$value->author}}</a>
-                        <span>view : {{$value->views}}</span>
-                        <span style="color: #ccc">
-                            <span class="show_date" style="display: none;cursor: pointer;padding: 5px;">{{date('Y-m-d',$value->dateline)}}</span>
-                            <span class="show_time" style="cursor: pointer;padding: 5px;">{{date('H:i:s',$value->dateline)}}</span>
+                            <a class="no_attn"><?php echo "@";?>{{$value->author}}</a>
+                            <span>view : {{$value->views}}</span>
+                            <span style="color: #ccc">
+                                <span class="show_date" style="display: none;cursor: pointer;padding: 5px;">{{date('Y-m-d',$value->dateline)}}</span>
+                                <span class="show_time" style="cursor: pointer;padding: 5px;">{{date('H:i:s',$value->dateline)}}</span>
 
+                            </span>
                         </span>
-                    </span>
+
                     </div>
                     <div class="clear"></div>
 

@@ -100,5 +100,24 @@ h1.thread_title{    padding-top: 27px;}
     ._3_1_left{width: 100%;}
     ._3_1_right{display: none;}
     .mod_tab li span {    padding: 4px 4px;}
-
+    .user_info.author {
+        position: relative;
+        top: -44px;
+        left: -10px;
+    }
+    .user_info.author img {
+        width: 40px!important;
+        height: 40px!important;
+    }
+    .author-sign {
+        display: none;
+    }
+    .author-medal {
+        display: none;
+    }
+    .author-name {
+        width: auto!important;
+        font-size: 12px!important;
+        margin-left: 33px;
+    }
 }
