@@ -100,7 +100,7 @@
         <div class="_3_1_right">
             <div style="    text-align: center;    margin-bottom: 10px;">
                 <a class="mod_btn"><span>关注</span></a>
-                <a class="mod_btn"><span>返回</span></a>
+                <a class="mod_btn go_back"><span>返回</span></a>
 
             </div>
             <div class="" style="    background-color: #fff;

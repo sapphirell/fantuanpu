@@ -102,4 +102,8 @@ $(function() {
     $(".window_gift_alert").click(function () {
         $(".window_gift_alert").hide("fast");
     })
+    //返回
+    $(".go_back").click(function () {
+        window.location.href = "/index"
+    })
 });

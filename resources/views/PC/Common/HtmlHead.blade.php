@@ -25,6 +25,6 @@
 {{--<script src="/Static/Script/layer/layer.js"></script>--}}
 <script src="https://apps.bdimg.com/libs/layer/2.1/layer.js"></script>
 
-<script src="/Static/Script/common.js?date=20181106"></script>
+<script src="/Static/Script/common.js?date=20181107"></script>
 <link rel="stylesheet" type="text/css" href="/Static/Style/mc.css?date=20181106">
 <link rel="stylesheet" type="text/css" href="/Static/Style/Web/style.css?date=20181106">
