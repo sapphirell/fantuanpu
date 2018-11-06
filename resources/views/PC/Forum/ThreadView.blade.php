@@ -193,7 +193,7 @@
 </script>
 <body>
 
-<div class="wp" style="margin-top: 50px;">
+<div class="wp web_body " style="margin-top: 50px;">
     <span style="    line-height: 12px;display: inline-block;padding-bottom: 5px;margin-left: 20px;font-weight: 900; text-shadow: 0 0 5px #adadad;">当前位置</span> ><a href="/forum-{{$data['fid']}}-1.html" class="thread_position">{{$data['forum']->name}}</a>
     <div style="background: #FFFFFF;margin: 15px;padding: 15px;border-radius: 5px;box-shadow: 2px 3px 3px #e4e4e4;position: relative;">
         <div>

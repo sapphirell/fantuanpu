@@ -97,5 +97,8 @@ h1.thread_title{    padding-top: 27px;}
 /***自适应***/
 @media screen and (max-width: 960px) {
     .banner,.banner img{width: 100%!important;}
+    ._3_1_left{width: 100%;}
+    ._3_1_right{display: none;}
+    .mod_tab li span {    padding: 4px 4px;}
 
 }

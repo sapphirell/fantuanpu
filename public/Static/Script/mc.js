@@ -79,11 +79,13 @@ $(document).ready(function(){
             $('body').animate({"margin-left":"235px"});
             $across.css({"backgroundColor":"#eee"});
             $active.animate({"left":"0"});
+            $(".web_body").addClass("blur8");
             mbtnNum++;
         }else{
             $('body').animate({"margin-left":"0px"});
             $across.css({"backgroundColor":"#444"});
             $active.animate({"left":"-235px"});
+            $(".web_body").removeClass("blur8");
             mbtnNum--;
         };
         $.layer.closeAll()

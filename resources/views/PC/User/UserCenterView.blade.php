@@ -116,13 +116,12 @@
         </div>
     </div>
     <div style="width:700px;float: right;">
-        <div class="panel" style="display: block;height: 100%">@include('PC.UserCenter.EditUserData')</div>
-        <div class="panel" style="display: none;height: 100%"><iframe src="/my_thread?" style="width: 100%;height: 100%;border-width: 0px;overflow: hidden" ></iframe></div>
+        <div class="panel" style="display: block;">@include('PC.UserCenter.EditUserData')</div>
+        <div class="panel" style="display: none;">@include('PC.UserCenter.MyThread')</div>
         <div class="panel" style="display: none;height: 100%">
             <div class="notice">功能暂缺</div>
         </div>
-        <div class="panel" style="display: none;    height: 99.9%;">
-            {{--<iframe src="/my_medal" style="width: 100%;height: 100%;border-width: 0px;overflow: hidden"  id="my_medal"></iframe>--}}
+        <div class="panel" style="display: none;">
             @include('PC.UserCenter.MyMedal')
         </div>
     </div>

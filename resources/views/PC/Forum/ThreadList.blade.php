@@ -42,7 +42,7 @@
         });
     })
 </script>
-<div class="wp" style="padding: 5px;margin-top: 50px;    ">
+<div class="wp web_body" style="padding: 5px;margin-top: 50px;    ">
 
     <!--头部banner-->
     <div class="3-1" >
@@ -98,13 +98,19 @@
 
         </div>
         <div class="_3_1_right">
-            <div>
-                <a>关注板块</a>
-                <a>返回</a>
+            <div style="    text-align: center;    margin-bottom: 10px;">
+                <a class="mod_btn"><span>关注</span></a>
+                <a class="mod_btn"><span>返回</span></a>
+
             </div>
-            <div class="bm">
-                <div class="bm_h">板块简介</div>
-                <div class="bm_c" style="color: #545454;padding: 10px;">板块</div>
+            <div class="" style="    background-color: #fff;
+    padding: 5px;
+    box-shadow: 0 0 5px #ccc;
+    margin-right: 5px;
+    border-radius: 5px;">
+                <h1 style="font-size: 15px;cursor:pointer;font-weight: 900;color: #f18fbe;text-shadow: 0 0 3px;">{{$data['forum']->name}}</h1>
+                <img src="{{$data['forum']->forumimage}}" style="width: 100%;margin-bottom: 5px;margin-top: 5px;">
+                <p></p>
             </div>
         </div>
 

@@ -21,8 +21,8 @@
 
 <div class="header">
     <div class="memuBtn"></div>
-    <p class="title"><a href="/" style="">饭团扑.com</a></p>
-    <div style=" min-width: 900px ;  max-width: 960px;    margin: 0 auto;">
+    <p class="title none_960"><a href="/" style="">饭团扑.com</a></p>
+    <div style="max-width: 960px;    margin: 0 auto;">
         <h1 style="display: inline;margin:0px;float:right;"></h1>
         <div class="search">
             {{--<a class="add-me"><i class="icon-plus"></i> <span id="msg_num">0</span> Message</a>--}}

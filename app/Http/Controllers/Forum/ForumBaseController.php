@@ -50,6 +50,8 @@ class ForumBaseController extends Controller
     {
         $this->data['list'] = $this->threadModel->getThreadList($fid,$page);
         $this->data['fid']  = $fid;
+        $this->data['forum']  = Forum_forum_model::get_nodes_by_fid($fid);
+//        dd($this->data['forum']);
         $this->data['page']  = $page;
         return view('PC/Forum/ThreadList')->with('data',$this->data);
     }

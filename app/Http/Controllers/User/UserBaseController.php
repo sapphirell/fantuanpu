@@ -202,6 +202,7 @@ class UserBaseController extends Controller
             return MemberFieldForumModel::find($this->data['user_info']->uid);
         });
         $this->data['user_count'] = CommonMemberCount::GetUserCoin($this->data['user_info']->uid);
+        $this->data['my_thread'] = ForumThreadModel::where('authorid',$this->data['user_info']->uid)->orderBy('dateline','desc')->paginate(15);
         $this->my_medal(); // 勋章中心
 //                dd($this->data);
         return view('PC/User/UserCenterView')->with('data',$this->data);
@@ -212,6 +213,7 @@ class UserBaseController extends Controller
         $this->data['user_info'] = session('user_info');
         //查询用户最近发的帖子
         $this->data['my_thread'] = ForumThreadModel::where('authorid',$this->data['user_info']->uid)->orderBy('dateline','desc')->paginate(15);
+
         return view('PC/UserCenter/MyThread')->with('data',$this->data);
     }
 
