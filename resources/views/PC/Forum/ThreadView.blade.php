@@ -1,6 +1,6 @@
 @include('PC.Common.Header')
 <link rel="stylesheet" type="text/css" href="/Static/Style/Web/forum.css">
-<title>饭团扑-{{$data['thread_subject']->subject}}</title>
+
 
 <script src="/Static/Script/Web/forum.js"></script>
 <script type="text/javascript" src="/Static/Script/wangEditor/wangEditor.js"></script>

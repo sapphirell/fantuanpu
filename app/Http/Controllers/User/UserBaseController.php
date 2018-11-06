@@ -187,6 +187,12 @@ class UserBaseController extends Controller
         $user->save();
         return self::response();
     }
+
+    /**
+     * 用户中心
+     * @param Request $request
+     * @返回 $this
+     */
     public function UserCenter(Request $request)
     {
         $this->data['user_info'] = session('user_info');
@@ -196,7 +202,7 @@ class UserBaseController extends Controller
             return MemberFieldForumModel::find($this->data['user_info']->uid);
         });
         $this->data['user_count'] = CommonMemberCount::GetUserCoin($this->data['user_info']->uid);
-
+        $this->my_medal(); // 勋章中心
 //                dd($this->data);
         return view('PC/User/UserCenterView')->with('data',$this->data);
     }
@@ -396,7 +402,7 @@ class UserBaseController extends Controller
 
         return self::response();
     }
-    public function my_medal(Request $request)
+    public function my_medal()
     {
         $this->data['user_info'] = session('user_info');
         $this->data['extcredits_name'] = CommonMemberCount::$extcredits;

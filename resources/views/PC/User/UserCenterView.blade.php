@@ -64,6 +64,7 @@
     .panel
     {
         border:0px;
+        box-shadow: none;
     }
     .bm_h {
         background: #85a8ca;
@@ -83,7 +84,7 @@
         </div>
 
     </div>
-    <div class="shadow " style="width: 250px;float: left;background: #ffffff;">
+    <div class="shadow " style="width: 250px;float: left;background: #ffffff;    border-bottom: 2px solid #00BCD4;border-radius: 0px 0px 5px 5px;">
         <div style="padding: 10px;">
             <div class="center" style="width: 20px">
 
@@ -114,14 +115,15 @@
             </div>
         </div>
     </div>
-    <div style="width:700px;float: right;height: 100%;box-shadow: 0px 0 15px #e6e6e6;">
+    <div style="width:700px;float: right;">
         <div class="panel" style="display: block;height: 100%">@include('PC.UserCenter.EditUserData')</div>
-        <div class="panel" style="display: none;height: 100%"><iframe src="/my_thread?" style="width: 100%;height: 100%;border-width: 0px;overflow: hidden"></iframe></div>
+        <div class="panel" style="display: none;height: 100%"><iframe src="/my_thread?" style="width: 100%;height: 100%;border-width: 0px;overflow: hidden" ></iframe></div>
         <div class="panel" style="display: none;height: 100%">
             <div class="notice">功能暂缺</div>
         </div>
         <div class="panel" style="display: none;    height: 99.9%;">
-            <iframe src="/my_medal" style="width: 100%;height: 100%;border-width: 0px;overflow: hidden"></iframe>
+            {{--<iframe src="/my_medal" style="width: 100%;height: 100%;border-width: 0px;overflow: hidden"  id="my_medal"></iframe>--}}
+            @include('PC.UserCenter.MyMedal')
         </div>
     </div>
     <div class="clear"></div>
@@ -129,6 +131,13 @@
 <script src="/Static/Script/cropper/cropper.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
+//        window.setInterval(function () {
+//            $("iframe").each(function() {
+//                var index = $(this).index();
+//                $("iframe").eq(index).height($(this).contents().find("body").height())
+//            })
+//        }, 200);
+
         $(".my_avatar").click(function (e) {
             e.preventDefault();
             layer.open({
@@ -157,6 +166,8 @@
             $(".ava_glass").fadeToggle("fast");
             event.stopPropagation();
         })
+        //
+
     })
 
 </script>

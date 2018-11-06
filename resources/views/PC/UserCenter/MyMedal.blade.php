@@ -12,9 +12,6 @@
     .bm_h {
         background: #85a8ca;
     }
-    .bm_c{
-        height: 99.9%!important;
-    }
     .medal_swich{
         list-style: none;
         float: left;
@@ -36,10 +33,14 @@
         display: inline-block;
         color: #00AFB0;
     }
+    .medal_body {
+        height: 500px;
+        overflow-y: scroll;
+    }
     .medal_info_item {float: left;width: 155px;padding: 5px;border: 3px dashed #ddd;border-radius: 5px;margin: 5px}
 </style>
 <div class="bm_h">我的勋章</div>
-<div class="bm_c" style="background: #ffffff;height: 100%;overflow: hidden">
+<div class="bm_c" style="background: #ffffff;overflow: hidden">
     @if(session('user_info')->sellmedal == 1)
         <div class="notice">&nbsp;尊贵的饭团扑老会员,您有<span style="color: #47d1ff;">{{count($data['my_old_medal'])}}</span>枚旧版勋章,它可以由您当初的购买价格兑换为
             @foreach($data['old_score'] as $key=>$value)
@@ -207,5 +208,6 @@
                 window.location.reload()
             })
         })
+
     })
 </script>

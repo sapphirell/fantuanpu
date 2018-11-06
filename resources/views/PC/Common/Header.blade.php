@@ -1,14 +1,7 @@
 <html>
 <head>
-    <title>饭团扑 |
-        @if($data['title'])
-            {{$data['title']}}
-        @else
-            兴趣不再小众
-        @endif
-    </title>
-
-    <meta name="keywords" content="饭团扑,二次元,动漫论坛,宅论坛">
+    <title>饭团扑 | @if($data['title']){{$data['title']}}@else兴趣不再小众 @endif</title>
+    <meta name="keywords" content="饭团扑,二次元,动漫论坛,宅论坛,{{$data["keywords"]}}">
     <meta name="description" content="饭团扑,一个二次元社交社区">
     @include('PC.Common.HtmlHead')
 </head>
@@ -47,8 +40,8 @@
 
         </div>
         <ul class='hd'>
-            <li><a href="/index"  class="header_items"><p class="none_960" style="color: #fff;">板块 <span>Forums</span></p><i class="inline_block_960 fa fa-code-fork fa-2x"></i></a></li>
-            <li><a href="/notice"  class="header_items"><p class="none_960" style="color: #ff9999;">公告/招募</p></a></li>
+            <li><a href="/index"  class="header_items"><p class="none_960" style="color: #fff;">板块</p><i class="inline_block_960 fa fa-code-fork fa-2x"></i></a></li>
+            <li><a href="/notice"  class="header_items"><p class="none_960" style="color: #ff9999;">公告</p></a></li>
         </ul>
 
 
@@ -105,10 +98,10 @@
             @endif
         </ul>
     </div>
-    <div style="position: fixed;bottom: 0px;width: inherit">
-        <p class="statement">Powered by <a href="/fantuanpuDevelopers">FantuanpuDevelopers</a>.</p>
-        <p class="statement">Used <a href="http://php.net">PHP</a> & <a href="https://laravel.com/docs/5.2">Laravel</a> & <a href="https://www.swoole.com">Swoole</a></p>
-    </div>
+    {{--<div style="position: fixed;bottom: 0px;width: inherit">--}}
+        {{--<p class="statement">Powered by <a href="/fantuanpuDevelopers">FantuanpuDevelopers</a>.</p>--}}
+        {{--<p class="statement">Used <a href="http://php.net">PHP</a> & <a href="https://laravel.com/docs/5.2">Laravel</a> & <a href="https://www.swoole.com">Swoole</a></p>--}}
+    {{--</div>--}}
 
 
 </div>
