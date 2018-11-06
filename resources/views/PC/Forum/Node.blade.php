@@ -8,16 +8,16 @@
         <ul>
             <li>
                 <img src="/Image/1.jpg">
-                <div class="push_title">第一条推送消息</div>
+                <div class="push_title"><a href="/medal_shop">饭团扑回归勋章限时购买</a></div>
             </li>
-            <li>
-                <img src="/Image/2.jpg">
-                <div class="push_title">第二条推送消息</div>
-            </li>
-            <li>
-                <img src="/Image/3.jpg">
-                <div class="push_title">第三条推送消息</div>
-            </li>
+            {{--<li>--}}
+                {{--<img src="/Image/2.jpg">--}}
+                {{--<div class="push_title">第二条推送消息</div>--}}
+            {{--</li>--}}
+            {{--<li>--}}
+                {{--<img src="/Image/3.jpg">--}}
+                {{--<div class="push_title">第三条推送消息</div>--}}
+            {{--</li>--}}
         </ul>
 
 
