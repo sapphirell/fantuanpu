@@ -120,4 +120,7 @@ h1.thread_title{    padding-top: 27px;}
         font-size: 12px!important;
         margin-left: 33px;
     }
+    .user_medal {
+        display: none;
+    }
 }

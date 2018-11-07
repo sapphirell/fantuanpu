@@ -49,13 +49,15 @@ class ForumBaseController extends Controller
 //    }
     public function ThreadList(Request $request,$fid,$page)
     {
-        $this->data['list'] = $this->threadModel->getThreadList($fid,$page);
+        $this->data['plus_ids'] = ForumPlusModel::find($fid);
+        $this->data['list'] = $this->threadModel->getThreadList($fid,$page,$this->data['plus_ids']);
         $this->data['fid']  = $fid;
-        $this->data['forum']  = Forum_forum_model::get_nodes_by_fid($fid);
+        $this->data['forum']    = Forum_forum_model::get_nodes_by_fid($fid);
 //        dd($this->data['forum']);
-        $this->data['page']  = $page;
+        $this->data['page']     = $page;
         //帖子置顶信息以及板块版主
         $this->data['forum_plus'] = ForumPlusModel::get_forum_plus($fid);
+//        dd($this->data['forum_plus']["master"]);
         //合并置顶帖进去
         $this->data['list'] = array_merge($this->data['forum_plus']['top'],$this->data['list']);
 

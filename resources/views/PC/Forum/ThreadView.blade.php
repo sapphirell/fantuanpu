@@ -354,7 +354,7 @@
                     @endif
                 @endforeach
                 @if(count($data['thread']['thread_post']) < \App\Http\Controllers\System\CoreController::THREAD_REPLY_PAGE)
-                    <div style="    padding: 20px;color: #bfbfbf;border: 4px dashed;width: 538px;margin-left: 15px;text-align: center;">暂无更多</div>
+                    <div style="    padding: 20px;color: #bfbfbf;border: 4px dashed;    width: 90%;margin-left: 15px;text-align: center;">暂无更多</div>
                 @else
                     <span class="get_more_posts trans">+</span>
                 @endif

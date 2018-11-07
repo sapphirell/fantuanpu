@@ -37,9 +37,10 @@ class ForumPlusModel extends Model
     {
         $plus = self::find($fid);
         $data = ['top'=>[],'master'=>[]];
+        $thread_model = new Thread_model();
         foreach ($plus['top_thread_id'] as $value)
         {
-            $thread = ForumThreadModel::find($value);
+            $thread = $thread_model->getThread($value)["thread_subject"];
             $thread->top = 1;
             $data['top'][] = $thread;
         }

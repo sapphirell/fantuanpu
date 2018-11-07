@@ -6,7 +6,8 @@
 <script type="text/javascript" src="/Static/Script/wangEditor/wangEditor.js"></script>
 <style>
     .fourm_thread_items {    padding: 5px 8px;background: #ffffff;    box-shadow: 0 0 5px #ddd;}
-    .avatar {float: left}
+    .avatar {float: left;
+        flex:none;}
     .wp {
         margin-top: 29px;
 
@@ -35,6 +36,9 @@
         border-left: 3px solid #ec78a3;
         padding-left: 5px;
     }
+    .master_avatar {
+        float: left;
+    }
 </style>
 <script>
     $(document).ready(function () {
@@ -54,6 +58,7 @@
         border-radius: 5px;overflow: hidden">
             @foreach($data['list'] as $key => $value)
                 <div class="fourm_thread_items @if($value->top)top @endif" style="
+                        display: flex;
                 @if($key%2==0)
                         background: #f9f9f9;
                 @endif
@@ -61,7 +66,7 @@
                 "  >
 
                     {{avatar($value->authorid,$size='50',30,'avatar',$type='small')}}
-                    <div style="display: inline-block;float: left; margin-left: 20px;">
+                    <div style="display: inline-block;float: left; margin-left: 20px;flex-grow: 1">
                         <a href="thread-{{$value->tid}}-1.html" style="font-size: 15px;margin-bottom: 3px;display: inline-block;"  target="_blank">
                             {{$value->subject}}
                             <span style="color: #000000">(+{{$value->replies}})</span>
@@ -116,6 +121,27 @@
                 <img src="{{$data['forum']->forumimage}}" style="width: 100%;margin-bottom: 5px;margin-top: 5px;">
                 <p></p>
             </div>
+
+            @if(session('user_info')->groupid == 1 || in_array(session("user_info")->uid , $data["plus_ids"]))
+                <p style="    background-color: #fff;padding: 5px;box-shadow: 0 0 5px #ccc;margin-right: 5px;margin-top: 5px;margin-bottom: 5px;border-radius: 5px;margin: 5px 5px 0px 0px;font-size: 15px;font-weight: 900;text-align: center;">
+                    <i class="fa fa-cog fa-lg"></i>
+                </p>
+            @endif
+            <div>
+
+                @foreach($data['forum_plus']["master"] as $value)
+
+                    <div style="background: #ffffff;padding: 5px;margin-right: 5px;background-color: #fff;padding: 5px;box-shadow: 0 0 5px #ccc;margin-right: 5px;    margin-top: 5px;margin-bottom: 5px;border-radius: 5px;">
+                        {{avatar($value->uid,$size='50',30,'master_avatar',$type='small')}}
+                        <div style="    display: inline-block;">
+                            <p style="    padding: 0px 8px;font-weight: 900;">{{ $value->username }}</p>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                @endforeach
+                    <div class="clear"></div>
+            </div>
+
         </div>
 
 

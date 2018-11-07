@@ -13,7 +13,7 @@ class Thread_model extends Model
     public $table_post   = 'pre_forum_post';
     public $timestamps = false;
 
-    public function getThread($tid,$page)
+    public function getThread($tid,$page=1)
     {
         $thread_cache_key   = CoreController::THREAD_VIEW;
 
@@ -52,7 +52,7 @@ class Thread_model extends Model
     /**
     * @path
     **/
-    public function getThreadList($fid,$page)
+    public function getThreadList($fid,$page,$remove_tid=[])
     {
         return DB::table($this->table_thread)
             ->where('fid',$fid)
