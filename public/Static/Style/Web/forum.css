@@ -115,6 +115,13 @@ h1.thread_title{    padding-top: 27px;}
     .author-medal {
         display: none;
     }
+    .author_message {
+        position: relative;
+        top: -30px;
+    }
+    .author-message {
+        display: block!important;
+    }
     .author-name {
         width: auto!important;
         font-size: 12px!important;

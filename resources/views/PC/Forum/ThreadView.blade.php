@@ -178,6 +178,9 @@
     .author-name {
         width: 150px;text-align: center;display: inline-block;font-size: 14px;font-weight: 900;margin-bottom: 10px;color: #6abdd6;
     }
+    .author-message {
+        display: flex
+    }
 </style>
 <script>
     $(document).ready(function () {
@@ -215,46 +218,49 @@
             <h1 style="display:inline-block;font-size: 15px;font-family: 微软雅黑;font-weight: 900;text-align: left;">{{$data['thread']['thread_subject']->subject}}</h1>
 
         </div>
-        <div class="user_info author" style="display: inline-block;width: 160px">
+        <div class="author-message" style="">
+            <div class="user_info author" style="display: inline-block;width: 160px">
 
-            {{avatar($data['thread']['thread_subject']->authorid,150,5,'author-avatar','big')}}
-            <p class="author-sign" style="width: inherit;width: inherit;margin: 8px;color: #b7b7b7;">未设置用户签名</p>
-            <div class="author-medal">
+                {{avatar($data['thread']['thread_subject']->authorid,150,5,'author-avatar','big')}}
+                <p class="author-sign" style="width: inherit;width: inherit;margin: 8px;color: #b7b7b7;">未设置用户签名</p>
+                <div class="author-medal">
 
-                @foreach($data['thread']['thread_post'][0]->medal['in_adorn'] as $medal_key=>$medal_value)
-                    <div style="position: relative;margin-left: 5px">
-                        <div class="medal_info {{$key}}" id="{{ '0_'. $medal_key}}" style="">
-                            <p style="border-left: 3px solid #00A0FF;line-height: 13px;padding-left: 5px">
-                                {{$medal_value->medal_name}}
-                            </p>
-                            @foreach(json_decode($medal_value->medal_action,true) as $action_value)
-                                <li style="    margin-left: 8px;">
-                                    <?php
-                                    $act_info = \App\Http\DbModel\ActionModel::name($action_value['action_name']);
-                                    ?>
-                                    <span class="alert_span">{{ $act_info->action_name }}</span> 时,有
-                                    <span class="alert_span">{{ $action_value['rate'] * 100}} %</span>
-                                    概率获得
+                    @foreach($data['thread']['thread_post'][0]->medal['in_adorn'] as $medal_key=>$medal_value)
+                        <div style="position: relative;margin-left: 5px">
+                            <div class="medal_info {{$key}}" id="{{ '0_'. $medal_key}}" style="">
+                                <p style="border-left: 3px solid #00A0FF;line-height: 13px;padding-left: 5px">
+                                    {{$medal_value->medal_name}}
+                                </p>
+                                @foreach(json_decode($medal_value->medal_action,true) as $action_value)
+                                    <li style="    margin-left: 8px;">
+                                        <?php
+                                        $act_info = \App\Http\DbModel\ActionModel::name($action_value['action_name']);
+                                        ?>
+                                        <span class="alert_span">{{ $act_info->action_name }}</span> 时,有
+                                        <span class="alert_span">{{ $action_value['rate'] * 100}} %</span>
+                                        概率获得
 
-                                    <span  class="alert_span">{{ $action_value['score_value'] }}</span>
-                                    枚
-                                    <span  class="alert_span">{{ \App\Http\DbModel\CommonMemberCount::$extcredits[$action_value['score_type']] }}</span>
-                                </li>
-                            @endforeach
+                                        <span  class="alert_span">{{ $action_value['score_value'] }}</span>
+                                        枚
+                                        <span  class="alert_span">{{ \App\Http\DbModel\CommonMemberCount::$extcredits[$action_value['score_type']] }}</span>
+                                    </li>
+                                @endforeach
+                            </div>
+                            <img class="trans medal_img {{$medal_value->rarity}}" style="width: 30px;height: 30px" src="{{$medal_value->medal_image}}" position="0" key="{{$medal_key}}">
+
                         </div>
-                        <img class="trans medal_img {{$medal_value->rarity}}" style="width: 30px;height: 30px" src="{{$medal_value->medal_image}}" position="0" key="{{$medal_key}}">
 
-                    </div>
+                    @endforeach
+                </div>
 
-                @endforeach
             </div>
-
-        </div>
-        <div class="author_message" style="width: 100%;float:left;">
-            <div class="bbcode_container">
-            {!! bbcode2html($data['thread']['thread_post'][0]->message) !!}
+            <div class="author_message" style="width: 100%;float:left;flex-grow: 1;">
+                <div class="bbcode_container">
+                    {!! bbcode2html($data['thread']['thread_post'][0]->message) !!}
+                </div>
             </div>
         </div>
+
         <div class="clear"></div>
     </div>
     <div class="3-1">
