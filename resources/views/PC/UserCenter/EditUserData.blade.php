@@ -96,6 +96,8 @@
     $(document).ready(function () {
         //申请获得邮箱验证码
         $(".send_code_mail").click(function (e) {
+            $(".send_code_mail").text("请等待...");
+            $(".send_code_mail").removeAttr('onclick');
             e.preventDefault();
             $.get("/send_validate_email",function (res) {
                 alert(res.msg)
