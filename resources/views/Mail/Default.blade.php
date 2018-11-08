@@ -1,1 +1,1 @@
-<p>您的验证码为【{{$key}}】，有效时间两小时。</p>
+<p>您的验证码为<span style="font-size: 16px;font-weight: 900">【{{$key}}】</span>，请在五分钟内填写~</p>

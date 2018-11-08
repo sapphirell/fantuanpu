@@ -21,7 +21,8 @@ class UserHelperController extends Controller
     }
 
     /****
-     * @param $data 传入数组则认为是用户数据,进行用户登录信息录入,传入字符串则认为是用户邮箱
+     *
+     * @param $data
      * @return bool
      */
     public static function SetLoginStatus($data)

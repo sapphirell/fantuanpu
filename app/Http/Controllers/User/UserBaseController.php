@@ -189,6 +189,45 @@ class UserBaseController extends Controller
     }
 
     /**
+     * 发送等待验证用户邮件
+     * @param Request $request
+     */
+    public function send_validate_email(Request $request)
+    {
+//        return self::response();
+        $user = session('user_info');
+        $param["code"] = rand(1000,9999);
+        $param["subject"] = "饭团扑论坛绑定邮箱邮件";
+        Cache::put($user->email, $param["code"], 5);
+
+        return  MailController::email_to($user->email,"BindEmail",$param);
+    }
+    /**
+     * 验证用户邮箱,并更改用户为正式用户
+     * @param Request $request
+     */
+    public function ValidateEmail(Request $request)
+    {
+        $check = $this->checkRequest($request,['email','code']);
+
+        if ($check !== true)
+            return self::response([],40001,'缺少参数'.$check);
+        //用户组必须等于8 ,等待验证会员
+        $user = User_model::getUserByEmial($request->input('email'),false);
+        if ($user->groupid != 8)
+            return self::response([],40002,'您不需要验证邮件,因为您不是等待验证会员');
+
+        $user_code = Cache::get($request->input('email'));
+        //检查code是否正确
+        if ($request->input('code') != $user_code)
+            return self::response([],40003,'验证码错误');
+        $user->groupid = 10;
+        $user->save();
+
+        UserHelperController::SetLoginStatus($user);
+        return self::response([],200,"用户组更新成功");
+    }
+    /**
      * 用户中心
      * @param Request $request
      * @返回 $this
@@ -255,7 +294,7 @@ class UserBaseController extends Controller
         $userModel->password =  $user->password ;
         $userModel->regdate =  time() ;
         $userModel->groupid = 8;//等待验证会员
-        $user->sellmedal    = 2;
+        $userModel->sellmedal     = 2;
         $userModel->save();
 
         /**

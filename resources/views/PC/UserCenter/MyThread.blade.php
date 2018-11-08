@@ -6,7 +6,7 @@
         height: 99.9%!important;
     }
 </style>
-<div class="bm_h">我发的帖子</div>
+<div class="bm_h pink">我发的帖子</div>
 <div class="bm_c" style="background: #ffffff;height: 100%;overflow: hidden">
     @foreach($data['my_thread'] as  $key => $value)
         <p class="fourm_thread_items" @if($key%2==0) style="background: #f5f5f5;" @endif >

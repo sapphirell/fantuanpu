@@ -136,6 +136,8 @@ Route::group([
         Route::post('/adorn_mine', ['uses' => 'UserBaseController@adorn_mine', 'as' => 'adorn_mine']);# 佩戴勋章
         Route::post('/put_in_box', ['uses' => 'UserBaseController@put_in_box', 'as' => 'put_in_box']);# 摘下勋章
         Route::get('/sign', ['uses' => 'SignController@sign', 'as' => 'sign']);# 签到
+        Route::get('/validate_email', ['uses' => 'UserBaseController@ValidateEmail', 'as' => 'ValidateEmail']);# 等待验证会员验证电子邮箱
+        Route::get('/send_validate_email', ['uses' => 'UserBaseController@send_validate_email', 'as' => 'send_validate_email']);# 等待验证会员验证电子邮箱
     });
     //管理后台 IndexCp
     Route::group([

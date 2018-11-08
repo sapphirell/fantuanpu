@@ -67,7 +67,8 @@
         box-shadow: none;
     }
     .bm_h {
-        background: #85a8ca;
+        background-color: #ffb6c7;
+        background-image: linear-gradient(270deg, #f4f5f4 0%, #ffb6c7 93%);
     }
     .bm_c{
         height: 99.9%;
@@ -161,11 +162,9 @@
         });
         //头像蒙版
         $(".my_avatar").hover(function (event) {
-            console.log("hover1次")
             $(".ava_glass").fadeToggle("fast");
             event.stopPropagation();
         })
-        //
 
     })
 

@@ -124,7 +124,7 @@
 
             @if(session('user_info')->groupid == 1 || in_array(session("user_info")->uid , $data["plus_ids"]))
                 <p style="    background-color: #fff;padding: 5px;box-shadow: 0 0 5px #ccc;margin-right: 5px;margin-top: 5px;margin-bottom: 5px;border-radius: 5px;margin: 5px 5px 0px 0px;font-size: 15px;font-weight: 900;text-align: center;">
-                    <i class="fa fa-cog fa-lg"></i>
+                    <i class="fa fa-cog fa-lg setting_forum"></i>
                 </p>
             @endif
             <div>
@@ -206,6 +206,10 @@
                     location.reload();
                 }
             })
+
+            $(".setting_forum").click(function () {
+
+            });
         })
     })
 </script>

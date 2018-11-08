@@ -22,10 +22,11 @@ class User_model extends Model
         $this->email = $email;
 //        $this->username =
     }
-    public static function getUserByEmial($mail)
+    public static function getUserByEmial($mail,$avatar=true)
     {
-        $user = User_model::where('email',$mail)->select("username","email","uid")->first();
-        $user->avatar = config('app.online_url').\App\Http\Controllers\User\UserHelperController::GetAvatarUrl($user->uid);
+        $user = User_model::where('email',$mail)->first();
+        if ($avatar)
+            $user->avatar = config('app.online_url').\App\Http\Controllers\User\UserHelperController::GetAvatarUrl($user->uid);
         return $user;
     }
 }
