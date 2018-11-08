@@ -423,7 +423,7 @@
 //        console.log(quote)
 //        var reg = new RegExp($("#"+pid+" .quote",blockquote).html());
 //        var Html = str.replace(reg,"");
-        var posts = "<blockquote>"+str+"</blockquote>";
+        var posts = "<blockquote>"+str+"</blockquote><br/>";
         editor.txt.html(posts)
     }
     $(document).ready(function () {
