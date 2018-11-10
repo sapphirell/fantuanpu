@@ -178,7 +178,7 @@ class UserBaseController extends Controller
         {
             return self::response([],40004,'两次密码输入不相等');
         }
-        $user = UCenter_member_model::where('email','=',$request->input('email'))->select()->first();
+        $user = User_model::where('email','=',$request->input('email'))->select()->first();
         if (empty($user))
         {
             return self::response([],40005,'用户不存在');
