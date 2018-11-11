@@ -94,6 +94,24 @@ h1.thread_title{    padding-top: 27px;}
     color: #ffb0b0;
 }
 .bbcode_container img {max-width:100%;}
+/*帖子详情页面*/
+.post_msg
+{
+    background: #fff;
+    padding: 8px;
+    margin: 15px;
+    box-shadow: 2px 3px 3px #e4e4e4;
+    width: 641px;
+    float: left;
+    min-height: 100px;
+    border-radius: 20px;
+    padding-bottom: 20px;
+    width:100%;
+    box-sizing: content-box;
+}
+.post_msg img {
+    max-width: 100%;
+}
 /***自适应***/
 @media screen and (max-width: 960px) {
     .banner,.banner img{width: 100%!important;}

@@ -56,23 +56,7 @@
         position: relative;
         padding-right: 50px;
     }
-    .post_msg
-    {
-        background: #fff;
-        padding: 8px;
-        margin: 15px;
-        box-shadow: 2px 3px 3px #e4e4e4;
-        width: 641px;
-        float: left;
-        min-height: 100px;
-        border-radius: 20px;
-        padding-bottom: 20px;
-        width:100%;
-        box-sizing: content-box;
-    }
-    .post_msg img {
-        max-width: 100%;
-    }
+
     .w-e-text-container{
         height:200px!important;
         border-color: #eee!important;
@@ -93,7 +77,7 @@
         padding: 0px;
         color: #afa1a1;
         border: 4px dashed;
-        width: 643px;
+        width: 90%;
         margin-left: 15px;
         text-align: center;
         font-size: 50px;
@@ -456,9 +440,17 @@
         var next_page = 2;
         $(".get_more_posts").click(function (e) {
             $.post('/app/post_next_page',{page:next_page,tid:tid,need:"html"},function (event) {
-                $(".post_item:last").append(event);
+                $(".post_item:last").after(event);
                 console.log(event)
-                next_page += 1;
+                if (!event)
+                {
+                    alert("没有更多了");
+                }
+                else
+                {
+                    next_page += 1;
+                }
+
             })
         })
         //勋章详情显示
