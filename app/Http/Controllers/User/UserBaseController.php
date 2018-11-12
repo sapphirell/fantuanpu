@@ -259,6 +259,8 @@ class UserBaseController extends Controller
     public function DoRegister(Request $request)
     {
         $ck = $this->checkRequest($request,['username','email','password','repassword']);
+        if(!filter_var($request->input('email'), FILTER_VALIDATE_EMAIL))
+            return self::response([],40003,"这真的是邮箱账号吗?");
         if( $ck !== true)
         {
             return self::response([$request->input()],40001,'缺少参数'.$ck);
