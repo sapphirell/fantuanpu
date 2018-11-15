@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Forum;
 
 
 use App\Http\DbModel\Forum_forum_model;
+use App\Http\DbModel\ForumPlusModel;
 use App\Http\DbModel\ForumPostModel;
 use App\Http\DbModel\ForumThreadModel;
 use App\Http\DbModel\Thread_model;
@@ -63,5 +64,25 @@ class ThreadController extends Controller
         $this->_viewThread($tid,$page);
         return view('PC/Forum/ThreadView')->with('data',$this->data);
 
+    }
+
+    /**
+     * 设置帖子为置顶帖子
+     * @param Request $request
+     */
+    public function set_top_thread(Request $request)
+    {
+        $checkParams = $this->checkRequest($request,['tid','fid','todo']);
+        $flag_prower = "null";
+        $flag_toped = "null";
+        if($checkParams !== true)
+        {
+            return self::response([],40001,'缺少参数'.$checkParams);
+        }
+        // 获取板块目前的附加信息
+        $forum_plus = ForumPlusModel::find($request->input('fid'));
+        $flag_prower = in_array(session("user_info")->uid,json_encode("master_id",true));
+        $flag_toped = in_array($request->input('tid'),json_encode($forum_plus["top_thread_id"],true));
+        dd(in_array(session("user_info")->uid,json_encode("master_id",true)));
     }
 }

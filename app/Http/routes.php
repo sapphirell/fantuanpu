@@ -16,7 +16,8 @@ use App\Http\UserAgent;
 Route::group([
     'namespace' => 'App',
     'middleware' => [
-        'app'
+        'app',
+        'domain.fantuanpu'
     ]
 ],function () {
     Route::get('/app/test', ['uses' => 'UserController@test', 'as' => 'app-user-test']);#app测试
@@ -38,6 +39,9 @@ Route::group([
 //App 接口(非token)
 Route::group([
     'namespace' => 'App',
+    'middleware' => [
+        'domain.fantuanpu'
+    ],
 ],function () {
     Route::post('/app/forum_list', ['uses' => 'ForumController@forum_list', 'as' => 'forum_list']);#板块列表
     Route::post('/app/look_look', ['uses' => 'ForumController@look_look', 'as' => 'look_look']);#随便看看
@@ -61,7 +65,10 @@ Route::group([
     //pc端
     //服务
     Route::group([
-        'namespace' => 'System'
+        'namespace' => 'System',
+        'middleware' => [
+            'domain.fantuanpu'
+        ],
     ], function () {
         Route::get('/ss', ['uses' => 'ServeController@ss', 'as' => 'ss']);#查看session
         Route::get('/info', ['uses' => 'ServeController@info', 'as' => 'info']);#phpinfo
@@ -73,7 +80,10 @@ Route::group([
     });
     //论坛
     Route::group([
-        'namespace' => 'Forum'
+        'namespace' => 'Forum',
+        'middleware' => [
+            'domain.fantuanpu'
+        ],
     ], function () {
         Route::get('/',             ['uses' => 'ForumBaseController@ForumIndex', 'as' => 'forum']);#论坛首页
         Route::get('/forum.php',    ['uses' => 'ForumBaseController@ForumIndex', 'as' => 'forum-index']);#论坛首页
@@ -100,9 +110,22 @@ Route::group([
 
 
     });
+    //论坛-必须登录
+    Route::group([
+        'namespace' => 'Forum',
+        'middleware' => [
+            'need.login',
+            'domain.fantuanpu'
+        ],
+    ], function () {
+        Route::get('/set_top_thread', ['uses' => 'ThreadController@set_top_thread', 'as' => 'set_top_thread']);#设置帖子为置顶
+    });
     //用户
     Route::group([
-        'namespace' => 'User'
+        'namespace' => 'User',
+        'middleware' => [
+            'domain.fantuanpu'
+        ],
     ], function () {
         Route::get('/login', ['uses' => 'UserBaseController@LoginView', 'as' => 'login']);#登录
         Route::get('/logout', ['uses' => 'UserBaseController@LogOut', 'as' => 'LogOut']);#退出
@@ -122,8 +145,9 @@ Route::group([
     Route::group([
         'namespace' => 'User',
         'middleware' => [
-            'need.login'
-        ]
+            'need.login',
+            'domain.fantuanpu'
+        ],
     ], function () {
         Route::get('/user-center', ['uses' => 'UserBaseController@UserCenter', 'as' => 'UserCenter']);#用户中心
         Route::post('/uc-do-upload-avatar', 'UserBaseController@DoUploadAvatar');#修改头像
@@ -138,6 +162,8 @@ Route::group([
         Route::get('/sign', ['uses' => 'SignController@sign', 'as' => 'sign']);# 签到
         Route::get('/validate_email', ['uses' => 'UserBaseController@ValidateEmail', 'as' => 'ValidateEmail']);# 等待验证会员验证电子邮箱
         Route::get('/send_validate_email', ['uses' => 'UserBaseController@send_validate_email', 'as' => 'send_validate_email']);# 等待验证会员验证电子邮箱
+
+
     });
     //管理后台 IndexCp
     Route::group([
@@ -145,7 +171,7 @@ Route::group([
         'namespace' => 'Admincp',
         'middleware' => [
             'admin'
-        ]
+        ],
     ], function () {
         Route::get('/admincp/', ['uses' => 'AdmincpController@IndexCp', 'as' => 'admin']);#管理后台首页
         Route::get('/admincp/user_manager', ['uses' => 'AdmincpController@userManager', 'as' => 'userManager']);#用户管理面板

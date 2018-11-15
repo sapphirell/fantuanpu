@@ -4,6 +4,8 @@ namespace App\Http;
 
 use App\Http\Middleware\Admin;
 use App\Http\Middleware\App;
+use App\Http\Middleware\DomainFantuanpu;
+use App\Http\Middleware\DomainLolita;
 use App\Http\Middleware\NeedLogin;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -54,6 +56,8 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'admin' => Admin::class,
         'need.login' => NeedLogin::class,
-        'app' => App::class
+        'app' => App::class,
+        'domain.fantuanpu' => DomainFantuanpu::class,
+        'domain.lolita' => DomainLolita::class
     ];
 }
