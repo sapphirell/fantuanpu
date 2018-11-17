@@ -130,7 +130,7 @@ class UserBaseController extends Controller
         {
             $accessToken = md5($userEmail.time());
             //发送邮件
-            $data['url'] =  self::DOMAIN . "retrieve/?source=email&token=".$accessToken;
+            $data['url'] =  self::FANTUANPU_DOMAIN . "retrieve/?source=email&token=".$accessToken;
             $code = rand(1000,9999);
             $input = [
                 'email'     => $userEmail,

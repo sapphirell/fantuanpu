@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Http\Controllers\Controller;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,7 +18,7 @@ class DomainLolita
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if (in_array($request->getHost(),["localhost","lofans.com","www.fantuanpu.com"]))
+        if (in_array($request->getHost(),array_merge(Controller::$lolita_domain,Controller::$local_domain)))
             return $next($request);
         else
             return "404 NOT FOUND";

@@ -44,7 +44,7 @@ class MailController extends Controller
         {
             $accessToken = md5($email.time());
             //发送邮件
-            $data['url'] =  self::DOMAIN . "retrieve/?source=email&token=".$accessToken;
+            $data['url'] =  self::FANTUANPU_DOMAIN . "retrieve/?source=email&token=".$accessToken;
             $input = [
                 'email'     => $email,
                 'toUser'    => "hentai@fantuanpu.com",

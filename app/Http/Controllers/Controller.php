@@ -30,6 +30,22 @@ class Controller extends BaseController
      *
      */
     const DOMAIN = 'http://www.fantuanpu.com/';
+    const FANTUANPU_DOMAIN = 'http://fantuanpu.com/';
+    const LOLITA_DOMAIN = 'http://suki-suku.me/';
+    public static $lolita_domain = [
+        'suki-suku.me',
+        'local.suki-suku.me',
+        'www.suki-suku.me',
+    ];
+    public static $fantuanpu_domain = [
+        'fantuanpu.com',
+        'www.fantuanpu.com',
+        'local.fantuanpu.com',
+
+    ];
+    public static $local_domain = [
+        'localhost',
+    ];
     /**
      * 帖子回帖分页数量
      */

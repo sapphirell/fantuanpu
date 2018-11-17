@@ -21,7 +21,7 @@ class DomainFantuanpu
      */
     public function handle($request, Closure $next)
     {
-        if (in_array($request->getHost(),["localhost","fantuanpu.com","www.fantuanpu.com"]))
+        if (in_array($request->getHost(),array_merge(Controller::$fantuanpu_domain,Controller::$local_domain)))
             return $next($request);
         else
             return Controller::response([],40000,'不允许当前域名进行访问');

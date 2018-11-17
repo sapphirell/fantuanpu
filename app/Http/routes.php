@@ -11,6 +11,12 @@
 |
 */
 use App\Http\UserAgent;
+//if( UserAgent::isMobile() ){
+//    //移动端
+//    Route::get('/', ['uses' => 'Controller@mobile', 'as' => 'mobile']);
+//}else{
+//pc端
+
 
 //App 接口(必须获取token的)
 Route::group([
@@ -58,130 +64,132 @@ Route::group([
     Route::post('/app/add_user_coin', ['uses' => 'UserController@add_user_coin', 'as' => 'add_user_coin']);#用户修改资金
 });
 
-//if( UserAgent::isMobile() ){
-//    //移动端
-//    Route::get('/', ['uses' => 'Controller@mobile', 'as' => 'mobile']);
-//}else{
-    //pc端
-    //服务
-    Route::group([
-        'namespace' => 'System',
-        'middleware' => [
-            'domain.fantuanpu'
-        ],
-    ], function () {
-        Route::get('/ss', ['uses' => 'ServeController@ss', 'as' => 'ss']);#查看session
-        Route::get('/info', ['uses' => 'ServeController@info', 'as' => 'info']);#phpinfo
-        Route::get('/test', ['uses' => 'TestController@index', 'as' => 'test']);#test
-        Route::get('/ping', ['uses' => 'TestController@ping', 'as' => 'test']);#test
-        Route::get('/avatar', ['uses' => 'PictureController@show_avatar', 'as' => 'show_avatar']);#传uid返回头像链接
+
+//服务
+Route::group([
+    'namespace' => 'System',
+], function () {
+    Route::get('/', ['uses' => 'ServeController@index', 'as' => 'index']);#根
+    Route::get('/ss', ['uses' => 'ServeController@ss', 'as' => 'ss']);#查看session
+    Route::get('/info', ['uses' => 'ServeController@info', 'as' => 'info']);#phpinfo
+    Route::get('/test', ['uses' => 'TestController@index', 'as' => 'test']);#test
+    Route::get('/ping', ['uses' => 'TestController@ping', 'as' => 'test']);#test
+    Route::get('/avatar', ['uses' => 'PictureController@show_avatar', 'as' => 'show_avatar']);#传uid返回头像链接
 
 
-    });
-    //论坛
-    Route::group([
-        'namespace' => 'Forum',
-        'middleware' => [
-            'domain.fantuanpu'
-        ],
-    ], function () {
-        Route::get('/',             ['uses' => 'ForumBaseController@ForumIndex', 'as' => 'forum']);#论坛首页
-        Route::get('/forum.php',    ['uses' => 'ForumBaseController@ForumIndex', 'as' => 'forum-index']);#论坛首页
-        Route::get('/index',        ['uses' => 'ForumBaseController@ForumIndex', 'as' => 'forum-index']);#论坛首页
-        Route::get('/about', ['uses' => 'ForumBaseController@index', 'as' => 'about']);#about
-        Route::get('/talk', ['uses' => 'ForumBaseController@talk', 'as' => 'talk']);#帖子首页
-        Route::get('/notice', ['uses' => 'ForumBaseController@notice', 'as' => 'notice']);#声明
-        Route::post('/dopost-notice', ['uses' => 'ForumBaseController@save_notice', 'as' => 'do-notice']);#声明
-        Route::get('/forum-{id}-{page}.html', ['uses' => 'ForumBaseController@ThreadList', 'as' => 'thread']);#帖子首页
+});
+//论坛
+Route::group([
+    'namespace' => 'Forum',
+    'middleware' => [
+        'domain.fantuanpu'
+    ],
+], function () {
+//    Route::get('/',             ['uses' => 'ForumBaseController@ForumIndex', 'as' => 'forum']);#论坛首页
+    Route::get('/forum.php',    ['uses' => 'ForumBaseController@ForumIndex', 'as' => 'forum-index']);#论坛首页
+    Route::get('/index',        ['uses' => 'ForumBaseController@ForumIndex', 'as' => 'forum-index']);#论坛首页
+    Route::get('/about', ['uses' => 'ForumBaseController@index', 'as' => 'about']);#about
+    Route::get('/talk', ['uses' => 'ForumBaseController@talk', 'as' => 'talk']);#帖子首页
+    Route::get('/notice', ['uses' => 'ForumBaseController@notice', 'as' => 'notice']);#声明
+    Route::post('/dopost-notice', ['uses' => 'ForumBaseController@save_notice', 'as' => 'do-notice']);#声明
+    Route::get('/forum-{id}-{page}.html', ['uses' => 'ForumBaseController@ThreadList', 'as' => 'thread']);#帖子首页
 
-        /**
-         *@param tid int 帖子标题id
-         *@param page int 帖子页数
-         *@return App\Http\Controllers\Forum\ThreadController
-         */
-        Route::get('/thread-{tid}-{page}.html', ['uses' => 'ThreadController@viewThread', 'as' => 'thread']);#查看帖子
+    /**
+     *@param tid int 帖子标题id
+     *@param page int 帖子页数
+     *@return App\Http\Controllers\Forum\ThreadController
+     */
+    Route::get('/thread-{tid}-{page}.html', ['uses' => 'ThreadController@viewThread', 'as' => 'thread']);#查看帖子
 
-        Route::post('/new-thread', ['uses' => 'ThreadApiController@NewThread', 'as' => 'new-thread']);#发新帖
-        Route::post('/post-thread', ['uses' => 'ThreadApiController@PostsThread', 'as' => 'store-posts']);#回帖
-        Route::get('/webim', ['uses' => 'ForumBaseController@webim', 'as' => 'webim']);#webim即时聊天
-        Route::get('/fantuanpuDevelopers', ['uses' => 'ForumBaseController@fantuanpuDevelopers', 'as' => 'fantuanpuDevelopers']);#饭团扑开发者列表
-        Route::get('/app_download', ['uses' => 'ForumBaseController@app_download', 'as' => 'app_download']);#下载App页面
-        Route::get('/medal_shop', ['uses' => 'MedalController@medal_shop', 'as' => 'medal_shop']);#勋章商店
-
-
-    });
-    //论坛-必须登录
-    Route::group([
-        'namespace' => 'Forum',
-        'middleware' => [
-            'need.login',
-            'domain.fantuanpu'
-        ],
-    ], function () {
-        Route::get('/set_top_thread', ['uses' => 'ThreadController@set_top_thread', 'as' => 'set_top_thread']);#设置帖子为置顶
-    });
-    //用户
-    Route::group([
-        'namespace' => 'User',
-        'middleware' => [
-            'domain.fantuanpu'
-        ],
-    ], function () {
-        Route::get('/login', ['uses' => 'UserBaseController@LoginView', 'as' => 'login']);#登录
-        Route::get('/logout', ['uses' => 'UserBaseController@LogOut', 'as' => 'LogOut']);#退出
-        Route::get('/register', ['uses' => 'UserBaseController@Register', 'as' => 'register']);#注册
-        Route::post('/do-reg', ['uses' => 'UserBaseController@DoRegister', 'as' => 'DoRegister']);#do注册
-        Route::post('/do-login', ['uses' => 'UserBaseController@DoLogin', 'as' => 'do-login']);#登录
-        Route::get('/old-user', ['uses' => 'UserBaseController@OldUser', 'as' => 'OldUser']);#老账户寻回
-        Route::get('/get-email', ['uses' => 'UserBaseController@GetAccountByEmail', 'as' => 'GetAccountByEmail']);#根据邮箱找回账户
-        Route::post('/get-email', ['uses' => 'UserBaseController@RetrieveMail', 'as' => 'RetrieveMail']);#根据邮箱找回账户,发送邮件
-        Route::get('/new-password', ['uses' => 'UserBaseController@ResetPassword', 'as' => 'ResetPassword']);#修改密码,根据验证邮件
-        Route::post('/do-repassword', ['uses' => 'UserBaseController@DoResetPassword', 'as' => 'DoResetPassword']);#post修改密码
-        Route::post('/do-checkUsername', ['uses' => 'UserBaseController@checkUsername', 'as' => 'checkUsername']);#用户名是否被注册
-        Route::post('/do-checkEmail', ['uses' => 'UserBaseController@checkEmail', 'as' => 'checkEmail']);#emial是否被注册
-        Route::get('/live2d', ['uses' => 'UserBaseController@live2d', 'as' => 'live2d']);#live2d 测试
-    });
-    //用户-必须登录的
-    Route::group([
-        'namespace' => 'User',
-        'middleware' => [
-            'need.login',
-            'domain.fantuanpu'
-        ],
-    ], function () {
-        Route::get('/user-center', ['uses' => 'UserBaseController@UserCenter', 'as' => 'UserCenter']);#用户中心
-        Route::post('/uc-do-upload-avatar', 'UserBaseController@DoUploadAvatar');#修改头像
-        Route::get('/get_my_message', 'UserBaseController@get_my_message');#获取我的消息
-        Route::get('/update_user_avatar', 'UserBaseController@update_user_avatar');#修改用户头像
-        Route::get('/my_thread', ['uses' => 'UserBaseController@my_thread', 'as' => 'get_my_thread']);#我发的帖子
-        Route::get('/my_medal', ['uses' => 'UserBaseController@my_medal', 'as' => 'my_medal']);# 我的勋章
-        Route::get('/sell_old_medal', ['uses' => 'UserBaseController@sell_old_medal', 'as' => 'my_medal']);# 卖掉旧版勋章
-        Route::post('/buy_medal', ['uses' => 'UserBaseController@buy_medal', 'as' => 'buy_medal']);# 购买勋章
-        Route::post('/adorn_mine', ['uses' => 'UserBaseController@adorn_mine', 'as' => 'adorn_mine']);# 佩戴勋章
-        Route::post('/put_in_box', ['uses' => 'UserBaseController@put_in_box', 'as' => 'put_in_box']);# 摘下勋章
-        Route::get('/sign', ['uses' => 'SignController@sign', 'as' => 'sign']);# 签到
-        Route::get('/validate_email', ['uses' => 'UserBaseController@ValidateEmail', 'as' => 'ValidateEmail']);# 等待验证会员验证电子邮箱
-        Route::get('/send_validate_email', ['uses' => 'UserBaseController@send_validate_email', 'as' => 'send_validate_email']);# 等待验证会员验证电子邮箱
+    Route::post('/new-thread', ['uses' => 'ThreadApiController@NewThread', 'as' => 'new-thread']);#发新帖
+    Route::post('/post-thread', ['uses' => 'ThreadApiController@PostsThread', 'as' => 'store-posts']);#回帖
+    Route::get('/webim', ['uses' => 'ForumBaseController@webim', 'as' => 'webim']);#webim即时聊天
+    Route::get('/fantuanpuDevelopers', ['uses' => 'ForumBaseController@fantuanpuDevelopers', 'as' => 'fantuanpuDevelopers']);#饭团扑开发者列表
+    Route::get('/app_download', ['uses' => 'ForumBaseController@app_download', 'as' => 'app_download']);#下载App页面
+    Route::get('/medal_shop', ['uses' => 'MedalController@medal_shop', 'as' => 'medal_shop']);#勋章商店
 
 
-    });
-    //管理后台 IndexCp
-    Route::group([
-        'namespace' => 'Admincp',
-        'namespace' => 'Admincp',
-        'middleware' => [
-            'admin'
-        ],
-    ], function () {
-        Route::get('/admincp/', ['uses' => 'AdmincpController@IndexCp', 'as' => 'admin']);#管理后台首页
-        Route::get('/admincp/user_manager', ['uses' => 'AdmincpController@userManager', 'as' => 'userManager']);#用户管理面板
-        Route::get('/admincp/user-edit', ['uses' => 'AdmincpController@userEdit', 'as' => 'userManager']);#用户管理面板
-        Route::get('/admincp/add_medal', ['uses' => 'OperateController@add_medal', 'as' => 'add_medal']);#添加新的勋章页面
-        Route::get('/admincp/medal_list', ['uses' => 'OperateController@medal_list', 'as' => 'medal_list']);#勋章列表
-        Route::post('/admincp/store_medal', ['uses' => 'OperateController@store_medal', 'as' => 'store_medal']);#添加新的勋章
+});
+//论坛-必须登录
+Route::group([
+    'namespace' => 'Forum',
+    'middleware' => [
+        'need.login',
+        'domain.fantuanpu'
+    ],
+], function () {
+    Route::get('/set_top_thread', ['uses' => 'ThreadController@set_top_thread', 'as' => 'set_top_thread']);#设置帖子为置顶
+});
+//用户
+Route::group([
+    'namespace' => 'User',
+    'middleware' => [
+        'domain.fantuanpu'
+    ],
+], function () {
+    Route::get('/login', ['uses' => 'UserBaseController@LoginView', 'as' => 'login']);#登录
+    Route::get('/logout', ['uses' => 'UserBaseController@LogOut', 'as' => 'LogOut']);#退出
+    Route::get('/register', ['uses' => 'UserBaseController@Register', 'as' => 'register']);#注册
+    Route::post('/do-reg', ['uses' => 'UserBaseController@DoRegister', 'as' => 'DoRegister']);#do注册
+    Route::post('/do-login', ['uses' => 'UserBaseController@DoLogin', 'as' => 'do-login']);#登录
+    Route::get('/old-user', ['uses' => 'UserBaseController@OldUser', 'as' => 'OldUser']);#老账户寻回
+    Route::get('/get-email', ['uses' => 'UserBaseController@GetAccountByEmail', 'as' => 'GetAccountByEmail']);#根据邮箱找回账户
+    Route::post('/get-email', ['uses' => 'UserBaseController@RetrieveMail', 'as' => 'RetrieveMail']);#根据邮箱找回账户,发送邮件
+    Route::get('/new-password', ['uses' => 'UserBaseController@ResetPassword', 'as' => 'ResetPassword']);#修改密码,根据验证邮件
+    Route::post('/do-repassword', ['uses' => 'UserBaseController@DoResetPassword', 'as' => 'DoResetPassword']);#post修改密码
+    Route::post('/do-checkUsername', ['uses' => 'UserBaseController@checkUsername', 'as' => 'checkUsername']);#用户名是否被注册
+    Route::post('/do-checkEmail', ['uses' => 'UserBaseController@checkEmail', 'as' => 'checkEmail']);#emial是否被注册
+    Route::get('/live2d', ['uses' => 'UserBaseController@live2d', 'as' => 'live2d']);#live2d 测试
+});
+//用户-必须登录的
+Route::group([
+    'namespace' => 'User',
+    'middleware' => [
+        'need.login',
+        'domain.fantuanpu'
+    ],
+], function () {
+    Route::get('/user-center', ['uses' => 'UserBaseController@UserCenter', 'as' => 'UserCenter']);#用户中心
+    Route::post('/uc-do-upload-avatar', 'UserBaseController@DoUploadAvatar');#修改头像
+    Route::get('/get_my_message', 'UserBaseController@get_my_message');#获取我的消息
+    Route::get('/update_user_avatar', 'UserBaseController@update_user_avatar');#修改用户头像
+    Route::get('/my_thread', ['uses' => 'UserBaseController@my_thread', 'as' => 'get_my_thread']);#我发的帖子
+    Route::get('/my_medal', ['uses' => 'UserBaseController@my_medal', 'as' => 'my_medal']);# 我的勋章
+    Route::get('/sell_old_medal', ['uses' => 'UserBaseController@sell_old_medal', 'as' => 'my_medal']);# 卖掉旧版勋章
+    Route::post('/buy_medal', ['uses' => 'UserBaseController@buy_medal', 'as' => 'buy_medal']);# 购买勋章
+    Route::post('/adorn_mine', ['uses' => 'UserBaseController@adorn_mine', 'as' => 'adorn_mine']);# 佩戴勋章
+    Route::post('/put_in_box', ['uses' => 'UserBaseController@put_in_box', 'as' => 'put_in_box']);# 摘下勋章
+    Route::get('/sign', ['uses' => 'SignController@sign', 'as' => 'sign']);# 签到
+    Route::get('/validate_email', ['uses' => 'UserBaseController@ValidateEmail', 'as' => 'ValidateEmail']);# 等待验证会员验证电子邮箱
+    Route::get('/send_validate_email', ['uses' => 'UserBaseController@send_validate_email', 'as' => 'send_validate_email']);# 等待验证会员验证电子邮箱
 
-    });
-//
-//}
-//
-//
+
+});
+//管理后台 IndexCp
+Route::group([
+    'namespace' => 'Admincp',
+    'namespace' => 'Admincp',
+    'middleware' => [
+        'admin'
+    ],
+], function () {
+    Route::get('/admincp/', ['uses' => 'AdmincpController@IndexCp', 'as' => 'admin']);#管理后台首页
+    Route::get('/admincp/user_manager', ['uses' => 'AdmincpController@userManager', 'as' => 'userManager']);#用户管理面板
+    Route::get('/admincp/user-edit', ['uses' => 'AdmincpController@userEdit', 'as' => 'userManager']);#用户管理面板
+    Route::get('/admincp/add_medal', ['uses' => 'OperateController@add_medal', 'as' => 'add_medal']);#添加新的勋章页面
+    Route::get('/admincp/medal_list', ['uses' => 'OperateController@medal_list', 'as' => 'medal_list']);#勋章列表
+    Route::post('/admincp/store_medal', ['uses' => 'OperateController@store_medal', 'as' => 'store_medal']);#添加新的勋章
+});
+
+
+//SUKI的接口
+//用户-必须登录的
+Route::group([
+    'namespace' => 'System',
+    'middleware' => [
+        'domain.lolita'
+    ],
+], function () {
+    Route::get('/ss', ['uses' => 'ServeController@ss', 'as' => 'ss']);#查看session
+
+});

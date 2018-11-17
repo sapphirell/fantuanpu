@@ -39,6 +39,16 @@
     .master_avatar {
         float: left;
     }
+    .thread_setting_p {
+        position: absolute;
+        background: #fff;
+        padding: 5px;
+        border-radius: 5px;
+    }
+    .thread_setting_p li {
+        list-style: none;
+        margin: 5px;
+    }
 </style>
 <script>
     $(document).ready(function () {
@@ -84,9 +94,20 @@
 
                     </div>
                     <div class="clear"></div>
+                    <div style="float: right;color: #797979">
+                        <i class="fa fa-lg fa-cogs setting_thread" style="" ></i>
+                        <div class="thread_setting_p">
+                            <ul>
+                                <li><a>置顶</a></li>
+                                <li><a>取消置顶</a></li>
+                                {{--<li><a>精华</a></li>--}}
+                                {{--<li><a>取消精华</a></li>--}}
+                            </ul>
+                        </div>
+                    </div>
 
 
-                    {{--<a href="/" style="color: red;float: right" > 完全清理</a>--}}
+
 
                 </div>
             @endforeach
@@ -209,6 +230,10 @@
 
             $(".setting_forum").click(function () {
 
+            });
+
+            $(".setting_thread").click(function () {
+                
             });
         })
     })
