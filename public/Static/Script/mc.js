@@ -1,3 +1,4 @@
+
 $(document).ready(function(){
     //获取窗口高度
     var getHeight = $(window).height();

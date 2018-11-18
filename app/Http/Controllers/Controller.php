@@ -31,7 +31,7 @@ class Controller extends BaseController
      */
     const DOMAIN = 'http://www.fantuanpu.com/';
     const FANTUANPU_DOMAIN = 'http://fantuanpu.com/';
-    const LOLITA_DOMAIN = 'http://suki-suku.me/';
+    const LOLITA_DOMAIN = 'http://suki-suki.me/';
     public static $lolita_domain = [
         'suki-suku.me',
         'local.suki-suku.me',

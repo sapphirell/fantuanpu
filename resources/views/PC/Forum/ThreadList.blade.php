@@ -105,10 +105,6 @@
                             </ul>
                         </div>
                     </div>
-
-
-
-
                 </div>
             @endforeach
             <div style="float: right;margin: 15px;">

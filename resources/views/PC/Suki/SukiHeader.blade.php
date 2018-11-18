@@ -1,0 +1,110 @@
+<html>
+<head>
+    <title>SUKI -@if($data['title']){{$data['title']}}@else 小裙子交流社区 @endif</title>
+    <meta name="keywords" content="SUKI,lolita服饰,jk制服,Lolita开箱推荐,软妹服装社区,{{$data["keywords"]}}">
+    <meta name="description" content="SUKI,一个小众服饰社交社区">
+    @include('PC.Common.HtmlHead')
+    <style>
+        .header {
+            box-shadow: 0 0 19px #ff00004f;
+            border-top: 0px solid #de9cb2;
+        }
+        body {
+            background: #fafafa;
+        }
+        .search_box {
+            background: #ffb8b8;
+            border: 0px;
+            color: #fff2e9;
+            height: 21px;
+            font-size: 15px;
+            font-family: 'PingFang SC', 'Helvetica Neue', 'Helvetica', 'STHeitiSC-Light', 'Arial', sans-serif;
+            font-weight: 100;
+            border: 1px solid #f4b8b7;
+            margin-top: 5px;
+            border-radius: 7px;
+            padding: 13px;
+            width: 120px;
+            margin-right: 5px;
+        }
+        .search_box:hover ,.search_box:active,.search_box:focus {
+            border-color: #d695b0!important;
+            box-shadow: 0 0 5px #ff7979;
+        }
+        .hd li {
+            list-style: none;
+            display: inline-block;
+            padding: 5px 15px;
+            color: #464646;
+            font-size: 13px;
+            cursor: pointer;
+            height: 100%;
+            margin: 0px;
+            float: left;
+        }
+        .hd li:hover {
+            box-shadow: 0 -25px 21px inset #e68a9d;
+        }
+    </style>
+</head>
+
+<body>
+
+@if (count($errors) > 0)
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+
+<div class="header pink_bg">
+
+    <p class="title none_960"><a href="{{\App\Http\Controllers\Controller::LOLITA_DOMAIN}}" style="font-weight: 900;text-shadow: 0 0 3px #af2e2e;">suki-suki.me</a></p>
+    <div style="max-width: 960px;    margin: 0 auto;">
+        <h1 style="display: inline;margin:0px;float:right;"></h1>
+        <div class="search">
+            {{--<a class="add-me"><i class="icon-plus"></i> <span id="msg_num">0</span> Message</a>--}}
+            @if(session('user_info')->uid)
+                @if($data['user_has_sign'])
+                    <i class="fa fa-pencil-square-o fa-lg"></i>
+                @else
+                    <a class="sign" style="color: #ffffff;font-size: 12px;margin-right: 10px;    margin-top: 12px;display: none;"> <i class="fa fa-pencil-square-o fa-lg"></i> </a>
+
+                @endif
+            @endif
+            <from action="">
+                <input type="text" name="" class="search_box trans" placeholder="Searching..">
+
+            </from>
+
+        </div>
+        <ul class='hd'>
+            <li class="trans" style="">
+                {{avatar(1,30,50,"","big")}}
+            </li>
+            <li class="trans">
+                <a href="/index"  class="header_items">
+                    <i class="fa fa-home fa-fw fa-lg" style="color: #ffffff;line-height: 23px"></i>
+                    <p class="none_960" style="color: #fff;display: inline-block">分区</p>
+
+                </a>
+            </li>
+            <li class="trans">
+                <a href="/notice"  class="header_items">
+                    <i class="fa fa-comments-o fa-fw fa-lg"  style="color: #ffffff;line-height: 23px"></i>
+                    <p class="none_960" style="color: #fff;display: inline-block">新品</p>
+                </a>
+            </li>
+
+        </ul>
+
+
+
+        <span class="clear"></span>
+    </div>
+
+</div>
