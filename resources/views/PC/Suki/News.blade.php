@@ -21,6 +21,22 @@
         color: #88b8d2;
         font-size: 11px;
     }
+    .system_setting_checkbox {
+        width: 45px;
+        height: 45px;
+        display: inline-block;
+        background: #88ebff;
+        font-size: 11px;
+        color: #fff;
+        text-align: center;
+        cursor: pointer;
+        border-radius: 100%;
+        padding: 5px;
+        box-shadow: 0 0 10px #64f8fb;
+        margin: 5px;
+        font-weight: 900;
+        background-image: linear-gradient(176deg, #53def5 0%, #c0fff6 100%);
+    }
 </style>
 <div class="wp index_body">
     <div class="part">
@@ -48,39 +64,20 @@
             <div class=""></div>
             <p>闲聊</p>
         </div>
+
+        <div style="width: 200px;float:right;">
+            <div class="system_setting_checkbox" check-arr= >
+                浏览全部
+            </div>
+            <div class="system_setting_checkbox">
+                图片展开
+            </div>
+        </div>
+
         <div class="clear"></div>
     </div>
 
-    <div class="thread_list">
-        <div class="thread_item">
-
-            <div class="fourm_thread_items @if($value->top)top @endif" style="
-                    display: flex;
-                    background: #ffffff;
-                    padding: 10px;
-                    border-radius: 5px;
-            "  >
-
-                {{avatar(1,50,50,"","big")}}
-                <div style="display: inline-block;float: left; margin-left: 20px;flex-grow: 1">
-                    <a href="thread-{{$value->tid}}-1.html" style="font-size: 15px;margin-bottom: 3px;display: inline-block;"  target="_blank">
-                        {{$value->subject}}
-                        <span style="color: #000000">(+{{$value->replies}})</span>
-                    </a>
-                    <br>
-                    <span style="">
-                            <a class="no_attn"><?php echo "@";?>{{$value->author}}</a>
-                            <span>view : {{$value->views}}</span>
-                            <span style="color: #ccc">
-                                <span class="show_date" style="display: none;cursor: pointer;padding: 5px;">{{date('Y-m-d',$value->dateline)}}</span>
-                                <span class="show_time" style="cursor: pointer;padding: 5px;">{{date('H:i:s',$value->dateline)}}</span>
-                            </span>
-                        </span>
-
-                </div>
-                <div class="clear"></div>
-            </div>
-        </div>
-    </div>
+    @include('PC.Suki.SukiThreadList')
 
 </div>
+@include('PC.Suki.SukiFooter')
