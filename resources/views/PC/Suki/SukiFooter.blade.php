@@ -14,7 +14,20 @@
 </div>
 <script>
 
+    $(document).ready(function () {
+        var user_panel = 1;
+        $(".user_info_btn").click(
+            function () {
+                if(user_panel % 2)
+                    $(".user_info_panel").removeClass("zoomOutUp").css({display:"block"}).addClass("zoomInDown")
+                else
+                    $(".user_info_panel").removeClass("zoomInDown").addClass("zoomOutUp")
 
+                user_panel ++;
+
+            }
+        );
+    })
 
 </script>
 

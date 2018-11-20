@@ -57,7 +57,6 @@ class Controller extends BaseController
     public function __construct()
     {
         error_reporting(E_ERROR);
-        date_default_timezone_set('Asia/Shanghai');
         if (!session('access_id'))
         {
             $rand_code = md5(rand(0,99999).time());

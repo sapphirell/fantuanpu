@@ -26,5 +26,6 @@
 <script src="https://apps.bdimg.com/libs/layer/2.1/layer.js"></script>
 
 <script src="/Static/Script/common.js?date=20181108.2"></script>
+<link rel="stylesheet" type="text/css" href="/Static/Style/animate.css">
 <link rel="stylesheet" type="text/css" href="/Static/Style/mc.css?date=20181108.2">
 <link rel="stylesheet" type="text/css" href="/Static/Style/Web/style.css?date=20181108.2">

@@ -24,8 +24,6 @@ class ServeController extends Controller
 
     public function index(Request $request)
     {
-        if (false)
-            return 12;
         $domain = $request->getHost();
         if (in_array($domain,self::$local_domain))
             return view("PC/Common/LocalhostIndex");

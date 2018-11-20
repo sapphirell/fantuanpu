@@ -1,7 +1,7 @@
 <div class="thread_list" style="margin-top: 10px">
     <div class="thread_item">
 
-        <div class="fourm_thread_items @if($value->top)top @endif" style="  margin: 10px;   border-bottom: 4px solid #e28fae;   box-shadow: 0 0 10px #f1f1f1;background: #ffffff;padding: 10px;border-radius: 10px;"  >
+        <div class="fourm_thread_items @if($value->top)top @endif" style="  margin: 10px;  box-shadow: 0 0 10px #f1f1f1;background: #ffffff;padding: 10px;border-radius: 5px;"  >
             <div style="     display: flex;    padding: 10px;">
                 {{avatar(1,50,50,"","big")}}
                 <div style="display: inline-block;float: left; margin-left: 20px;flex-grow: 1">

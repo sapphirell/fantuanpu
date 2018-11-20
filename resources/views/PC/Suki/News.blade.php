@@ -40,30 +40,13 @@
 </style>
 <div class="wp index_body">
     <div class="part">
-        <div class="part_item">
+        @foreach($data['nodes'] as $value)
+        <a href="/forum-{{$value['fid']}}-1.html"  class="part_item">
             <div class=""></div>
-            <p>讨论</p>
-        </div>
-        <div class="part_item">
-            <div class=""></div>
-            <p>同城</p>
-        </div>
-        <div class="part_item">
-            <div class=""></div>
-            <p>上新</p>
-        </div>
-        <div class="part_item">
-            <div class=""></div>
-            <p>开箱</p>
-        </div>
-        <div class="part_item">
-            <div class=""></div>
-            <p>闲聊</p>
-        </div>
-        <div class="part_item">
-            <div class=""></div>
-            <p>闲聊</p>
-        </div>
+            <p>{{$value["name"]}}</p>
+        </a>
+        @endforeach
+
 
         <div style="width: 200px;float:right;">
             <div class="system_setting_checkbox" check-arr= >

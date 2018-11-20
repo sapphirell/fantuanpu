@@ -45,6 +45,19 @@
         .hd li:hover {
             box-shadow: 0 -25px 21px inset #e68a9d;
         }
+        .user_info_panel {
+            background: #fff;
+            position: fixed;
+            width: 200px;
+            height: 300px;
+            top: 48px;
+            left: 10px;
+            box-shadow: 0 0 15px #00000012;
+            display: none;
+        }
+        .user_info_item {
+            width:100%;
+        }
     </style>
 </head>
 
@@ -83,7 +96,7 @@
 
         </div>
         <ul class='hd'>
-            <li class="trans" style="">
+            <li class="trans user_info_btn" style="">
                 {{avatar(1,30,50,"","big")}}
             </li>
             <li class="trans">
@@ -107,4 +120,27 @@
         <span class="clear"></span>
     </div>
 
+</div>
+<div class="user_info_panel animated ">
+    <div style="display: inline-block;float:left;margin: 10px">{{avatar(1,50,50,"","big")}}</div>
+    <div style="float:left;">
+        <h2 style="    font-size: 15px;color: #6a6c7f;margin-top: 15px;">头戴草莓胖次</h2>
+        <p style="    width: 120px;font-size: 12px;color: #8e8e8e;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">签名档签名档签名档签名档签名档签名档签名档签名档签名档签名档</p>
+    </div>
+    <div class="clear"></div>
+    <div class="user_info_item">
+        <ul>
+            <li><img style="width:25px;" src="/Image/tixing.png">关注的用户</li>
+            <li><img style="width:25px;" src="/Image/tixing.png">期待的商品</li>
+            <li><img style="width:25px;" src="/Image/tixing.png">收藏的帖子</li>
+            <li><img style="width:25px;" src="/Image/tixing.png">评论</li>
+            <li><img style="width:25px;" src="/Image/tixing.png">{{"@"}}我</li>
+            <li><img style="width:25px;" src="/Image/tixing.png">点赞</li>
+        </ul>
+    </div>
+
+    <a style="    position: absolute;bottom: 0px;width: 100%;text-align: center">
+        <span style="    font-size: 14px;color: #d95794;font-weight: 900;">LogOff</span>
+        <img src="/Image/tuichu1.png" style="width:20px;" >
+    </a>
 </div>

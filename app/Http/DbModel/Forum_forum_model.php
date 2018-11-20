@@ -35,6 +35,15 @@ class Forum_forum_model extends Model
         return $topMod;
     }
 
+    /**
+     * 获取156所有的下级板块
+     */
+    public function get_suki_nodes()
+    {
+        $data = $this->get_bottom_nodes(156,'forum',1);
+
+        return $data;
+    }
     public function get_bottom_nodes($fid,$type = 'forum')
     {
         //板块分区是group、板块是forum、小组是sub
