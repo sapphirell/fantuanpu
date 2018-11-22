@@ -76,7 +76,7 @@
 
 <div class="header pink_bg">
 
-    <p class="title none_960"><a href="{{\App\Http\Controllers\Controller::LOLITA_DOMAIN}}" style="font-weight: 900;text-shadow: 0 0 3px #af2e2e;">suki-suki.me</a></p>
+    <p class="title none_960"><a href="{{\App\Http\Controllers\Controller::LOLITA_DOMAIN}}" style="font-weight: 900;text-shadow: 0 0 3px #af2e2e;"><img style="width: 60px;margin: 4px;" src="/Image/SUKI.png"></a></p>
     <div style="max-width: 960px;    margin: 0 auto;">
         <h1 style="display: inline;margin:0px;float:right;"></h1>
         <div class="search">
@@ -86,7 +86,6 @@
                     <i class="fa fa-pencil-square-o fa-lg"></i>
                 @else
                     <a class="sign" style="color: #ffffff;font-size: 12px;margin-right: 10px;    margin-top: 12px;display: none;"> <i class="fa fa-pencil-square-o fa-lg"></i> </a>
-
                 @endif
             @endif
             <from action="">

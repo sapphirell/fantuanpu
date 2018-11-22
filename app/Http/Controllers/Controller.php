@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 //use App\Http\Requests\Request;
 use App\Http\Controllers\System\CoreController;
 use App\Http\DbModel\ImModel;
+use App\Http\DbModel\UserSettingModel;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
@@ -13,6 +14,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesResources;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\Schema;
 
 class Controller extends BaseController
 {
@@ -33,9 +35,9 @@ class Controller extends BaseController
     const FANTUANPU_DOMAIN = 'http://fantuanpu.com/';
     const LOLITA_DOMAIN = 'http://suki-suki.me/';
     public static $lolita_domain = [
-        'suki-suku.me',
-        'local.suki-suku.me',
-        'www.suki-suku.me',
+        'suki-suki.me',
+        'local.suki-suki.me',
+        'www.suki-suki.me',
     ];
     public static $fantuanpu_domain = [
         'fantuanpu.com',
@@ -46,6 +48,7 @@ class Controller extends BaseController
     public static $local_domain = [
         'localhost',
     ];
+    public static $fantuanpu_forum = [1,36,41,49,52,56,64,2,37,38,123,125,126,44,66,50,51,69,93,114,57,73,75,65,71,83,85];
     /**
      * 帖子回帖分页数量
      */
@@ -59,9 +62,10 @@ class Controller extends BaseController
         error_reporting(E_ERROR);
         if (!session('access_id'))
         {
-            $rand_code = md5(rand(0,99999).time());
+            $rand_code = md5(rand(0, 99999) .time()); // 没有登录的时候充当uid用
             session(['access_id' => $rand_code]);
         }
+
 
         $request                = new Request();
         $this->data['request']  = $request->input();
@@ -69,12 +73,17 @@ class Controller extends BaseController
         $user_info              = session('user_info');
         if ($user_info->uid)
         {
+            //用户是否签到
             $user_has_sign = CoreController::USER_SIGN;
             $this->data['user_has_sign'] = Cache::get($user_has_sign['key'] . $user_info->uid .'_'. date("Ymd"));
         }
         //获取IM
         $this->data = array_merge($this->data,$this->get_im_message());
 
+    }
+    public static function get_user_setting()
+    {
+        return UserSettingModel::find(session("user_info")->uid ? :0);
     }
     public function rand_name()
     {

@@ -38,6 +38,10 @@ class CoreController extends Controller
      */
     const POSTS_VIEW = ['key'=>'post_view_','time'=>60*24*30];
     /**
+     * 最新帖子缓存 ,缓存6秒,避免洪水攻击
+     */
+    const THREAD_LIST = ['key'=>'thread_list_','time'=>0.1];
+    /**
      * 取得老用户查询缓存
      */
     const OLD_USER = ['key'=>'old_user_key_','time'=>1000];
@@ -98,4 +102,8 @@ class CoreController extends Controller
      *  获取板块的附加信息,存两天
      */
     const FORUM_PLUS = ['key' => 'forum_plus_','time' => 60*24*2 ];
+    /**
+     * 用户系统配置
+     */
+    const USER_SETTING = ['key' => 'user_setting_','time' => 60*24*5 ];
 }

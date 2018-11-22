@@ -26,7 +26,7 @@ class Thread_model extends Model
 //        dd($res['thread_post']);
         return $res;
     }
-    public function getPostOfThread($tid,$page)
+    public function getPostOfThread($tid,$page=1)
     {
         $posts_cache_key    = CoreController::POSTS_VIEW;
         $cache =  Cache::remember(

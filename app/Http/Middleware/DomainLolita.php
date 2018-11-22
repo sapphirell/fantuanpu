@@ -21,7 +21,7 @@ class DomainLolita
         if (in_array($request->getHost(),array_merge(Controller::$lolita_domain,Controller::$local_domain)))
             return $next($request);
         else
-            return "404 NOT FOUND";
+            return Controller::response([],40000,'不允许当前域名进行访问');
         return $next($request);
     }
 }

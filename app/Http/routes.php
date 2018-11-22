@@ -183,13 +183,13 @@ Route::group([
 
 
 //SUKI的接口
-//用户-必须登录的
+//App
 Route::group([
-    'namespace' => 'System',
+    'namespace' => 'Sukiapp',
     'middleware' => [
         'domain.lolita'
     ],
 ], function () {
-    Route::get('/ss', ['uses' => 'ServeController@ss', 'as' => 'ss']);#查看session
+    Route::get('/suki-thread', ['uses' => 'CommonApiController@get_thread', 'as' => 'get_thread']);#获取suki的帖子
 
 });

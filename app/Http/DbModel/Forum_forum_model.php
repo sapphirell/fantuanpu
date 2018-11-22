@@ -2,6 +2,7 @@
 
 namespace App\Http\DbModel;
 
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\System\CoreController;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
