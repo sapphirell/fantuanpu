@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>SUKI -@if($data['title']){{$data['title']}}@else 小裙子交流社区 @endif</title>
+    <title>Suki! -@if($data['title']){{$data['title']}}@else 小裙子交流社区 @endif</title>
     <meta name="keywords" content="SUKI,lolita服饰,jk制服,Lolita开箱推荐,软妹服装社区,{{$data["keywords"]}}">
     <meta name="description" content="SUKI,一个小众服饰社交社区">
     @include('PC.Common.HtmlHead')

@@ -35,7 +35,8 @@ class ForumThreadModel extends Model
                                 preg_match_all("/\[img\].*?\[\/img\]/",$flor->message,$tmp);// 取前几楼的图片
                                 $subject_images = array_merge($subject_images,$tmp[0]);
                             }
-
+                            //帖子预览
+                            $value['preview'] = preg_replace("/\[img\].*?\[\/img\]/",'[图片]',$post_image[0]->message);
                             //取图片地址
                             foreach ($subject_images as &$str)
                                 $str = mb_substr($str,5,mb_strlen($str)-11,'utf-8');
