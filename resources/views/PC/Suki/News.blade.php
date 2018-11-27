@@ -8,6 +8,11 @@
         float: left;
         margin:10px;
         cursor: pointer;
+        background: #fbfbfb;
+        padding: 10px;
+        border: 3px solid #a8c3c1;
+        border-radius: 5px;
+        border: 3px solid #fbfbfb;
     }
     .part_item > div {
         width: 40px;
@@ -37,11 +42,17 @@
         font-weight: 900;
         background-image: linear-gradient(176deg, #53def5 0%, #c0fff6 100%);
     }
+    .selected_part_item {
+        background: #d7edff;
+        padding: 10px;
+        border: 3px solid #a8c3c1;
+        border-radius: 5px;
+    }
 </style>
 <div class="wp index_body">
     <div class="part">
         @foreach($data['nodes'] as $value)
-        <a href="/forum-{{$value['fid']}}-1.html"  class="part_item">
+        <a href="/forum-{{$value['fid']}}-1.html"  class="part_item fid_{{$value["fid"]}}" fid="{{$value["fid"]}}">
             <div class=""></div>
             <p>{{$value["name"]}}</p>
         </a>

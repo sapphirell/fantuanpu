@@ -79,7 +79,17 @@ class Controller extends BaseController
         }
         //获取IM
         $this->data = array_merge($this->data,$this->get_im_message());
-
+        //初始化setting
+        if (!session("user_setting"))
+        {
+            $setting = UserSettingModel::find($user_info->uid?:0);
+            session(['setting' => $setting]);
+        }
+        else
+        {
+            $setting = session("setting");
+        }
+        $this->data['setting'] = json_encode($setting);
     }
     public static function get_user_setting()
     {
