@@ -18,6 +18,24 @@ use App\Http\UserAgent;
 //pc端
 
 
+//通用
+Route::group([
+    'namespace' => 'User',
+], function ()
+{
+    Route::get('/login', ['uses' => 'UserBaseController@LoginView', 'as' => 'login']);#登录
+    Route::get('/logout', ['uses' => 'UserBaseController@LogOut', 'as' => 'LogOut']);#退出
+    Route::get('/register', ['uses' => 'UserBaseController@Register', 'as' => 'register']);#注册
+    Route::post('/do-reg', ['uses' => 'UserBaseController@DoRegister', 'as' => 'DoRegister']);#do注册
+    Route::post('/do-login', ['uses' => 'UserBaseController@DoLogin', 'as' => 'do-login']);#登录
+    Route::get('/old-user', ['uses' => 'UserBaseController@OldUser', 'as' => 'OldUser']);#老账户寻回
+    Route::get('/get-email', ['uses' => 'UserBaseController@GetAccountByEmail', 'as' => 'GetAccountByEmail']);#根据邮箱找回账户
+    Route::post('/get-email', ['uses' => 'UserBaseController@RetrieveMail', 'as' => 'RetrieveMail']);#根据邮箱找回账户,发送邮件
+    Route::get('/new-password', ['uses' => 'UserBaseController@ResetPassword', 'as' => 'ResetPassword']);#修改密码,根据验证邮件
+    Route::post('/do-repassword', ['uses' => 'UserBaseController@DoResetPassword', 'as' => 'DoResetPassword']);#post修改密码
+    Route::post('/do-checkUsername', ['uses' => 'UserBaseController@checkUsername', 'as' => 'checkUsername']);#用户名是否被注册
+    Route::post('/do-checkEmail', ['uses' => 'UserBaseController@checkEmail', 'as' => 'checkEmail']);#emial是否被注册
+});
 //App 接口(必须获取token的)
 Route::group([
     'namespace' => 'App',
@@ -127,18 +145,7 @@ Route::group([
         'domain.fantuanpu'
     ],
 ], function () {
-    Route::get('/login', ['uses' => 'UserBaseController@LoginView', 'as' => 'login']);#登录
-    Route::get('/logout', ['uses' => 'UserBaseController@LogOut', 'as' => 'LogOut']);#退出
-    Route::get('/register', ['uses' => 'UserBaseController@Register', 'as' => 'register']);#注册
-    Route::post('/do-reg', ['uses' => 'UserBaseController@DoRegister', 'as' => 'DoRegister']);#do注册
-    Route::post('/do-login', ['uses' => 'UserBaseController@DoLogin', 'as' => 'do-login']);#登录
-    Route::get('/old-user', ['uses' => 'UserBaseController@OldUser', 'as' => 'OldUser']);#老账户寻回
-    Route::get('/get-email', ['uses' => 'UserBaseController@GetAccountByEmail', 'as' => 'GetAccountByEmail']);#根据邮箱找回账户
-    Route::post('/get-email', ['uses' => 'UserBaseController@RetrieveMail', 'as' => 'RetrieveMail']);#根据邮箱找回账户,发送邮件
-    Route::get('/new-password', ['uses' => 'UserBaseController@ResetPassword', 'as' => 'ResetPassword']);#修改密码,根据验证邮件
-    Route::post('/do-repassword', ['uses' => 'UserBaseController@DoResetPassword', 'as' => 'DoResetPassword']);#post修改密码
-    Route::post('/do-checkUsername', ['uses' => 'UserBaseController@checkUsername', 'as' => 'checkUsername']);#用户名是否被注册
-    Route::post('/do-checkEmail', ['uses' => 'UserBaseController@checkEmail', 'as' => 'checkEmail']);#emial是否被注册
+
     Route::get('/live2d', ['uses' => 'UserBaseController@live2d', 'as' => 'live2d']);#live2d 测试
 });
 //用户-必须登录的
@@ -191,5 +198,6 @@ Route::group([
     ],
 ], function () {
     Route::get('/suki-thread', ['uses' => 'CommonApiController@get_thread', 'as' => 'get_thread']);#获取suki的帖子
+    Route::post('/suki-new-thread', ['uses' => 'CommonApiController@suki_new_thread', 'as' => 'suki-new-thread']);#获取suki的帖子
 
 });

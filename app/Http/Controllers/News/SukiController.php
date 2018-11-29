@@ -15,7 +15,7 @@ class SukiController extends Controller
     {
         $this->data['nodes'] = (new Forum_forum_model())->get_suki_nodes();
         $this->data['thread'] = ForumThreadModel::get_new_thread(self::$fantuanpu_forum);
-//        dd($this->data['thread']);
+        //        dd($this->data['thread']);
         return view('PC/Suki/News')->with('data',$this->data);
     }
 }

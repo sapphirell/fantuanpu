@@ -4,6 +4,7 @@
     <meta name="keywords" content="SUKI,lolita服饰,jk制服,Lolita开箱推荐,软妹服装社区,{{$data["keywords"]}}">
     <meta name="description" content="SUKI,一个小众服饰社交社区">
     @include('PC.Common.HtmlHead')
+    <script src="/Static/Script/wangEditor/wangEditor.min.js"></script>
     <style>
         .header {
             box-shadow: 0 0 19px #ff00004f;
@@ -76,8 +77,10 @@
 
 <div class="header pink_bg">
 
-    <p class="title none_960"><a href="{{\App\Http\Controllers\Controller::LOLITA_DOMAIN}}" style="font-weight: 900;text-shadow: 0 0 3px #af2e2e;"><img style="width: 60px;margin: 4px;" src="/Image/SUKI.png"></a></p>
-    <div style="max-width: 960px;    margin: 0 auto;">
+    <p class="title none_960">
+        <a href="{{\App\Http\Controllers\Controller::LOLITA_DOMAIN}}" style="font-weight: 900;text-shadow: 0 0 3px #af2e2e;"><img style="width: 60px;margin: 4px;" src="/Image/SUKI.png"></a>
+    </p>
+    <div style="max-width: 960px;margin: 0 auto;">
         <h1 style="display: inline;margin:0px;float:right;"></h1>
         <div class="search">
             {{--<a class="add-me"><i class="icon-plus"></i> <span id="msg_num">0</span> Message</a>--}}
@@ -95,9 +98,15 @@
 
         </div>
         <ul class='hd'>
-            <li class="trans user_info_btn" style="">
-                {{avatar(1,30,50,"","big")}}
-            </li>
+            @if(session("user_info")->uid)
+                <li class="trans user_info_btn" style="">
+                    {{avatar(session("user_info")->uid,30,50,"","big")}}
+                </li>
+            @else
+                <li class="" id="alert_ajax_login">
+                    <img src="/Image/denglu-copy.png" style="width: 30px;border: 2px solid #fff;padding: 2px;border-radius: 100%;">
+                </li>
+            @endif
             <li class="trans">
                 <a href="/index"  class="header_items">
                     <i class="fa fa-home fa-fw fa-lg" style="color: #ffffff;line-height: 23px"></i>

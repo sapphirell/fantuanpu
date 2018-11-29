@@ -31,6 +31,43 @@
 //        console.log(setting.lolita_viewing_forum)
         reset_checkout_forum();
     }
+    function construct_edtior(id)
+    {
+        var E = window.wangEditor
+        editor = new E('#editor')
+        editor.customConfig.colors = [
+            '#000000',
+            '#eeece0',
+            '#1c487f',
+            '#4d80bf',
+            '#c24f4a',
+            '#8baa4a',
+            '#7b5ba1',
+            '#46acc8',
+            '#f9963b',
+            '#ffffff'
+        ]
+        editor.customConfig.menus = [
+            'head',  // 标题
+            'bold',  // 粗体
+            'fontSize',  // 字号
+            'fontName',  // 字体
+            'italic',  // 斜体
+            'link',  // 插入链接
+            'justify',  // 对齐方式
+            'quote',  // 引用
+//        'emoticon',  // 表情
+//        'image',  // 插入图片
+            'undo',  // 撤销
+            'redo'  // 重复
+        ]
+
+        editor.customConfig.pasteFilterStyle = false
+        editor.customConfig.uploadImgServer = '/upload'
+        editor.customConfig.uploadImgMaxSize = 1.9 * 1024 * 1024
+        editor.customConfig.uploadImgMaxLength = 5 // 一次可上传的图片数量
+        editor.create()
+    }
     /**
      *  增加或删除一个配置,并返回当前配置
      * @param fid
@@ -54,6 +91,7 @@
     $(document).ready(function () {
         var user_panel = 1;
         construct_setting();
+        construct_edtior();
 
         console.log(setting);
         $(".user_info_btn").click(
@@ -75,12 +113,44 @@
             var todo = $(this).hasClass('selected_part_item') ? "del" : "add";
             var setting = setting_and_return(fid,todo);
             reset_checkout_forum();
-            var thread_list = $.get("/suki-thread",{'view_forum':setting},function (e) {
-                console.log(e)
-                console.log(todo)
-
+            var thread_list = $.get("/suki-thread",{'view_forum':setting,'need' : "html"},function (e) {
+//                console.log(e)
+//                console.log(todo)
+                $(".thread_list").remove();
+                $(".list_container").append(e);
             });
         });
+
+        //发一个新帖子
+        $('#post_thread').click(function () {
+            var edHtml = html2ubb(editor.txt.html())
+            var subject = $('#subject').val()
+            var _token = $('#new_thread_token').val()
+            var fid     = $('#post_to_fid').val()
+            var postData = {
+                'subject' : subject,
+                'message' : edHtml,
+                '_token'  : _token ,
+                'fid'     : fid
+            };
+            console.log(postData)
+            $.post('/suki-new-thread',postData,function (event) {
+                alert(event.msg);
+                if (event.ret == 200)
+                {
+                    location.reload();
+                }
+            })
+
+
+        })
+//        $(".setting_forum").click(function () {
+//
+//        });
+//
+//        $(".setting_thread").click(function () {
+//
+//        });
     })
 
 </script>

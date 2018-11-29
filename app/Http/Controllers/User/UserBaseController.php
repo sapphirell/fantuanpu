@@ -35,8 +35,15 @@ class UserBaseController extends Controller
         $this->data['form'] = $request->input('form');
         return view('PC/User/Login')->with('data',$this->data);
     }
-    public function Register()
+    public function Register(Request $request)
     {
+        if (in_array($request->getHost(),self::$fantuanpu_domain))
+        {
+            $this->data["reg_message"] = '<p style="    float: left;    width: 98%;padding: 5px;line-height: 23px;">动物饭团扑成立于2011年,并于2013年建立饭团扑动漫论坛,经历了七年多的时间,以前还是学生党的成员也大多已经成为了一只工作汪,
+                    虽然现实工作中大家都忙了起来,但仍然要多抽出来时间在<span style="text-decoration: line-through;">网上冲浪</span>(好土啊),总之希望大家能在饭团扑玩的开心,和喜欢的人面基!
+                </p>';
+        }
+
         return view('PC/User/Register')->with('data',$this->data);
     }
     public function DoLogin(Request $request){
