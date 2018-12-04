@@ -94,7 +94,7 @@
 
                     </div>
                     <div class="clear"></div>
-                    <div style="float: right;color: #797979">
+                    <div style="float: right;color: #797979;display: none;">
                         <i class="fa fa-lg fa-cogs setting_thread" style="" ></i>
                         <div class="thread_setting_p">
                             <ul>
