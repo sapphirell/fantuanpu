@@ -84,7 +84,7 @@
     </div>
     @include('PC.Suki.SukiPosterContent')
     <a style="position:fixed;bottom: 120px;right: 20px;" id="alert_poster">
-        <img src="/Static/Image/common/fatie.png" style="width: 40px">
+        <img src="/Static/image/common/fatie.png" style="width: 40px">
     </a>
 </div>
 @include('PC.Suki.SukiFooter')
