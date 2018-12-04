@@ -5,14 +5,14 @@
                 <div style="     display: flex;flex-flow:row; ">
                     <div style="width: 100px">
                         <div style="display: block;margin: 0px auto 10px auto;">
-                            {{avatar($value['authorid'],50,50,"thread_author_avatar","big")}}
+                            {{avatar($value['authorid'],50,50,"thread_author_avatar","big","margin: 0 auto;display: block;")}}
                         </div>
                         <p style="text-align: center;" class="no_attn">{{$value['author']}}</p>
                     </div>
 
                     <div style="display: inline-block;float: left; flex: 1;">
                         <p>
-                            <a href="thread-{{$value['tid']}}-1.html" style="font-size: 15px;margin-bottom: 3px;display: inline-block;"  target="_blank">{{$value['subject']}}</a>
+                            <a href="suki-thread-{{$value['tid']}}-1.html" style="font-size: 15px;margin-bottom: 3px;display: inline-block;"  target="_blank">{{$value['subject']}}</a>
                             <span style="color: #000000">(+{{$value['replies']}})</span>
                             <span>view : {{$value['views']}}</span>
                             <span class="show_date" style="color: #ccc;cursor: pointer;padding: 5px;">{{$value['last_post_date']}}</span>

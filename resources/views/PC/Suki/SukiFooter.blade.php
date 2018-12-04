@@ -1,6 +1,7 @@
-
-<div class="window_gift_alert trans" style="display: none">
-</div>
+{{--websocket弹窗--}}
+<div class="window_gift_alert trans" style="display: none"></div>
+{{--遮罩--}}
+<div class="shade" style="display: none"></div>
 <div class="wp footer_cut clear"></div>
 <div class="wp" style="margin-bottom: 20px;margin-top: 10px;">
     <a href="https://github.com/sapphirell/fantuanpu" style="padding: 10px;padding-right:0px;color: #d0d0d0;">Suki of Utopia ,</a>
@@ -15,6 +16,8 @@
 
 </div>
 <script>
+
+
     /**
      *
      */
@@ -48,24 +51,27 @@
             '#ffffff'
         ]
         editor.customConfig.menus = [
-            'head',  // 标题
+//            'head',  // 标题
             'bold',  // 粗体
             'fontSize',  // 字号
-            'fontName',  // 字体
-            'italic',  // 斜体
+//            'fontName',  // 字体
+//            'italic',  // 斜体
             'link',  // 插入链接
-            'justify',  // 对齐方式
+//            'justify',  // 对齐方式
             'quote',  // 引用
 //        'emoticon',  // 表情
-//        'image',  // 插入图片
-            'undo',  // 撤销
-            'redo'  // 重复
+            'image',  // 插入图片
+//            'undo',  // 撤销
+//            'redo'  // 重复
         ]
-
+        console.log(editor.customConfig);
         editor.customConfig.pasteFilterStyle = false
-        editor.customConfig.uploadImgServer = '/upload'
+        editor.customConfig.uploadImgServer = 'https://image.fantuanpu.com/upload_file'
         editor.customConfig.uploadImgMaxSize = 1.9 * 1024 * 1024
         editor.customConfig.uploadImgMaxLength = 5 // 一次可上传的图片数量
+        editor.customConfig.uploadImgParams = {
+            form: 'editor'
+        }
         editor.create()
     }
     /**
@@ -83,13 +89,16 @@
         else if (todo == 'del' && index > -1)
             setting.lolita_viewing_forum.splice(index,1)
 
-//        console.log(index);
+//        console.log(todo);
+//        console.log(setting.lolita_viewing_forum);
+
         $("#setting").val(JSON.stringify(setting));
 
         return setting.lolita_viewing_forum
     }
     $(document).ready(function () {
         var user_panel = 1;
+        var user_poster = 1;
         construct_setting();
         construct_edtior();
 
@@ -120,7 +129,20 @@
                 $(".list_container").append(e);
             });
         });
+        //弹出发帖框
+        $("#alert_poster").click(function (e) {
+            e.preventDefault();
 
+            $(".shade").show()
+            $(".poster_content").removeClass("zoomOutUp").css({display:"block"}).addClass("bounceIn")
+
+
+
+        });
+        $(".shade").click(function () {
+            $(".shade").hide()
+            $(".poster_content").removeClass("bounceIn").addClass("zoomOutUp")
+        })
         //发一个新帖子
         $('#post_thread').click(function () {
             var edHtml = html2ubb(editor.txt.html())

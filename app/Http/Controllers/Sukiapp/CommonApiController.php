@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Sukiapp;
 
 use App\Http\Controllers\Forum\ThreadApiController;
+use App\Http\Controllers\Forum\ThreadController;
 use App\Http\DbModel\ForumThreadModel;
 use App\Http\DbModel\Thread_model;
 use App\Http\DbModel\UserSettingModel;
@@ -15,8 +16,10 @@ class CommonApiController extends Controller
 {
     public function get_thread(Request $request,Thread_model $thread_model)
     {
+//        dd($request->input("view_forum"));
+        self::set_suki_view(session("user_info")->uid,$request->input("view_forum"));
         $this->data['thread'] = ForumThreadModel::get_new_thread($request->input("view_forum"));
-//        dd($thread);
+
         return $request->input("need") == 'html' ?  view('PC/Suki/SukiThreadList')->with('data',$this->data) : self::response($this->data);
     }
 
@@ -56,4 +59,13 @@ class CommonApiController extends Controller
         return self::response();
     }
 
+    /***
+     * 查看suki的帖子
+     * @param Request $request
+     */
+    public function view_thread(Request $request,$tid,$page)
+    {
+        $this->data = (new ThreadController(new Thread_model()))->_viewThread($tid,$page);
+        return view('PC/Suki/SukiThread')->with('data',$this->data);
+    }
 }

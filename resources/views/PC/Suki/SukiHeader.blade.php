@@ -55,6 +55,7 @@
             left: 10px;
             box-shadow: 0 0 15px #00000012;
             display: none;
+            z-index: 10002;
         }
         .user_info_item {
             width:100%;
@@ -108,18 +109,18 @@
                 </li>
             @endif
             <li class="trans">
-                <a href="/index"  class="header_items">
+                <a href="/"  class="header_items">
                     <i class="fa fa-home fa-fw fa-lg" style="color: #ffffff;line-height: 23px"></i>
-                    <p class="none_960" style="color: #fff;display: inline-block">分区</p>
+                    <p class="none_960" style="color: #fff;display: inline-block">首页</p>
 
                 </a>
             </li>
-            <li class="trans">
-                <a href="/notice"  class="header_items">
-                    <i class="fa fa-comments-o fa-fw fa-lg"  style="color: #ffffff;line-height: 23px"></i>
-                    <p class="none_960" style="color: #fff;display: inline-block">新品</p>
-                </a>
-            </li>
+            {{--<li class="trans">--}}
+                {{--<a href="/notice"  class="header_items">--}}
+                    {{--<i class="fa fa-comments-o fa-fw fa-lg"  style="color: #ffffff;line-height: 23px"></i>--}}
+                    {{--<p class="none_960" style="color: #fff;display: inline-block">新品</p>--}}
+                {{--</a>--}}
+            {{--</li>--}}
 
         </ul>
 

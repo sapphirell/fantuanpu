@@ -118,8 +118,9 @@ class Controller extends BaseController
     }
     /**
      *  调起swoole消息队列
+     *  $async 决定是否异步执行此函数
      */
-    public function call_message_queue($class,$action,$data)
+    public function call_message_queue($class,$action,$data,$async = false)
     {
         $data['class']  = $class;
         $data['action'] = $action;
@@ -153,7 +154,21 @@ class Controller extends BaseController
         }
         return true;
     }
-    //
+
+    /**
+     * 配置suki的查看板块
+     */
+    public function set_suki_view(int $uid , array $fid)
+    {
+        foreach ($fid as &$value)
+            $value = intval($value);
+
+        $setting = UserSettingModel::find($uid);
+        $setting->lolita_viewing_forum = json_encode($fid);
+        $setting->save();
+        session(['setting' => $setting]);
+        return true;
+    }
     public function mobile()
     {
         return view("Mobile/index");

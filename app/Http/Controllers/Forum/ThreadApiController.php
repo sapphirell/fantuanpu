@@ -58,7 +58,7 @@ class ThreadApiController extends Controller
                             $request->getClientIp(),
                             $user_info
                         );
-        return self::response();
+        return self::response([],200,'发帖成功');
     }
     public  function _newThread($fid,$subject,$message,$ip,$user_info)
     {
@@ -211,6 +211,6 @@ class ThreadApiController extends Controller
         Cache::forget( $posts_cache_key['key'].$request->input('tid') ."_" . ceil($post->position/20));
 
         ActionController::complete_action('RCT',$user_info->uid,$request->input('tid'));
-        return self::response();
+        return self::response([],200,'回帖成功');
     }
 }

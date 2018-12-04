@@ -36,6 +36,14 @@ Route::group([
     Route::post('/do-checkUsername', ['uses' => 'UserBaseController@checkUsername', 'as' => 'checkUsername']);#用户名是否被注册
     Route::post('/do-checkEmail', ['uses' => 'UserBaseController@checkEmail', 'as' => 'checkEmail']);#emial是否被注册
 });
+Route::group([
+    'namespace' => 'Forum',
+], function () {
+
+    Route::post('/post-thread', ['uses' => 'ThreadApiController@PostsThread', 'as' => 'store-posts']);#回帖
+
+});
+
 //App 接口(必须获取token的)
 Route::group([
     'namespace' => 'App',
@@ -96,6 +104,8 @@ Route::group([
 
 
 });
+
+
 //论坛
 Route::group([
     'namespace' => 'Forum',
@@ -111,16 +121,14 @@ Route::group([
     Route::get('/notice', ['uses' => 'ForumBaseController@notice', 'as' => 'notice']);#声明
     Route::post('/dopost-notice', ['uses' => 'ForumBaseController@save_notice', 'as' => 'do-notice']);#声明
     Route::get('/forum-{id}-{page}.html', ['uses' => 'ForumBaseController@ThreadList', 'as' => 'thread']);#帖子首页
-
     /**
      *@param tid int 帖子标题id
      *@param page int 帖子页数
      *@return App\Http\Controllers\Forum\ThreadController
      */
     Route::get('/thread-{tid}-{page}.html', ['uses' => 'ThreadController@viewThread', 'as' => 'thread']);#查看帖子
-
     Route::post('/new-thread', ['uses' => 'ThreadApiController@NewThread', 'as' => 'new-thread']);#发新帖
-    Route::post('/post-thread', ['uses' => 'ThreadApiController@PostsThread', 'as' => 'store-posts']);#回帖
+
     Route::get('/webim', ['uses' => 'ForumBaseController@webim', 'as' => 'webim']);#webim即时聊天
     Route::get('/fantuanpuDevelopers', ['uses' => 'ForumBaseController@fantuanpuDevelopers', 'as' => 'fantuanpuDevelopers']);#饭团扑开发者列表
     Route::get('/app_download', ['uses' => 'ForumBaseController@app_download', 'as' => 'app_download']);#下载App页面
@@ -199,5 +207,5 @@ Route::group([
 ], function () {
     Route::get('/suki-thread', ['uses' => 'CommonApiController@get_thread', 'as' => 'get_thread']);#获取suki的帖子
     Route::post('/suki-new-thread', ['uses' => 'CommonApiController@suki_new_thread', 'as' => 'suki-new-thread']);#获取suki的帖子
-
+    Route::get('/suki-thread-{tid}-{page}.html', ['uses' => 'CommonApiController@view_thread', 'as' => 'thread']);#查看帖子
 });
