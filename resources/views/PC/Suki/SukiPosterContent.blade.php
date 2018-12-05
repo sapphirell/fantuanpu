@@ -3,7 +3,7 @@
         <div class="input-group">
             <div class="input-group-addon" style="    padding: 0px 10px;">
                 <select style="      border-color: #e6e2e2;  height: 30px;border-radius: 0px!important;background: #eee;border: 0px;box-shadow: none!important;" id="post_to_fid">
-                    <option>请选择分类</option>
+                    <option value="0">请选择分类</option>
 
                     @foreach($data['nodes'] as $value)
                         <option value="{{$value["fid"]}}">{{$value["name"]}}</option>

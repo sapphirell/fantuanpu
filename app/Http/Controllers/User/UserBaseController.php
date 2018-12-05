@@ -98,7 +98,7 @@ class UserBaseController extends Controller
     public function LogOut(Request $request)
     {
         $request->session()->pull('user_info');
-        return redirect()->route('forum-index');
+        return redirect("/");
     }
     public function OldUser(Request $request)
     {

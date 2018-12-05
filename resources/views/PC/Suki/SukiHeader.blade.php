@@ -60,6 +60,20 @@
         .user_info_item {
             width:100%;
         }
+        .panel_btn_list li {
+            list-style: none;
+            padding: 3px;
+            cursor: pointer;
+            font-weight: 900;
+        }
+        .panel_btn_list li:hover {
+            color: #00A0FF;
+        }
+        .panel_btn_list li img {
+            width: 25px;
+            margin-right: 10px;
+
+        }
     </style>
 </head>
 
@@ -84,14 +98,6 @@
     <div style="max-width: 960px;margin: 0 auto;">
         <h1 style="display: inline;margin:0px;float:right;"></h1>
         <div class="search">
-            {{--<a class="add-me"><i class="icon-plus"></i> <span id="msg_num">0</span> Message</a>--}}
-            @if(session('user_info')->uid)
-                @if($data['user_has_sign'])
-                    <i class="fa fa-pencil-square-o fa-lg"></i>
-                @else
-                    <a class="sign" style="color: #ffffff;font-size: 12px;margin-right: 10px;    margin-top: 12px;display: none;"> <i class="fa fa-pencil-square-o fa-lg"></i> </a>
-                @endif
-            @endif
             <from action="">
                 <input type="text" name="" class="search_box trans" placeholder="Searching..">
 
@@ -138,18 +144,18 @@
     </div>
     <div class="clear"></div>
     <div class="user_info_item">
-        <ul>
-            <li><img style="width:25px;" src="/Image/tixing.png">关注的用户</li>
-            <li><img style="width:25px;" src="/Image/tixing.png">期待的商品</li>
-            <li><img style="width:25px;" src="/Image/tixing.png">收藏的帖子</li>
-            <li><img style="width:25px;" src="/Image/tixing.png">评论</li>
-            <li><img style="width:25px;" src="/Image/tixing.png">{{"@"}}我</li>
-            <li><img style="width:25px;" src="/Image/tixing.png">点赞</li>
+        <ul class="panel_btn_list">
+            <li class="trans"><img style="width:25px;" src="/Image/tixing.png">关注的用户</li>
+            <li class="trans"><img style="width:25px;" src="/Image/tixing.png">期待的商品</li>
+            <li class="trans"><img style="width:25px;" src="/Image/tixing.png">收藏的帖子</li>
+            <li class="trans"><img style="width:25px;" src="/Image/tixing.png">评论</li>
+            <li class="trans"><img style="width:25px;" src="/Image/tixing.png">{{"@"}}我</li>
+            <li class="trans"><img style="width:25px;" src="/Image/tixing.png">点赞</li>
         </ul>
     </div>
 
-    <a style="    position: absolute;bottom: 0px;width: 100%;text-align: center">
-        <span style="    font-size: 14px;color: #d95794;font-weight: 900;">LogOff</span>
-        <img src="/Image/tuichu1.png" style="width:20px;" >
+    <a style="    position: absolute;bottom: 0px;width: 100%;text-align: center" href="/logout">
+        <span style="    font-size: 14px;color: #d95794;font-weight: 900;">LogOut</span>
+        <img src="/Image/tuichu1.png" style="width: 14px;padding-bottom: 4px;" >
     </a>
 </div>

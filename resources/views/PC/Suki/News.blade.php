@@ -66,18 +66,6 @@
             <p>{{$value["name"]}}</p>
         </a>
         @endforeach
-
-
-        {{--<div style="width: 200px;float:right;">--}}
-            {{--<div class="system_setting_checkbox" check-arr= >--}}
-                {{--浏览全部--}}
-            {{--</div>--}}
-            {{--<div class="system_setting_checkbox">--}}
-                {{--图片展开--}}
-            {{--</div>--}}
-        {{--</div>--}}
-
-        {{--<div class="clear"></div>--}}
     </div>
     <div class="list_container">
         @include('PC.Suki.SukiThreadList')

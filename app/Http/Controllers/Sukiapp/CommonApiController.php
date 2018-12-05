@@ -47,7 +47,7 @@ class CommonApiController extends Controller
             ? Forum_forum_model::where('name',"=",$request->input('fname'))->first()->fid
             : $request->input('fid');
         if (!$fid)
-            return self::response([],40004,'fid为空,至少需要传输fname或fid');
+            return self::response([],40004,'请选择发帖分类');
 
         $threadApiController->_newThread(
             $fid,
