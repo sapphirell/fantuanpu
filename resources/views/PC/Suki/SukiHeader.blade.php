@@ -62,11 +62,15 @@
         }
         .panel_btn_list li {
             list-style: none;
+
+        }
+        .panel_btn_list li a {
             padding: 3px;
             cursor: pointer;
             font-weight: 900;
+
         }
-        .panel_btn_list li:hover {
+        .panel_btn_list li a:hover {
             color: #00A0FF;
         }
         .panel_btn_list li img {
@@ -145,7 +149,7 @@
     <div class="clear"></div>
     <div class="user_info_item">
         <ul class="panel_btn_list">
-            <li class="trans"><img style="width:25px;" src="/Image/tixing.png">关注的用户</li>
+            <li class="trans"><img style="width:25px;" src="/Image/tixing.png"><a href="suki-myfollow">关注的用户</a></li>
             <li class="trans"><img style="width:25px;" src="/Image/tixing.png">期待的商品</li>
             <li class="trans"><img style="width:25px;" src="/Image/tixing.png">收藏的帖子</li>
             <li class="trans"><img style="width:25px;" src="/Image/tixing.png">评论</li>
