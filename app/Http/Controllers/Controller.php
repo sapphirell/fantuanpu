@@ -70,19 +70,19 @@ class Controller extends BaseController
         $request                = new Request();
         $this->data['request']  = $request->input();
         $this->data['title']    = false;
-        $user_info              = session('user_info');
-        if ($user_info->uid)
+        $this->data['user_info']              = session('user_info');
+        if ($this->data['user_info'] ->uid)
         {
             //用户是否签到
             $user_has_sign = CoreController::USER_SIGN;
-            $this->data['user_has_sign'] = Cache::get($user_has_sign['key'] . $user_info->uid .'_'. date("Ymd"));
+            $this->data['user_has_sign'] = Cache::get($user_has_sign['key'] . $this->data['user_info'] ->uid .'_'. date("Ymd"));
         }
         //获取IM
         $this->data = array_merge($this->data,$this->get_im_message());
         //初始化setting
         if (!session("user_setting"))
         {
-            $setting = UserSettingModel::find($user_info->uid?:0);
+            $setting = UserSettingModel::find($this->data['user_info']->uid?:0);
             session(['setting' => $setting]);
         }
         else

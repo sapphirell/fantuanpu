@@ -18,7 +18,7 @@ class ForumThreadModel extends Model
         $data = Cache::remember($cacheKey['key'].json_encode($fid_arr),$cacheKey["time"],
                 function () use ($fid_arr,$thread_mod) {
                         $data = ForumThreadModel::orderBy('lastpost','desc');
-                        if (empty($data))
+                        if (empty($fid_arr))
                             $data = $data->where('fid','!=','63')->orderBy('lastpost','desc')->paginate(15)->toArray()['data'];
                         else
                             $data = $data->whereIn('fid',$fid_arr)->orderBy('lastpost','desc')->paginate(15)->toArray()['data'];
