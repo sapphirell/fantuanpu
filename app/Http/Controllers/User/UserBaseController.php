@@ -419,6 +419,7 @@ class UserBaseController extends Controller
 
         $user_session->sellmedal = 2;
         $user_session->save();
+
         UserHelperController::SetLoginStatus($user_session);
         $my_old_medal = DB::table('pre_forum_medalmybox')
                     ->leftJoin('pre_forum_medal','pre_forum_medalmybox.medalid','=','pre_forum_medal.medalid')
@@ -445,6 +446,7 @@ class UserBaseController extends Controller
         $user = User_model::find($user_session->uid);
         $user->sellmedal = 2;
         $user->save();
+        User_model::flushUserCache();
 //        dd($user_score);
         CommonMemberCount::BatchAddUserCount($user_session->uid,$user_score);
         //标记用户为已经兑换

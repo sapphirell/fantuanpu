@@ -20,7 +20,10 @@ class CoreController extends Controller
     {
         parent::__construct();
     }
-
+    /**
+     * common_member缓存key
+     */
+    const USER_INFO = ['key'=>'member_','time'=>3600];
     /**
      * 板块列表缓存key
      */

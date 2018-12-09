@@ -149,7 +149,7 @@
     <div class="clear"></div>
     <div class="user_info_item">
         <ul class="panel_btn_list">
-            <li class="trans"><img style="width:25px;" src="/Image/tixing.png"><a href="suki-myfollow">关注的用户</a></li>
+            <li class="trans"><img style="width:25px;" src="/Image/tixing.png"><a href="suki-myfollow?like_type=1">关注的用户</a></li>
             <li class="trans"><img style="width:25px;" src="/Image/tixing.png">期待的商品</li>
             <li class="trans"><img style="width:25px;" src="/Image/tixing.png">收藏的帖子</li>
             <li class="trans"><img style="width:25px;" src="/Image/tixing.png">评论</li>
