@@ -49,5 +49,12 @@ class ForumThreadModel extends Model
         return $data;
     }
 
+    /**
+     * 获取一个人发的帖子
+     */
+    public static function get_user_thread($uid,$page)
+    {
+        return self::where('authorid',$uid)->orderBy('tid','desc')->limit(15)->offset($page*15)->get();
+    }
 
 }

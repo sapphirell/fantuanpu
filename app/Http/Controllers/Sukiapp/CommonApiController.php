@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Sukiapp;
 use App\Http\Controllers\Forum\ThreadApiController;
 use App\Http\Controllers\Forum\ThreadController;
 use App\Http\DbModel\ForumThreadModel;
+use App\Http\DbModel\MemberLikeModel;
+use App\Http\DbModel\MyLikeModel;
 use App\Http\DbModel\Thread_model;
 use App\Http\DbModel\UserSettingModel;
 use Illuminate\Http\Request;
@@ -67,5 +69,52 @@ class CommonApiController extends Controller
     {
         $this->data = (new ThreadController(new Thread_model()))->_viewThread($tid,$page);
         return view('PC/Suki/SukiThread')->with('data',$this->data);
+    }
+
+    /**
+     * 关注用户
+     * @param Request $request
+     */
+    public function suki_follow_user(Request $request)
+    {
+
+        $check = self::checkRequest($request,["uid","to_uid","to_do"]);
+        if ($check !== true)
+            return self::response([],40001,"缺少参数$check");
+
+        $like_all = MyLikeModel::get_user_like($request->input("uid"),4);
+        $uid_arr =[];
+        foreach ($like_all as $value)
+        {
+            $uid_arr[] = $value->like_id;
+        }
+
+
+        if ($request->input("to_do") == "follow" )
+        {
+            if (in_array($request->input("to_uid"),$uid_arr))
+            {
+                return self::response([],40002,"已经关注了");
+            }
+            else
+            {
+                return self::response([],200,"关注成功了");
+            }
+
+
+        }
+        if ($request->input("to_do") == "unfollow" )
+        {
+            if (in_array($request->input("to_uid"),$uid_arr))
+            {
+                return self::response([],200,"取消关注成功");
+            }
+            else
+            {
+                return self::response([],40002,"您还未关注");
+            }
+
+
+        }
     }
 }

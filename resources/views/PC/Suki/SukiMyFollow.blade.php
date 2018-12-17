@@ -10,7 +10,7 @@
         <div>
             @foreach($data['my_follow'] as $value)
                 <div>
-                    <a style="display: inline-block;float: left" href="/suki-userhome-{{$value->uid}}.html">{{avatar($value->user->uid,50,"100")}}</a>
+                    <a style="display: inline-block;float: left" href="/suki-userhome-{{$value->id}}.html">{{avatar($value->user->uid,50,"100")}}</a>
                     <div style="display: inline-block;float: left;">
                         <p>{{$value->user->username}}</p>
                         <a href="">取消关注</a>
