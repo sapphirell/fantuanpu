@@ -98,6 +98,7 @@ class CommonApiController extends Controller
             }
             else
             {
+                MyLikeModel::add_user_like($this->data["user_info"]->uid,$request->input("to_uid"),4);
                 return self::response([],200,"关注成功了");
             }
 
@@ -107,10 +108,12 @@ class CommonApiController extends Controller
         {
             if (in_array($request->input("to_uid"),$uid_arr))
             {
+                MyLikeModel::rm_user_like($this->data["user_info"]->uid,$request->input("to_uid"),4);
                 return self::response([],200,"取消关注成功");
             }
             else
             {
+
                 return self::response([],40002,"您还未关注");
             }
 

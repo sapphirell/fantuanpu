@@ -4,10 +4,10 @@
             <div class="fourm_thread_items @if($value['top'])top @endif" style="  margin: 10px;  box-shadow: 0 0 10px #f1f1f1;background: #ffffff;padding: 10px;border-radius: 5px;"  >
                 <div style="     display: flex;flex-flow:row; ">
                     <div style="width: 100px">
-                        <div style="display: block;margin: 0px auto 10px auto;">
+                        <a href="/suki-userhome-{{$value['authorid']}}.html" style="display: block;margin: 0px auto 10px auto;">
                             {{avatar($value['authorid'],50,50,"thread_author_avatar","big","margin: 0 auto;display: block;")}}
-                        </div>
-                        <p style="text-align: center;" class="no_attn">{{$value['author']}}</p>
+                        </a>
+                        <a href="/suki-userhome-{{$value['authorid']}}.html" style="text-align: center;    width: inherit; display: inline-block;   color: #777;" class="no_attn">{{$value['author']}}</a>
                     </div>
 
                     <div style="display: inline-block;float: left; flex: 1;">

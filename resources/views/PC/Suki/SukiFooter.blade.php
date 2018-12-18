@@ -174,14 +174,40 @@
                 $(".uc_user_thread:last").after(event)
                 $(".suki_get_user_thread").attr("page",  $(".suki_get_user_thread").attr("page")+1)
             })
-        })
-//        $(".setting_forum").click(function () {
-//
-//        });
-//
-//        $(".setting_thread").click(function () {
-//
-//        });
+        });
+        //点击关注
+        $(".follow").click(function (e) {
+            e.preventDefault();
+            var uid = $(this).attr("uid")
+            var to_uid = $(this).attr("to_uid")
+            var to_do = $(this).attr("to_do")
+            var url = $(this).attr("href")
+            var postData = {
+                "uid": uid,
+                "to_uid": to_uid,
+                "to_do" : to_do
+            };
+            $.post(url,postData,function (event) {
+//                console.log(event)
+                alert(event.msg)
+                if (event.ret == 200)
+                {
+                    if (to_do == "follow")
+                    {
+                        var follow_text = "关注中"
+                        var next_to_do = "unfollow"
+                    }
+                    else
+                    {
+                        var follow_text = "关注"
+                        var next_to_do = "follow"
+                    }
+                    $(".follow").text(follow_text).attr("to_do",next_to_do)
+                }
+
+            })
+        });
+
     })
 
 </script>

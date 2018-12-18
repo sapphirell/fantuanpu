@@ -40,8 +40,8 @@ class SukiWebController extends Controller
         $this->data['user'] = User_model::find($uid);
 //        dd($this->data['user']);
         $this->data['thread'] = ForumThreadModel::get_user_thread($uid,1);
-        $this->data['has_follow'] = MyLikeModel::has_follow();
-//        dd($this->data['thread']);
+        $this->data['has_follow'] = MyLikeModel::has_follow($this->data["user_info"]->uid,$uid);
+
         return view("PC/Suki/SukiUserHome")->with("data",$this->data);
     }
 

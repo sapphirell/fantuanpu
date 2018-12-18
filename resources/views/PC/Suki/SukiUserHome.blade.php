@@ -10,7 +10,17 @@
         <div style="margin: 0 auto;width: 120px">{{avatar($data['user']->uid,120,"100")}}</div>
         <h1 style="    text-align: center;margin: 20px;font-size: 16px;font-weight: 900;color: #524a4f;">{{$data['user']->username}}</h1>
         <div>
-            <a href="">关注中</a>
+            <a  class="follow"
+                uid="{{$data['user_info']->uid}}"
+                to_uid="{{$data['user']->uid}}"
+                to_do="{{$data["has_follow"]?"unfollow":"follow"}}"
+                href="/suki_follow_user">
+                @if($data["has_follow"])
+                    关注中
+                @else
+                    关注
+                @endif
+            </a>
             <a href="">加为好友</a>
             <a href="">私信</a>
         </div>
