@@ -141,9 +141,9 @@
 
 </div>
 <div class="user_info_panel animated ">
-    <div style="display: inline-block;float:left;margin: 10px">{{avatar(1,50,50,"","big")}}</div>
+    <div style="display: inline-block;float:left;margin: 10px">{{avatar($data["user_info"]->uid,50,50,"","big")}}</div>
     <div style="float:left;">
-        <h2 style="    font-size: 15px;color: #6a6c7f;margin-top: 15px;">头戴草莓胖次</h2>
+        <h2 style="    font-size: 15px;color: #6a6c7f;margin-top: 15px;">{{$data["user_info"]->username}}</h2>
         <p style="    width: 120px;font-size: 12px;color: #8e8e8e;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">签名档签名档签名档签名档签名档签名档签名档签名档签名档签名档</p>
     </div>
     <div class="clear"></div>
