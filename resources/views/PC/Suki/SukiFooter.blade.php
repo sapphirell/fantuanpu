@@ -207,7 +207,24 @@
 
             })
         });
+        //点击空间留言
+        $(".add_board_message").click(function (e) {
+            e.preventDefault();
 
+            var board_message = $(".board_message").val();
+            var postData = {
+                "message": board_message,
+                "uid" : $(".add_board_message").attr("uid")
+            };
+
+            $.post("/suki_reply_board",postData,function (event) {
+                alert(event.msg)
+                if (event.ret == 200)
+                {
+                    window.location.reload();
+                }
+            })
+        });
     })
 
 </script>

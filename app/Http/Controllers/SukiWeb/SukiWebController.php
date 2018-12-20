@@ -1,9 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Sukiapp;
+namespace App\Http\Controllers\SukiWeb;
 
+use App\Http\Controllers\Forum\ThreadController;
 use App\Http\DbModel\ForumThreadModel;
 use App\Http\DbModel\MyLikeModel;
+use App\Http\DbModel\SukiMessageBoardModel;
+use App\Http\DbModel\Thread_model;
 use App\Http\DbModel\User_model;
 use Illuminate\Http\Request;
 
@@ -12,22 +15,29 @@ use App\Http\Controllers\Controller;
 
 class SukiWebController extends Controller
 {
+
+    /**
+     * 查看suki空间的follow
+     * @param Request $request
+     * @返回 $this
+     */
     public function suki_myfollow(Request $request)
     {
         if ($request->input("like_type") == 1) // 用户
         {
+
             $this->data["my_follow"]= MyLikeModel::get_user_like($this->data['user_info']->uid,$request->input("like_type"));
             foreach ($this->data["my_follow"] as &$value)
             {
                 $value->user = User_model::find($value->like_id,["username","uid"]);
             }
         }
-//            $this->data["follow"] = MyLikeModel::leftJoin("pre_common_member","pre_my_like.like_id",'=',"pre_common_member.uid")
-//                ->where("pre_common_member.uid",$this->data['user_info']->uid)
-//                ->where("pre_my_like.like_type",1)
-//                ->get();
+        //            $this->data["follow"] = MyLikeModel::leftJoin("pre_common_member","pre_my_like.like_id",'=',"pre_common_member.uid")
+        //                ->where("pre_common_member.uid",$this->data['user_info']->uid)
+        //                ->where("pre_my_like.like_type",1)
+        //                ->get();
 
-//        dd( $this->data["my_follow"]);
+        //        dd( $this->data["my_follow"]);
         return view("PC/Suki/SukiMyFollow")->with("data",$this->data);
     }
 
@@ -38,9 +48,9 @@ class SukiWebController extends Controller
     public function suki_userhome($uid)
     {
         $this->data['user'] = User_model::find($uid);
-//        dd($this->data['user']);
         $this->data['thread'] = ForumThreadModel::get_user_thread($uid,1);
         $this->data['has_follow'] = MyLikeModel::has_follow($this->data["user_info"]->uid,$uid);
+        $this->data['message_board'] = SukiMessageBoardModel::get_user_message($uid,1);
 
         return view("PC/Suki/SukiUserHome")->with("data",$this->data);
     }
@@ -55,6 +65,19 @@ class SukiWebController extends Controller
             return self::response([],40001,"缺少参数".$check);
         $this->data['thread'] = ForumThreadModel::get_user_thread($request->input("uid"),$request->input("page"));
 
+
         return $request->input("need")  == "html" ? view("PC/Suki/SukiUcThreadlist")->with("data",$this->data) :self::response($this->data['thread']);
+    }
+
+
+
+    /***
+     * 查看suki的帖子
+     * @param Request $request
+     */
+    public function view_thread(Request $request,$tid,$page)
+    {
+        $this->data = (new ThreadController(new Thread_model()))->_viewThread($tid,$page);
+        return view('PC/Suki/SukiThread')->with('data',$this->data);
     }
 }
