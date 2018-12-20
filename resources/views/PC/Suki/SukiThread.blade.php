@@ -315,7 +315,7 @@
                 'subject' : subject
             };
             console.log(postData)
-            $.post('/post-thread',postData,function (event) {
+            $.post('/suki_reply_thread',postData,function (event) {
                 alert(event.msg);
                 if (event.ret == 200)
                 {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\SukiWeb;
 
+use App\Http\Controllers\Forum\ThreadApiController;
 use App\Http\DbModel\SukiMessageBoardModel;
 use Illuminate\Http\Request;
 
@@ -14,9 +15,9 @@ class SukiWebApiController extends Controller
      * 回复suki帖子
      * @param Request $request
      */
-    public function suki_reply_thread(Request $request)
+    public function suki_reply_thread(Request $request,ThreadApiController $threadApiController)
     {
-
+        return $threadApiController->PostsThread($request,false,"suki");
     }
     public function get_thread(Request $request,Thread_model $thread_model)
     {
@@ -74,7 +75,7 @@ class SukiWebApiController extends Controller
         $check = self::checkRequest($request,["uid","message"]);
         if ($check !== true)
             return self::response([],40001,"缺少参数".$check);
-        
+
         $message = new SukiMessageBoardModel();
         $message->uid = $request->input("uid");
         $message->authorid = $this->data['user_info']->uid;
@@ -135,4 +136,6 @@ class SukiWebApiController extends Controller
 
         }
     }
+
+
 }

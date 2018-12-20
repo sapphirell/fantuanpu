@@ -10,6 +10,7 @@ use App\Http\DbModel\ForumPostModel;
 use App\Http\DbModel\ForumPostTableidModel;
 use App\Http\DbModel\ForumThreadModel;
 use App\Http\DbModel\HomeNotification;
+use App\Http\DbModel\SukiNoticeModel;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -118,11 +119,11 @@ class ThreadApiController extends Controller
         return ActionController::complete_action('PNT',$user_info->uid,$this->threadModel->tid);
     }
     /**
-     * 回复帖子
+     * 回复帖子,如果$thread_origin =fantuanpu 通知HomeNotification表, =suki 通知SukiNotice表
      * @param Request $request
      * @返回 mixed
      */
-    public function PostsThread(Request $request,$user_info = false)
+    public function PostsThread(Request $request,$user_info = false,$thread_origin = "fantuanpu")
     {
         $user_info = $user_info ? : session('user_info');
         if(empty($user_info))
@@ -175,20 +176,33 @@ class ThreadApiController extends Controller
         /**
          *  通知帖主帖子被回复
          */
-        $notification = new HomeNotification();
-        $notification->uid = $thread->authorid;
-        $notification->type = 'post';//通知类型:"doing"记录,"friend"好友请求,"sharenotice"好友分享,"post"话题回复,
-        $notification->new = 1;
-        $notification->authorid = $user_info->uid;
-        $notification->author = $user_info->username;
-        $notification->note = " <a href=\"home.php?mod=space&uid=36\">{$user_info->username}</a> 回复了您的帖子 
+        if ($thread_origin == "fantuanpu" && $thread->authorid != $user_info->uid)
+        {
+            $notification = new HomeNotification();
+            $notification->uid = $thread->authorid;
+            $notification->type = 'post';//通知类型:"doing"记录,"friend"好友请求,"sharenotice"好友分享,"post"话题回复,
+            $notification->new = 1;
+            $notification->authorid = $user_info->uid;
+            $notification->author = $user_info->username;
+            $notification->note = " <a href=\"home.php?mod=space&uid=36\">{$user_info->username}</a> 回复了您的帖子 
                                 <a href=\"forum.php?mod=redirect&goto=findpost&ptid={$thread->tid}&pid={$tableId->pid}\" target=\"_blank\">{$request->input('subject')}</a> &nbsp; 
                                 <a href=\"forum.php?mod=redirect&goto=findpost&pid={$thread->tid}&ptid={$tableId->pid}\" target=\"_blank\" class=\"lit\">查看</a>";
-        $notification->dateline = time();
-        $notification->from_id = $tableId->pid;
-        $notification->from_idtype = 'quote';
-        $notification->from_num = '0';
-        $notification->save();
+            $notification->dateline = time();
+            $notification->from_id = $tableId->pid;
+            $notification->from_idtype = 'quote';
+            $notification->from_num = '0';
+            $notification->save();
+        }
+        if ($thread_origin == "suki" && $thread->authorid != $user_info->uid)
+        {
+            $notice = new SukiNoticeModel();
+            $notice->uid = $thread->authorid;
+            $notice->position_id = $request->input('tid');
+            $notice->authorid = $user_info->uid;
+            $notice->message = "回复了您的帖子";
+            $notice->author = $user_info->username;
+            $notice->place = 1;
+        }
         /**
          * 用户统计更新
          */

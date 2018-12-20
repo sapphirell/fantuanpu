@@ -219,13 +219,12 @@ Route::group([
     Route::get('/suki-userhome-{uid}.html', ['uses' => 'SukiWebController@suki_userhome', 'as' => 'suki_userhome']);#查看别人的suki用户空间
     Route::get('/suki-myfollow', ['uses' => 'SukiWebController@suki_myfollow', 'as' => 'suki_myfollow']);#查看我的关注者
     Route::post('/suki_get_user_thread', ['uses' => 'SukiWebController@suki_get_user_thread', 'as' => 'suki_get_user_thread']);#获取用户的更多帖子
-
     Route::post('/suki_reply_thread', ['uses' => 'SukiWebController@suki_reply_thread', 'as' => 'suki_reply_thread']);#回复suki帖子
 
 
     Route::get('/suki-thread', ['uses' => 'SukiWebApiController@get_thread', 'as' => 'get_thread']);#获取suki的帖子
     Route::post('/suki-new-thread', ['uses' => 'SukiWebApiController@suki_new_thread', 'as' => 'suki-new-thread']);#获取suki的帖子
     Route::post('/suki_reply_board', ['uses' => 'SukiWebApiController@suki_reply_board', 'as' => 'suki_reply_board']);#用户空间留言
-
     Route::post('/suki_follow_user', ['uses' => 'SukiWebApiController@suki_follow_user', 'as' => 'suki_follow_user']);#suki关注和取关
+    Route::post('/suki_reply_thread', ['uses' => 'SukiWebApiController@suki_reply_thread', 'as' => 'suki_reply_thread']);#suki回复帖子
 });

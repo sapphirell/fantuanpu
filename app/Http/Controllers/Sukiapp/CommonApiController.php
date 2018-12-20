@@ -16,5 +16,4 @@ use App\Http\Controllers\Controller;
 
 class CommonApiController extends Controller
 {
-
 }
