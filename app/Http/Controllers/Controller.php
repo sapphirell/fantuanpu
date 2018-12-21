@@ -65,10 +65,7 @@ class Controller extends BaseController
             $rand_code = md5(rand(0, 99999) .time()); // 没有登录的时候充当uid用
             session(['access_id' => $rand_code]);
         }
-
-
-        $request                = new Request();
-        $this->data['request']  = $request->input();
+        $this->data['request']  =  request()->input();
         $this->data['title']    = false;
         $this->data['user_info']              = session('user_info');
         if ($this->data['user_info'] ->uid)

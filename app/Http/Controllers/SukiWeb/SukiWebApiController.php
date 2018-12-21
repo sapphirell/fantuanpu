@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\SukiWeb;
 
 use App\Http\Controllers\Forum\ThreadApiController;
+use App\Http\Controllers\Sukiapp\CommonApiController;
 use App\Http\DbModel\SukiMessageBoardModel;
 use Illuminate\Http\Request;
 
@@ -137,5 +138,19 @@ class SukiWebApiController extends Controller
         }
     }
 
+    /**
+     * 添加suki好友
+     * @param Request $request
+     */
+    public function add_suki_friend(Request $request)
+    {
+        $check = self::checkRequest($request,["friend_id","message"]);
+        if ($check !== true)
+            return self::response([],40001,"缺少参数".$check);
+
+        $res = CommonApiController::_suki_send_friend_request($this->data["user_info"]->uid,$request->input("friend_id"),$request->input("message"));
+
+        return $res ? self::response([],200,"已经发送申请") : self::response([],40002,"你们已经是好友了");
+    }
 
 }

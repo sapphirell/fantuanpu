@@ -80,4 +80,13 @@ class SukiWebController extends Controller
         $this->data = (new ThreadController(new Thread_model()))->_viewThread($tid,$page);
         return view('PC/Suki/SukiThread')->with('data',$this->data);
     }
+
+    /**
+     * 弹出的suki加好友申请的面板
+     * @param Request $request
+     */
+    public function add_suki_friend_view(Request $request)
+    {
+        return  view('PC/Suki/SukiAddFriend')->with('data',$this->data);
+    }
 }

@@ -225,6 +225,23 @@
                 }
             })
         });
+        //点击弹出申请好友窗口
+        $(".add_suki_friend").click(function (e) {
+            e.preventDefault();
+            var friend_uid = $(this).attr("friend_uid");
+            layer.open({
+                type: 2,
+                title: false,
+                closeBtn: 0, //不显示关闭按钮
+                shade: 0.8,
+                shadeClose: true,
+                area: ['300px', '160px'],
+                offset: '100px',
+                // skin: 'layui-layer-rim', //加上边框
+                content: ['/add_suki_friend_view?friend_uid='+friend_uid, 'no']
+            });
+        })
+        
     })
 
 </script>

@@ -25,7 +25,7 @@
                     关注
                 @endif
             </a>
-            <a href="">加为好友</a>
+            <a href="/add_suki_friend_view" class="add_suki_friend" friend_uid="{{$data['user']->uid}}">加为好友</a>
             <a href="">私信</a>
         </div>
     </div>

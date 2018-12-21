@@ -204,8 +204,10 @@
         <div class="author-message" style="">
             <div class="user_info author" style="display: inline-block;width: 160px">
 
-                {{avatar($data['thread']['thread_subject']->authorid,150,5,'author-avatar','big')}}
-                <p class="author-sign" style="width: inherit;width: inherit;margin: 8px;color: #b7b7b7;">未设置用户签名</p>
+                <a href="">{{avatar($data['thread']['thread_subject']->authorid,150,5,'author-avatar','big')}}</a>
+                <a href=""><p class="author-sign" style="width: inherit;width: inherit;margin: 8px;color: #b7b7b7;">未设置用户签名</p></a>
+
+
 
 
             </div>
@@ -232,12 +234,16 @@
 
                                 <div style="width: 80px;display: inline-block;float: left;    margin-right: 15px;">
 
-                                    {{avatar($value->authorid,80,100,'post-avatar','normal')}}
-                                    <span style="color: #5abdd4;width: 80px;text-align: center;display: inline-block;margin-top: 5px">{{$value->author}}</span>
+                                    <a href="/suki-userhome-{{$value->authorid}}.html" style="cursor: pointer">
+                                        {{avatar($value->authorid,80,100,'post-avatar','normal')}}
+                                    </a>
+
+                                        <a style="color: #5abdd4;width: 80px;text-align: center;display: inline-block;margin-top: 5px">{{$value->author}}</a>
+
 
                                 </div>
                                 <div class="post_content" style="width: 70%;display: inline-block;float:left;">
-                                    <span style="color: #cccccc;    padding-left: 5px;">{{date("Y m-d H:i:s",$value->dateline)}}</span>
+                                    <span style="color: #cccccc;    padding-left: 5px;">{{date("Y·m·d H:i:s",$value->dateline)}}</span>
                                     <div id="{{$value->pid}}" style="padding: 5px;">{!! bbcode2html($value->message) !!}</div>
 
 

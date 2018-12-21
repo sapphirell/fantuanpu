@@ -29,7 +29,7 @@
             margin-right: 5px;
         }
         .search_box:hover ,.search_box:active,.search_box:focus {
-            border-color: #d695b0!important;
+            border-color: #ad8a98!important;
             box-shadow: 0 0 5px #ff7979;
         }
         .hd li {
@@ -118,19 +118,19 @@
                     <img src="/Image/denglu-copy.png" style="width: 30px;border: 2px solid #fff;padding: 2px;border-radius: 100%;">
                 </li>
             @endif
-            <li class="trans">
-                <a href="/"  class="header_items">
-                    <i class="fa fa-home fa-fw fa-lg" style="color: #ffffff;line-height: 23px"></i>
-                    <p class="none_960" style="color: #fff;display: inline-block">首页</p>
-
-                </a>
-            </li>
             {{--<li class="trans">--}}
-                {{--<a href="/notice"  class="header_items">--}}
-                    {{--<i class="fa fa-comments-o fa-fw fa-lg"  style="color: #ffffff;line-height: 23px"></i>--}}
-                    {{--<p class="none_960" style="color: #fff;display: inline-block">新品</p>--}}
+                {{--<a href="/"  class="header_items">--}}
+                    {{--<i class="fa fa-home fa-fw fa-lg" style="color: #ffffff;line-height: 23px"></i>--}}
+                    {{--<p class="none_960" style="color: #fff;display: inline-block">首页</p>--}}
+
                 {{--</a>--}}
             {{--</li>--}}
+            <li class="trans">
+                <a href="/"  class="header_items">
+                    <i class="fa fa-comments-o fa-fw fa-lg"  style="color: #ffffff;line-height: 23px"></i>
+                    <p class="none_960" style="color: #fff;display: inline-block">交流</p>
+                </a>
+            </li>
 
         </ul>
 
