@@ -5,7 +5,9 @@ namespace App\Http\Controllers\SukiWeb;
 use App\Http\Controllers\Forum\ThreadController;
 use App\Http\DbModel\ForumThreadModel;
 use App\Http\DbModel\MyLikeModel;
+use App\Http\DbModel\SukiFriendRequestModel;
 use App\Http\DbModel\SukiMessageBoardModel;
+use App\Http\DbModel\SukiNoticeModel;
 use App\Http\DbModel\Thread_model;
 use App\Http\DbModel\User_model;
 use Illuminate\Http\Request;
@@ -88,5 +90,32 @@ class SukiWebController extends Controller
     public function add_suki_friend_view(Request $request)
     {
         return  view('PC/Suki/SukiAddFriend')->with('data',$this->data);
+    }
+
+    /**
+     * 用户提醒列表
+     * @param Request $request
+     */
+    public function suki_notice(Request $request)
+    {
+        switch ($request->input("type"))
+        {
+            case "reply_me" :
+                $this->data["reply_me"] = SukiNoticeModel::find_user_notice($this->data['user_info']->uid,1);
+                break;
+            case "my_message": //我的私信
+                break;
+            case "call_me": //@
+
+                break;
+            case "friend_request":
+                $this->data["friend_request"] = SukiFriendRequestModel::get_user_friend_request($this->data['user_info']->uid,$request->input("page")?:1);
+                break;
+            default :
+                $this->data["reply_me"] = SukiNoticeModel::find_user_notice($this->data['user_info'],1);
+                break;
+        }
+//        dd($this->data);
+        return  view('PC/Suki/SukiNoticeView')->with('data',$this->data);
     }
 }

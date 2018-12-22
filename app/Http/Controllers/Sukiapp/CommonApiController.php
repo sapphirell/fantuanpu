@@ -9,6 +9,7 @@ use App\Http\DbModel\MemberLikeModel;
 use App\Http\DbModel\MyLikeModel;
 use App\Http\DbModel\SukiFriendModel;
 use App\Http\DbModel\SukiFriendRequestModel;
+use App\Http\DbModel\SukiNoticeModel;
 use App\Http\DbModel\Thread_model;
 use App\Http\DbModel\UserSettingModel;
 use Illuminate\Http\Request;
@@ -31,7 +32,7 @@ class CommonApiController extends Controller
         $suki_friends->save();
         return true;
     }
-
+    //发送好友申请
     public static function _suki_send_friend_request($uid,$friend,$message)
     {
         if (SukiFriendModel::is_friend($uid,$friend))

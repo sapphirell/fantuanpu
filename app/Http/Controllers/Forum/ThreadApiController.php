@@ -154,7 +154,6 @@ class ThreadApiController extends Controller
         $postModel->message = $request->input('message');
         $postModel->useip   = $request->getClientIp();
         $postModel->save();
-
         /**
          * 查找回帖所属的主题,并讲回复数+1
          */
@@ -195,13 +194,15 @@ class ThreadApiController extends Controller
         }
         if ($thread_origin == "suki" && $thread->authorid != $user_info->uid)
         {
+            $post = $postModel->where('pid',$postModel->pid)->first();
             $notice = new SukiNoticeModel();
             $notice->uid = $thread->authorid;
-            $notice->position_id = $request->input('tid');
+            $notice->position_id = json_encode(["tid"=>$request->input('tid'),"pid"=>$tableId->pid,"floor"=>$post->position]);
             $notice->authorid = $user_info->uid;
             $notice->message = "回复了您的帖子";
             $notice->author = $user_info->username;
             $notice->place = 1;
+            $notice->save();
         }
         /**
          * 用户统计更新

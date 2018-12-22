@@ -21,7 +21,7 @@
             font-size: 15px;
             font-family: 'PingFang SC', 'Helvetica Neue', 'Helvetica', 'STHeitiSC-Light', 'Arial', sans-serif;
             font-weight: 100;
-            border: 1px solid #f4b8b7;
+            border: 1px solid #ffc0c0;
             margin-top: 5px;
             border-radius: 7px;
             padding: 13px;
@@ -31,6 +31,7 @@
         .search_box:hover ,.search_box:active,.search_box:focus {
             border-color: #ad8a98!important;
             box-shadow: 0 0 5px #ff7979;
+            border-style:dashed!important;
         }
         .hd li {
             list-style: none;
@@ -50,19 +51,22 @@
             background: #fff;
             position: fixed;
             width: 200px;
-            height: 300px;
+            height: 310px;
             top: 48px;
             left: 10px;
             box-shadow: 0 0 15px #00000012;
             display: none;
             z-index: 10002;
+            animation-duration: 0.55s;
         }
         .user_info_item {
             width:100%;
         }
         .panel_btn_list li {
             list-style: none;
-
+            margin-right: 10px;
+            margin-left: 10px;
+            margin-bottom: 5px;
         }
         .panel_btn_list li a {
             padding: 3px;
@@ -149,12 +153,15 @@
     <div class="clear"></div>
     <div class="user_info_item">
         <ul class="panel_btn_list">
-            <li class="trans"><img style="width:25px;" src="/Image/tixing.png"><a href="suki-myfollow?like_type=1">关注的用户</a></li>
+            <li class="trans"><a href="suki-myfollow?like_type=1"><img style="width:25px;" src="/Image/tixing.png">关注的用户</a></li>
             <li class="trans"><img style="width:25px;" src="/Image/tixing.png">期待的商品</li>
             <li class="trans"><img style="width:25px;" src="/Image/tixing.png">收藏的帖子</li>
-            <li class="trans"><img style="width:25px;" src="/Image/tixing.png">评论</li>
-            <li class="trans"><img style="width:25px;" src="/Image/tixing.png">{{"@"}}我</li>
-            <li class="trans"><img style="width:25px;" src="/Image/tixing.png">点赞</li>
+            <li class="trans"><a href="/suki_notice?type=reply_me"><img style="width:25px;" src="/Image/tixing.png">站内提醒</a></li>
+            <li class="trans"><img style="width:25px;" src="/Image/tixing.png">补款闹钟</li>
+            {{--<li class="trans"><img style="width:25px;" src="/Image/tixing.png">评论</li>--}}
+            {{--<li class="trans"><img style="width:25px;" src="/Image/tixing.png">{{"@"}}我</li>--}}
+            {{--<li class="trans"><img style="width:25px;" src="/Image/tixing.png">点赞</li>--}}
+            {{--<li class="trans"><img style="width:25px;" src="/Image/tixing.png">好友申请</li>--}}
         </ul>
     </div>
 

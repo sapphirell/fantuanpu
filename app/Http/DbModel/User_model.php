@@ -21,9 +21,14 @@ class User_model extends Model
         if ($need == '*')
             return $user;
 
-        foreach ($user->original as $key)
+        //过滤掉不该返还的字段,比如password,salt
+        foreach ($user->original as $key => $value)
             if (!in_array($key,$need))
+            {
+                unset($user->attributes[$key]);
                 unset($user->original[$key]);
+            }
+
 
         return $user;
 

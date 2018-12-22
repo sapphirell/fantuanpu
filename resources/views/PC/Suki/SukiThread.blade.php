@@ -227,7 +227,7 @@
                     @if($key == 0)
                         {{--帖子一楼--}}
                     @else
-                        <div class="post_item">
+                        <div class="post_item" name="{{$value->pid}}">
                             <?php $rand_border = ['#bbb0ff','#e7b0ff','#dbffb0','#b5ecff','#ffb5b5']; ?>
                             <div class="post_msg"  style="z-index: 1; position: relative;    margin-right: 20px;
                                     border-bottom: 3px solid {{$rand_border[rand(0,4)]}};">

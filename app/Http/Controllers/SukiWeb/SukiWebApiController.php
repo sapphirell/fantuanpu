@@ -4,6 +4,7 @@ namespace App\Http\Controllers\SukiWeb;
 
 use App\Http\Controllers\Forum\ThreadApiController;
 use App\Http\Controllers\Sukiapp\CommonApiController;
+use App\Http\DbModel\MyLikeModel;
 use App\Http\DbModel\SukiMessageBoardModel;
 use Illuminate\Http\Request;
 
