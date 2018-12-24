@@ -17,7 +17,7 @@ class SukiNoticeModel extends Model
      */
     public static function find_user_notice(int $uid,int $place=1)
     {
-        $data = self::where(['uid' => $uid,'place' => $place])->get();
+        $data = self::where(['uid' => $uid,'place' => $place])->orderBy("id","desc")->get();
         foreach ($data as &$value)
         {
             $value->position = json_decode($value->position_id);

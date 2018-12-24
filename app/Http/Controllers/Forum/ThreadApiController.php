@@ -199,9 +199,10 @@ class ThreadApiController extends Controller
             $notice->uid = $thread->authorid;
             $notice->position_id = json_encode(["tid"=>$request->input('tid'),"pid"=>$tableId->pid,"floor"=>$post->position]);
             $notice->authorid = $user_info->uid;
-            $notice->message = "回复了您的帖子";
+            $notice->message =  $request->input('message');
             $notice->author = $user_info->username;
             $notice->place = 1;
+            $notice->notice_time = time();
             $notice->save();
         }
         /**

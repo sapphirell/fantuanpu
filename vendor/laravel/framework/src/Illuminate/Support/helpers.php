@@ -1262,6 +1262,34 @@ if (! function_exists('bbcode2html')) {
         echo $html;
     }
 }
+if (! function_exists('format_time'))
+{
+    function format_time(int $time,$default_format="Y-m-d")
+    {
+        $time_ymd = date("Ymd",$time);
+        $now = time();
+        $now_ymd = date("Ymd",$now);
+        $_1h = 60*60;
+        if ($time > $now)
+        {
+            if ($now_ymd != $time_ymd)
+                return date($default_format,$time);
+            if ($time - $now < $_1h)
+                return floor(($time-$now)/60) . "分钟后";
+            if ($time - $now > $_1h)
+                return floor(($time-$now)/3600) . "小时后";
+        }
+        else
+        {
+            if ($now_ymd != $time_ymd)
+                return date($default_format,$time);
+            if ($now -$time < $_1h)
+                return floor(($now-$time)/60) . "分钟前";
+            if ( $now - $time  > $_1h)
+                return floor(($now-$time)/3600) . "小时前";
+        }
+    }
+}
 if (! function_exists('getposttablename'))
 {
     //获取getposttablenameid
