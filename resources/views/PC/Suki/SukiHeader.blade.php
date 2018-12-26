@@ -14,24 +14,28 @@
             background: #fafafa;
         }
         .search_box {
-            background: #ffb8b8;
+            background: #ffffff;
             border: 0px;
-            color: #fff2e9;
-            height: 21px;
+            color: #353331;
+            height: 12px;
             font-size: 15px;
             font-family: 'PingFang SC', 'Helvetica Neue', 'Helvetica', 'STHeitiSC-Light', 'Arial', sans-serif;
-            font-weight: 100;
-            border: 1px solid #ffc0c0;
-            margin-top: 5px;
-            border-radius: 7px;
-            padding: 13px;
-            width: 120px;
+            font-weight: 200;
+            border: 1px solid #fff;
+            margin-top: 8px;
             margin-right: 5px;
+            border-radius: 2px;
+            padding: 11px;
+            display: inline-block;
+            border-radius: 50px;
+            width: 25px;
+            padding-left: 20px;
         }
         .search_box:hover ,.search_box:active,.search_box:focus {
-            border-color: #ad8a98!important;
-            box-shadow: 0 0 5px #ff7979;
-            border-style:dashed!important;
+            border-color: #FFFFFF!important;
+            border-radius: 20px;
+            /*box-shadow: 0 0 5px #ff7979;*/
+            /*border-style:dashed!important;*/
         }
         .hd li {
             list-style: none;
@@ -47,40 +51,86 @@
         .hd li:hover {
             box-shadow: 0 -25px 21px inset #e68a9d;
         }
+        .user_info_panel a {
+            text-decoration: none;
+        }
+        .user_info_panel a:hover {
+            color: #F09C9C!important;
+        }
         .user_info_panel {
             background: #fff;
             position: fixed;
-            width: 200px;
-            height: 310px;
+            width: 250px;
+            height: 320px;
             top: 48px;
-            left: 10px;
-            box-shadow: 0 0 15px #00000012;
+            /* left: 10px; */
+            box-shadow: 0 0 15px #0000001c;
             display: none;
             z-index: 10002;
             animation-duration: 0.55s;
+            /*display: block;*/
+            border-radius: 13px;
+            overflow: hidden;
+            padding-top: 5px;
+
         }
         .user_info_item {
             width:100%;
+            margin-top: 10px;
+        }
+        .panel_btn_list {
+            padding-left: 15px;
         }
         .panel_btn_list li {
             list-style: none;
-            margin-right: 10px;
-            margin-left: 10px;
-            margin-bottom: 5px;
+            float: left;
+            box-sizing: border-box;
+            width: 110px;
         }
         .panel_btn_list li a {
             padding: 3px;
             cursor: pointer;
-            font-weight: 900;
+            color: #927979;
+            margin: 1px;
+            display: inline-block;
 
         }
         .panel_btn_list li a:hover {
             color: #00A0FF;
         }
         .panel_btn_list li img {
-            width: 25px;
+            width: 14px;
             margin-right: 10px;
 
+        }
+        .user_info_content {
+            display: flex;
+            justify-content: space-around;
+            margin: 0px 10px;
+            border-bottom: 1px solid #efeeee;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #efeeee;
+        }
+        .user_info_content div {
+            float: left;
+            /*flex-grow: 1;*/
+        }
+        .user_info_content_value {
+            font-size: 22px;
+            color: #967777;
+            font-weight: 900;
+            width: 100%;
+            text-align: center;
+            margin: 0px;
+            display: inline-block;
+        }
+        .user_info_content_description{
+            color: #9e8484;
+            display: inline-block;
+            width: 100%;
+            text-align: center;
+            margin: 0px;
+            font-size: 11px;
         }
     </style>
 </head>
@@ -108,7 +158,7 @@
         <div class="search">
             <from action="">
                 <input type="text" name="" class="search_box trans" placeholder="Searching..">
-
+                <i style="color: #fcd4d1;position: relative;left: -32px;top: -2.3px;font-size: 14px;text-shadow: 0 0 3px #f7dfdc;" class="fa fa-search fa-fw fa-lg toggle_search"></i>
             </from>
 
         </div>
@@ -144,29 +194,44 @@
     </div>
 
 </div>
-<div class="user_info_panel animated ">
-    <div style="display: inline-block;float:left;margin: 10px">{{avatar($data["user_info"]->uid,50,50,"","big")}}</div>
-    <div style="float:left;">
-        <h2 style="    font-size: 15px;color: #6a6c7f;margin-top: 15px;">{{$data["user_info"]->username}}</h2>
-        <p style="    width: 120px;font-size: 12px;color: #8e8e8e;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">签名档签名档签名档签名档签名档签名档签名档签名档签名档签名档</p>
-    </div>
-    <div class="clear"></div>
-    <div class="user_info_item">
-        <ul class="panel_btn_list">
-            <li class="trans"><a href="suki-myfollow?like_type=1"><img style="width:25px;" src="/Image/tixing.png">关注的用户</a></li>
-            <li class="trans"><img style="width:25px;" src="/Image/tixing.png">期待的商品</li>
-            <li class="trans"><img style="width:25px;" src="/Image/tixing.png">收藏的帖子</li>
-            <li class="trans"><a href="/suki_notice?type=reply_me"><img style="width:25px;" src="/Image/tixing.png">站内提醒</a></li>
-            <li class="trans"><img style="width:25px;" src="/Image/tixing.png">补款闹钟</li>
-            {{--<li class="trans"><img style="width:25px;" src="/Image/tixing.png">评论</li>--}}
-            {{--<li class="trans"><img style="width:25px;" src="/Image/tixing.png">{{"@"}}我</li>--}}
-            {{--<li class="trans"><img style="width:25px;" src="/Image/tixing.png">点赞</li>--}}
-            {{--<li class="trans"><img style="width:25px;" src="/Image/tixing.png">好友申请</li>--}}
-        </ul>
-    </div>
+<div class="wp">
+    <div class="user_info_panel animated ">
+        <div style="display: inline-block;float:left;      margin: 10px 20px 12px 20px;">{{avatar($data["user_info"]->uid,60,50,"","big")}}</div>
+        <div style="float:left;">
+            <h2 style="     font-size: 17px;color: #6a6c7f;margin-top: 15px;">{{$data["user_info"]->username}}</h2>
+            <p style="    width: 100px;font-size: 12px;color: #8e8e8e;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">签名档签名档签名档签名档签名档签名档签名档签名档签名档签名档</p>
+        </div>
+        <div class="clear"></div>
+        <div class="user_info_content">
+            <div>
+                <a class="user_info_content_value trans">10</a>
+                <a class="user_info_content_description trans">帖子</a>
+            </div>
+            <div>
+                <a href="/suki-myfollow?like_type=1" class="user_info_content_value trans">10</a>
+                <a href="/suki-myfollow?like_type=1" class="user_info_content_description trans">关注</a>
+            </div>
+            <div>
+                <a class="user_info_content_value trans">10</a>
+                <a class="user_info_content_description trans" >粉丝</a>
+            </div>
+        </div>
+        <div class="user_info_item">
+            <ul class="panel_btn_list">
+            <li class="trans"><a href="" class="trans"><img style="" src="/Image/star-pink.png">我的收藏</a></li>
+            <li class="trans"><a href="" class="trans"><img style="" src="/Image/history.png">浏览历史</a></li>
+            <li class="trans"><a href="" class="trans"><img style="" src="/Image/friends.png">通讯录</a></li>
+            <li class="trans"><a href="" class="trans"><img style="" src="/Image/nearby.png">附近同好</a></li>
+            <li class="trans"><a href="" class="trans"><img style="" src="/Image/print.png">草稿箱</a></li>
+            <li class="trans"><a href="" class="trans"><img style="" src="/Image/tixing.png">补款闹钟</a></li>
 
-    <a style="    position: absolute;bottom: 0px;width: 100%;text-align: center" href="/logout">
-        <span style="    font-size: 14px;color: #d95794;font-weight: 900;">LogOut</span>
-        <img src="/Image/tuichu1.png" style="width: 14px;padding-bottom: 4px;" >
-    </a>
+
+            </ul>
+        </div>
+
+        <a style="    position: absolute;bottom: 0px;width: 100%;text-align: center" href="/logout">
+            <span style="    font-size: 14px;color: #d95794;font-weight: 900;">退出登录</span>
+            <img src="/Image/tuichu1.png" style="width: 14px;padding-bottom: 4px;" >
+        </a>
+    </div>
 </div>

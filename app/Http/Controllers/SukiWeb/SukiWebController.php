@@ -118,4 +118,9 @@ class SukiWebController extends Controller
 //        dd($this->data);
         return  view('PC/Suki/SukiNoticeView')->with('data',$this->data);
     }
+
+    public function about_suki()
+    {
+        return  view('PC/Suki/SukiNoticeView')->with('data',$this->data);
+    }
 }

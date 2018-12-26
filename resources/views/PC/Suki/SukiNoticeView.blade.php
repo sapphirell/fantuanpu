@@ -33,12 +33,12 @@
         display: inline-block;
         width: 100%;
         padding: 9px 20px;
-        /* border: 5px solid #ffb9b9; */
+        border: 5px solid #f7c6cd;
         border-width: 0px 0px 0px 5px;
         color: #9a6363;
-        background-color: #ffb6c7;
-        background-image: linear-gradient(270deg, #f4f5f4 0%, #ffe8dd 93%);
-        border-radius: 5px;
+        background-color: #fdf5f5;
+        /* background-image: linear-gradient(270deg, #f4f5f4 0%, #ffe8dd 93%); */
+        border-radius: 3px;
     }
 </style>
 <div class="wp" style="    margin-top: 60px;
@@ -47,7 +47,8 @@
     box-shadow: 0 0 15px #f7f7f7;
     border-radius: 3px;
     overflow: hidden;    border-top: 3px solid #fbcccc;">
-    <div style="width: 180px;float: left;   background: #eee;background-image: linear-gradient(0deg, #e9f5f0 0%, #FDE7D9 100%);flex: none;">
+    <div style="width: 180px;float: left;   background: #eee;
+        background-image: linear-gradient(0deg, #f5f5f5 0%, #ffffff 100%);flex: none;">
         <ul class="my_alert_list" style="    overflow: hidden;">
             <li>
                 <a href="/suki_notice?type=reply_me" class="@if($data["request"]["type"]=="reply_me"){{"onchange"}}@endif">回复我的</a>
@@ -97,8 +98,8 @@
 
                         {{--<a href="/suki-thread-{{$value->subject['thread_subject']->tid}}-1.html?pid={{$value->position->pid}}&floor={{$value->position->floor}}">--}}
                         <div class="origin_thread" href="/suki-thread-{{$value->subject['thread_subject']->tid}}-1.html">
-                            <span>评论了您的主题 :  </span>
-                            <a>{{$value->subject['thread_subject']->subject}}</a>
+                            <span style="color: #ae9c9e;">评论了您的主题 :  </span>
+                            <a style="color: #947b7e;">{{$value->subject['thread_subject']->subject}}</a>
                         </div>
                     </div>
 

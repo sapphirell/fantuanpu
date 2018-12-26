@@ -13,12 +13,16 @@
         border: 3px solid #a8c3c1;
         border-radius: 5px;
         border: 3px solid #fbfbfb;
+        text-decoration: none;
+    }
+    .part_item:hover,.part_item:active{
+        text-decoration: none;
     }
     .part_item > div {
         width: 40px;
         height: 40px;
         background: #ffffff;
-        box-shadow: 0 0 5px #afafaf;
+        box-shadow: 2px 1px 9px 1px #ffdede;
         border-radius: 5px;
     }
     .part_item > p {
@@ -43,7 +47,7 @@
         background-image: linear-gradient(176deg, #53def5 0%, #c0fff6 100%);
     }
     .selected_part_item {
-        background: #d7edff;
+        background: #ecf6ff;
         padding: 10px;
         border: 3px solid #a8c3c1;
         border-radius: 5px;
@@ -55,14 +59,26 @@
     .w-e-toolbar {
         border: 1px solid #d8d8d8!important;
     }
+    .appimage img {
+        width: inherit;
+        margin: 5px;
+        width: 30px;
+        height: 30px;
+        display: inline-block;
+    }
+    .suki_banner {
 
+    }
 </style>
 <div class="wp index_body">
+    <div class="suki_banner"></div>
     <div class="part" style="    overflow-x: auto;white-space: nowrap;display: flex">
 
         @foreach($data['nodes'] as $value)
         <a href="/forum-{{$value['fid']}}-1.html"  class="part_item fid_{{$value["fid"]}}" fid="{{$value["fid"]}}">
-            <div class=""></div>
+            <div class="appimage">
+                <img src="{{$value['appimage']}}">
+            </div>
             <p>{{$value["name"]}}</p>
         </a>
         @endforeach

@@ -36,14 +36,24 @@ h4,h5{margin: 3px;}
 label{
     cursor: pointer;}
 i{cursor: pointer;/*字体图标*/}
-blockquote {    padding: 10px 20px;
+blockquote {
+    position: relative;
+    padding: 5px 30px;
     margin: 0 0 20px;
     font-size: 13.5px;
     border: 0px solid #fff;
-    border-left: 5px solid #00BCD4;
+    /*border-left: 5px solid #92d7e0;*/
     background: #cccccc29;
     box-shadow: 0 0 5px #fff;
-    border-radius: 5px;}
+    border-radius: 5px;
+    color: #cccccc;
+    cursor: pointer;}
+/*blockquote::before {content:"\“";    font-size: 58px;*/
+    /*display: inline-block;*/
+    /*position: absolute;*/
+    /*left: -10px;*/
+    /*top: -20px;}*/
+/*blockquote::after {content:"\”";}*/
 input,textarea{outline:none;}
 input[type="button"],input[type="submit"]{
     color: #FFFFFF;
