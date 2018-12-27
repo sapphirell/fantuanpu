@@ -79,7 +79,7 @@
             margin-top: 10px;
         }
         .panel_btn_list {
-            padding-left: 15px;
+            padding-left: 25px;
         }
         .panel_btn_list li {
             list-style: none;
@@ -131,6 +131,13 @@
             text-align: center;
             margin: 0px;
             font-size: 11px;
+        }
+        .panel_btn_list li.rough > a{
+            color:#ccc;
+        }
+        .panel_btn_list li.rough > a:hover
+        {
+            color: #cccccc !important;
         }
     </style>
 </head>
@@ -196,7 +203,13 @@
 </div>
 <div class="wp">
     <div class="user_info_panel animated ">
-        <div style="display: inline-block;float:left;      margin: 10px 20px 12px 20px;">{{avatar($data["user_info"]->uid,60,50,"","big")}}</div>
+        <div class="my_avatar shadow" style="    margin-top: 10px;display: inline-block;float: left;width: 60px;height: 60px; border-radius: 100%;overflow: hidden;position: relative;margin: 12px 20px 12px 32px;">
+            <div class="ava_glass" style="    display: inline-block;float: left;width: 60px;height: 60px;position: absolute;background: url(/Image/real-trans.png);display: none;cursor: pointer;">
+                <span style="    position: absolute;bottom: 5px;width: 60px;display: inline-block;text-align: center;color: #fff;font-size: 12px;">更换</span>
+            </div>
+            {{avatar($data["user_info"]->uid,60,50,"","big")}}
+        </div>
+        {{--<div style="display: inline-block;float:left;      margin: 10px 20px 12px 20px;"></div>--}}
         <div style="float:left;">
             <h2 style="     font-size: 17px;color: #6a6c7f;margin-top: 15px;">{{$data["user_info"]->username}}</h2>
             <p style="    width: 100px;font-size: 12px;color: #8e8e8e;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">签名档签名档签名档签名档签名档签名档签名档签名档签名档签名档</p>
@@ -218,11 +231,11 @@
         </div>
         <div class="user_info_item">
             <ul class="panel_btn_list">
-            <li class="trans"><a href="" class="trans"><img style="" src="/Image/star-pink.png">我的收藏</a></li>
-            <li class="trans"><a href="" class="trans"><img style="" src="/Image/history.png">浏览历史</a></li>
-            <li class="trans"><a href="" class="trans"><img style="" src="/Image/friends.png">通讯录</a></li>
-            <li class="trans"><a href="" class="trans"><img style="" src="/Image/nearby.png">附近同好</a></li>
-            <li class="trans"><a href="" class="trans"><img style="" src="/Image/print.png">个人信息</a></li>
+            <li class="trans rough"><a href="" class="trans"><img style="" src="/Image/star-pink.png">我的收藏</a></li>
+            <li class="trans rough"><a href="" class="trans"><img style="" src="/Image/history.png">浏览历史</a></li>
+            <li class="trans rough"><a href="" class="trans"><img style="" src="/Image/friends.png">通讯录</a></li>
+            <li class="trans rough"><a href="" class="trans"><img style="" src="/Image/nearby.png">附近同好</a></li>
+            <li class="trans rough"><a href="" class="trans"><img style="" src="/Image/print.png">个人信息</a></li>
             <li class="trans"><a href="/suki_notice?type=reply_me" class="trans"><img style="" src="/Image/tixing2.png">站内消息</a></li>
 
 

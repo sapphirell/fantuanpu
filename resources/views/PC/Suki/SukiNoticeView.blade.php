@@ -99,7 +99,7 @@
                         {{--<a href="/suki-thread-{{$value->subject['thread_subject']->tid}}-1.html?pid={{$value->position->pid}}&floor={{$value->position->floor}}">--}}
                         <div class="origin_thread" href="/suki-thread-{{$value->subject['thread_subject']->tid}}-1.html">
                             <span style="color: #ae9c9e;">评论了您的主题 :  </span>
-                            <a style="color: #947b7e;">{{$value->subject['thread_subject']->subject}}</a>
+                            <a href="/suki-thread-{{$value->subject['thread_subject']->tid}}-1.html" style="color: #947b7e;">{{$value->subject['thread_subject']->subject}}</a>
                         </div>
                     </div>
 

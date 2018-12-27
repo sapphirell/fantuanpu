@@ -1,4 +1,4 @@
-@if(empty($data["message_board"]->id))
+@if(empty($data["message_board"][0]->id))
     <div style="margin: 10px 4px;color: #ccc;">还没有留言,快来留下第一条吧~</div>
 @endif
 

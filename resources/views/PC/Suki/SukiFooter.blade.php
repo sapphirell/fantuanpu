@@ -251,6 +251,11 @@
 
             toggle_search++;
         });
+        //头像蒙版
+        $(".my_avatar").hover(function (event) {
+            $(".ava_glass").fadeToggle("fast");
+            event.stopPropagation();
+        })
     })
 
 </script>

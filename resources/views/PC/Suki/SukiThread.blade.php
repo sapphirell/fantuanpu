@@ -163,8 +163,9 @@
         width: 150px;text-align: center;display: inline-block;font-size: 14px;font-weight: 900;margin-bottom: 10px;color: #6abdd6;
     }
     .author-message {
-        display: flex
+        display: flex;
     }
+
 </style>
 <script>
     $(document).ready(function () {
@@ -211,7 +212,7 @@
 
 
             </div>
-            <div class="author_message" style="width: 100%;float:left;flex-grow: 1;">
+            <div class="author_message" style="width: 100%;float:left;flex-grow: 1;padding-left: 10px;">
                 <div class="bbcode_container">
                     {!! bbcode2html($data['thread']['thread_post'][0]->message) !!}
                 </div>

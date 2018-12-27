@@ -17,9 +17,9 @@
                             <span class="show_date" style="color: #ccc;cursor: pointer;padding: 5px;float: right;">{{ format_time($value['lastpost']) }}</span>
                         </p>
                         <p>
-                            <span style="color: #000000">{{$value['suki_fname']}} · </span>
-                            <span>查看  {{$value['views']}}</span>
-                            <span>点赞  {{$value['star']}}</span>
+                            <span style="color: #ccc;">{{$value['suki_fname']}} · </span>
+                            <span style="color: #ccc;">查看  {{$value['views']}} · </span>
+                            <span style="color: #ccc;">点赞  {{$value['star']}}</span>
                         </p>
                         <br>
                         <p style="display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 3;overflow: hidden;">{{$value['preview']}}</p>
