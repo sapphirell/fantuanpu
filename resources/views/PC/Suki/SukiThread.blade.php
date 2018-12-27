@@ -204,8 +204,8 @@
         <div class="author-message" style="">
             <div class="user_info author" style="display: inline-block;width: 160px">
 
-                <a href="">{{avatar($data['thread']['thread_subject']->authorid,150,5,'author-avatar','big')}}</a>
-                <a href=""><p class="author-sign" style="width: inherit;width: inherit;margin: 8px;color: #b7b7b7;">未设置用户签名</p></a>
+                <a  href="suki-userhome-{{$data['thread']['thread_subject']->authorid}}.html">{{avatar($data['thread']['thread_subject']->authorid,150,5,'author-avatar','big')}}</a>
+                <a  href="suki-userhome-{{$data['thread']['thread_subject']->authorid}}.html"><p class="author-sign" style="width: inherit;width: inherit;margin: 8px;color: #b7b7b7;">未设置用户签名</p></a>
 
 
 
