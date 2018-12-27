@@ -4,8 +4,10 @@ namespace App\Http\Controllers\SukiWeb;
 
 use App\Http\Controllers\Forum\ThreadApiController;
 use App\Http\Controllers\Sukiapp\CommonApiController;
+use App\Http\DbModel\ForumThreadModel;
 use App\Http\DbModel\MyLikeModel;
 use App\Http\DbModel\SukiMessageBoardModel;
+use App\Http\DbModel\Thread_model;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -24,7 +26,7 @@ class SukiWebApiController extends Controller
     public function get_thread(Request $request,Thread_model $thread_model)
     {
         //        dd($request->input("view_forum"));
-        self::set_suki_view(session("user_info")->uid,$request->input("view_forum"));
+        self::set_suki_view(session("user_info")->uid ?: 0,$request->input("view_forum"));
         $this->data['thread'] = ForumThreadModel::get_new_thread($request->input("view_forum"));
 
         return $request->input("need") == 'html' ?  view('PC/Suki/SukiThreadList')->with('data',$this->data) : self::response($this->data);

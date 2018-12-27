@@ -13,7 +13,13 @@ class Forum_forum_model extends Model
     public $primaryKey = 'fid';
     public $table='pre_forum_forum';
     public $timestamps = false;
-
+    public static $suki_forum = [
+        157 => "讨论",
+        158 => "同城",
+        158 => "评测",
+        160 => "悄悄话",
+        161 => "易物",
+    ];
     /**
      * 新版的获取板块,这将指定的获取一些板块,并且忽视上下级关系-_-(上下级并无卵用啊)
      */

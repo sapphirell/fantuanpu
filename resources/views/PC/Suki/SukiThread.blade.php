@@ -238,7 +238,7 @@
                                         {{avatar($value->authorid,80,100,'post-avatar','normal')}}
                                     </a>
 
-                                        <a style="color: #5abdd4;width: 80px;text-align: center;display: inline-block;margin-top: 5px">{{$value->author}}</a>
+                                        <a href="suki-userhome-{{$value->authorid}}.html" style="color: #5abdd4;width: 80px;text-align: center;display: inline-block;margin-top: 5px">{{$value->author}}</a>
 
 
                                 </div>

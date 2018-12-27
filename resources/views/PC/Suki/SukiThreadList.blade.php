@@ -12,12 +12,15 @@
 
                     <div style="display: inline-block;float: left; flex: 1;">
                         <p>
-                            <a href="suki-thread-{{$value['tid']}}-1.html" style="font-size: 15px;margin-bottom: 3px;display: inline-block;"  target="_blank">{{$value['subject']}}</a>
+                            <a href="suki-thread-{{$value['tid']}}-1.html" style="font-size: 15px;color: #754242;margin-bottom: 3px;display: inline-block;font-weight: 700;"  target="_blank">{{$value['subject']}}</a>
                             <span style="color: #000000">(+{{$value['replies']}})</span>
-                            <span>view : {{$value['views']}}</span>
-                            <span class="show_date" style="color: #ccc;cursor: pointer;padding: 5px;">{{$value['last_post_date']}}</span>
+                            <span class="show_date" style="color: #ccc;cursor: pointer;padding: 5px;float: right;">{{ format_time($value['lastpost']) }}</span>
                         </p>
-
+                        <p>
+                            <span style="color: #000000">{{$value['suki_fname']}} · </span>
+                            <span>查看  {{$value['views']}}</span>
+                            <span>点赞  {{$value['star']}}</span>
+                        </p>
                         <br>
                         <p style="display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 3;overflow: hidden;">{{$value['preview']}}</p>
                         @if(!empty($value['subject_images']))

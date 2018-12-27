@@ -72,7 +72,7 @@
             border-radius: 13px;
             overflow: hidden;
             padding-top: 5px;
-
+            margin-left: 5px;
         }
         .user_info_item {
             width:100%;

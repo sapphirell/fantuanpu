@@ -40,8 +40,9 @@ class ForumThreadModel extends Model
                             //取图片地址
                             foreach ($subject_images as &$str)
                                 $str = mb_substr($str,5,mb_strlen($str)-11,'utf-8');
-
                             $value['subject_images'] = $subject_images;
+                            //获取板块名称
+                            $value["suki_fname"] = Forum_forum_model::$suki_forum[$value["fid"]];
                         }
 
                         return $data;

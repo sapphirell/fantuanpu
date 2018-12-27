@@ -6,7 +6,7 @@
 <div class="wp" style="margin-bottom: 20px;margin-top: 10px;">
     <a href="https://github.com/sapphirell/fantuanpu" style="padding: 10px;padding-right:0px;color: #d0d0d0;">Suki of Utopia ,</a>
     <span style="color: #d0d0d0;font-size: 11px;padding: 5px;padding-left: 0px">Prowerd by Sap.</span>
-    <p  style="color: #d0d0d0;font-size: 11px;padding: 5px;">{{date("Y")}} . <a href="" style="color: #d0d0d0;font-size: 11px;padding: 5px;padding-left: 0px;">About Suki ?</a></p>
+    <p  style="color: #d0d0d0;font-size: 11px;padding: 5px;">{{date("Y")}} . <a href="" style="color: #d0d0d0;font-size: 11px;padding: 5px;padding-left: 0px;">About Suki?</a></p>
 </div>
 <div>
     <input type="hidden" id="username" class="form-control" disabled value="{{$data['im_username']}}" style="width: 250px;margin-bottom: 5px;">
