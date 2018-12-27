@@ -112,7 +112,7 @@ class SukiWebController extends Controller
                 $this->data["friend_request"] = SukiFriendRequestModel::get_user_friend_request($this->data['user_info']->uid,$request->input("page")?:1);
                 break;
             default :
-                $this->data["reply_me"] = SukiNoticeModel::find_user_notice($this->data['user_info'],1);
+                $this->data["reply_me"] = SukiNoticeModel::find_user_notice($this->data['user_info']->uid,1);
                 break;
         }
 //        dd($this->data);

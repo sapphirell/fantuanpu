@@ -223,7 +223,7 @@
             <li class="trans"><a href="" class="trans"><img style="" src="/Image/friends.png">通讯录</a></li>
             <li class="trans"><a href="" class="trans"><img style="" src="/Image/nearby.png">附近同好</a></li>
             <li class="trans"><a href="" class="trans"><img style="" src="/Image/print.png">个人信息</a></li>
-            <li class="trans"><a href="/suki_notice" class="trans"><img style="" src="/Image/tixing2.png">站内消息</a></li>
+            <li class="trans"><a href="/suki_notice?type=reply_me" class="trans"><img style="" src="/Image/tixing2.png">站内消息</a></li>
 
 
             </ul>
