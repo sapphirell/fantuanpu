@@ -256,6 +256,10 @@
             $(".ava_glass").fadeToggle("fast");
             event.stopPropagation();
         })
+        //首页点击加载更多帖子
+        $(".add_more_threadlist").click(function (e) {
+            e.preventDefault();
+        });
     })
 
 </script>

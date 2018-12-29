@@ -69,6 +69,21 @@
     .suki_banner {
 
     }
+
+    .add_more_threadlist{
+        text-align: center;
+        width: 100%;
+        display: inline-block;
+        font-size: 20px;
+        color: #d2d2d2;
+        /*text-shadow: 0 0 3px;*/
+        text-decoration: none!important;
+    }
+    .add_more_threadlist:hover,.add_more_threadlist:active,.add_more_threadlist:focus {
+        text-shadow: 0 0 6px;
+        color: #ffb0b0;
+        text-decoration: none;
+    }
 </style>
 <div class="wp index_body">
     <div class="suki_banner"></div>
@@ -86,6 +101,7 @@
     <div class="list_container">
         @include('PC.Suki.SukiThreadList')
     </div>
+    <a href="/" class="add_more_threadlist trans">加载更多</a>
     @include('PC.Suki.SukiPosterContent')
     <a style="position:fixed;bottom: 120px;right: 20px;" id="alert_poster">
         <img src="/Static/image/common/fatie.png" style="width: 40px">

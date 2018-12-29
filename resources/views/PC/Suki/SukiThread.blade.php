@@ -196,9 +196,19 @@
     <div style="background: #FFFFFF;margin: 15px;padding: 15px;border-radius: 5px;box-shadow: 2px 3px 3px #e4e4e4;position: relative;">
         <div>
             <span class="author-name" style="">{{$data['thread']['thread_subject']->author}}</span>
-            <a style="text-decoration-line: none;">
-                <img src="/Static/image/common/collection.png" style="line-height: 12px;display: inline-block;padding-bottom: 5px;">
-            </a>
+
+                <a  style="text-decoration-line: none;" class="do_follow"
+                    status="@if($data['has_collection'] === true){{"unfollow"}}@else{{"follow"}}@endif"
+                >
+                    @if($data['has_collection'] == true)
+                        <img src="/Static/image/common/collection_pre.png" style="line-height: 12px;display: inline-block;padding-bottom: 5px;">
+                    @else
+                        <img src="/Static/image/common/collection.png" style="line-height: 12px;display: inline-block;padding-bottom: 5px;">
+                    @endif
+
+                </a>
+
+
             <h1 style="display:inline-block;font-size: 15px;font-family: 微软雅黑;font-weight: 900;text-align: left;">{{$data['thread']['thread_subject']->subject}}</h1>
 
         </div>
@@ -347,7 +357,27 @@
 
             })
         })
-
+        //关注帖子
+        $(".do_follow").click(function (e) {
+            e.preventDefault();
+            var data = {
+                tid : tid,
+                todo : $(this).attr("status"),
+            };
+            $.post("/add_suki_like",data,function (e) {
+                alert(e.msg)
+                if($(".do_follow").attr("status") == "follow")
+                {
+                    $(".do_follow").attr("status","unfollow")
+                    $(".do_follow>img").attr("src","/Static/image/common/collection_pre.png")
+                }
+                else
+                {
+                    $(".do_follow").attr("status","follow")
+                    $(".do_follow>img").attr("src","/Static/image/common/collection.png")
+                }
+            })
+        });
     })
 
 </script>

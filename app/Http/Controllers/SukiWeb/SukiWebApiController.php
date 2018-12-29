@@ -156,4 +156,30 @@ class SukiWebApiController extends Controller
         return $res ? self::response([],200,"已经发送申请") : self::response([],40002,"你们已经是好友了");
     }
 
+    /***
+     * suki添加喜欢帖子
+     */
+    public function add_suki_like(Request $request)
+    {
+        $check = self::checkRequest($request,["tid","todo"]);
+        if ($check !== true)
+            return self::response([],40001,"缺少参数{$check}");
+        $has_follow = MyLikeModel::has_like($this->data['user_info']->uid,$request->input("tid"),3);
+
+        if ($request->input("todo") == "follow")
+        {
+            if ($has_follow)
+                return self::response([],40002,"已经喜欢过该帖子了~");
+
+            CommonApiController::_suki_add_my_like_thread($this->data['user_info']->uid,$request->input('tid'));
+            return self::response([],40002,"收藏成功");
+        }
+        else
+        {
+            if (!$has_follow)
+                return self::response([],40002,"尚未关注~");
+            CommonApiController::_suki_rm_my_like_thread($this->data['user_info']->uid,$request->input('tid'));
+            return self::response([],40002,"取关成功");
+        }
+    }
 }

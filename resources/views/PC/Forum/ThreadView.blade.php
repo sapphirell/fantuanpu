@@ -196,7 +196,7 @@
     <div style="background: #FFFFFF;margin: 15px;padding: 15px;border-radius: 5px;box-shadow: 2px 3px 3px #e4e4e4;position: relative;">
         <div>
             <span class="author-name" style="">{{$data['thread']['thread_subject']->author}}</span>
-            <a style="text-decoration-line: none;">
+            <a style="text-decoration-line: none;" class="add_suki_like">
                 <img src="/Static/image/common/collection.png" style="line-height: 12px;display: inline-block;padding-bottom: 5px;">
             </a>
             <h1 style="display:inline-block;font-size: 15px;font-family: 微软雅黑;font-weight: 900;text-align: left;">{{$data['thread']['thread_subject']->subject}}</h1>

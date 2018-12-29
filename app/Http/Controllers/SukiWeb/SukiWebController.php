@@ -51,7 +51,7 @@ class SukiWebController extends Controller
     {
         $this->data['user'] = User_model::find($uid);
         $this->data['thread'] = ForumThreadModel::get_user_thread($uid,1);
-        $this->data['has_follow'] = MyLikeModel::has_follow($this->data["user_info"]->uid,$uid);
+        $this->data['has_follow'] = MyLikeModel::has_like($this->data["user_info"]->uid,$uid,4);
         $this->data['message_board'] = SukiMessageBoardModel::get_user_message($uid,1);
 
         return view("PC/Suki/SukiUserHome")->with("data",$this->data);
@@ -79,7 +79,15 @@ class SukiWebController extends Controller
      */
     public function view_thread(Request $request,$tid,$page)
     {
+
         $this->data = (new ThreadController(new Thread_model()))->_viewThread($tid,$page);
+
+        $this->data['has_collection'] = MyLikeModel::has_like(
+            $this->data['user_info']->uid?:0,
+            $this->data['thread']['thread_subject']->tid,
+            3);
+
+
         return view('PC/Suki/SukiThread')->with('data',$this->data);
     }
 

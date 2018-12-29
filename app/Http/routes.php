@@ -249,6 +249,7 @@ Route::group([
     Route::post('/suki_follow_user', ['uses' => 'SukiWebApiController@suki_follow_user', 'as' => 'suki_follow_user']);#suki关注和取关
     Route::post('/suki_reply_thread', ['uses' => 'SukiWebApiController@suki_reply_thread', 'as' => 'suki_reply_thread']);#suki回复帖子
     Route::post('/add_suki_friend', ['uses' => 'SukiWebApiController@add_suki_friend', 'as' => 'add_suki_friend']);#suki加好友
+    Route::post('/add_suki_like', ['uses' => 'SukiWebApiController@add_suki_like', 'as' => 'add_suki_like']);#suki收藏帖子
 
 
 });

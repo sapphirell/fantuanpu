@@ -47,4 +47,14 @@ class CommonApiController extends Controller
         $friend_request->save();
         return true;
     }
+    //添加suki喜欢的帖子
+    public static function _suki_add_my_like_thread(int $uid,int $tid)
+    {
+        MyLikeModel::add_user_like($uid,$tid,3);
+    }
+    //移除suki喜欢的帖子
+    public static function _suki_rm_my_like_thread(int $uid,int $tid)
+    {
+        MyLikeModel::rm_user_like($uid,$tid,3);
+    }
 }
