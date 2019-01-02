@@ -2,6 +2,7 @@
 <div class="window_gift_alert trans" style="display: none"></div>
 {{--遮罩--}}
 <div class="shade" style="display: none"></div>
+<div class="transparent_shade" style="  display: none;  position: fixed;background: #ffffff00;width: 100%;height: 100%;top: 0;z-index: 1000000;"></div>
 <div class="wp footer_cut clear"></div>
 <div class="wp" style="margin-bottom: 20px;margin-top: 10px;">
     <a href="https://github.com/sapphirell/fantuanpu" style="padding: 10px;padding-right:0px;color: #d0d0d0;">Suki of Utopia ,</a>
@@ -100,14 +101,22 @@
         $(".user_info_btn").click(
             function () {
                 if(user_panel % 2)
-                    $(".user_info_panel").removeClass("zoomOutUp").css({display:"block"}).addClass("zoomInDown")
-                else
-                    $(".user_info_panel").removeClass("zoomInDown").addClass("zoomOutUp")
+                {
+                    $(".transparent_shade").show();
+                    $(".user_info_panel").removeClass("zoomOutUp").css({display:"block"}).addClass("zoomInDown");
+                }
+
 
                 user_panel ++;
 
             }
         );
+        $(".transparent_shade").click(function () {
+            $(".transparent_shade").hide();
+            $(".user_info_panel").removeClass("zoomInDown").addClass("zoomOutUp")
+            user_panel ++;
+
+        })
         //切换加载帖子
         $(".part_item").click(function (e) {
             e.preventDefault();

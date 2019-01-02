@@ -242,6 +242,7 @@ Route::group([
     Route::post('/suki_get_user_thread', ['uses' => 'SukiWebController@suki_get_user_thread', 'as' => 'suki_get_user_thread']);#获取用户的更多帖子
     Route::post('/suki_reply_thread', ['uses' => 'SukiWebController@suki_reply_thread', 'as' => 'suki_reply_thread']);#回复suki帖子
     Route::get('/suki_notice', ['uses' => 'SukiWebController@suki_notice', 'as' => 'suki_notice']);#suki的站内提醒
+    Route::get('/suki_relationship', ['uses' => 'SukiWebController@suki_relationship', 'as' => 'suki_relationship']);#suki的用户关系 关注 粉丝 好友
 
 
 

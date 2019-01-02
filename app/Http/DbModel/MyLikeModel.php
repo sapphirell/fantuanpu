@@ -47,4 +47,15 @@ class MyLikeModel extends Model
 
         return $data;
     }
+
+    /**
+     * 获取关注这个的
+     * @param $uid
+     * @param $type 1=饭团扑帖子 2=饭团扑用户 3=suki帖子 4=suki用户
+     */
+    public static function get_follow_that($uid,$type)
+    {
+        $data = self::where(["like_id"=>$uid,"like_type"=>$type])->get();
+        return $data;
+    }
 }

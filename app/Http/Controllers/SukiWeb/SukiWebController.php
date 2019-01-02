@@ -127,6 +127,43 @@ class SukiWebController extends Controller
         return  view('PC/Suki/SukiNoticeView')->with('data',$this->data);
     }
 
+    //suki的 关注 粉丝 好友
+    public function suki_relationship(Request $request)
+    {
+
+        switch ($request->input("type"))
+        {
+            case "my_follow" :
+                $this->data["my_follow"]= MyLikeModel::get_user_like($this->data['user_info']->uid,4);
+                foreach ($this->data["my_follow"] as &$value)
+                {
+                    $value->user = User_model::find($value->like_id,["username","uid"]);
+                }
+
+                break;
+            case "follow_me":
+                $this->data["follow_me"]= MyLikeModel::get_follow_that($this->data['user_info']->uid,4);
+                foreach ($this->data["follow_me"] as &$value)
+                {
+
+                    $value->user = User_model::find($value->like_id,["username","uid"]);
+                    $value->has_follow = MyLikeModel::has_like($this->data['user_info']->uid,$value->like_id,4);
+                }
+
+
+                break;
+            case "friends":
+
+                break;
+
+            default :
+
+                break;
+        }
+//        dd($this->data);
+        return  view('PC/Suki/SukiRelationship')->with('data',$this->data);
+    }
+
     public function about_suki()
     {
         return  view('PC/Suki/SukiNoticeView')->with('data',$this->data);

@@ -66,7 +66,7 @@
             /* left: 10px; */
             box-shadow: 0 0 15px #0000001c;
             display: none;
-            z-index: 10002;
+            z-index: 1000001;
             animation-duration: 0.55s;
             /*display: block;*/
             border-radius: 13px;
@@ -221,8 +221,8 @@
                 <a class="user_info_content_description trans">帖子</a>
             </div>
             <div>
-                <a href="/suki-myfollow?like_type=1" class="user_info_content_value trans">10</a>
-                <a href="/suki-myfollow?like_type=1" class="user_info_content_description trans">关注</a>
+                <a href="/suki_relationship?type=my_follow" class="user_info_content_value trans">10</a>
+                <a href="/suki_relationship?type=my_follow" class="user_info_content_description trans">关注</a>
             </div>
             <div>
                 <a class="user_info_content_value trans">10</a>
