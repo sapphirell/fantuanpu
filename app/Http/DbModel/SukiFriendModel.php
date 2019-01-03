@@ -15,4 +15,14 @@ class SukiFriendModel extends Model
         $data = self::where(['uid' => $uid ,'friend_id' => $fid])->first();
         return empty($data) ? false : true;
     }
+
+    public static function get_my_friends(int $uid,$page)
+    {
+        $data = self::where("uid",$uid)->limit(10)->offset(($page-1) * 10)->get();
+        foreach ($data as &$value)
+        {
+            $value->user = User_model::find($value->friend_id);
+        }
+        return $data;
+    }
 }

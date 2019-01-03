@@ -59,9 +59,6 @@
             <li>
                 <a href="/suki_relationship?type=friends" class="@if($data["request"]["type"]=="friends"){{"onchange"}}@endif">我的好友</a>
             </li>
-            <li>
-                <a href="/suki_relationship?type=friends_request" class="@if($data["request"]["type"]=="friends_request"){{"onchange"}}@endif">好友申请</a>
-            </li>
             <li class="clear"></li>
         </ul>
     </div>
@@ -120,36 +117,31 @@
                 </div>
             @endforeach
         @elseif($data['request']['type'] == "friends")
-        @elseif($data['request']['type'] == "friends_request")
-            @foreach($data['friends_request'] as $value)
-                <div style="margin: 10px 0px">
-                    <div style="margin: 5px 10px 5px 30px;float:left;">{{avatar($value->uid,50,100)}}</div>
-                    <div style="margin: 5px;float:left;">
-                        <p>
-                            <span>{{$value->nickname}}</span>
-                            在
-                            <span>{{format_time($value->time)}}</span>
-                            <span>请求加你为好友,并说:</span>
-                            <span>{{$value->message}}</span>
-                        </p>
-                        <p>
-                            {{--1=正在等待反馈 2=已经同意 3=已经拒绝--}}
-                            @if($value->result == 1)
-                                <a class="apply_suki_friends" href="/apply_suki_friends" to_do="2" applicant_id="{{$value->uid}}" ship_id="{{$data["user_info"]->uid}}">同意</a>
-                                <a class="apply_suki_friends"  href="/apply_suki_friends" to_do="3" applicant_id="{{$value->uid}}" ship_id="{{$data["user_info"]->uid}}">拒绝</a>
-
-                            @elseif($value->result == 2)
-                                <p>已同意</p>
-                            @elseif($value->result == 3)
-                                <p>已拒绝</p>
-                            @endif
-                        </p>
+            @foreach($data['my_friends'] as $value)
+                <div style="    width: 260px;float: left;">
+                    <div style="display: inline-block;float:left;margin: 15px 20px;">{{avatar($value->user->uid,50,100)}}</div>
+                    <div style="display: inline-block;float:left;">
+                        <p style="display: block;float:left;    width: 100%;line-height: 45px;">{{$value->user->username}}</p>
+                        <a  class="trans"
+                            uid="{{$data['user_info']->uid}}"
+                            to_uid="{{$value->user->uid}}"
+                            style="margin-left: 5px"
+                        >
+                            私信
+                        </a>
+                        <a  class="trans"
+                            uid="{{$data['user_info']->uid}}"
+                            to_uid="{{$value->user->uid}}"
+                            style="margin-left: 5px"
+                        >
+                            解除关系
+                        </a>
                     </div>
-                    <div class="clear"></div>
 
-
+                    <span class="clear"></span>
                 </div>
             @endforeach
+
         @endif
         <div class="clear"></div>
     </div>

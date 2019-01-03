@@ -5,6 +5,7 @@ namespace App\Http\Controllers\SukiWeb;
 use App\Http\Controllers\Forum\ThreadController;
 use App\Http\DbModel\ForumThreadModel;
 use App\Http\DbModel\MyLikeModel;
+use App\Http\DbModel\SukiFriendModel;
 use App\Http\DbModel\SukiFriendRequestModel;
 use App\Http\DbModel\SukiMessageBoardModel;
 use App\Http\DbModel\SukiNoticeModel;
@@ -116,8 +117,11 @@ class SukiWebController extends Controller
             case "call_me": //@
 
                 break;
-            case "friend_request":
-                $this->data["friend_request"] = SukiFriendRequestModel::get_user_friend_request($this->data['user_info']->uid,$request->input("page")?:1);
+            case "friends_request":
+                $this->data['friends_request'] = SukiFriendRequestModel::get_user_friend_request(
+                    $this->data['user_info']->uid,
+                    $request->input('page')?:1
+                );
                 break;
             default :
                 $this->data["reply_me"] = SukiNoticeModel::find_user_notice($this->data['user_info']->uid,1);
@@ -152,14 +156,9 @@ class SukiWebController extends Controller
 
 
                 break;
-            case "friends_request":
-                $this->data['friends_request'] = SukiFriendRequestModel::get_user_friend_request(
-                                                    $this->data['user_info']->uid,
-                                                    $request->input('page')?:1
-                                                );
-                break;
-            case "friends":
 
+            case "friends":
+                $this->data['my_friends'] = SukiFriendModel::get_my_friends($this->data['user_info']->uid,$request->input("page"));
                 break;
             default :
 
