@@ -13,8 +13,6 @@ class SukiFriendModel extends Model
     public static function is_friend(int $uid,int $fid)
     {
         $data = self::where(['uid' => $uid ,'friend_id' => $fid])->first();
-
-
         return empty($data) ? false : true;
     }
 }

@@ -273,6 +273,18 @@
         $(".add_more_threadlist").click(function (e) {
             e.preventDefault();
         });
+        //同意或拒绝好友申请
+        $(".apply_suki_friends").click(function (e) {
+            e.preventDefault();
+            var apply_suki_friends_url = $(this).attr("href");
+            var to_do = $(this).attr("to_do");
+            var applicant_id = $(this).attr("applicant_id");
+            var ship_id = $(this).attr("ship_id");
+            $.post(apply_suki_friends_url,{to_do:to_do,applicant_id:applicant_id,ship_id:ship_id},function (res) {
+                alert(res.msg);
+//                window.location.reload();
+            })
+        })
     })
 
 </script>

@@ -152,10 +152,15 @@ class SukiWebController extends Controller
 
 
                 break;
+            case "friends_request":
+                $this->data['friends_request'] = SukiFriendRequestModel::get_user_friend_request(
+                                                    $this->data['user_info']->uid,
+                                                    $request->input('page')?:1
+                                                );
+                break;
             case "friends":
 
                 break;
-
             default :
 
                 break;

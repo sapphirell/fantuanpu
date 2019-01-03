@@ -6,6 +6,7 @@ use App\Http\Controllers\Forum\ThreadApiController;
 use App\Http\Controllers\Sukiapp\CommonApiController;
 use App\Http\DbModel\ForumThreadModel;
 use App\Http\DbModel\MyLikeModel;
+use App\Http\DbModel\SukiFriendRequestModel;
 use App\Http\DbModel\SukiMessageBoardModel;
 use App\Http\DbModel\Thread_model;
 use Illuminate\Http\Request;
@@ -181,5 +182,26 @@ class SukiWebApiController extends Controller
             CommonApiController::_suki_rm_my_like_thread($this->data['user_info']->uid,$request->input('tid'));
             return self::response([],40002,"取关成功");
         }
+    }
+
+    /**
+     * 添加suki的好友
+     */
+    public function apply_suki_friends(Request $request)
+    {
+        $check = self::checkRequest($request,["applicant_id","ship_id","to_do"]);
+        if ($check !== true)
+            return self::response([],40001,"缺少参数$check");
+
+        $res = SukiFriendRequestModel::apply_suki_friend_request(
+                $request->input("applicant_id"),
+                $request->input("ship_id"),
+                $request->input("to_do")
+            );
+
+        if ($res == true)
+            return self::response();
+        else
+            return self::response([],40002,"操作失败,该申请已失效。");
     }
 }

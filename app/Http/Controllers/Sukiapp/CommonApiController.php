@@ -11,6 +11,7 @@ use App\Http\DbModel\SukiFriendModel;
 use App\Http\DbModel\SukiFriendRequestModel;
 use App\Http\DbModel\SukiNoticeModel;
 use App\Http\DbModel\Thread_model;
+use App\Http\DbModel\User_model;
 use App\Http\DbModel\UserSettingModel;
 use Illuminate\Http\Request;
 
@@ -44,6 +45,7 @@ class CommonApiController extends Controller
         $friend_request->friend_id = $friend;
         $friend_request->message = $message;
         $friend_request->time = time();
+        $friend_request->nickname = User_model::find($uid)->username;
         $friend_request->save();
         return true;
     }
