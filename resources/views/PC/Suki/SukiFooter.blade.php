@@ -132,6 +132,10 @@
                 $(".list_container").append(e);
             });
         });
+        //点击加载更多
+        $(".add_more_threadlist").click(function (e) {
+            e.preventDefault();
+        })
         //弹出发帖框
         $("#alert_poster").click(function (e) {
             e.preventDefault();

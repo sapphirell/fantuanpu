@@ -63,9 +63,14 @@
             <li class="clear"></li>
         </ul>
     </div>
+
     <div style="float: left;    flex-grow: 1;">
         @if($data['request']['type'] == "my_follow")
+            @if($data['my_follow']->isEmpty())
+                <p style="padding: 20px 50px;">还没有关注~</p>
+            @endif
             @foreach($data['my_follow'] as $value)
+
                 <div style="    width: 260px;float: left;">
                     <div style="display: inline-block;float:left;margin: 15px 20px;">{{avatar($value->user->uid,50,100)}}</div>
                     <div style="display: inline-block;float:left;">
@@ -86,6 +91,9 @@
             @endforeach
 
         @elseif($data['request']['type'] == "follow_me")
+            @if($data['follow_me']->isEmpty())
+                <p style="padding: 20px 50px;">还没有关注~</p>
+            @endif
             @foreach($data['follow_me'] as $value)
                 <div style="    width: 260px;float: left;">
                     <div style="display: inline-block;float:left;margin: 15px 20px;">{{avatar($value->user->uid,50,100)}}</div>

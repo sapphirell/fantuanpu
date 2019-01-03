@@ -233,7 +233,7 @@
             <ul class="panel_btn_list">
             <li class="trans rough"><a href="" class="trans"><img style="" src="/Image/star-pink.png">我的收藏</a></li>
             <li class="trans rough"><a href="" class="trans"><img style="" src="/Image/history.png">浏览历史</a></li>
-            <li class="trans rough"><a href="" class="trans"><img style="" src="/Image/friends.png">通讯录</a></li>
+            <li class="trans"><a href="/suki_relationship?type=friends" class="trans"><img style="" src="/Image/friends.png">通讯录</a></li>
             <li class="trans rough"><a href="" class="trans"><img style="" src="/Image/nearby.png">附近同好</a></li>
             <li class="trans rough"><a href="" class="trans"><img style="" src="/Image/print.png">个人信息</a></li>
             <li class="trans"><a href="/suki_notice?type=reply_me" class="trans"><img style="" src="/Image/tixing2.png">站内消息</a></li>
