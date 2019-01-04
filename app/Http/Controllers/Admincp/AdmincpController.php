@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admincp;
 
+use App\Http\DbModel\ForumPostModel;
 use App\Http\DbModel\ForumThreadModel;
 use App\Http\DbModel\Thread_model;
 use App\Http\DbModel\UCenter_member_model;
@@ -50,11 +51,20 @@ class AdmincpController extends Controller
             case  'hidden' :
                 if (!empty($user))
                 {
-                    Thread_model::where('authorid','=',$request->input('uid'))->update('closed',1);
+                    ForumThreadModel::where('authorid','=',$request->input('uid'))->update('closed',1);
                 }
                 break;
+            case  'clear' :
+                if (!empty($user))
+                {
+                    ForumPostModel::where('authorid','=',$request->input('uid'))->delete();
+                    ForumThreadModel::where('authorid','=',$request->input('uid'))->delete();
+                }
+                break;
+            default :
+                break;
         }
-
+        User_model::flushUserCache($request->input('uid'));
         return Redirect::back()->withInput();
     }
 }

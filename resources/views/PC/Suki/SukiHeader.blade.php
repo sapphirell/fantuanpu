@@ -237,6 +237,10 @@
             <li class="trans rough"><a href="" class="trans"><img style="" src="/Image/nearby.png">附近同好</a></li>
             <li class="trans rough"><a href="" class="trans"><img style="" src="/Image/print.png">个人信息</a></li>
             <li class="trans"><a href="/suki_notice?type=reply_me" class="trans"><img style="" src="/Image/tixing2.png">站内消息</a></li>
+            <li class="trans">
+                <a href="/suki_notice?type=reply_me" class="trans"><img style="" src="/Image/tixing2.png">补款闹钟</a>
+                <span style="    font-size: 10px;font-weight: 400;color: #f00;position: absolute;">new</span>
+            </li>
 
 
             </ul>

@@ -73,11 +73,12 @@
         display: inline-block;
         background: #fff;
     }
+    .get_more_posts
     .get_more_posts {
         padding: 0px;
         color: #afa1a1;
         border: 4px dashed;
-        width: 90%;
+        width: 95%;
         margin-left: 15px;
         text-align: center;
         font-size: 50px;
@@ -85,9 +86,10 @@
         background: #ffffff29;
         text-decoration: none;
         cursor: pointer;
-        border-radius: 5px;
+        border-radius: 20px;
         line-height: 50px;
         padding-bottom: 10px;
+
     }
     .get_more_posts:hover
     {
@@ -274,7 +276,7 @@
                     @endif
                 @endforeach
                 @if(count($data['thread']['thread_post']) < \App\Http\Controllers\System\CoreController::THREAD_REPLY_PAGE)
-                    <div style="    padding: 20px;color: #bfbfbf;border: 4px dashed;    width: 90%;margin-left: 15px;text-align: center;">暂无更多</div>
+                    <div class="" style="padding: 20px;color: #bfbfbf;border: 4px dashed;width: 95%;margin-left: 15px;text-align: center;border-radius: 20px;">暂无更多</div>
                 @else
                     <span class="get_more_posts trans">+</span>
                 @endif
@@ -291,9 +293,17 @@
                 </form>
             </div>
         </div>
-        <div class="_3_1_right">
-            <div style="    float: right;width: 100%;    background: #80f5ff;margin-top: 15px;box-shadow: 2px 3px 3px #e4e4e4;margin-right: 18px;">
-                <a href="/app_download" style="    text-align: center;color: #ffffff;display: inline-block;cursor: pointer;width: inherit;text-decoration-line: none;">下载Suki! App</a>
+        <div class="_3_1_right" style="margin-top: 15px;">
+            {{--<div style="    float: right;width: 100%;    background: #80f5ff;margin-top: 15px;box-shadow: 2px 3px 3px #e4e4e4;margin-right: 18px;">--}}
+                {{--<a href="/app_download" style="    text-align: center;color: #ffffff;display: inline-block;cursor: pointer;width: inherit;text-decoration-line: none;">--}}
+                    {{--Suki!App开发中--}}
+                {{--</a>--}}
+
+            {{--</div>--}}
+            <div class="bm" style="margin-right: 18px;">
+                <div class="bm_h pink">
+                    <a style=" color: #fff;" >戳此自定义你的补款工具</a>
+                </div>
 
             </div>
         </div>
