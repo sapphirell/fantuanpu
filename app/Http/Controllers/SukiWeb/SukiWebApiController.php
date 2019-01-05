@@ -6,6 +6,7 @@ use App\Http\Controllers\Forum\ThreadApiController;
 use App\Http\Controllers\Sukiapp\CommonApiController;
 use App\Http\DbModel\ForumThreadModel;
 use App\Http\DbModel\MyLikeModel;
+use App\Http\DbModel\SukiClockModel;
 use App\Http\DbModel\SukiFriendRequestModel;
 use App\Http\DbModel\SukiMessageBoardModel;
 use App\Http\DbModel\Thread_model;
@@ -203,5 +204,34 @@ class SukiWebApiController extends Controller
             return self::response();
         else
             return self::response([],40002,"操作失败,该申请已失效。");
+    }
+    // suki闹钟增删改查
+    public function setting_clock(Request $request)
+    {
+        $check = self::checkRequest($request,['name','money','date']);
+        if ($check !== true)
+            return self::response([],40001,"缺少参数$check");
+        if ($request->input('cid'))
+            $data = SukiClockModel::find($request->input('cid'));
+        else
+        {
+            $data = new SukiClockModel();
+
+            if (empty($data))
+                return self::response([],40002,"记录不存在");
+        }
+        if ($request->input('to_do') == 'del')
+        {
+            $data->delete();
+            return self::response();
+        }
+
+        $data->uid = $this->data['user_info']->uid;
+        $data->clock_name = $request->input("name");
+        $data->clock_money = $request->input("money");
+        $data->clock_date = $request->input("date");
+        $data->save();
+
+        return self::response();
     }
 }

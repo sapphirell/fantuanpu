@@ -243,6 +243,8 @@ Route::group([
     Route::post('/suki_reply_thread', ['uses' => 'SukiWebController@suki_reply_thread', 'as' => 'suki_reply_thread']);#回复suki帖子
     Route::get('/suki_notice', ['uses' => 'SukiWebController@suki_notice', 'as' => 'suki_notice']);#suki的站内提醒
     Route::get('/suki_relationship', ['uses' => 'SukiWebController@suki_relationship', 'as' => 'suki_relationship']);#suki的用户关系 关注 粉丝 好友
+    Route::get('/suki_alarm_clock', ['uses' => 'SukiWebController@suki_alarm_clock', 'as' => 'suki_alarm_clock']);#suki的补款闹钟页面
+    Route::get('/suki_clock_setting', ['uses' => 'SukiWebController@suki_clock_setting', 'as' => 'suki_clock_setting']);#suki新建一个闹钟
 
 
 
@@ -252,6 +254,7 @@ Route::group([
     Route::post('/add_suki_friend', ['uses' => 'SukiWebApiController@add_suki_friend', 'as' => 'add_suki_friend']);#suki加好友
     Route::post('/add_suki_like', ['uses' => 'SukiWebApiController@add_suki_like', 'as' => 'add_suki_like']);#suki收藏帖子
     Route::post('/apply_suki_friends', ['uses' => 'SukiWebApiController@apply_suki_friends', 'as' => 'apply_suki_friends']);#批准suki好友申请
+    Route::post('/setting_clock', ['uses' => 'SukiWebApiController@setting_clock', 'as' => 'setting_clock']);#闹钟增删改查
 
 
 });

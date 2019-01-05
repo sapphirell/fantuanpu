@@ -7,7 +7,7 @@
 <div class="wp" style="margin-bottom: 20px;margin-top: 10px;">
     <a href="https://github.com/sapphirell/fantuanpu" style="padding: 10px;padding-right:0px;color: #d0d0d0;">Suki of Utopia ,</a>
     <span style="color: #d0d0d0;font-size: 11px;padding: 5px;padding-left: 0px">Prowerd by Sap.</span>
-    <p  style="color: #d0d0d0;font-size: 11px;padding: 5px;">{{date("Y")}} . <a href="" style="color: #d0d0d0;font-size: 11px;padding: 5px;padding-left: 0px;">About Suki?</a></p>
+    <p  style="color: #d0d0d0;font-size: 11px;padding: 5px;">{{date("Y")}} . <a href="/about_suki" style="color: #d0d0d0;font-size: 11px;padding: 5px;padding-left: 0px;">About Suki?</a></p>
 </div>
 <div>
     <input type="hidden" id="username" class="form-control" disabled value="{{$data['im_username']}}" style="width: 250px;margin-bottom: 5px;">
@@ -285,6 +285,20 @@
 //                window.location.reload();
             })
         })
+        //弹出设置一个新的补款闹钟
+        $(".add_new_clock").click(function (e) {
+            layer.open({
+                type: 2,
+                title: false,
+                closeBtn: 0, //不显示关闭按钮
+                shade: 0.8,
+                shadeClose: true,
+                area: ['300px', '260px'],
+                offset: '100px',
+                // skin: 'layui-layer-rim', //加上边框
+                content: ['/suki_clock_setting', 'no']
+            });
+        });
     })
 
 </script>

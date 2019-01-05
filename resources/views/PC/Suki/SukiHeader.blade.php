@@ -1,3 +1,4 @@
+<!doctype html>
 <html>
 <head>
     <title>Suki! -@if($data['title']){{$data['title']}}@else 小裙子交流社区 @endif</title>
@@ -40,7 +41,7 @@
         .hd li {
             list-style: none;
             display: inline-block;
-            padding: 5px 15px;
+            padding: 5px 15px 10px 5px;
             color: #464646;
             font-size: 13px;
             cursor: pointer;
@@ -238,7 +239,7 @@
             <li class="trans rough"><a href="" class="trans"><img style="" src="/Image/print.png">个人信息</a></li>
             <li class="trans"><a href="/suki_notice?type=reply_me" class="trans"><img style="" src="/Image/tixing2.png">站内消息</a></li>
             <li class="trans">
-                <a href="/suki_notice?type=reply_me" class="trans"><img style="" src="/Image/tixing2.png">补款闹钟</a>
+                <a href="/suki_alarm_clock?type=view" class="trans"><img style="" src="/Image/tixing2.png">补款闹钟</a>
                 <span style="    font-size: 10px;font-weight: 400;color: #f00;position: absolute;">new</span>
             </li>
 

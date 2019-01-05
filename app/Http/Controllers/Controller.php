@@ -126,7 +126,7 @@ class Controller extends BaseController
 //        dd($redis->keys('*'));
         return $push;
     }
-    public static function response($data = null,$ret='200',$msg='操作成功')
+    public static function response($data = null,$ret='200',$msg='提交成功(๑•ㅂ•́)و✧')
     {
         if (empty($data))
             $res =  ['ret'=>intval($ret),'msg'=>$msg,'data'=>[]];
@@ -135,7 +135,7 @@ class Controller extends BaseController
 
         return response(json_encode($res,JSON_UNESCAPED_UNICODE))->header('Content-Type', 'application/json')->header('Charset','UTF-8');
     }
-    public function jsReturn($url,$msg='操作成功')
+    public function jsReturn($url,$msg='提交成功(๑•ㅂ•́)و')
     {
         if (empty($url))
             return false;
@@ -146,7 +146,7 @@ class Controller extends BaseController
     {
         foreach ($param as $value)
         {
-            if ($Request->input($value) === false || $Request->input($value) === null)
+            if ($Request->input($value) === false || $Request->input($value) === null || $Request->input($value) === "")
                 return $value;
         }
         return true;

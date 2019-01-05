@@ -167,9 +167,18 @@ class SukiWebController extends Controller
 //        dd($this->data);
         return  view('PC/Suki/SukiRelationship')->with('data',$this->data);
     }
-
+    //suki补款闹钟
+    public function suki_alarm_clock(Request $request)
+    {
+        return view('PC/Suki/SukiAlarmClock')->with('data',$this->data);
+    }
+    //新增闹钟
+    public function suki_clock_setting(Request $request)
+    {
+        return view('PC/Suki/SukiClockSetting')->with('data',$this->data);
+    }
     public function about_suki()
     {
-        return  view('PC/Suki/SukiNoticeView')->with('data',$this->data);
+        return  view('PC/Suki/SukiAbout')->with('data',$this->data);
     }
 }
