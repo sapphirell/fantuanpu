@@ -293,7 +293,7 @@
                 closeBtn: 0, //不显示关闭按钮
                 shade: 0.8,
                 shadeClose: true,
-                area: ['300px', '260px'],
+                area: ['400px', '370px'],
                 offset: '100px',
                 // skin: 'layui-layer-rim', //加上边框
                 content: ['/suki_clock_setting', 'no']

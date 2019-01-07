@@ -172,7 +172,7 @@
         </div>
         <ul class='hd'>
             @if(session("user_info")->uid)
-                <li class="trans user_info_btn" style="">
+                <li class="trans user_info_btn" style="    padding: 5px;border-radius: 100%;margin-right: 20px">
                     {{avatar(session("user_info")->uid,30,50,"","big")}}
                 </li>
             @else

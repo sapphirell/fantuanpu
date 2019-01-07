@@ -5,6 +5,7 @@ namespace App\Http\Controllers\SukiWeb;
 use App\Http\Controllers\Forum\ThreadController;
 use App\Http\DbModel\ForumThreadModel;
 use App\Http\DbModel\MyLikeModel;
+use App\Http\DbModel\SukiClockModel;
 use App\Http\DbModel\SukiFriendModel;
 use App\Http\DbModel\SukiFriendRequestModel;
 use App\Http\DbModel\SukiMessageBoardModel;
@@ -170,6 +171,9 @@ class SukiWebController extends Controller
     //suki补款闹钟
     public function suki_alarm_clock(Request $request)
     {
+        $group = $request->input("group") ? : false;
+        $this->data["my_clock"] = SukiClockModel::get_user_clock($this->data['user_info']->uid,$group);
+//        dd($this->data["my_clock"]);
         return view('PC/Suki/SukiAlarmClock')->with('data',$this->data);
     }
     //新增闹钟
