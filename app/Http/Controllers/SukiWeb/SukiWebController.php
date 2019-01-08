@@ -139,6 +139,7 @@ class SukiWebController extends Controller
         switch ($request->input("type"))
         {
             case "my_follow" :
+                $this->data['title'] = "我关注的";
                 $this->data["my_follow"]= MyLikeModel::get_user_like($this->data['user_info']->uid,4);
                 foreach ($this->data["my_follow"] as &$value)
                 {
@@ -147,6 +148,7 @@ class SukiWebController extends Controller
 
                 break;
             case "follow_me":
+                $this->data['title'] = "关注我的";
                 $this->data["follow_me"]= MyLikeModel::get_follow_that($this->data['user_info']->uid,4);
                 foreach ($this->data["follow_me"] as &$value)
                 {
@@ -159,6 +161,7 @@ class SukiWebController extends Controller
                 break;
 
             case "friends":
+                $this->data['title'] = "我的好友";
                 $this->data['my_friends'] = SukiFriendModel::get_my_friends($this->data['user_info']->uid,$request->input("page"));
                 break;
             default :
@@ -172,6 +175,7 @@ class SukiWebController extends Controller
     public function suki_alarm_clock(Request $request)
     {
         $group = $request->input("group") ? : false;
+        $this->data['title'] = "补款闹钟";
         $this->data["my_clock"] = SukiClockModel::get_user_clock($this->data['user_info']->uid,$group);
 //        dd($this->data["my_clock"]);
         return view('PC/Suki/SukiAlarmClock')->with('data',$this->data);
@@ -179,7 +183,14 @@ class SukiWebController extends Controller
     //新增闹钟
     public function suki_clock_setting(Request $request)
     {
+        $this->data['title'] = "补款闹钟";
         return view('PC/Suki/SukiClockSetting')->with('data',$this->data);
+    }
+    //信誉墙
+    public function suki_tribunal(Request $request)
+    {
+        $this->data['title'] = "lolita信誉墙";
+        return view('PC/Suki/SukiTribunal')->with('data',$this->data);
     }
     public function about_suki()
     {

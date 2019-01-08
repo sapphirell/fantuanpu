@@ -302,7 +302,7 @@
             {{--</div>--}}
             <div class="bm" style="margin-right: 18px;">
                 <div class="bm_h pink">
-                    <a style=" color: #fff;" >戳此自定义你的补款工具</a>
+                    <a style=" color: #fff;" href="/suki_alarm_clock?type=setting">戳此自定义你的补款工具</a>
                 </div>
 
             </div>

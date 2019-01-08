@@ -193,7 +193,12 @@
                     <p class="none_960" style="color: #fff;display: inline-block">交流</p>
                 </a>
             </li>
-
+                <li class="trans">
+                    <a href="/suki_tribunal"  class="header_items">
+                        <i class="fa  fa-gavel fa-fw fa-lg"  style="color: #ffffff;line-height: 23px"></i>
+                        <p class="none_960" style="color: #fff;display: inline-block">信誉墙</p>
+                    </a>
+                </li>
         </ul>
 
 
@@ -240,7 +245,7 @@
             <li class="trans"><a href="/suki_notice?type=reply_me" class="trans"><img style="" src="/Image/tixing2.png">站内消息</a></li>
             <li class="trans">
                 <a href="/suki_alarm_clock?type=view" class="trans"><img style="" src="/Image/tixing2.png">补款闹钟</a>
-                <span style="    font-size: 10px;font-weight: 400;color: #f00;position: absolute;">new</span>
+                <span style="    font-size: 10px;font-weight: 400;color: #bf0000;position: absolute;" title="...这个new似乎没有意义">new</span>
             </li>
 
 
