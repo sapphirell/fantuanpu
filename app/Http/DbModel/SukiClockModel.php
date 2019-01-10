@@ -13,7 +13,7 @@ class SukiClockModel extends Model
 
     public static function get_user_clock($uid,$group=false)
     {
-        $data = self::select(DB::raw("cid,sum(clock_money) as sum,clock_name,clock_date,date_format(clock_date,'%Y%m') as ym"))->where(['uid'=>$uid]);
+        $data = self::select(DB::raw("cid,sum(clock_money) as sum,clock_name,clock_date,clock_end,date_format(clock_date,'%Y%m') as ym"))->where(['uid'=>$uid]);
         switch ($group)
         {
             case false :

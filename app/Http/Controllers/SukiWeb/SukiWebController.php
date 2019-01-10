@@ -175,7 +175,7 @@ class SukiWebController extends Controller
     public function suki_alarm_clock(Request $request)
     {
         $group = $request->input("group") ? : false;
-        $this->data['title'] = "补款闹钟";
+        $this->data['title']    = "补款闹钟";
         $this->data["my_clock"] = SukiClockModel::get_user_clock($this->data['user_info']->uid,$group);
 //        dd($this->data["my_clock"]);
         return view('PC/Suki/SukiAlarmClock')->with('data',$this->data);
@@ -191,6 +191,12 @@ class SukiWebController extends Controller
     {
         $this->data['title'] = "lolita信誉墙";
         return view('PC/Suki/SukiTribunal')->with('data',$this->data);
+    }
+    //用户信息
+    public function suki_user_info(Request $request)
+    {
+
+        return  view('PC/Suki/SukiMyUserCenter')->with('data',$this->data);
     }
     public function about_suki()
     {

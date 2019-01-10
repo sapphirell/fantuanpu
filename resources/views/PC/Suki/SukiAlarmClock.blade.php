@@ -1,4 +1,5 @@
 @include('PC.Suki.SukiHeader')
+<link rel="stylesheet" type="text/css" href="/Static/Style/Web/forum.css">
 <style>
     .add_new_clock {
         display: inline-block;
@@ -15,16 +16,20 @@
         background: #888888;
         color: #fff;
     }
+    .clock_container {
+        margin: 10px 10px 10px 5px;
+        background: #fff;
+        padding: 10px;
+        border-radius: 10px;
+        box-shadow: 0 0 15px #ddd;
+    }
 </style>
 <div class="wp" style="margin-top: 60px;">
     <div class="alert">补款闹钟功能尚在测试中,功能确定后将同步开发到App中,如果有更好的功能建议,可以<a href="">点这里</a>提交意见反馈。</div>
-
-    @if($data['request']['type'] == 'view')
-        @if(empty($data['my_clock']))
-        <div>尚无设置过提醒,<a href="/suki_alarm_clock?type=setting">现在去设置</a></div>
-        @else
-            <div><a href="/suki_alarm_clock?type=setting">去设置新的提醒</a></div>
-            <div>
+        {{--<div><a href="/suki_alarm_clock?type=setting">去设置新的提醒</a></div>--}}
+    <div class="3_1">
+        <div class="_3_1_left">
+            <div class="clock_container">
                 <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
 
                     <div class="btn-group" role="group">
@@ -41,31 +46,26 @@
                         </div>
                     </div>
                 </div>
+                @foreach($data['my_clock'] as $value)
+                    <div style="font-size: 15px;color: #7d6565;    line-height: 25px;">
+
+                        <span style="width: 120px;display: inline-block">{{$value['clock_name']}}</span>
+                        <span style="width: 80px;display: inline-block">￥{{$value['sum']}}</span>
+                        <span>{{date("Y·m·d",strtotime($value['clock_date']))}} - {{date("Y·m·d",strtotime($value['clock_end']))}}</span>
+                    </div>
+                @endforeach
             </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-                <label class="form-check-label" for="inlineRadio1">不要提醒我</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-                <label class="form-check-label" for="inlineRadio2">补款日邮件提醒我</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3" disabled>
-                <label class="form-check-label" for="inlineRadio3">App横幅提醒 (disabled)</label>
-            </div>
-            @foreach($data['my_clock'] as $value)
-                <div>
-                    <span>价格:{{$value['sum']}}</span>
-                    <span>名称:{{$value['clock_name']}}</span>
-                    <span>日期:{{$value['clock_date']}}</span>
-                </div>
-            @endforeach
-        @endif
-    @elseif($data['request']['type'] == 'setting')
-        <a href="/suki_alarm_clock?type=view">去预览已添加的</a>
-        <div class="add_new_clock trans">+</div>
-    @endif
+
+        </div>
+        <div class="_3_1_right"></div>
+
+    </div>
+
+
+    {{--@elseif($data['request']['type'] == 'setting')--}}
+        {{--<a href="/suki_alarm_clock?type=view">去预览已添加的</a>--}}
+        {{--<div class="add_new_clock trans">+</div>--}}
+    {{--@endif--}}
 
 </div>
 @include('PC.Suki.SukiFooter')
