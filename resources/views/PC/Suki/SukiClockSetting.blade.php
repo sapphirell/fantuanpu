@@ -26,7 +26,7 @@
     </div>
     <div class="input-group">
         <div class="input-group-prepend">
-            <div class="input-group-text set_date" >补款日期</div>
+            <div class="input-group-text " >补款日期</div>
         </div>
         <input type="text" class="form-control" id="pick_date" placeholder="选择日期" aria-label="选择日期" aria-describedby="btnGroupAddon">
     </div>
@@ -45,7 +45,7 @@
             var name = $(".set_name").val()
             var money = $(".set_money").val()
             var date = $(".set_date").val;
-            $.post("/setting_clock",{name:name,money:money,date:date},function (e) {
+            $.post("/setting_clock",{name:name,money:money,date:date,},function (e) {
                 alert(e.msg)
             })
         })

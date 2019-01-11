@@ -257,6 +257,7 @@ Route::group([
     Route::post('/add_suki_like', ['uses' => 'SukiWebApiController@add_suki_like', 'as' => 'add_suki_like']);#suki收藏帖子
     Route::post('/apply_suki_friends', ['uses' => 'SukiWebApiController@apply_suki_friends', 'as' => 'apply_suki_friends']);#批准suki好友申请
     Route::post('/setting_clock', ['uses' => 'SukiWebApiController@setting_clock', 'as' => 'setting_clock']);#闹钟增删改查
+    Route::get('/setting_clock_alert', ['uses' => 'SukiWebApiController@setting_clock_alert', 'as' => 'setting_clock_alert']);#闹钟提醒方式修改
 
 
 });

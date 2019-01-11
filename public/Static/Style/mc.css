@@ -418,3 +418,7 @@ ul{padding: 0px;margin: 0px}
     -webkit-animation-name: rubberBand;
     animation-name: rubberBand;
 }
+.dropdown-menu{
+    border: 0px!important;
+    box-shadow: 0 0 12px #0000001a;
+}

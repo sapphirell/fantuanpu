@@ -230,7 +230,25 @@ class SukiWebApiController extends Controller
         $data->clock_name = $request->input("name");
         $data->clock_money = $request->input("money");
         $data->clock_date = $request->input("date");
+        $data->clock_end = $request->input("clock_end");
         $data->save();
+
+        return self::response();
+    }
+
+    //suki闹钟提醒方式修改
+    public function setting_clock_alert(Request $request)
+    {
+        $check = self::checkRequest($request,['id','alert_type']);
+        if ($check !== true)
+            return self::response([],40001,"缺少参数$check");
+
+        $clock = SukiClockModel::find($request->input("id"));
+        if (empty($clock->cid))
+            return self::response([],40001,"该闹钟不存在");
+
+        $clock->alert_type = $request->input("alert_type");
+        $clock->save();
 
         return self::response();
     }

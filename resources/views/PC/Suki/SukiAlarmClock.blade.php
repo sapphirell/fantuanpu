@@ -20,8 +20,19 @@
         margin: 10px 10px 10px 5px;
         background: #fff;
         padding: 10px;
-        border-radius: 10px;
-        box-shadow: 0 0 15px #ddd;
+        border-radius: 5px;
+        box-shadow: 0 0 15px #e8e8e8;
+    }
+    .input-group {
+        margin: 10px 0px;
+    }
+    ._3_1_right .form-control {
+        border: 1px solid #d6b7b7;
+    }
+    ._3_1_right .input-group-text
+    {
+        background-color: #efe9e9;
+        border: 1px solid #d6b7b7;
     }
 </style>
 <div class="wp" style="margin-top: 60px;">
@@ -33,31 +44,91 @@
                 <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
 
                     <div class="btn-group" role="group">
-                        <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            @if($data['request']['view']=='month')
+                        <button
+                                style="border: 0px;color: #fff;background-color: #fdbec1;padding: 3px 15px;margin-left: 0px;margin-bottom: 15px;"
+                                id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            @if($data['request']['group']=='ym')
                                 按月汇总
                             @else
                                 查看全部
                             @endif
                         </button>
                         <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                            <a class="dropdown-item" href="#">查看全部</a>
-                            <a class="dropdown-item" href="#">按月分组</a>
+                            <a href="/suki_alarm_clock" class="dropdown-item" href="#">查看全部</a>
+                            <a href="/suki_alarm_clock?group=ym" class="dropdown-item" href="#">按月分组</a>
                         </div>
                     </div>
                 </div>
-                @foreach($data['my_clock'] as $value)
-                    <div style="font-size: 15px;color: #7d6565;    line-height: 25px;">
+                @if($data['my_clock']->isEmpty())
+                    <br >
+                    <img style="    margin: 0 auto;display: block;" src="/Static/image/common/none.png">
+                @endif
 
-                        <span style="width: 120px;display: inline-block">{{$value['clock_name']}}</span>
-                        <span style="width: 80px;display: inline-block">￥{{$value['sum']}}</span>
-                        <span>{{date("Y·m·d",strtotime($value['clock_date']))}} - {{date("Y·m·d",strtotime($value['clock_end']))}}</span>
-                    </div>
-                @endforeach
+                @if($data['request']['group'] == "ym")
+                    {{dd($data)}}
+                @else
+                    @foreach($data['my_clock'] as $value)
+                        <div style="font-size: 15px;color: #7d6565;    line-height: 25px;">
+
+                            <span style="width: 120px;display: inline-block">{{$value['clock_name']}}</span>
+                            <span style="width: 80px;display: inline-block">￥{{$value['sum']}}</span>
+                            <span>{{date("Y·m·d",strtotime($value['clock_date']))}} - {{date("Y·m·d",strtotime($value['clock_end']))}}</span>
+                            <div class="btn-group" role="group">
+                                <button style="border: 0px;color: #000;background-color: #fff;padding: 3px 15px;margin-left: 10px;"  type="button" class="btn btn-secondary dropdown-toggle tb" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    @if($value["alert_type"] == '1')
+                                        <a >不要提醒</a>
+                                    @elseif($value["alert_type"] == '2')
+                                        邮件提醒
+                                    @elseif($value["alert_type"] == '3')
+                                        App提醒
+                                    @endif
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                    <a href="/setting_clock_alert?id={{$value['cid']}}&alert_type=1" class="dropdown-item setting_clock_alert" >不要提醒</a>
+                                    <a href="/setting_clock_alert?id={{$value['cid']}}&alert_type=2" class="dropdown-item setting_clock_alert" >邮件提醒</a>
+                                    {{--<a href="/setting_clock_alert?id={{$value['cid']}}&alert_type=3" class="dropdown-item setting_clock_alert" >App提醒</a>--}}
+                                    <p style="color: #bbb6b6;padding-left: 19px;margin: 0px" disabled href="/setting_clock_alert?id={{$value['cid']}}&alert_type=3" class="dropdown-item setting_clock_alert" >短信提醒
+                                        <i class="fa-question-circle fa" title="意见征集中:启用该功能,需要自付短信费。如果用的人不多就不开发这个功能了..." style="float: right;margin: 5px;"></i>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                @endif
             </div>
 
         </div>
-        <div class="_3_1_right"></div>
+        <div class="_3_1_right">
+            <div style="background: #ffffff;padding: 10px;border-radius: 5px;box-shadow: 0 0 15px #e8e8e8;margin-top: 10px;">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">名称</div>
+                    </div>
+                    <input type="text" class="form-control set_name" placeholder="自定义的名称" aria-label="自定义的名称" aria-describedby="btnGroupAddon">
+                </div>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text" >金额</div>
+                    </div>
+                    <input type="text" class="form-control set_money" placeholder="金额,不带小数点" aria-label="金额,不带小数点" aria-describedby="btnGroupAddon">
+                </div>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text" >补款</div>
+                    </div>
+                    <input type="text" class="form-control set_date" id="pick_date" placeholder="选择日期" aria-label="选择日期" aria-describedby="btnGroupAddon">
+                </div>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text" >截止</div>
+                    </div>
+                    <input type="text" class="form-control clock_end" id="pick_date" placeholder="选择日期" aria-label="选择日期" aria-describedby="btnGroupAddon">
+                </div>
+                <input type="submit" class="sub_clock" style="    background: #fcbec3;border: 0px;width: 100%;">
+            </div>
+
+        </div>
+        <div class="clear"></div>
 
     </div>
 
@@ -68,4 +139,39 @@
     {{--@endif--}}
 
 </div>
+
+<script src="/Static/Script/laydate/laydate.js"></script>
+<script>
+    $(document).ready(function () {
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#pick_date' //指定元素
+        });
+
+        $(".sub_clock").click(function (e) {
+            e.preventDefault();
+            var name = $(".set_name").val()
+            var money = $(".set_money").val()
+            var date = $(".set_date").val();
+            var clock_end = $(".clock_end").val();
+            var fd = {name:name,money:money,date:date,clock_end:clock_end}
+            $.post("/setting_clock",fd,function (e) {
+                alert(e.msg)
+                console.log(fd)
+                if (e.ret == 200)
+                    location.reload()
+            })
+        })
+        //修改suki闹钟提醒方式
+        $("a.setting_clock_alert").click(function (e) {
+            e.preventDefault();
+            var this_setting = $(this).text()
+            var hrefs = $(this).attr("href");
+            $.get(hrefs,{},function (e) {
+                $(".tb").text(this_setting+" ");
+            });
+        })
+    })
+
+</script>
 @include('PC.Suki.SukiFooter')
