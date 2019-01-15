@@ -243,10 +243,7 @@ class UserBaseController extends Controller
     {
         $this->data['user_info'] = session('user_info');
         $cacheKey = CoreController::USER_FIELD . $this->data['user_info']->uid;
-        $this->data['field_forum'] =  Cache::remember($cacheKey['key'],$cacheKey['time'],function ()
-        {
-            return MemberFieldForumModel::find($this->data['user_info']->uid);
-        });
+//        $this->data['field_forum'] =  MemberFieldForumModel::find($this->data['user_info']->uid);
         $this->data['user_count'] = CommonMemberCount::GetUserCoin($this->data['user_info']->uid);
         $this->data['my_thread'] = ForumThreadModel::where('authorid',$this->data['user_info']->uid)->orderBy('dateline','desc')->paginate(15);
         $this->my_medal(); // 勋章中心

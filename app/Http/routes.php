@@ -35,6 +35,8 @@ Route::group([
     Route::post('/do-repassword', ['uses' => 'UserBaseController@DoResetPassword', 'as' => 'DoResetPassword']);#post修改密码
     Route::post('/do-checkUsername', ['uses' => 'UserBaseController@checkUsername', 'as' => 'checkUsername']);#用户名是否被注册
     Route::post('/do-checkEmail', ['uses' => 'UserBaseController@checkEmail', 'as' => 'checkEmail']);#emial是否被注册
+    Route::get('/validate_email', ['uses' => 'UserBaseController@ValidateEmail', 'as' => 'ValidateEmail']);# 等待验证会员验证电子邮箱
+    Route::get('/send_validate_email', ['uses' => 'UserBaseController@send_validate_email', 'as' => 'send_validate_email']);# 等待验证会员验证电子邮箱
 });
 Route::group([
     'namespace' => 'Forum',
@@ -175,8 +177,7 @@ Route::group([
     Route::post('/adorn_mine', ['uses' => 'UserBaseController@adorn_mine', 'as' => 'adorn_mine']);# 佩戴勋章
     Route::post('/put_in_box', ['uses' => 'UserBaseController@put_in_box', 'as' => 'put_in_box']);# 摘下勋章
     Route::get('/sign', ['uses' => 'SignController@sign', 'as' => 'sign']);# 签到
-    Route::get('/validate_email', ['uses' => 'UserBaseController@ValidateEmail', 'as' => 'ValidateEmail']);# 等待验证会员验证电子邮箱
-    Route::get('/send_validate_email', ['uses' => 'UserBaseController@send_validate_email', 'as' => 'send_validate_email']);# 等待验证会员验证电子邮箱
+
 
 
 });

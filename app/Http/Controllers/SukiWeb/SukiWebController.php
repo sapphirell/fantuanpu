@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\SukiWeb;
 
 use App\Http\Controllers\Forum\ThreadController;
+use App\Http\DbModel\CommonMemberCount;
 use App\Http\DbModel\ForumThreadModel;
+use App\Http\DbModel\MemberFieldForumModel;
 use App\Http\DbModel\MyLikeModel;
 use App\Http\DbModel\SukiClockModel;
 use App\Http\DbModel\SukiFriendModel;
@@ -196,6 +198,8 @@ class SukiWebController extends Controller
     public function suki_user_info(Request $request)
     {
 
+
+//                dd($this->data);
         return  view('PC/Suki/SukiMyUserCenter')->with('data',$this->data);
     }
     public function about_suki()

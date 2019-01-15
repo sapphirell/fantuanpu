@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 //use App\Http\Requests\Request;
 use App\Http\Controllers\System\CoreController;
 use App\Http\DbModel\ImModel;
+use App\Http\DbModel\MemberFieldForumModel;
 use App\Http\DbModel\UserSettingModel;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -65,14 +66,16 @@ class Controller extends BaseController
             $rand_code = md5(rand(0, 99999) .time()); // 没有登录的时候充当uid用
             session(['access_id' => $rand_code]);
         }
-        $this->data['request']  =  request()->input();
-        $this->data['title']    = false;
-        $this->data['user_info']              = session('user_info');
-        if ($this->data['user_info'] ->uid)
+        $this->data['request']      =  request()->input();
+        $this->data['title']        = false;
+        $this->data['user_info']    = session('user_info');
+        if ($this->data['user_info']->uid)
         {
             //用户是否签到
             $user_has_sign = CoreController::USER_SIGN;
             $this->data['user_has_sign'] = Cache::get($user_has_sign['key'] . $this->data['user_info'] ->uid .'_'. date("Ymd"));
+            //签名档
+            $this->data['field_forum'] = MemberFieldForumModel::find($this->data['user_info']->uid);
         }
         //获取IM
         $this->data = array_merge($this->data,$this->get_im_message());

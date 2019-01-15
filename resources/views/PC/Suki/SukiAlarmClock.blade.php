@@ -65,7 +65,14 @@
                 @endif
 
                 @if($data['request']['group'] == "ym")
-                    {{dd($data)}}
+                    {{--{{dd($data)}}--}}
+                    @foreach($data['my_clock'] as $value)
+                        <div>
+                            <span style="width: 120px;display: inline-block">{{$value['ym']}}</span>
+                            <span style="width: 120px;display: inline-block">{{$value['count']?:0}}个补款项</span>
+                            <span style="width: 80px;display: inline-block">共计￥{{$value['sum']}}</span>
+                        </div>
+                    @endforeach
                 @else
                     @foreach($data['my_clock'] as $value)
                         <div style="font-size: 15px;color: #7d6565;    line-height: 25px;">
