@@ -73,7 +73,6 @@
         display: inline-block;
         background: #fff;
     }
-    .get_more_posts
     .get_more_posts {
         padding: 0px;
         color: #afa1a1;

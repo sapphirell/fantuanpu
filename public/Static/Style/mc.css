@@ -56,17 +56,17 @@ blockquote {
 /*blockquote::after {content:"\”";}*/
 input,textarea{outline:none;}
 input[type="button"],input[type="submit"]{
-    color: #FFFFFF;
-    padding: 3px 20px;
+    color: #b1c9d0;
+    padding: 5px 30px;
     margin: 5px 0px;
     display: inline-block;
     cursor: pointer;
-    font-weight: 900;
+    font-weight: 100;
     font-size: 12px;
     border: 1px solid #D4D4D4;
     border-radius: 3px;
-    background-color: #afd5e0;
-    border-color: #88a6af;
+    background-color: #ffffff;
+    border-color: #b1c9d0;
 }
 /*input[type="button"]:active, input[type="submit"]:active{position: relative;top: 1px}*/
 
@@ -168,12 +168,18 @@ ul{padding: 0px;margin: 0px}
     padding: 8px;
     color:#fff;
     background: #ff9c9c;
+    padding-left: 15px;
     /*background: #F6F6F6;background: -webkit-gradient(linear,left top,left 40,from(#FFF),color-stop(100%,#F3F3F3),to(#F3F3F3));background: -moz-linear-gradient(center top,#FFF,#F3F3F3 140%);background: -o-linear-gradient(top,#FFF 0%,#F3F3F3 140%);*/
     -webkit-box-shadow: 0px 2px 10px #eee;-moz-box-shadow: 0px 2px 10px #eee;}
 .bm_c{background: #fff;}
 .bm_h.pink {
     background-color: #ffb6c7;
     background-image: linear-gradient(270deg, #f4f5f4 0%, #ffb6c7 93%);
+}
+.bm_h.white{
+    background-color: #fff;
+    border-bottom:1px dashed #ddd ;
+    color: #928282;
 }
 .pink_bg {
     background-color: #ffb6c7;

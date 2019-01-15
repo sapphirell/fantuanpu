@@ -52,9 +52,14 @@
         border: 3px solid #a8c3c1;
         border-radius: 5px;
     }
-    .w-e-text-container{
+
+    .w-e-toolbar{
+        border-color: #e8e8e8!important;
+        background-color: #ffffff!important;
+    }
+    .w-e-text-container {
         height: 180px !important;/*!important是重点，因为原div是行内样式设置的高度300px*/
-        border-color: #e6e2e2!important;
+        border-color: #e8e8e8!important;
     }
     .w-e-toolbar {
         border: 1px solid #d8d8d8!important;
