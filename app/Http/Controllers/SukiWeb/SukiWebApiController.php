@@ -10,6 +10,7 @@ use App\Http\DbModel\SukiClockModel;
 use App\Http\DbModel\SukiFriendRequestModel;
 use App\Http\DbModel\SukiMessageBoardModel;
 use App\Http\DbModel\Thread_model;
+use App\Http\DbModel\User_model;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -251,5 +252,15 @@ class SukiWebApiController extends Controller
         $clock->save();
 
         return self::response();
+    }
+    //修改suki的用户信息
+    public function update_suki_user_info(Request $request)
+    {
+        $user = User_model::find($this->data['user_info']->uid);
+        if ($request->input("username"))
+        {
+            $user->username = $request->input("username");
+        }
+
     }
 }

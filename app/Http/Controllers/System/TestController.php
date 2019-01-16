@@ -29,6 +29,7 @@ class TestController extends Controller
     }
     public function ping()
     {
+        header('Access-Control-Allow-Origin:*');
         return 'ok';
     }
 }

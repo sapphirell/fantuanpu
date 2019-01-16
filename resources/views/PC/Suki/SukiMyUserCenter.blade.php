@@ -52,14 +52,15 @@
                 <p style="    margin-top: 97px;">登录邮箱</p>
             </div>
             <div class="user_info_right">
-                <input type="text" class="form-control trans" value="{{$data['user_info']->username }}">
+                {{--<input type="text" class="form-control trans" value="{{$data['user_info']->username }}">--}}
+                <p style="text-align: left;    font-weight: 800;">{{$data['user_info']->username }}</p>
                 <textarea class="form-control trans" style="    padding-bottom: 25px;">{{ $data['field_forum']->sightml }}</textarea>
-                <span style="    font-size: 11px;color: #e0e0e0;font-weight: 400;position: relative;     user-select:none;  left: 94px;bottom: 30px;">*最多显示72个字哦</span>
+                <span style="    font-size: 11px;color: #e0e0e0;font-weight: 400;position: relative;     user-select:none;  left: 94px;bottom: 30px;">*最多显示72个字</span>
                 <input type="text" autocomplete="new-password" class="form-control trans" value="" placeholder="请输入原密码">
-                <input type="password" autocomplete="new-password" class="form-control trans" value="" placeholder="请输入新密码">
-                <input type="password" autocomplete="new-password" class="form-control trans" value="" placeholder="请重复输入一次">
+                <input type="text" autocomplete="new-password" class="form-control trans" value="" placeholder="请输入新密码">
+                <input type="text" autocomplete="new-password" class="form-control trans" value="" placeholder="请重复输入一次">
                 <input type="text" disabled class="form-control trans" value="{{ $data['user_info']->email }}">
-                <input type="submit" style="    float: right;">
+                <input type="submit" class="update_user_button" style="float: right;">
             </div>
             <div class="clear"></div>
         </div>
@@ -174,6 +175,11 @@
                 }
 
             })
+        })
+        //提交修改
+        $(".update_user_button").click(function (e) {
+            e.preventDefault();
+
         })
     })
 </script>
