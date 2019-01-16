@@ -29,4 +29,16 @@ class MemberFieldForumModel extends Model
         });
         return $field;
     }
+    public static function update_field(int $uid,array $upd)
+    {
+        $cacheKey = CoreController::USER_FIELD;
+        $field      = self::find($uid);
+        foreach ($upd as $key => $value)
+        {
+            $field->{$key} = $value;
+        }
+        $field->save();
+
+        Cache::forget($cacheKey['key'].$uid);
+    }
 }

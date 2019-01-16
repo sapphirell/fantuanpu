@@ -12,7 +12,17 @@ class UCenter_member_model extends Model
     public $timestamps = false;
 
     public static function GetUserInfoByEmail($email){
-
         return User_model::where('email',$email)->select()->first();
+    }
+    public static function UpdateUserPassword($uid,$newpass)
+    {
+        $user = self::find($uid);
+        $user->password = self::GetSaltPass($newpass,$user->salt);
+        $user->save();
+
+    }
+    public static function GetSaltPass($psw,$salt)
+    {
+        return md5(md5($psw).$salt);
     }
 }

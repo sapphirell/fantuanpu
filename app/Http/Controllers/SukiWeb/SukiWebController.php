@@ -197,9 +197,6 @@ class SukiWebController extends Controller
     //用户信息
     public function suki_user_info(Request $request)
     {
-
-
-//                dd($this->data);
         return  view('PC/Suki/SukiMyUserCenter')->with('data',$this->data);
     }
     public function about_suki()

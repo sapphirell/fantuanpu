@@ -259,7 +259,7 @@ Route::group([
     Route::post('/apply_suki_friends', ['uses' => 'SukiWebApiController@apply_suki_friends', 'as' => 'apply_suki_friends']);#批准suki好友申请
     Route::post('/setting_clock', ['uses' => 'SukiWebApiController@setting_clock', 'as' => 'setting_clock']);#闹钟增删改查
     Route::get('/setting_clock_alert', ['uses' => 'SukiWebApiController@setting_clock_alert', 'as' => 'setting_clock_alert']);#闹钟提醒方式修改
-    Route::get('/update_suki_user_info', ['uses' => 'SukiWebApiController@update_suki_user_info', 'as' => 'update_suki_user_info']);#修改suki的用户信息
+    Route::post('/update_suki_user_info', ['uses' => 'SukiWebApiController@update_suki_user_info', 'as' => 'update_suki_user_info']);#修改suki的用户信息
 
 
 });

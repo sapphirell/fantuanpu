@@ -5,11 +5,13 @@ namespace App\Http\Controllers\SukiWeb;
 use App\Http\Controllers\Forum\ThreadApiController;
 use App\Http\Controllers\Sukiapp\CommonApiController;
 use App\Http\DbModel\ForumThreadModel;
+use App\Http\DbModel\MemberFieldForumModel;
 use App\Http\DbModel\MyLikeModel;
 use App\Http\DbModel\SukiClockModel;
 use App\Http\DbModel\SukiFriendRequestModel;
 use App\Http\DbModel\SukiMessageBoardModel;
 use App\Http\DbModel\Thread_model;
+use App\Http\DbModel\UCenter_member_model;
 use App\Http\DbModel\User_model;
 use Illuminate\Http\Request;
 
@@ -257,10 +259,29 @@ class SukiWebApiController extends Controller
     public function update_suki_user_info(Request $request)
     {
         $user = User_model::find($this->data['user_info']->uid);
-        if ($request->input("username"))
+        if ($request->input("sightml") != $this->data['field_forum']->sightml)
         {
-            $user->username = $request->input("username");
+            MemberFieldForumModel::update_field($this->data['user_info']->uid,["sightml"=>$request->input("sightml")]);
+        }
+        $old_password = $request->input("old_password");
+        $new_password = $request->input("new_password");
+        $repeat_password = $request->input("repeat_password");
+        if ($old_password || $new_password || $repeat_password)
+        {
+            $check = self::checkRequest($request,["old_password","new_password","repeat_password"]);
+            if ($check !== true)
+                return self::response([],40001,"缺少参数{$check}");
+            if ($new_password != $repeat_password)
+                return self::response([],40002,"两次输入密码不相符");
+
+            $uc_data = UCenter_member_model::find($this->data['user_info']->uid);
+            if ($uc_data->password != UCenter_member_model::GetSaltPass($old_password,$uc_data->salt))
+                return self::response([],40003,"原密码输入错误");
+            UCenter_member_model::UpdateUserPassword($this->data['user_info']->uid,$uc_data->password);
+
         }
 
+        User_model::flushUserCache($this->data['user_info']->uid);
+        return self::response();
     }
 }

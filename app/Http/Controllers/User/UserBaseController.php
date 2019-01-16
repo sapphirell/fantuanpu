@@ -192,6 +192,7 @@ class UserBaseController extends Controller
         }
         $user->password = md5(md5( $request->input('password') ). $user->salt);
         $user->save();
+        User_model::flushUserCache($user->uid);
         return self::response();
     }
 
