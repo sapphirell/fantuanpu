@@ -59,7 +59,7 @@ class CommonMemberCount extends Model
      * @param $field 更新哪个字段
      * @param $value 更新的值,可正可负
      */
-    public static function AddUserCount($uid,$field,$value,$operation=false,$relatedid=1)
+    public static function AddUserCount($uid,$field,$value=1,$operation=false,$relatedid=1)
     {
         $cache_key = CoreController::USER_COUNT;
         $user = self::where('uid',$uid)->first() ;
@@ -86,6 +86,7 @@ class CommonMemberCount extends Model
 
     /**
      *  一次更新用户多个字段的值
+     * $operation = false 则不记录变更log
      */
     public static function BatchAddUserCount($uid ,$data,$operation='RPR',$relatedid=1)
     {
@@ -97,11 +98,14 @@ class CommonMemberCount extends Model
             $user = new self();
             $user->uid = $uid;
         }
-        #j积分变更日志
-        $log = new CreditLogModel();
-        $log->operation = $operation;
-        $log->$relatedid = $relatedid;
-        $log->dateline = time();
+        if ($operation !== false)
+        {
+            #j积分变更日志
+            $log = new CreditLogModel();
+            $log->operation = $operation;
+            $log->$relatedid = $relatedid;
+            $log->dateline = time();
+        }
 
         foreach ($data as $key => $value)
         {
@@ -115,5 +119,9 @@ class CommonMemberCount extends Model
         $log_update && $log->save();
         $user->save();
         Cache::forget($cache_key['key'] .$uid);
+    }
+    public static function exp2level()
+    {
+        //sukiexp
     }
 }

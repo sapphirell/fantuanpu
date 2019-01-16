@@ -218,21 +218,21 @@
         {{--<div style="display: inline-block;float:left;      margin: 10px 20px 12px 20px;"></div>--}}
         <div style="float:left;">
             <h2 style="     font-size: 17px;color: #6a6c7f;margin-top: 15px;">{{$data["user_info"]->username}}</h2>
-            <p style="    width: 100px;font-size: 12px;color: #8e8e8e;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">签名档签名档签名档签名档签名档签名档签名档签名档签名档签名档</p>
+            <p style="    width: 100px;font-size: 12px;color: #8e8e8e;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">{{ $data['field_forum']->sightml ?: "暂未设置签名档" }}</p>
         </div>
         <div class="clear"></div>
         <div class="user_info_content">
             <div>
-                <a class="user_info_content_value trans">10</a>
-                <a class="user_info_content_description trans">帖子</a>
+                <a href="" class="user_info_content_value trans">{{$data["count"]["posts"]}}</a>
+                <a href=""  class="user_info_content_description trans">帖子</a>
             </div>
             <div>
-                <a href="/suki_relationship?type=my_follow" class="user_info_content_value trans">10</a>
+                <a href="/suki_relationship?type=my_follow" class="user_info_content_value trans">{{$data["count"]["followsuki"]}}</a>
                 <a href="/suki_relationship?type=my_follow" class="user_info_content_description trans">关注</a>
             </div>
             <div>
-                <a class="user_info_content_value trans">10</a>
-                <a class="user_info_content_description trans" >粉丝</a>
+                <a href="/suki_relationship?type=follow_me"  class="user_info_content_value trans">{{$data["count"]['sukifollow']}}</a>
+                <a href="/suki_relationship?type=follow_me"  class="user_info_content_description trans" >粉丝</a>
             </div>
         </div>
         <div class="user_info_item">

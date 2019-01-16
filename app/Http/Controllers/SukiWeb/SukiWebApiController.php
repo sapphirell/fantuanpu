@@ -4,6 +4,8 @@ namespace App\Http\Controllers\SukiWeb;
 
 use App\Http\Controllers\Forum\ThreadApiController;
 use App\Http\Controllers\Sukiapp\CommonApiController;
+use App\Http\DbModel\CommonMemberCount;
+use App\Http\DbModel\Forum_forum_model;
 use App\Http\DbModel\ForumThreadModel;
 use App\Http\DbModel\MemberFieldForumModel;
 use App\Http\DbModel\MyLikeModel;
@@ -124,6 +126,8 @@ class SukiWebApiController extends Controller
             else
             {
                 MyLikeModel::add_user_like($this->data["user_info"]->uid,$request->input("to_uid"),4);
+                CommonMemberCount::AddUserCount($this->data["user_info"]->uid,"followsuki");
+                CommonMemberCount::AddUserCount($request->input("to_uid"),"followsuki");
                 return self::response([],200,"关注成功了");
             }
 
@@ -134,6 +138,8 @@ class SukiWebApiController extends Controller
             if (in_array($request->input("to_uid"),$uid_arr))
             {
                 MyLikeModel::rm_user_like($this->data["user_info"]->uid,$request->input("to_uid"),4);
+                CommonMemberCount::AddUserCount($this->data["user_info"]->uid,"followsuki",-1);
+                CommonMemberCount::AddUserCount($request->input("to_uid"),"followsuki",-1);
                 return self::response([],200,"取消关注成功");
             }
             else

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\System;
 
 use App\Http\Controllers\Forum\ForumBaseController;
 use App\Http\Controllers\News\SukiController;
+use App\Http\Controllers\SukiWeb\SukiWebController;
 use App\Http\Controllers\User\UserBaseController;
 use App\Http\DbModel\Forum_forum_model;
 use App\Http\DbModel\Thread_model;
@@ -31,6 +32,6 @@ class ServeController extends Controller
             return (new ForumBaseController((new Forum_forum_model()) , (new Thread_model())))
                 ->ForumIndex($request,(new UserBaseController())); // -_-什么鬼...
         if (in_array($domain,self::$local_domain));
-            return (new SukiController())->index($request);
+            return (new SukiWebController())->index($request);
     }
 }

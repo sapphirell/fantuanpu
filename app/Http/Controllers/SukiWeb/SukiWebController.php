@@ -4,6 +4,7 @@ namespace App\Http\Controllers\SukiWeb;
 
 use App\Http\Controllers\Forum\ThreadController;
 use App\Http\DbModel\CommonMemberCount;
+use App\Http\DbModel\Forum_forum_model;
 use App\Http\DbModel\ForumThreadModel;
 use App\Http\DbModel\MemberFieldForumModel;
 use App\Http\DbModel\MyLikeModel;
@@ -21,7 +22,19 @@ use App\Http\Controllers\Controller;
 
 class SukiWebController extends Controller
 {
-
+    public function __construct()
+    {
+        parent::__construct();
+        $this->data["count"] = CommonMemberCount::find($this->data['user_info']->uid);
+    }
+    public function index(Request $request)
+    {
+        $this->data['nodes'] = (new Forum_forum_model())->get_suki_nodes();
+        $this->data['thread'] = ForumThreadModel::get_new_thread(
+            json_decode(session("setting")['lolita_viewing_forum'])
+        );
+        return view('PC/Suki/News')->with('data',$this->data);
+    }
     /**
      * 查看suki空间的follow
      * @param Request $request
