@@ -70,7 +70,8 @@ class SukiWebApiController extends Controller
             $request->input('subject'),
             $request->input('message'),
             $request->getClientIp(),
-            $user_info
+            $user_info,
+            "suki"
         );
         return self::response();
     }

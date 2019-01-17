@@ -61,7 +61,7 @@ class ThreadApiController extends Controller
                         );
         return self::response([],200,'发帖成功');
     }
-    public  function _newThread($fid,$subject,$message,$ip,$user_info)
+    public function _newThread($fid,$subject,$message,$ip,$user_info,$from="fantuanpu")
     {
         $data['fid']        = $fid;
         $data['author']     = $user_info->username;
@@ -112,7 +112,10 @@ class ThreadApiController extends Controller
         /**
          * 用户统计更新
          */
-        $count = CommonMemberCount::AddUserCount($user_info->uid,"threads",1);
+        if ($from == "fantuanpu")
+            CommonMemberCount::AddUserCount($user_info->uid,"threads",1);
+        if ($from == "suki")
+            CommonMemberCount::AddUserCount($user_info->uid,"sukithreads",1);
         /**
          *  完成动作 发帖
          */
@@ -191,6 +194,10 @@ class ThreadApiController extends Controller
             $notification->from_idtype = 'quote';
             $notification->from_num = '0';
             $notification->save();
+            /**
+             * 用户统计更新
+             */
+            CommonMemberCount::AddUserCount($user_info->uid,'posts',1);
         }
         if ($thread_origin == "suki" && $thread->authorid != $user_info->uid)
         {
@@ -204,11 +211,12 @@ class ThreadApiController extends Controller
             $notice->place = 1;
             $notice->notice_time = time();
             $notice->save();
+            /**
+             * 用户统计更新
+             */
+            CommonMemberCount::AddUserCount($user_info->uid,'sukiposts',1);
         }
-        /**
-         * 用户统计更新
-         */
-        CommonMemberCount::AddUserCount($user_info->uid,'posts',1);
+
         /**
          *  通知用户帖子被回复
          */
