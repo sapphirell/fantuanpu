@@ -82,7 +82,13 @@
         if (todo == 'add' && index == -1)
             setting.lolita_viewing_forum.push(fid);
         else if (todo == 'del' && index > -1)
-            setting.lolita_viewing_forum.splice(index,1)
+        {
+            if (setting.lolita_viewing_forum.length > 1)
+                setting.lolita_viewing_forum.splice(index,1)
+            else
+                alert("最少保留一个")
+        }
+
 
 //        console.log(todo);
 //        console.log(setting.lolita_viewing_forum);
@@ -94,6 +100,7 @@
     $(document).ready(function () {
         var user_panel = 1;
         var user_poster = 1;
+        var load_thread_nextpage = 2;
         construct_setting();
         construct_edtior();
 
@@ -123,6 +130,7 @@
 
             var fid = $(this).attr("fid");
             var todo = $(this).hasClass('selected_part_item') ? "del" : "add";
+//            console.log(fid,todo)
             var setting = setting_and_return(fid,todo);
             reset_checkout_forum();
             var thread_list = $.get("/suki-thread",{'view_forum':setting,'need' : "html"},function (e) {
@@ -130,11 +138,28 @@
 //                console.log(todo)
                 $(".thread_list").remove();
                 $(".list_container").append(e);
+                load_thread_nextpage = 2;
             });
         });
         //点击加载更多
         $(".add_more_threadlist").click(function (e) {
             e.preventDefault();
+            var fd = {'view_forum':setting.lolita_viewing_forum,'need' : "html","page":load_thread_nextpage}
+            console.log(fd)
+            var thread_list = $.get("/suki-thread",fd,function (e) {
+                console.log(e)
+//                console.log(todo)
+                if (e)
+                {
+                    load_thread_nextpage++
+                    $(".list_container").append(e);
+                }
+                else
+                {
+                    alert("已经到底啦")
+                }
+
+            });
         })
         //弹出发帖框
         $("#alert_poster").click(function (e) {

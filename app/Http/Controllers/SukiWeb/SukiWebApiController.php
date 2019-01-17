@@ -32,11 +32,22 @@ class SukiWebApiController extends Controller
     }
     public function get_thread(Request $request,Thread_model $thread_model)
     {
-        //        dd($request->input("view_forum"));
-        self::set_suki_view(session("user_info")->uid ?: 0,$request->input("view_forum")?:[157]);
-        $this->data['thread'] = ForumThreadModel::get_new_thread($request->input("view_forum"));
+        //                dd($request->input("view_forum"));
+        self::set_suki_view(session("user_info")->uid ?: 0, $request->input("view_forum") ?: [157]);
+        $this->data['thread'] = ForumThreadModel::get_new_thread(
+            $request->input("view_forum"),
+            $request->input("page") ?: 1
+        );
 
-        return $request->input("need") == 'html' ?  view('PC/Suki/SukiThreadList')->with('data',$this->data) : self::response($this->data);
+        if ($request->input("need") == 'html')
+        {
+            return empty($this->data['thread']) ? "" : view('PC/Suki/SukiThreadList')->with('data', $this->data);
+        }
+        else
+        {
+            return self::response($this->data);
+        }
+
     }
 
     /**

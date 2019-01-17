@@ -11,18 +11,29 @@ class ForumThreadModel extends Model
     public $table='pre_forum_thread';
     public $timestamps = false;
     public $primaryKey = 'tid';
-    public static function get_new_thread($fid_arr = [])
+    public static function get_new_thread($fid_arr = [],$page=1)
     {
         $cacheKey   = CoreController::THREAD_LIST;
         $thread_mod = new Thread_model() ; //$cacheKey["time"]
-        $data = Cache::remember($cacheKey['key'].json_encode($fid_arr),$cacheKey["time"],
-                function () use ($fid_arr,$thread_mod) {
+        //参数检查
+        if (!is_array($fid_arr))
+            $exception = true;
+        foreach ($fid_arr as $value)
+            if (!is_numeric($value))
+                $exception = true;
+        if ($exception)
+            $fid_arr = [];
+
+
+        $data = Cache::remember($cacheKey['key'].json_encode($fid_arr)."_page_".$page,0,
+                function () use ($fid_arr,$thread_mod ,$page) {
                         $data = ForumThreadModel::orderBy('lastpost','desc');
                         if (empty($fid_arr))
-                            $data = $data->where('fid','!=','63')->orderBy('lastpost','desc')->paginate(15)->toArray()['data'];
+                            $data = $data->where('fid','!=','63')->orderBy('lastpost','desc')->offset(15*($page-1))->limit(15)->get();
                         else
-                            $data = $data->whereIn('fid',$fid_arr)->orderBy('lastpost','desc')->paginate(15)->toArray()['data'];
-
+                            $data = $data->whereIn('fid',$fid_arr)->orderBy('lastpost','desc')->offset(15*($page-1))->limit(15)->get();
+//                        dd($data);
+                        $data = $data->isEmpty() ? [] : $data->toArray();
                         foreach ($data as &$value)
                         {
                             $value['avatar'] = config('app.online_url') .\App\Http\Controllers\User\UserHelperController::GetAvatarUrl($value['authorid']);

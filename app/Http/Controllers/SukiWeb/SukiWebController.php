@@ -31,7 +31,8 @@ class SukiWebController extends Controller
     {
         $this->data['nodes'] = (new Forum_forum_model())->get_suki_nodes();
         $this->data['thread'] = ForumThreadModel::get_new_thread(
-            json_decode(session("setting")['lolita_viewing_forum'])
+            json_decode(session("setting")->lolita_viewing_forum),
+            $request->input("page")?:1
         );
         return view('PC/Suki/News')->with('data',$this->data);
     }

@@ -36,6 +36,8 @@ class CommonMemberCount extends Model
 
     public static function GetUserCoin($uid)
     {
+        if (!$uid)
+            return false;
         $cache_key = CoreController::USER_COUNT;
         $user_count  = Cache::remember($cache_key['key'] .$uid,$cache_key['time'],function () use ($uid)
         {

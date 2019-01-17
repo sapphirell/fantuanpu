@@ -24,6 +24,6 @@ class DomainFantuanpu
         if (in_array($request->getHost(),array_merge(Controller::$fantuanpu_domain,Controller::$local_domain)))
             return $next($request);
         else
-            return Controller::response([],40000,'不允许当前域名进行访问');
+            return Controller::response([],40000,'fantuanpu不允许当前域名进行访问');
     }
 }
