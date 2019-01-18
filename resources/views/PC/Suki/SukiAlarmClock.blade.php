@@ -34,6 +34,14 @@
         background-color: #efe9e9;
         border: 1px solid #d6b7b7;
     }
+    .clock_line {
+        margin:8px 0px;
+    }
+    .clock_line span {
+        font-size:16px;
+        text-shadow: 0 0 3px #d8c1c1;
+    }
+    .clock_line
 </style>
 <div class="wp" style="margin-top: 60px;">
     <div class="alert">补款闹钟功能尚在测试中,功能确定后将同步开发到App中,如果有更好的功能建议,可以<a href="">点这里</a>提交意见反馈。</div>
@@ -67,7 +75,7 @@
                 @if($data['request']['group'] == "ym")
                     {{--{{dd($data)}}--}}
                     @foreach($data['my_clock'] as $value)
-                        <div>
+                        <div class="clock_line">
                             <span style="width: 120px;display: inline-block">{{$value['ym']}}</span>
                             <span style="width: 120px;display: inline-block">{{$value['count']?:0}}个补款项</span>
                             <span style="width: 80px;display: inline-block">共计￥{{$value['sum']}}</span>
@@ -75,7 +83,7 @@
                     @endforeach
                 @else
                     @foreach($data['my_clock'] as $value)
-                        <div style="font-size: 15px;color: #7d6565;    line-height: 25px;">
+                        <div  class="clock_line" style="font-size: 15px;color: #7d6565;    line-height: 25px;">
 
                             <span style="width: 120px;display: inline-block">{{$value['clock_name']}}</span>
                             <span style="width: 80px;display: inline-block">￥{{$value['sum']}}</span>

@@ -35,6 +35,7 @@ class ThreadController extends Controller
     }
     public function _viewThread($tid,$page)
     {
+
         $this->data['thread']   = $this->threadModel->getThread($tid,$page);
         $this->data['title'] = $this->data['thread']['thread_subject']->subject;
         $this->data['keywords'] = $this->data['thread']['thread_subject']->subject;

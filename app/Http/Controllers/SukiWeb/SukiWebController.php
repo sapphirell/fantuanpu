@@ -97,14 +97,13 @@ class SukiWebController extends Controller
      */
     public function view_thread(Request $request,$tid,$page)
     {
-
+//        dd($this->data);
         $this->data = (new ThreadController(new Thread_model()))->_viewThread($tid,$page);
-
+        $this->data["count"] = CommonMemberCount::find($this->data['user_info']->uid);
         $this->data['has_collection'] = MyLikeModel::has_like(
             $this->data['user_info']->uid?:0,
             $this->data['thread']['thread_subject']->tid,
             3);
-
 
         return view('PC/Suki/SukiThread')->with('data',$this->data);
     }

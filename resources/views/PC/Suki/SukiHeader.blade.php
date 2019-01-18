@@ -222,6 +222,7 @@
         </div>
         <div class="clear"></div>
         <div class="user_info_content">
+
             <div>
                 <a href="" class="user_info_content_value trans">{{$data["count"]["sukithreads"]}}</a>
                 <a href=""  class="user_info_content_description trans">帖子</a>

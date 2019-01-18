@@ -96,10 +96,10 @@
         text-decoration: none;
     }
     .post-avatar {
-        margin: 5px 5px;
+        margin: 5px 10px;
         display: block;
-        width: 70px !important;
-        height: 70px !important;
+        width: 60px !important;
+        height: 60px !important;
         border-radius: 50%;
         overflow: hidden;
         padding: 2px;
@@ -161,12 +161,29 @@
         padding: 3px;
     }
     .author-name {
-        width: 150px;text-align: center;display: inline-block;font-size: 14px;font-weight: 900;margin-bottom: 10px;color: #6abdd6;
+        width: 120px;
+        text-align: center;
+        display: inline-block;
+        font-size: 14px;
+        font-weight: 900;
+        margin-bottom: 10px;
+        color: #90718b;
+        margin-right: 20px;
+        font-size: 12px;
     }
     .author-message {
         display: flex;
     }
-
+    .post_msg {
+        padding-bottom: 7px;
+        border-radius: 10px;
+        box-shadow: 0px 1px 3px #d4d2d2;
+        margin-bottom: 0px;
+    }
+    .post_content
+    {
+        padding-bottom: 35px;
+    }
 </style>
 <script>
     $(document).ready(function () {
@@ -193,12 +210,13 @@
 </script>
 <body>
 
-<div class="wp web_body " style="margin-top: 50px;">
-    <div style="background: #FFFFFF;margin: 15px;padding: 15px;border-radius: 5px;box-shadow: 2px 3px 3px #e4e4e4;position: relative;">
+<div class="wp web_body " style="margin-top: 10px;">
+    <div style="background: #FFFFFF;margin: 15px;padding: 15px;border-radius: 5px;box-shadow: 2px 3px 3px #e4e4e4;position: relative;    margin-bottom: 0px;">
         <div>
             <span class="author-name" style="">{{$data['thread']['thread_subject']->author}}</span>
-
-                <a  style="text-decoration-line: none;" class="do_follow"
+            <h1 style="display:inline-block;font-size: 15px;font-family: 微软雅黑;font-weight: 900;text-align: left;">{{$data['thread']['thread_subject']->subject}}</h1>
+                <a  style="text-decoration-line: none;float: right;" class="do_follow"
+                    title="收藏"
                     status="@if($data['has_collection'] === true){{"unfollow"}}@else{{"follow"}}@endif"
                 >
                     @if($data['has_collection'] == true)
@@ -210,13 +228,13 @@
                 </a>
 
 
-            <h1 style="display:inline-block;font-size: 15px;font-family: 微软雅黑;font-weight: 900;text-align: left;">{{$data['thread']['thread_subject']->subject}}</h1>
+
 
         </div>
         <div class="author-message" style="">
             <div class="user_info author" style="display: inline-block;width: 160px">
 
-                <a  href="suki-userhome-{{$data['thread']['thread_subject']->authorid}}.html">{{avatar($data['thread']['thread_subject']->authorid,150,5,'author-avatar','big')}}</a>
+                <a  href="suki-userhome-{{$data['thread']['thread_subject']->authorid}}.html">{{avatar($data['thread']['thread_subject']->authorid,120,5,'author-avatar','big')}}</a>
                 <a  href="suki-userhome-{{$data['thread']['thread_subject']->authorid}}.html"><p class="author-sign" style="width: inherit;width: inherit;margin: 8px;color: #b7b7b7;">未设置用户签名</p></a>
 
 
@@ -227,6 +245,13 @@
                 <div class="bbcode_container">
                     {!! bbcode2html($data['thread']['thread_post'][0]->message) !!}
                 </div>
+                <p style="    font-size: 12px;position: absolute;bottom: 6px;right: 8px;color: #ccc9c9;">
+                    {{$data['thread']['thread_subject']->dateline}}
+                    查看
+                    {{$data['thread']['thread_subject']->views}}
+                    回复
+                    {{$data['thread']['thread_subject']->replies}}
+                </p>
             </div>
         </div>
 
@@ -242,7 +267,8 @@
                         <div class="post_item" name="{{$value->pid}}">
                             <?php $rand_border = ['#bbb0ff','#e7b0ff','#dbffb0','#b5ecff','#ffb5b5']; ?>
                             <div class="post_msg"  style="z-index: 1; position: relative;    margin-right: 20px;
-                                    border-bottom: 3px solid {{$rand_border[rand(0,4)]}};">
+                                    {{--border-bottom: 3px solid {{$rand_border[rand(0,4)]}};--}}
+                                    ">
 
                                 <div style="width: 80px;display: inline-block;float: left;    margin-right: 15px;">
 
@@ -250,23 +276,25 @@
                                         {{avatar($value->authorid,80,100,'post-avatar','normal')}}
                                     </a>
 
-                                        <a href="suki-userhome-{{$value->authorid}}.html" style="color: #5abdd4;width: 80px;text-align: center;display: inline-block;margin-top: 5px">{{$value->author}}</a>
+                                        <a href="suki-userhome-{{$value->authorid}}.html" style="color: #544349;width: 80px;text-align: center;display: inline-block;margin-top: 5px">{{$value->author}}</a>
 
 
                                 </div>
                                 <div class="post_content" style="width: 70%;display: inline-block;float:left;">
-                                    <span style="color: #cccccc;    padding-left: 5px;">{{date("Y·m·d H:i:s",$value->dateline)}}</span>
                                     <div id="{{$value->pid}}" style="padding: 5px;">{!! bbcode2html($value->message) !!}</div>
 
-
+                                    <div style="    width: 100%;display: inline-block;float: left;position: absolute;     bottom: 28px;right: 3px;">
+                                        {{--<img src="/Static/daimeng.gif">--}}
+                                        <span style="color: #cccccc;padding-left: 5px;position: absolute;right: 10px;">
+                                            {{$value->position}}楼 &nbsp;
+                                            {{date("Y·m·d H:i:s",$value->dateline)}}
+                                        </span>
+                                        <span onclick="reply({{$value->pid}})" class="reply" style="cursor: pointer;color: #f5b3b5;position: absolute;    right: 9px;bottom: 0px;">回复</span>
+                                    </div>
                                 </div>
                                 <div class="clear"></div>
 
-                                <div style="    width: 100%;display: inline-block;float: left;position: absolute;bottom: 0;">
-                                    {{--<img src="/Static/daimeng.gif">--}}
 
-                                    <p onclick="reply({{$value->pid}})" class="reply" style="cursor: pointer;color: #ccc;position: absolute;right: 20px;bottom: 5px;">&lt; Reply &gt;</p>
-                                </div>
 
                             </div>
                             <div class="clear"></div>
@@ -275,12 +303,12 @@
                     @endif
                 @endforeach
                 @if(count($data['thread']['thread_post']) < \App\Http\Controllers\System\CoreController::THREAD_REPLY_PAGE)
-                    <div class="" style="padding: 20px;color: #bfbfbf;border: 4px dashed;width: 95%;margin-left: 15px;text-align: center;border-radius: 20px;">暂无更多</div>
+                    <div class="" style="padding: 20px;color: #bfbfbf;border: 4px dashed;width: 95%;margin-top:20px;margin-left: 15px;text-align: center;border-radius: 20px;">暂无更多</div>
                 @else
-                    <span class="get_more_posts trans">+</span>
+                    <span style="margin-top:20px;" class="get_more_posts trans">+</span>
                 @endif
 
-                <form style="margin: 15px;">
+                <form style="margin: 15px;margin-top: 20px;">
                     <textarea name="message" style="display: none"></textarea>
 
                     <div id="editor" style="background-color: #fff;box-shadow: 0 0 5px #eee;"></div>
@@ -322,6 +350,7 @@
 //        var Html = str.replace(reg,"");
         var posts = "<blockquote>"+str+"</blockquote><br/>";
         editor.txt.html(posts)
+        $("html,body").animate({scrollTop:$("#editor").offset().top-80},1000);
     }
     $(document).ready(function () {
         var subject = $('#subject').val()
