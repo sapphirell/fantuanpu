@@ -217,4 +217,9 @@ class SukiWebController extends Controller
     {
         return  view('PC/Suki/SukiAbout')->with('data',$this->data);
     }
+    //suki 搜索
+    public function suki_search(Request $request)
+    {
+//        ForumThreadModel::
+    }
 }

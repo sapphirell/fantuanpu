@@ -222,6 +222,7 @@ Route::group([
     Route::get('/about_suki', ['uses' => 'SukiWebController@about_suki', 'as' => 'about_suki']);#关于suki
     Route::get('/add_suki_friend_view', ['uses' => 'SukiWebController@add_suki_friend_view', 'as' => 'add_suki_friend_view']);#suki加好友页面
     Route::get('/suki_tribunal', ['uses' => 'SukiWebController@suki_tribunal', 'as' => 'suki_tribunal']);#suki法庭,公示墙
+    Route::get('/suki_search', ['uses' => 'SukiWebController@suki_search', 'as' => 'suki_search']);#suki搜索
 
     Route::get('/suki-thread', ['uses' => 'SukiWebApiController@get_thread', 'as' => 'get_thread']);#获取suki的帖子
     Route::post('/suki-new-thread', ['uses' => 'SukiWebApiController@suki_new_thread', 'as' => 'suki-new-thread']);#获取suki的帖子

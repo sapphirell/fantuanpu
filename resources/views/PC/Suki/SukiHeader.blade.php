@@ -252,8 +252,8 @@
             </ul>
         </div>
 
-        <a style="    position: absolute;bottom: 0px;width: 100%;text-align: center" href="/logout">
-            <span style="    font-size: 14px;color: #d95794;font-weight: 900;">退出登录</span>
+        <a style="    position: absolute;bottom: 0px;width: 100%;text-align: center;    background: #f3f2f2;padding: 5px;" href="/logout">
+            <span style="font-size: 14px;color: #a99595;font-weight: 900;    font-size: 12px;">退出登录</span>
             <img src="/Image/tuichu1.png" style="width: 14px;padding-bottom: 4px;" >
         </a>
     </div>

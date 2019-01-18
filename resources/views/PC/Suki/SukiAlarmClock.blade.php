@@ -123,15 +123,15 @@
                     <div class="input-group-prepend">
                         <div class="input-group-text" >补款</div>
                     </div>
-                    <input type="text" class="form-control set_date" id="pick_date" placeholder="选择日期" aria-label="选择日期" aria-describedby="btnGroupAddon">
+                    <input type="text" class="form-control set_date" id="pick_date_start" placeholder="选择日期" aria-label="选择日期" aria-describedby="btnGroupAddon">
                 </div>
                 <div class="input-group">
                     <div class="input-group-prepend">
                         <div class="input-group-text" >截止</div>
                     </div>
-                    <input type="text" class="form-control clock_end" id="pick_date" placeholder="选择日期" aria-label="选择日期" aria-describedby="btnGroupAddon">
+                    <input type="text" class="form-control clock_end" id="pick_date_end" placeholder="选择日期" aria-label="选择日期" aria-describedby="btnGroupAddon">
                 </div>
-                <input type="submit" class="sub_clock" style="    background: #fcbec3;border: 0px;width: 100%;">
+                <input type="submit" class="sub_clock" style="color: #000;    background: #fcbec3;border: 0px;width: 100%;">
             </div>
 
         </div>
@@ -152,9 +152,11 @@
     $(document).ready(function () {
         //执行一个laydate实例
         laydate.render({
-            elem: '#pick_date' //指定元素
+            elem: '#pick_date_start' //指定元素
         });
-
+        laydate.render({
+            elem: '#pick_date_end'
+        });
         $(".sub_clock").click(function (e) {
             e.preventDefault();
             var name = $(".set_name").val()

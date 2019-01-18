@@ -68,5 +68,11 @@ class ForumThreadModel extends Model
     {
         return self::where('authorid',$uid)->orderBy('tid','desc')->limit(15)->offset($page*15)->get();
     }
-
+    /**
+     * 根据名字模糊搜索帖子
+     */
+    public static function find_by_namelike($name)
+    {
+        
+    }
 }

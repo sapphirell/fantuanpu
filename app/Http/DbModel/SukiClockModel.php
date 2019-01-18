@@ -22,7 +22,7 @@ class SukiClockModel extends Model
             case "day" :
                 $data = $data->groupBy("clock_date")->orderBy("clock_date","asc")->get();
                 break;
-            case "month" :
+            case "ym" :
                 $data = $data->groupBy("ym")->orderBy("clock_date","asc")->get();
                 break;
             default:
