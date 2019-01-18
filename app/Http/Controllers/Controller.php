@@ -80,7 +80,7 @@ class Controller extends BaseController
         //获取IM
         $this->data = array_merge($this->data,$this->get_im_message());
         //初始化setting
-        if (!session("user_setting"))
+        if (!session("setting"))
         {
             $setting = UserSettingModel::find($this->data['user_info']->uid?:0);
             session(['setting' => $setting]);
@@ -162,10 +162,19 @@ class Controller extends BaseController
     {
         foreach ($fid as &$value)
             $value = intval($value);
+//        dd($fid);
+        if ($uid === 0 || $uid === '0')
+        {
+            $setting = json_decode($this->data["setting"]);
+            $setting->lolita_viewing_forum = json_encode($fid);
 
-        $setting = UserSettingModel::find($uid);
-        $setting->lolita_viewing_forum = json_encode($fid);
-        $setting->save();
+        }
+        else
+        {
+            $setting = UserSettingModel::find($uid);
+            $setting->lolita_viewing_forum = json_encode($fid);
+            $setting->save();
+        }
         session(['setting' => $setting]);
         return true;
     }

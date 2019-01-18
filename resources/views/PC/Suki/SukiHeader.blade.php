@@ -41,7 +41,7 @@
         .hd li {
             list-style: none;
             display: inline-block;
-            padding: 5px 15px 10px 5px;
+            padding: 5px 10px 10px 10px;
             color: #464646;
             font-size: 13px;
             cursor: pointer;
@@ -176,7 +176,7 @@
                     {{avatar(session("user_info")->uid,30,50,"","big")}}
                 </li>
             @else
-                <li class="" id="alert_ajax_login">
+                <li class="" id="alert_ajax_login" class=" trans">
                     <img src="/Image/denglu-copy.png" style="width: 30px;border: 2px solid #fff;padding: 2px;border-radius: 100%;">
                 </li>
             @endif
