@@ -103,6 +103,7 @@ Route::group([
     Route::get('/test', ['uses' => 'TestController@index', 'as' => 'test']);#test
     Route::get('/ping', ['uses' => 'TestController@ping', 'as' => 'test']);#test
     Route::get('/avatar', ['uses' => 'PictureController@show_avatar', 'as' => 'show_avatar']);#传uid返回头像链接
+    Route::get('/clock_alert', ['uses' => 'ServeController@clock_alert', 'as' => 'clock_alert']);#闹钟提醒
 
 
 });

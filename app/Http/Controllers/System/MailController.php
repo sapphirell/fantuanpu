@@ -38,7 +38,7 @@ class MailController extends Controller
      */
     public static function email_to($email,$blade,array $param)
     {
-        //检查用户60秒内有没有发送过找回邮件
+        //检查用户60秒内有没有发送过邮件
         $cacheKey = CoreController::HAS_POST_MAIL_TO;
         $response = Cache::remember($cacheKey['key'].$email ,$cacheKey['time'],function () use ($email,$param,$blade)
         {
@@ -47,9 +47,9 @@ class MailController extends Controller
             $data['url'] =  self::FANTUANPU_DOMAIN . "retrieve/?source=email&token=".$accessToken;
             $input = [
                 'email'     => $email,
-                'toUser'    => "hentai@fantuanpu.com",
+                'toUser'    => $email,
                 'subject'   => $param["subject"],
-                'msg'       => $param["code"],
+                'msg'       => $param["msg"],
                 'view'      => $blade
             ];
             self::sendMail($input);

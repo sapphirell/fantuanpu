@@ -204,8 +204,8 @@ class UserBaseController extends Controller
     {
 //        return self::response();
         $user = session('user_info');
-        $param["code"] = rand(1000,9999);
-        $param["subject"] = "饭团扑论坛绑定邮箱邮件";
+        $param["msg"] = rand(1000,9999);
+        $param["subject"] = "绑定邮箱邮件";
         Cache::put($user->email, $param["code"], 5);
 
         return  MailController::email_to($user->email,"BindEmail",$param);

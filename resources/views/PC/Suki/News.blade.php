@@ -47,10 +47,11 @@
         background-image: linear-gradient(176deg, #53def5 0%, #c0fff6 100%);
     }
     .selected_part_item {
-        background: #ecf6ff;
+        background: #fff2f1;
         padding: 10px;
-        border: 3px solid #a8c3c1;
+        border: 3px solid #ffdcde;
         border-radius: 5px;
+        width: 66px;
     }
 
     .w-e-toolbar{

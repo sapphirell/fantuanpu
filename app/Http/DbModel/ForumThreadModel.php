@@ -25,14 +25,14 @@ class ForumThreadModel extends Model
             $fid_arr = [];
 
 
-        $data = Cache::remember($cacheKey['key'].json_encode($fid_arr)."_page_".$page,0,
+        $data = Cache::remember($cacheKey['key'].json_encode($fid_arr)."_page_".$page,$cacheKey["time"],
                 function () use ($fid_arr,$thread_mod ,$page) {
+
                         $data = ForumThreadModel::orderBy('lastpost','desc');
                         if (empty($fid_arr))
                             $data = $data->where('fid','!=','63')->orderBy('lastpost','desc')->offset(15*($page-1))->limit(15)->get();
                         else
                             $data = $data->whereIn('fid',$fid_arr)->orderBy('lastpost','desc')->offset(15*($page-1))->limit(15)->get();
-//                        dd($data);
                         $data = $data->isEmpty() ? [] : $data->toArray();
                         foreach ($data as &$value)
                         {

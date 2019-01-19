@@ -43,7 +43,7 @@ class CoreController extends Controller
     /**
      * 最新帖子缓存 ,缓存6秒,避免洪水攻击
      */
-    const THREAD_LIST = ['key'=>'thread_list_','time'=>0.1];
+    const THREAD_LIST = ['key'=>'thread_list_','time'=>1];
     /**
      * 取得老用户查询缓存
      */

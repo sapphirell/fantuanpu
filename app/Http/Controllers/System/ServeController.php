@@ -7,7 +7,9 @@ use App\Http\Controllers\News\SukiController;
 use App\Http\Controllers\SukiWeb\SukiWebController;
 use App\Http\Controllers\User\UserBaseController;
 use App\Http\DbModel\Forum_forum_model;
+use App\Http\DbModel\SukiClockModel;
 use App\Http\DbModel\Thread_model;
+use App\Http\DbModel\User_model;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -33,5 +35,32 @@ class ServeController extends Controller
                 ->ForumIndex($request,(new UserBaseController())); // -_-什么鬼...
         if (in_array($domain,self::$local_domain));
             return (new SukiWebController())->index($request);
+    }
+    public function clock_alert()
+    {
+        $data = SukiClockModel::where(["clock_date" => date("Y-m-d")])->get();
+        $user_clock = [];
+        foreach ($data as $value)
+        {
+            //按人分
+            $user_clock[$value->uid]["today"][] = $value;
+        }
+        //明天的提醒
+        $data = SukiClockModel::where(["clock_date" =>  date("Y-m-d",strtotime("+1 day"))])->get();
+        foreach ($data as $value)
+        {
+            //按人分
+            $user_clock[$value->uid]["tomorrow"][] = $value;
+        }
+
+        //开始提醒
+        foreach ($user_clock as $uid => $value)
+        {
+            $user = User_model::find($uid);
+            $param["msg"] = $value;
+            $param["subject"] = "Suki闹钟提醒";
+            return MailController::email_to($user->email,"RemindersMail",$param);
+        }
+        return "ok";
     }
 }
