@@ -212,7 +212,7 @@
 
 <div class="wp web_body " style="margin-top: 10px;">
     <div style="background: #FFFFFF;margin: 15px;padding: 15px;border-radius: 5px;box-shadow: 2px 3px 3px #e4e4e4;position: relative;    margin-bottom: 0px;">
-        <div>
+        <div class="title_container">
             <span class="author-name" style="">{{$data['thread']['thread_subject']->author}}</span>
             <h1 style="display:inline-block;font-size: 15px;font-family: 微软雅黑;font-weight: 900;text-align: left;">{{$data['thread']['thread_subject']->subject}}</h1>
                 <a  style="text-decoration-line: none;float: right;" class="do_follow"

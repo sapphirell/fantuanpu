@@ -38,21 +38,28 @@ class ServeController extends Controller
     }
     public function clock_alert()
     {
-        $data = SukiClockModel::where(["clock_date" => date("Y-m-d")])->get();
+        $data = SukiClockModel::where(["clock_date" => date("Y-m-d"),"alert_type"=>2])->get();
         $user_clock = [];
+        //今天的提醒
         foreach ($data as $value)
         {
             //按人分
             $user_clock[$value->uid]["today"][] = $value;
         }
         //明天的提醒
-        $data = SukiClockModel::where(["clock_date" =>  date("Y-m-d",strtotime("+1 day"))])->get();
+        $data = SukiClockModel::where(["clock_date" =>  date("Y-m-d",strtotime("+1 day")),"alert_type"=>2 ])->get();
         foreach ($data as $value)
         {
             //按人分
             $user_clock[$value->uid]["tomorrow"][] = $value;
         }
-
+        //补款最后一天
+        $data = SukiClockModel::where(["clock_end" =>  date("Y-m-d"),"alert_type"=> 2 ])->get();
+        foreach ($data as $value)
+        {
+            //按人分
+            $user_clock[$value->uid]["lastday"][] = $value;
+        }
         //开始提醒
         foreach ($user_clock as $uid => $value)
         {

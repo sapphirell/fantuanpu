@@ -126,6 +126,16 @@ h1.thread_title{    padding-top: 27px;}
     .user_info.author img {
         width: 40px!important;
         height: 40px!important;
+        left: 18px;
+        position: relative;
+        top: 5px;
+        border:0px;
+        padding: 2px;
+        box-shadow: 0 2px 5px #c3def7;
+        border-radius: 100%!important;
+    }
+    .title_container {
+        padding-left:20px;
     }
     .author-sign {
         display: none;

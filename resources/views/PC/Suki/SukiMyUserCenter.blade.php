@@ -41,6 +41,18 @@
     .user_info_right input,.user_info_right textarea{
         background: #f9f9f9;
     }
+    @media screen and (max-width: 960px) {
+
+        .user_info {width: 100%}
+        .user_info_left {padding: 2px}
+        .user_info_left img {
+            width: 40px!important;
+            height: 40px!important;
+            margin: 10px auto;
+            display: block;
+        }
+        .user_info_right> span {display: none}
+    }
 </style>
 <div class="wp" style="margin-top: 65px">
     <div class="bm_h white">个人设置</div>
