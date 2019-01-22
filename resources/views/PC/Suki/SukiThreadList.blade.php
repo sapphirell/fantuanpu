@@ -21,12 +21,12 @@
                             <span style="color: #ccc;">查看  {{$value['views']}} · </span>
                             <span style="color: #ccc;">点赞  {{$value['star']}}</span>
                         </p>
-                        <br>
+                        {{--<br>--}}
                         <p style="display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 3;overflow: hidden;">{{$value['preview']}}</p>
                         @if(!empty($value['subject_images']))
                             <div class="thread_image_list" style="width:100%;float: left;">
                                 @foreach($value['subject_images'] as $image)
-                                    <img  style="width: 90px;height: 90px;float: left;margin: 10px" src="{{$image}}">
+                                    <img  style="width: 90px;height: 90px;float: left;margin: 5px" src="{{$image}}">
                                 @endforeach
                             </div>
                         @endif

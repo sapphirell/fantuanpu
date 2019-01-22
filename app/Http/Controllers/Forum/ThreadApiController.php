@@ -83,6 +83,7 @@ class ThreadApiController extends Controller
             }
         }
         $this->threadModel->replies = 1;
+        $from == "suki" && $this->threadModel->ascription = 2;
         $this->threadModel->save();
         /**
          * 添加post一楼数据
