@@ -234,9 +234,9 @@ class UserBaseController extends Controller
             return self::response([],40003,'验证码错误');
         $user->groupid = 10;
         $user->save();
-
+        User_model::flushUserCache($user->uid);
         UserHelperController::SetLoginStatus($user);
-        return self::response([],200,"用户组更新成功");
+        return self::response([],200,"邮箱绑定成功");
     }
     /**
      * 用户中心

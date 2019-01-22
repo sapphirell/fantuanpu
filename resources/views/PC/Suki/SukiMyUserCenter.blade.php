@@ -59,12 +59,13 @@
     <div class="bm_c">
         <div class="user_info">
 
-            <p class="mc_editor" style="    font-size: 14px;text-align: center" data="{{ $data['user_info']->email }}">注册邮箱
-                <span style="    color: #ffb0bb;font-weight: 900;">{{$data['user_info']->email}}</span>
-                等待验证
-            </p>
-            <p style="    font-size: 14px;text-align: center">在此之前无法发表主题和修改个人信息。</p>
+
             @if(session("user_info")->group->groupid == 8)
+                <p class="mc_editor" style="    font-size: 14px;text-align: center" data="{{ $data['user_info']->email }}">注册邮箱
+                    <span style="    color: #ffb0bb;font-weight: 900;">{{$data['user_info']->email}}</span>
+                    等待验证
+                </p>
+                <p style="    font-size: 14px;text-align: center">在此之前无法发表主题和修改个人信息。</p>
                 <p style="text-align: center;margin-top: 20px;">
                     <a style="display: inline-block;padding: 0px 5px 0px 10px;border: 2px solid;border-radius: 10px;font-size: 12px;font-weight: 900;color: #6b5b5b;cursor: pointer;" class="send_code_mail">
                         验证邮件
