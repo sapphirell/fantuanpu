@@ -7,5 +7,4 @@ PHP7<br>
 Swoole(PHP)<br>
 React(JavaScript)<br>
 React-native<br>
-Python3<br>
 欢迎感兴趣的人对此项目提交代码。
