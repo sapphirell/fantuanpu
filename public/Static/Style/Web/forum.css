@@ -158,4 +158,5 @@ h1.thread_title{    padding-top: 27px;}
     .user_medal {
         display: none;
     }
+    .poster_button {position:fixed;bottom: 120px;right: 20px;}
 }

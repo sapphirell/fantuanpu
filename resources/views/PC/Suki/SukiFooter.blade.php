@@ -324,6 +324,23 @@
                 content: ['/suki_clock_setting', 'no']
             });
         });
+        var mini_alert_poster = $("#alert_poster").hasClass("mini")
+        //宽度改变
+        $(window).resize(function () {          //当浏览器大小变化时
+            var height = $(window).width();
+            if (height < 575 && !mini_alert_poster)
+            {
+                $("#alert_poster").addClass("mini");
+                $("#alert_poster .pos_text").text("");
+                mini_alert_poster = true;
+            }
+            if (height > 575 && mini_alert_poster)
+            {
+                $("#alert_poster").removeClass("mini");
+                $("#alert_poster .pos_text").text("我要发帖");
+                mini_alert_poster = false;
+            }
+        });
     })
 
 </script>

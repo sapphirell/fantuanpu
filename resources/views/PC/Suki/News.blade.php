@@ -2,6 +2,7 @@
 <style>
     .wp.index_body {
         margin-top: 50px;
+        position: relative;
     }
     .part_item {
         display: inline-block;
@@ -90,10 +91,44 @@
         color: #ffb0b0;
         text-decoration: none;
     }
+
+    .poster_button {
+        display: inline-block;
+        background: #febec1;
+        border-radius: 5px;
+        color: #fff;
+        height: 40px;
+        padding: 10px 20px;
+        box-sizing: border-box;
+        margin-top: 25px;
+        position: absolute;
+        right: 10px;
+        padding-left: 40px;
+        background-image: linear-gradient(180deg, #FFB4BF 0%, #EF8A96 100%);
+        font-weight: 900;
+    }
+
+    .poster_button .pos_add{
+        font-size: 25px;
+        position: absolute;
+        left: 15px;
+        top: -1px;
+    }
+    #alert_poster.mini .poster_button{
+        width: 16px;
+        padding: 25px 24px 18px 20px;
+        border-radius: 100%;
+        text-align: center;
+        line-height: 38px;
+        top: 200px;
+        box-shadow: 0 0 5px #ff191942;
+    }
 </style>
 <div class="wp index_body">
 
-    <div class="suki_banner"></div>
+    <div class="suki_banner">
+        {{--<img src="/Image/testbanner.jpg">--}}
+    </div>
     <div class="part" style="    overflow-x: auto;white-space: nowrap;display: flex">
 
         @foreach($data['nodes'] as $value)
@@ -104,14 +139,21 @@
             <p>{{$value["name"]}}</p>
         </a>
         @endforeach
+
+        <a style="" id="alert_poster" class="trans">
+            <div class="poster_button">
+                {{--<img src="/Static/image/common/fatie.png" style="width: 40px">--}}
+                <span class="pos_add">+</span>
+                <span class="pos_text">我要发帖</span>
+            </div>
+        </a>
+
     </div>
     <div class="list_container">
         @include('PC.Suki.SukiThreadList')
     </div>
     <a href="/" class="add_more_threadlist trans">加载更多</a>
     @include('PC.Suki.SukiPosterContent')
-    <a style="position:fixed;bottom: 120px;right: 20px;" id="alert_poster">
-        <img src="/Static/image/common/fatie.png" style="width: 40px">
-    </a>
+
 </div>
 @include('PC.Suki.SukiFooter')
