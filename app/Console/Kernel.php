@@ -27,7 +27,8 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
-        $schedule->command('suki:clock')->dailyAt('1:00');
+//        $schedule->command('suki:clock')->dailyAt('1:00');
+        $schedule->command('suki:clock')->cron('* 1 * * *');
 //        $schedule->command('suki:clock')->everyMinute();
     }
 }

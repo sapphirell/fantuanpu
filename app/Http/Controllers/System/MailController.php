@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Mail;
+use Mockery\Matcher\Closure;
 
 class MailController extends Controller
 {
@@ -36,7 +37,7 @@ class MailController extends Controller
      * @param       $blade
      * @param array $param
      */
-    public static function email_to($email,$blade,array $param)
+    public static function email_to($email,$blade,array $param,\Closure $success_fn)
     {
         //检查用户60秒内有没有发送过邮件
         $cacheKey = CoreController::HAS_POST_MAIL_TO;
@@ -59,6 +60,7 @@ class MailController extends Controller
         });
         if ($response == time())
         {
+            call_user_func($success_fn);
             return self::response(['status'=>true],200,'发送成功');
         }
         else

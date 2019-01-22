@@ -66,7 +66,7 @@ class ServeController extends Controller
             $user = User_model::find($uid);
             $param["msg"] = $value;
             $param["subject"] = "Suki闹钟提醒";
-            return MailController::email_to($user->email,"RemindersMail",$param);
+            return MailController::email_to($user->email,"RemindersMail",$param,function () {});
         }
         return "ok";
     }

@@ -203,12 +203,15 @@ class UserBaseController extends Controller
     public function send_validate_email(Request $request)
     {
 //        return self::response();
-        $user = session('user_info');
         $param["msg"] = rand(1000,9999);
         $param["subject"] = "绑定邮箱邮件";
-        Cache::put($user->email, $param["code"], 5);
-
-        return  MailController::email_to($user->email,"BindEmail",$param);
+        $user = session('user_info');
+        return  MailController::email_to(
+            $user->email,$request->input("domain") == 'suki' ? "SukiBindEmail" :"BindEmail",
+            $param,
+            function () use ($user,$param) {
+                Cache::put($user->email, $param["msg"], 5);
+            });
     }
     /**
      * 验证用户邮箱,并更改用户为正式用户

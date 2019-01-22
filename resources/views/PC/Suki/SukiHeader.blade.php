@@ -224,15 +224,15 @@
         <div class="user_info_content">
 
             <div>
-                <a href="" class="user_info_content_value trans">{{$data["count"]["sukithreads"]}}</a>
+                <a href="" class="user_info_content_value trans">{{$data["count"]["sukithreads"]?:0}}</a>
                 <a href=""  class="user_info_content_description trans">帖子</a>
             </div>
             <div>
-                <a href="/suki_relationship?type=my_follow" class="user_info_content_value trans">{{$data["count"]["followsuki"]}}</a>
+                <a href="/suki_relationship?type=my_follow" class="user_info_content_value trans">{{$data["count"]["followsuki"]?:0}}</a>
                 <a href="/suki_relationship?type=my_follow" class="user_info_content_description trans">关注</a>
             </div>
             <div>
-                <a href="/suki_relationship?type=follow_me"  class="user_info_content_value trans">{{$data["count"]['sukifollow']}}</a>
+                <a href="/suki_relationship?type=follow_me"  class="user_info_content_value trans">{{$data["count"]['sukifollow']?:0}}</a>
                 <a href="/suki_relationship?type=follow_me"  class="user_info_content_description trans" >粉丝</a>
             </div>
         </div>

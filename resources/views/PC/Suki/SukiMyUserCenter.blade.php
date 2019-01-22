@@ -58,22 +58,47 @@
     <div class="bm_h white">个人设置</div>
     <div class="bm_c">
         <div class="user_info">
-            <div class="user_info_left">
-                {{avatar($data['user_info']->uid,80,100)}}
-                <p style="    margin-top: 45px;">设置新密码</p>
-                <p style="    margin-top: 100px;">登录邮箱</p>
-            </div>
-            <div class="user_info_right">
-                {{--<input type="text" class="form-control trans" value="{{$data['user_info']->username }}">--}}
-                <p style="text-align: left;    font-weight: 800;">{{$data['user_info']->username }}</p>
-                <textarea class="form-control trans sightml" style="    padding-bottom: 25px;">{{ $data['field_forum']->sightml }}</textarea>
-                <span style="    font-size: 11px;color: #e0e0e0;font-weight: 400;position: relative;     user-select:none;  left: 94px;bottom: 30px;">*最多显示72个字</span>
-                <input type="text" autocomplete="new-password" class="form-control trans old_password" value="" placeholder="请输入原密码">
-                <input type="text" autocomplete="new-password" class="form-control trans new_password" value="" placeholder="请输入新密码">
-                <input type="text" autocomplete="new-password" class="form-control trans repeat_password" value="" placeholder="请重复输入一次">
-                <input type="text" disabled class="form-control trans" value="{{ $data['user_info']->email }}">
-                <input type="submit" class="update_user_button" style="float: right;">
-            </div>
+
+            <p class="mc_editor" style="    font-size: 14px;text-align: center" data="{{ $data['user_info']->email }}">注册邮箱
+                <span style="    color: #ffb0bb;font-weight: 900;">{{$data['user_info']->email}}</span>
+                等待验证
+            </p>
+            <p style="    font-size: 14px;text-align: center">在此之前无法发表主题和修改个人信息。</p>
+            @if(session("user_info")->group->groupid == 8)
+                <p style="text-align: center;margin-top: 20px;">
+                    <a style="display: inline-block;padding: 0px 5px 0px 10px;border: 2px solid;border-radius: 10px;font-size: 12px;font-weight: 900;color: #6b5b5b;cursor: pointer;" class="send_code_mail">
+                        验证邮件
+                        <img width="25" src="/Static/image/common/next.png">
+                    </a>
+                </p>
+                <div class="code_form">
+                    <form action="/validate_email" method="get">
+                        <input type="text" class="form-control score_value" name="code" id="code"  placeholder="验证码">
+
+                        <input type="hidden" value="{{session('user_info')->email}}" id="email" name="email">
+                        <input type="submit" class="enter_for_edit" style="margin: 10px auto;display: block;">
+                    </form>
+                </div>
+            @else
+                <div class="user_info_left">
+                    {{avatar($data['user_info']->uid,80,100)}}
+                    <p style="    margin-top: 45px;">设置新密码</p>
+                    <p style="    margin-top: 100px;">登录邮箱</p>
+
+                </div>
+                <div class="user_info_right">
+                    {{--<input type="text" class="form-control trans" value="{{$data['user_info']->username }}">--}}
+                    <p style="text-align: left;    font-weight: 800;">{{$data['user_info']->username }}</p>
+                    <textarea class="form-control trans sightml" style="    padding-bottom: 25px;">{{ $data['field_forum']->sightml }}</textarea>
+                    <span style="    font-size: 11px;color: #e0e0e0;font-weight: 400;position: relative;     user-select:none;  left: 94px;bottom: 30px;">*最多显示72个字</span>
+                    <input type="text" autocomplete="new-password" class="form-control trans old_password" value="" placeholder="请输入原密码">
+                    <input type="text" autocomplete="new-password" class="form-control trans new_password" value="" placeholder="请输入新密码">
+                    <input type="text" autocomplete="new-password" class="form-control trans repeat_password" value="" placeholder="请重复输入一次">
+                    <input type="text" disabled class="form-control trans" value="{{ $data['user_info']->email }}">
+                    <input type="submit" class="update_user_button" style="float: right;">
+                </div>
+            @endif
+
             <div class="clear"></div>
         </div>
         {{--<div class="user_info">--}}
@@ -100,27 +125,8 @@
                     {{--<div class="uc_table_right">--}}
                         {{--<p class="mc_editor" data="{{ $data['user_info']->email }}">{{$data['user_info']->email}}</p>--}}
 
-                        {{--@if(session("user_info")->group->groupid == 8)--}}
-                            {{--<p>因未验证邮箱,当前无法发表主题,<a class="send_code_mail">点此发送</a>验证邮件</p>--}}
-                        {{--@endif--}}
-                        {{--<div class="code_form">--}}
-                            {{--<form action="/validate_email" method="get">--}}
-                                {{--<div class="form-group">--}}
-                                    {{--<div class="price_group">--}}
-                                        {{--<div class="col-sm-3">--}}
-                                            {{--<input type="text" class="form-control score_value" name="code" id="code"  placeholder="验证码">--}}
-                                        {{--</div>--}}
-                                        {{--<input type="hidden" value="{{session('user_info')->email}}" id="email" name="email">--}}
-                                        {{--<div class="col-sm-3">--}}
-                                            {{--<input type="submit" class="enter_for_edit" style="margin: 0px">--}}
 
-                                        {{--</div>--}}
-                                        {{--<div class="clear"></div>--}}
-                                    {{--</div>--}}
 
-                                {{--</div>--}}
-                            {{--</form>--}}
-                        {{--</div>--}}
                         {{--<input type="text" class="form-control">--}}
                     {{--</div>--}}
                 {{--</div>--}}
@@ -162,11 +168,12 @@
     $(document).ready(function () {
         //申请获得邮箱验证码
         $(".send_code_mail").click(function (e) {
-            $(".send_code_mail").text("请等待...");
+            $(".send_code_mail").text("请等待... "+" ");
             $(".send_code_mail").removeAttr('onclick');
             e.preventDefault();
-            $.get("/send_validate_email",function (res) {
+            $.get("/send_validate_email?domain=suki",function (res) {
                 alert(res.msg)
+                $(".send_code_mail").remove()
                 if (res.ret == 200)
                 {
                     $(".code_form").slideDown();

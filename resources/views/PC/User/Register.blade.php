@@ -107,7 +107,7 @@
             console.log(data)
             $.post('/do-reg',data,function (e) {
                 alert(e.msg)
-                location.reload();
+                parent.location.reload();
             })
         })
     })
