@@ -341,6 +341,22 @@
                 mini_alert_poster = false;
             }
         });
+        //更换头像
+        $(".my_avatar").click(function (e) {
+            e.preventDefault();
+            layer.open({
+                type: 2,
+                title: false,
+                closeBtn: 0, //不显示关闭按钮
+                shade: 0.8,
+                shadeClose: true,
+                // title:'登录',
+                area: ['200px', '260px'],
+                offset: '100px',
+                // skin: 'layui-layer-rim', //加上边框
+                content: ['/update_user_avatar', 'no']
+            });
+        })
     })
 
 </script>

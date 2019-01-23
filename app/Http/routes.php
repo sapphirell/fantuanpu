@@ -37,6 +37,8 @@ Route::group([
     Route::post('/do-checkEmail', ['uses' => 'UserBaseController@checkEmail', 'as' => 'checkEmail']);#emial是否被注册
     Route::get('/validate_email', ['uses' => 'UserBaseController@ValidateEmail', 'as' => 'ValidateEmail']);# 等待验证会员验证电子邮箱
     Route::get('/send_validate_email', ['uses' => 'UserBaseController@send_validate_email', 'as' => 'send_validate_email']);# 等待验证会员验证电子邮箱
+    Route::get('/update_user_avatar', 'UserBaseController@update_user_avatar');#修改用户头像
+    Route::post('/uc-do-upload-avatar', 'UserBaseController@DoUploadAvatar');#修改头像
 });
 Route::group([
     'namespace' => 'Forum',
@@ -90,6 +92,7 @@ Route::group([
     Route::post('/app/get_user_thread', ['uses' => 'UserController@get_user_thread', 'as' => 'user_view']);#获取用户发的帖子
     Route::post('/app/complete_action', ['uses' => 'UserController@complete_action', 'as' => 'complete_action']);#用户完成动作
     Route::post('/app/add_user_coin', ['uses' => 'UserController@add_user_coin', 'as' => 'add_user_coin']);#用户修改资金
+
 });
 
 
@@ -168,9 +171,7 @@ Route::group([
     ],
 ], function () {
     Route::get('/user-center', ['uses' => 'UserBaseController@UserCenter', 'as' => 'UserCenter']);#用户中心
-    Route::post('/uc-do-upload-avatar', 'UserBaseController@DoUploadAvatar');#修改头像
     Route::get('/get_my_message', 'UserBaseController@get_my_message');#获取我的消息
-    Route::get('/update_user_avatar', 'UserBaseController@update_user_avatar');#修改用户头像
     Route::get('/my_thread', ['uses' => 'UserBaseController@my_thread', 'as' => 'get_my_thread']);#我发的帖子
     Route::get('/my_medal', ['uses' => 'UserBaseController@my_medal', 'as' => 'my_medal']);# 我的勋章
     Route::get('/sell_old_medal', ['uses' => 'UserBaseController@sell_old_medal', 'as' => 'my_medal']);# 卖掉旧版勋章
