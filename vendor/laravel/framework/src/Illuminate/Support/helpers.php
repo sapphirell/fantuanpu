@@ -1069,7 +1069,6 @@ if (! function_exists('bbcode2html')) {
         }
 
         $message = str_replace("&amp;nbsp;"," ",$message);
-
         if($_G['setting']['plugins']['func'][HOOKTYPE]['discuzcode']) {
             $_G['discuzcodemessage'] = & $message;
             $param = func_get_args();

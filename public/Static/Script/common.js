@@ -1,7 +1,8 @@
 function html2ubb(str){
-    //str = str.replace(/(\r\n|\n|\r)/ig, '');
+    str = str.replace(/(\r\n|\n|\r)/ig, '');
     str = str.replace(/<br[^>]*>/ig,'\n');
     str = str.replace(/<p[^>\/]*\/>/ig,'\n');
+    str = str.replace(/\/p>/ig, '\/p>\r\n');
     //str = str.replace(/\[code\](.+?)\[\/code\]/ig, function($1, $2) {return phpcode($2);});
     str = str.replace(/\son[\w]{3,16}\s?=\s*([\'\"]).+?\1/ig,'');
 

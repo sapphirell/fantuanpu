@@ -41,9 +41,9 @@
                     <label class="btn btn-primary btn-upload"  style="padding: 4px 12px;    margin: 0px;"  for="inputImage" title="Upload image file">
                         <input type="file" class="sr-only" id="inputImage" name="file" accept="image/*">
                         <span class="docs-tooltip" data-toggle="tooltip" title="" data-original-title="Import image with Blob URLs">
-                    选择
-                    <span class="fa fa-upload"></span>
-                    </span>
+                        选择
+                        <i class="fa fa-upload"></i>
+                        </span>
                     </label>
 
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
