@@ -226,9 +226,10 @@ Route::group([
     Route::get('/suki_tribunal', ['uses' => 'SukiWebController@suki_tribunal', 'as' => 'suki_tribunal']);#suki法庭,公示墙
     Route::get('/suki_search', ['uses' => 'SukiWebController@suki_search', 'as' => 'suki_search']);#suki搜索
 
+
     Route::get('/suki-thread', ['uses' => 'SukiWebApiController@get_thread', 'as' => 'get_thread']);#获取suki的帖子
     Route::post('/suki-new-thread', ['uses' => 'SukiWebApiController@suki_new_thread', 'as' => 'suki-new-thread']);#获取suki的帖子
-
+    Route::post('/suki_next_page', ['uses' => 'SukiWebApiController@suki_next_page', 'as' => 'suki_next_page']);#看下一页帖子 suki
 
 
 });

@@ -304,4 +304,21 @@ class SukiWebApiController extends Controller
         User_model::flushUserCache($this->data['user_info']->uid);
         return self::response();
     }
+    //获取suki下一页帖子
+    public function suki_next_page(Request $request,Thread_model $thread_model)
+    {
+        if (empty($request->input('tid')))
+            return self::response([],40001,'缺少tid');
+        if (empty($request->input('page')))
+            return self::response([],40001,'缺少page');
+
+        $data = $thread_model->getPostOfThread($request->input('tid'),$request->input('page'));
+        foreach ($data as &$value)
+        {
+            $value->avatar = config('app.online_url').\App\Http\Controllers\User\UserHelperController::GetAvatarUrl($value>authorid);
+        }
+        $anonymous = in_array($data[0]->fid,self::$anonymous_forum);
+
+        return $request->input('need') == 'html' ? view("PC/Suki/SukiReply")->with('data',['thread_post'=>$data,'anonymous'=>$anonymous]): self::response($data);
+    }
 }

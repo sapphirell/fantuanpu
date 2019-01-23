@@ -233,15 +233,22 @@
         </div>
         <div class="author-message" style="">
             <div class="user_info author" style="display: inline-block;width: 160px">
+                @if($data['thread']['thread_subject']->anonymous == 2)
+                    <span >{{avatar(0,120,5,'author-avatar','big')}}</span>
+                    <a  href="suki-userhome-{{$data['thread']['thread_subject']->authorid}}.html">
+                        <p class="author-sign" style="width: inherit;width: inherit;margin: 8px;color: #b7b7b7;">
+                            {{$data['thread']['thread_subject']->anonymous == 2 ? "" : ($data['field_forum']->sightml?:"暂未设置签名") }}
+                        </p>
+                    </a>
+                @else
+                    <a  href="suki-userhome-{{$data['thread']['thread_subject']->authorid}}.html">{{avatar($data['thread']['thread_subject']->authorid,120,5,'author-avatar','big')}}</a>
+                    <a  href="suki-userhome-{{$data['thread']['thread_subject']->authorid}}.html">
+                        <p class="author-sign" style="width: inherit;width: inherit;margin: 8px;color: #b7b7b7;">
+                            {{$data['thread']['thread_subject']->anonymous == 2 ? "" : ($data['field_forum']->sightml?:"暂未设置签名") }}
+                        </p>
+                    </a>
 
-                <a  href="suki-userhome-{{$data['thread']['thread_subject']->authorid}}.html">{{
-                 avatar($data['thread']['thread_subject']->anonymous == 2 ? 0 :$data['thread']['thread_subject']->authorid,120,5,'author-avatar','big')
-                }}</a>
-                <a  href="suki-userhome-{{$data['thread']['thread_subject']->authorid}}.html">
-                    <p class="author-sign" style="width: inherit;width: inherit;margin: 8px;color: #b7b7b7;">
-                        {{$data['thread']['thread_subject']->anonymous == 2 ? "" : ($data['field_forum']->sightml?:"暂未设置签名") }}
-                    </p>
-                </a>
+                @endif
 
 
 
@@ -278,12 +285,16 @@
 
                                 <div style="width: 80px;display: inline-block;float: left;    margin-right: 15px;">
 
-                                    <a href="/suki-userhome-{{$value->authorid}}.html" style="cursor: pointer">
-                                        {{avatar($data['thread']['thread_subject']->anonymous == 2 ? 0 :$value->authorid,80,100,'post-avatar','normal')}}
-                                    </a>
+
                                     @if($data['thread']['thread_subject']->anonymous == 2)
+                                        <span>
+                                            {{avatar(0,80,100,'post-avatar','normal')}}
+                                        </span>
                                         <p style="color: #544349;width: 80px;text-align: center;display: inline-block;margin-top: 5px">匿名</p>
                                     @else
+                                        <a href="/suki-userhome-{{$value->authorid}}.html" style="cursor: pointer">
+                                            {{avatar($value->authorid,80,100,'post-avatar','normal')}}
+                                        </a>
                                         <a href="suki-userhome-{{$value->authorid}}.html" style="color: #544349;width: 80px;text-align: center;display: inline-block;margin-top: 5px">{{$value->author}}</a>
                                     @endif
 
@@ -389,7 +400,7 @@
         });
         var next_page = 2;
         $(".get_more_posts").click(function (e) {
-            $.post('/app/post_next_page',{page:next_page,tid:tid,need:"html"},function (event) {
+            $.post('/suki_next_page',{page:next_page,tid:tid,need:"html"},function (event) {
                 $(".post_item:last").after(event);
                 console.log(event)
                 if (!event)
