@@ -83,6 +83,7 @@ class ThreadApiController extends Controller
             }
         }
         $this->threadModel->replies = 1;
+        $this->threadModel->anonymous = in_array($fid,self::$anonymous_forum) ? 2 : 1;
         $from == "suki" && $this->threadModel->ascription = 2;
         $this->threadModel->save();
         /**

@@ -213,7 +213,7 @@
 <div class="wp web_body " style="margin-top: 10px;">
     <div style="background: #FFFFFF;margin: 15px;padding: 15px;border-radius: 5px;box-shadow: 2px 3px 3px #e4e4e4;position: relative;    margin-bottom: 0px;">
         <div class="title_container">
-            <span class="author-name" style="">{{$data['thread']['thread_subject']->author}}</span>
+            <span class="author-name" style="">{{$data['thread']['thread_subject']->anonymous == 2 ? "匿名" : $data['thread']['thread_subject']->author}}</span>
             <h1 style="display:inline-block;font-size: 15px;font-family: 微软雅黑;font-weight: 900;text-align: left;">{{$data['thread']['thread_subject']->subject}}</h1>
                 <a  style="text-decoration-line: none;float: right;" class="do_follow"
                     title="收藏"
@@ -234,8 +234,14 @@
         <div class="author-message" style="">
             <div class="user_info author" style="display: inline-block;width: 160px">
 
-                <a  href="suki-userhome-{{$data['thread']['thread_subject']->authorid}}.html">{{avatar($data['thread']['thread_subject']->authorid,120,5,'author-avatar','big')}}</a>
-                <a  href="suki-userhome-{{$data['thread']['thread_subject']->authorid}}.html"><p class="author-sign" style="width: inherit;width: inherit;margin: 8px;color: #b7b7b7;">未设置用户签名</p></a>
+                <a  href="suki-userhome-{{$data['thread']['thread_subject']->authorid}}.html">{{
+                 avatar($data['thread']['thread_subject']->anonymous == 2 ? 0 :$data['thread']['thread_subject']->authorid,120,5,'author-avatar','big')
+                }}</a>
+                <a  href="suki-userhome-{{$data['thread']['thread_subject']->authorid}}.html">
+                    <p class="author-sign" style="width: inherit;width: inherit;margin: 8px;color: #b7b7b7;">
+                        {{$data['thread']['thread_subject']->anonymous == 2 ? "" : ($data['field_forum']->sightml?:"暂未设置签名") }}
+                    </p>
+                </a>
 
 
 
@@ -273,11 +279,13 @@
                                 <div style="width: 80px;display: inline-block;float: left;    margin-right: 15px;">
 
                                     <a href="/suki-userhome-{{$value->authorid}}.html" style="cursor: pointer">
-                                        {{avatar($value->authorid,80,100,'post-avatar','normal')}}
+                                        {{avatar($data['thread']['thread_subject']->anonymous == 2 ? 0 :$value->authorid,80,100,'post-avatar','normal')}}
                                     </a>
-
+                                    @if($data['thread']['thread_subject']->anonymous == 2)
+                                        <p style="color: #544349;width: 80px;text-align: center;display: inline-block;margin-top: 5px">匿名</p>
+                                    @else
                                         <a href="suki-userhome-{{$value->authorid}}.html" style="color: #544349;width: 80px;text-align: center;display: inline-block;margin-top: 5px">{{$value->author}}</a>
-
+                                    @endif
 
                                 </div>
                                 <div class="post_content" style="width: 70%;display: inline-block;float:left;">
