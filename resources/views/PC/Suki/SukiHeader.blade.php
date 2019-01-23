@@ -58,20 +58,27 @@
         .user_info_panel a:hover {
             color: #F09C9C!important;
         }
+        .user_info_panel_box {
+            position: fixed;
+            margin: 0 auto;
+            display: block;
+            width: 960px;
+            z-index: 1000001;
+        }
         .user_info_panel {
             background: #fff;
-            position: fixed;
+            position: absolute;
             width: 250px;
             height: 320px;
             top: 48px;
-            /* left: 10px; */
+            right: 10px;
             box-shadow: 0 0 15px #0000001c;
             display: none;
-            z-index: 1000001;
+
             animation-duration: 0.55s;
             /*display: block;*/
             border-radius: 13px;
-            overflow: hidden;
+            /*overflow: hidden;*/
             padding-top: 5px;
             margin-left: 5px;
         }
@@ -140,6 +147,28 @@
         {
             color: #cccccc !important;
         }
+        .user_info_btn:hover {
+            box-shadow: 0 -25px 21px inset #f3abba!important;
+        }
+        .triangle_border_up{
+            width: 0;
+            height: 0;
+            border-width: 0px 12px 10px;
+            border-style: solid;
+            border-color: transparent transparent #fff;
+            margin: 7px auto;
+            position: absolute;
+            top: -15px;
+            right: 20px;
+        }
+
+        @media screen and (max-width: 960px) {
+            .user_info_panel {
+                position: fixed;
+                right: 10px;
+            }
+
+        }
     </style>
 </head>
 
@@ -157,20 +186,13 @@
 
 
 <div class="header pink_bg">
-
-    <p class="title none_960">
-        <a href="{{\App\Http\Controllers\Controller::LOLITA_DOMAIN}}" style="font-weight: 900;text-shadow: 0 0 3px #af2e2e;"><img style="width: 60px;margin: 4px;" src="/Image/SUKI.png"></a>
-    </p>
     <div style="max-width: 960px;margin: 0 auto;">
-        <h1 style="display: inline;margin:0px;float:right;"></h1>
-        <div class="search">
-            <from action="">
-                <input type="text" name="" class="search_box trans" placeholder="Searching..">
-                <i style="color: #fcd4d1;position: relative;left: -32px;top: -2.3px;font-size: 14px;text-shadow: 0 0 3px #f7dfdc;" class="fa fa-search fa-fw fa-lg toggle_search"></i>
-            </from>
+        <p class="title none_960">
+            <a href="{{\App\Http\Controllers\Controller::LOLITA_DOMAIN}}" style="font-weight: 900;text-shadow: 0 0 3px #af2e2e;margin-left: 20px;"><img style="width: 60px;margin: 4px;" src="/Image/SUKI.png"></a>
+        </p>
+        {{--<h1 style="display: inline;margin:0px;float:right;"></h1>--}}
 
-        </div>
-        <ul class='hd'>
+        <ul style="float: right;" class='hd'>
             @if(session("user_info")->uid)
                 <li class="trans user_info_btn" style="    padding: 5px;border-radius: 100%;margin-right: 20px">
                     {{avatar(session("user_info")->uid,30,50,"","big")}}
@@ -180,6 +202,15 @@
                     <img src="/Image/denglu-copy.png" style="width: 30px;border: 2px solid #fff;padding: 2px;border-radius: 100%;">
                 </li>
             @endif
+        </ul>
+        <div class="search">
+            <from action="">
+                <input type="text" name="" class="search_box trans" placeholder="Searching..">
+                <i style="color: #fcd4d1;position: relative;left: -34px;top: -2.3px;font-size: 14px;text-shadow: 0 0 3px #f7dfdc;" class="fa fa-search fa-fw fa-lg toggle_search"></i>
+            </from>
+        </div>
+        <ul class='hd'>
+
             {{--<li class="trans">--}}
                 {{--<a href="/"  class="header_items">--}}
                     {{--<i class="fa fa-home fa-fw fa-lg" style="color: #ffffff;line-height: 23px"></i>--}}
@@ -189,13 +220,15 @@
             {{--</li>--}}
             <li class="trans">
                 <a href="/"  class="header_items">
-                    <i class="fa fa-comments-o fa-fw fa-lg"  style="color: #ffffff;line-height: 23px"></i>
+                    {{--<i class="fa fa-comments-o fa-fw fa-lg"  style="color: #ffffff;line-height: 23px"></i>--}}
+                    <img src="/Image/home.png" style="width: 20px;">
                     <p class="none_960" style="color: #fff;display: inline-block">交流</p>
                 </a>
             </li>
                 <li class="trans">
                     <a href="/suki_tribunal"  class="header_items">
-                        <i class="fa  fa-gavel fa-fw fa-lg"  style="color: #ffffff;line-height: 23px"></i>
+                        {{--<i class="fa  fa-gavel fa-fw fa-lg"  style="color: #ffffff;line-height: 23px"></i>--}}
+                        <img src="/Image/xinyu.png" style="width: 20px;">
                         <p class="none_960" style="color: #fff;display: inline-block">信誉墙</p>
                     </a>
                 </li>
@@ -208,54 +241,61 @@
 
 </div>
 <div class="wp">
-    <div class="user_info_panel animated ">
-        <div class="my_avatar shadow" style="    margin-top: 10px;display: inline-block;float: left;width: 60px;height: 60px; border-radius: 100%;overflow: hidden;position: relative;margin: 12px 20px 12px 32px;">
-            <div class="ava_glass" style="    display: inline-block;float: left;width: 60px;height: 60px;position: absolute;background: url(/Image/real-trans.png);display: none;cursor: pointer;">
-                <span style="    position: absolute;bottom: 5px;width: 60px;display: inline-block;text-align: center;color: #fff;font-size: 12px;">更换</span>
-            </div>
-            {{avatar($data["user_info"]->uid,60,50,"","big")}}
-        </div>
-        {{--<div style="display: inline-block;float:left;      margin: 10px 20px 12px 20px;"></div>--}}
-        <div style="float:left;">
-            <h2 style="     font-size: 17px;color: #6a6c7f;margin-top: 15px;">{{$data["user_info"]->username}}</h2>
-            <p style="    width: 100px;font-size: 12px;color: #8e8e8e;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">{{ $data['field_forum']->sightml ?: "暂未设置签名档" }}</p>
-        </div>
-        <div class="clear"></div>
-        <div class="user_info_content">
+    <div class="user_info_panel_box">
 
-            <div>
-                <a href="" class="user_info_content_value trans">{{$data["count"]["sukithreads"]?:0}}</a>
-                <a href=""  class="user_info_content_description trans">帖子</a>
+        <div class="user_info_panel animated ">
+            <div class="triangle_border_up">
+                <span></span>
             </div>
-            <div>
-                <a href="/suki_relationship?type=my_follow" class="user_info_content_value trans">{{$data["count"]["followsuki"]?:0}}</a>
-                <a href="/suki_relationship?type=my_follow" class="user_info_content_description trans">关注</a>
+            <div class="my_avatar shadow" style="    margin-top: 10px;display: inline-block;float: left;width: 60px;height: 60px; border-radius: 100%;overflow: hidden;position: relative;margin: 12px 20px 12px 32px;">
+                <div class="ava_glass" style="    display: inline-block;float: left;width: 60px;height: 60px;position: absolute;background: url(/Image/real-trans.png);display: none;cursor: pointer;">
+                    <span style="    position: absolute;bottom: 5px;width: 60px;display: inline-block;text-align: center;color: #fff;font-size: 12px;">更换</span>
+                </div>
+                {{avatar($data["user_info"]->uid,60,50,"","big")}}
             </div>
-            <div>
-                <a href="/suki_relationship?type=follow_me"  class="user_info_content_value trans">{{$data["count"]['sukifollow']?:0}}</a>
-                <a href="/suki_relationship?type=follow_me"  class="user_info_content_description trans" >粉丝</a>
+            {{--<div style="display: inline-block;float:left;      margin: 10px 20px 12px 20px;"></div>--}}
+            <div style="float:left;">
+                <h2 style="     font-size: 17px;color: #6a6c7f;margin-top: 15px;">{{$data["user_info"]->username}}</h2>
+                <p style="    width: 100px;font-size: 12px;color: #8e8e8e;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">{{ $data['field_forum']->sightml ?: "暂未设置签名档" }}</p>
             </div>
+            <div class="clear"></div>
+            <div class="user_info_content">
+
+                <div>
+                    <a href="" class="user_info_content_value trans">{{$data["count"]["sukithreads"]?:0}}</a>
+                    <a href=""  class="user_info_content_description trans">帖子</a>
+                </div>
+                <div>
+                    <a href="/suki_relationship?type=my_follow" class="user_info_content_value trans">{{$data["count"]["followsuki"]?:0}}</a>
+                    <a href="/suki_relationship?type=my_follow" class="user_info_content_description trans">关注</a>
+                </div>
+                <div>
+                    <a href="/suki_relationship?type=follow_me"  class="user_info_content_value trans">{{$data["count"]['sukifollow']?:0}}</a>
+                    <a href="/suki_relationship?type=follow_me"  class="user_info_content_description trans" >粉丝</a>
+                </div>
+            </div>
+            <div class="user_info_item">
+                <ul class="panel_btn_list">
+                    <li class="trans rough"><a href="" class="trans"><img style="" src="/Image/star-pink.png">我的收藏</a></li>
+                    <li class="trans rough"><a href="" class="trans"><img style="" src="/Image/history.png">浏览历史</a></li>
+                    <li class="trans"><a href="/suki_relationship?type=friends" class="trans"><img style="" src="/Image/friends.png">通讯录</a></li>
+                    <li class="trans rough"><a href="" class="trans"><img style="" src="/Image/nearby.png">附近同好</a></li>
+                    <li class="trans"><a href="/suki_user_info" class="trans"><img style="" src="/Image/print.png">个人信息</a></li>
+                    <li class="trans"><a href="/suki_notice?type=reply_me" class="trans"><img style="" src="/Image/tixing2.png">站内消息</a></li>
+                    <li class="trans">
+                        <a href="/suki_alarm_clock?type=view" class="trans"><img style="" src="/Image/tixing2.png">补款闹钟</a>
+                        <span style="    font-size: 10px;font-weight: 400;color: #bf0000;position: absolute;" title="...这个new似乎没有意义">new</span>
+                    </li>
+
+
+                </ul>
+            </div>
+
+            <a style="    position: absolute;bottom: 0px;width: 100%;text-align: center;    background: #f3f2f2;padding: 5px;" href="/logout">
+                <span style="font-size: 14px;color: #a99595;font-weight: 900;border-radius: 0 0 13px 13px;font-size: 12px;">退出登录</span>
+                <img src="/Image/tuichu1.png" style="width: 14px;padding-bottom: 4px;" >
+            </a>
         </div>
-        <div class="user_info_item">
-            <ul class="panel_btn_list">
-            <li class="trans rough"><a href="" class="trans"><img style="" src="/Image/star-pink.png">我的收藏</a></li>
-            <li class="trans rough"><a href="" class="trans"><img style="" src="/Image/history.png">浏览历史</a></li>
-            <li class="trans"><a href="/suki_relationship?type=friends" class="trans"><img style="" src="/Image/friends.png">通讯录</a></li>
-            <li class="trans rough"><a href="" class="trans"><img style="" src="/Image/nearby.png">附近同好</a></li>
-            <li class="trans"><a href="/suki_user_info" class="trans"><img style="" src="/Image/print.png">个人信息</a></li>
-            <li class="trans"><a href="/suki_notice?type=reply_me" class="trans"><img style="" src="/Image/tixing2.png">站内消息</a></li>
-            <li class="trans">
-                <a href="/suki_alarm_clock?type=view" class="trans"><img style="" src="/Image/tixing2.png">补款闹钟</a>
-                <span style="    font-size: 10px;font-weight: 400;color: #bf0000;position: absolute;" title="...这个new似乎没有意义">new</span>
-            </li>
-
-
-            </ul>
-        </div>
-
-        <a style="    position: absolute;bottom: 0px;width: 100%;text-align: center;    background: #f3f2f2;padding: 5px;" href="/logout">
-            <span style="font-size: 14px;color: #a99595;font-weight: 900;    font-size: 12px;">退出登录</span>
-            <img src="/Image/tuichu1.png" style="width: 14px;padding-bottom: 4px;" >
-        </a>
     </div>
+
 </div>

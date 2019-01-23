@@ -10,11 +10,13 @@
         margin:10px;
         cursor: pointer;
         background: #fbfbfb;
-        padding: 10px;
+        padding: 7px;
         border: 3px solid #a8c3c1;
         border-radius: 5px;
         border: 3px solid #fbfbfb;
         text-decoration: none;
+        width: 60px;
+        height: 80px;
     }
     .part_item:hover,.part_item:active{
         text-decoration: none;
@@ -49,10 +51,11 @@
     }
     .selected_part_item {
         background: #fff2f1;
-        padding: 10px;
+        padding: 7px;
         border: 3px solid #ffdcde;
         border-radius: 5px;
-        width: 66px;
+        width: 60px;
+        height: 80px;
     }
 
     .w-e-toolbar{
@@ -104,15 +107,15 @@
         position: absolute;
         right: 10px;
         padding-left: 40px;
-        background-image: linear-gradient(180deg, #FFB4BF 0%, #EF8A96 100%);
+        background-image: linear-gradient(0deg, #FEBCC6 0%, #fba3ad 14%, #ffb9c2 100%);
         font-weight: 900;
     }
 
     .poster_button .pos_add{
-        font-size: 25px;
         position: absolute;
+        width: 15px;
         left: 15px;
-        top: -1px;
+        top: 11px;
     }
     #alert_poster.mini .poster_button{
         width: 16px;
@@ -142,7 +145,7 @@
     <div class="part" style="    overflow-x: auto;white-space: nowrap;display: flex">
 
         @foreach($data['nodes'] as $value)
-        <a href="/forum-{{$value['fid']}}-1.html"  class="part_item fid_{{$value["fid"]}}" fid="{{$value["fid"]}}">
+        <a href="/forum-{{$value['fid']}}-1.html"  class="trans part_item fid_{{$value["fid"]}}" fid="{{$value["fid"]}}">
             <div class="appimage">
                 <img src="{{$value['appimage']}}">
             </div>
@@ -153,7 +156,8 @@
         <a style="" id="alert_poster" class="trans">
             <div class="poster_button trans">
                 {{--<img src="/Static/image/common/fatie.png" style="width: 40px">--}}
-                <span class="pos_add">+</span>
+                {{--<span class="pos_add">+</span>--}}
+                <img src="/Image/plus.png" class="pos_add">
                 <span class="pos_text">我要发帖</span>
             </div>
         </a>

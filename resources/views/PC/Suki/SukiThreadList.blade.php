@@ -23,7 +23,7 @@
                         <p>
                             <a href="suki-thread-{{$value['tid']}}-1.html" style="font-size: 15px;color: #754242;margin-bottom: 3px;display: inline-block;font-weight: 700;"  target="_blank">{{$value['subject']}}</a>
                             <span style="color: #000000">(+{{$value['replies']}})</span>
-                            <span class="show_date" style="color: #ccc;cursor: pointer;padding: 5px;float: right;">{{ format_time($value['lastpost']) }}</span>
+                            <span class="show_date" style="color: #ccc;cursor: pointer;padding: 5px;float: right;font-size: 12px">{{ format_time($value['lastpost']) }}</span>
                         </p>
                         <p>
                             <span style="color: #ccc;">{{$value['suki_fname']}} · </span>
@@ -31,7 +31,7 @@
                             <span style="color: #ccc;">点赞  {{$value['star']}}</span>
                         </p>
                         {{--<br>--}}
-                        <p style="display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 3;overflow: hidden;">{{$value['preview']}}</p>
+                        <p style="display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 1;    padding-right: 50px;overflow: hidden;">{{$value['preview']}}</p>
                         @if(!empty($value['subject_images']))
                             <div class="thread_image_list" style="width:100%;float: left;">
                                 @foreach($value['subject_images'] as $image)
