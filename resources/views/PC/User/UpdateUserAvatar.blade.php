@@ -30,86 +30,86 @@
     body {background: #ffffff}
 </style>
 <div class="" style="background: #ffffff">
+    <div>
+        <div style="margin-top: 20px">
+            <form action="/uc-do-upload-avatar" method="post" enctype="multipart/form-data" style="    margin: 0 auto;width: 200px;text-align: center;">
+                <div style="width: inherit;height: 200px;box-shadow: 0px -1px 4px #ddd;">
+                    {{avatar(session('user_info')->uid,200,0,'user_change_avatar','big')}}
+                    {{--<img src="" id="user_change_avatar">--}}
+                </div>
+                <div style="margin-top: 20px;">
+                    <label class="btn btn-primary btn-upload"  style="padding: 4px 12px;    margin: 0px;"  for="inputImage" title="Upload image file">
+                        <input type="file" class="sr-only" id="inputImage" name="file" accept="image/*">
+                        <span class="docs-tooltip" data-toggle="tooltip" title="" data-original-title="Import image with Blob URLs">
+                    选择
+                    <span class="fa fa-upload"></span>
+                    </span>
+                    </label>
 
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    <input type="submit" style="margin: 0px;" class="btn btn-default" value="裁切">
+                    <input id="setCanvasData" type="hidden" name="position">
+                </div>
 
-                <form action="/uc-do-upload-avatar" method="post" enctype="multipart/form-data" style="    margin: 0 auto;width: 200px;text-align: center;">
-                    <div style="width: inherit;height: 200px;box-shadow: 0px -1px 4px #ddd;">
-                        {{avatar(session('user_info')->uid,200,0,'user_change_avatar','big')}}
-                        {{--<img src="" id="user_change_avatar">--}}
-                    </div>
-                    <div style="margin-top: 20px;">
-                        <label class="btn btn-primary btn-upload"  style="padding: 4px 12px;"  for="inputImage" title="Upload image file">
-                            <input type="file" class="sr-only" id="inputImage" name="file" accept="image/*">
-                            <span class="docs-tooltip" data-toggle="tooltip" title="" data-original-title="Import image with Blob URLs">
-                        选择
-                        <span class="fa fa-upload"></span>
-                        </span>
-                        </label>
-
-                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                        <input type="submit" class="btn btn-default" value="确定头像">
-                        <input id="setCanvasData" type="hidden" name="position">
-                    </div>
-
-                </form>
-
+            </form>
         </div>
     </div>
     <div class="clear"></div>
-    <script src="/Static/Script/cropper/cropper.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
 
-            $('.user_change_avatar').cropper({
-                aspectRatio: 1/1,
-                crop: function(e) {
-                    console.log(e.detail.height);
-                    //生成JSON字串
-                    var CanvasX = e.detail.x.toFixed(0);
-                    var CanvasY = e.detail.y.toFixed(0);
-                    var CanvasWidth = e.detail.width.toFixed(0);
-                    var CanvasHeight = e.detail.height.toFixed(0);
+</div>
+<script src="/Static/Script/cropper/cropper.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
 
-                    $('#setCanvasData').val('{"x":"'+CanvasX+'","y":"'+CanvasY+'","width":"'+CanvasWidth+'","height":"'+CanvasHeight+'"}');
-                }
-            });
+        $('.user_change_avatar').cropper({
+            aspectRatio: 1/1,
+            crop: function(e) {
+                console.log(e.detail.height);
+                //生成JSON字串
+                var CanvasX = e.detail.x.toFixed(0);
+                var CanvasY = e.detail.y.toFixed(0);
+                var CanvasWidth = e.detail.width.toFixed(0);
+                var CanvasHeight = e.detail.height.toFixed(0);
 
-            $('.docs-tooltip').click(function () {
-                var $image = $('.user_change_avatar');
-                var $inputImage = $('#inputImage');
-                var URL = window.URL || window.webkitURL;
-                var blobURL;
+                $('#setCanvasData').val('{"x":"'+CanvasX+'","y":"'+CanvasY+'","width":"'+CanvasWidth+'","height":"'+CanvasHeight+'"}');
+            }
+        });
 
-                if (URL) {
-                    $inputImage.change(function () {
-                        var files = this.files;
-                        var file;
+        $('.docs-tooltip').click(function () {
+            var $image = $('.user_change_avatar');
+            var $inputImage = $('#inputImage');
+            var URL = window.URL || window.webkitURL;
+            var blobURL;
 
-                        if (!$image.data('cropper')) {
-                            return;
+            if (URL) {
+                $inputImage.change(function () {
+                    var files = this.files;
+                    var file;
+
+                    if (!$image.data('cropper')) {
+                        return;
+                    }
+
+                    if (files && files.length) {
+                        file = files[0];
+
+                        if (/^image\/\w+$/.test(file.type)) {
+                            blobURL = URL.createObjectURL(file);
+                            $image.one('built.cropper', function () {
+                                URL.revokeObjectURL(blobURL);
+                            }).cropper('reset').cropper('replace', blobURL);
+
+                        } else {
+                            window.alert('请选择一个图片');
                         }
-
-                        if (files && files.length) {
-                            file = files[0];
-
-                            if (/^image\/\w+$/.test(file.type)) {
-                                blobURL = URL.createObjectURL(file);
-                                $image.one('built.cropper', function () {
-                                    URL.revokeObjectURL(blobURL);
-                                }).cropper('reset').cropper('replace', blobURL);
-
-                            } else {
-                                window.alert('请选择一个图片');
-                            }
-                        }
-                    })
-                }
-
-            })
-
-
+                    }
+                })
+            }
 
         })
 
-    </script>
-</div>
+
+
+    })
+
+</script>

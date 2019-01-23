@@ -1058,7 +1058,6 @@ if (! function_exists('bbcode2html')) {
         if($parsetype != 1 && !$bbcodeoff && $allowbbcode && (strpos($message, '[/code]') || strpos($message, '[/CODE]')) !== FALSE) {
             $message = preg_replace("/\s?\[code\](.+?)\[\/code\]\s?/ies", "codedisp('\\1')", $message);
         }
-
         $msglower = strtolower($message);
 
         $htmlon = $htmlon && $allowhtml ? 1 : 0;
@@ -1068,6 +1067,8 @@ if (! function_exists('bbcode2html')) {
         } else {
             $message = preg_replace("/<script[^\>]*?>(.*?)<\/script>/i", '', $message);
         }
+
+        $message = str_replace("&amp;nbsp;"," ",$message);
 
         if($_G['setting']['plugins']['func'][HOOKTYPE]['discuzcode']) {
             $_G['discuzcodemessage'] = & $message;

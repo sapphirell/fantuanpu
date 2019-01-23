@@ -254,11 +254,11 @@
 
 
             </div>
-            <div class="author_message" style="width: 100%;float:left;flex-grow: 1;padding-left: 10px;">
-                <div class="bbcode_container">
+            <div class="author_message" style="width: 100%;float:left;flex-grow: 1;padding-left: 10px;position: relative">
+                <div class="bbcode_container clear">
                     {!! bbcode2html($data['thread']['thread_post'][0]->message) !!}
                 </div>
-                <p style="    font-size: 12px;position: absolute;bottom: 6px;right: 8px;color: #ccc9c9;">
+                <p style="    font-size: 12px;position: absolute;right: 8px;color: #ccc9c9;bottom: 0px">
                     {{$data['thread']['thread_subject']->dateline}}
                     查看
                     {{$data['thread']['thread_subject']->views}}
