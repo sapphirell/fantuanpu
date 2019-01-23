@@ -123,6 +123,16 @@
         top: 200px;
         box-shadow: 0 0 5px #ff191942;
     }
+    @media screen and (max-width: 575px) {
+        .poster_button {     width: 16px;
+            padding: 25px 24px 18px 20px;
+            border-radius: 100%;
+            text-align: center;
+            line-height: 38px;
+            top: 200px;
+            box-shadow: 0 0 5px #ff191942;}
+        .pos_text {display: none}
+    }
 </style>
 <div class="wp index_body">
 
@@ -141,7 +151,7 @@
         @endforeach
 
         <a style="" id="alert_poster" class="trans">
-            <div class="poster_button">
+            <div class="poster_button trans">
                 {{--<img src="/Static/image/common/fatie.png" style="width: 40px">--}}
                 <span class="pos_add">+</span>
                 <span class="pos_text">我要发帖</span>
