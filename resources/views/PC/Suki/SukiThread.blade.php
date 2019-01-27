@@ -3,7 +3,6 @@
 
 
 <script src="/Static/Script/Web/forum.js"></script>
-<script type="text/javascript" src="/Static/Script/wangEditor/wangEditor.js"></script>
 <style>
     .fourm_thread_items {    padding: 5px 8px;background: #ffffff}
     .pstatus{
@@ -176,13 +175,19 @@
     }
     .post_msg {
         padding-bottom: 7px;
-        border-radius: 10px;
+        border-radius: 5px;
         box-shadow: 0px 1px 3px #d4d2d2;
         margin-bottom: 0px;
     }
     .post_content
     {
         padding-bottom: 35px;
+    }
+    .fa-angle-down:hover:before {
+        color: #F09C9C;
+    }
+    .w-e-text blockquote {
+        border:0px;
     }
 </style>
 <script>
@@ -211,22 +216,22 @@
 <body>
 
 <div class="wp web_body " style="margin-top: 10px;">
-    <div style="background: #FFFFFF;margin: 15px;padding: 15px;border-radius: 5px;box-shadow: 2px 3px 3px #e4e4e4;position: relative;    margin-bottom: 0px;">
+    <div style="background: #FFFFFF;margin: 15px;padding: 15px;padding-bottom:0px;border-radius: 5px;box-shadow: 0px 1px 3px #e4e4e4;position: relative;    margin-bottom: 0px;">
         <div class="title_container">
             <span class="author-name" style="">{{$data['thread']['thread_subject']->anonymous == 2 ? "匿名" : $data['thread']['thread_subject']->author}}</span>
             <h1 style="display:inline-block;font-size: 15px;font-family: 微软雅黑;font-weight: 900;text-align: left;">{{$data['thread']['thread_subject']->subject}}</h1>
-                <a  style="text-decoration-line: none;float: right;" class="do_follow"
-                    title="收藏"
-                    status="@if($data['has_collection'] === true){{"unfollow"}}@else{{"follow"}}@endif"
-                >
-                    @if($data['has_collection'] == true)
-                        <img src="/Static/image/common/collection_pre.png" style="line-height: 12px;display: inline-block;padding-bottom: 5px;">
-                    @else
-                        <img src="/Static/image/common/collection.png" style="line-height: 12px;display: inline-block;padding-bottom: 5px;">
-                    @endif
 
-                </a>
+            <a  style="text-decoration-line: none;" class="do_follow"
+                status="@if($data['has_collection'] === true){{"unfollow"}}@else{{"follow"}}@endif"
+            >
+                @if($data['has_collection'] == true)
+                    <img src="/Static/image/common/collection_pre.png" style="line-height: 12px;    width: 15px;display: inline-block;padding-bottom: 5px;">
+                @else
+                    <img src="/Static/image/common/collection.png"  style="line-height: 12px;    width: 15px;display: inline-block;padding-bottom: 5px;">
+                @endif
 
+            </a>
+            <i style="float: right;font-size: 20px;color: #909090;" class="fa fa-angle-down trans" aria-hidden="true"></i>
 
 
 
@@ -235,18 +240,13 @@
             <div class="user_info author" style="display: inline-block;width: 160px">
                 @if($data['thread']['thread_subject']->anonymous == 2)
                     <span >{{avatar(0,120,5,'author-avatar','big')}}</span>
-                    <a  href="suki-userhome-{{$data['thread']['thread_subject']->authorid}}.html">
-                        <p class="author-sign" style="width: inherit;width: inherit;margin: 8px;color: #b7b7b7;">
-                            {{$data['thread']['thread_subject']->anonymous == 2 ? "" : ($data['field_forum']->sightml?:"暂未设置签名") }}
-                        </p>
-                    </a>
                 @else
                     <a  href="suki-userhome-{{$data['thread']['thread_subject']->authorid}}.html">{{avatar($data['thread']['thread_subject']->authorid,120,5,'author-avatar','big')}}</a>
-                    <a  href="suki-userhome-{{$data['thread']['thread_subject']->authorid}}.html">
-                        <p class="author-sign" style="width: inherit;width: inherit;margin: 8px;color: #b7b7b7;">
-                            {{$data['thread']['thread_subject']->anonymous == 2 ? "" : ($data['field_forum']->sightml?:"暂未设置签名") }}
-                        </p>
-                    </a>
+
+                    <p class="author-sign trans" style="width: inherit;width: inherit;margin: 8px;color: #b7b7b7;width: 120px;">
+                        {{$data['thread']['thread_subject']->anonymous == 2 ? "" : ($data['thread']['thread_subject']->sightml?:"暂未设置签名") }}
+                    </p>
+
 
                 @endif
 
@@ -254,7 +254,7 @@
 
 
             </div>
-            <div class="author_message" style="width: 100%;float:left;flex-grow: 1;padding-left: 10px;position: relative">
+            <div class="author_message" style="width: 100%;float:left;flex-grow: 1;padding-left: 10px;position: relative;padding-bottom: 15px;">
                 <div class="bbcode_container clear">
                     {!! bbcode2html($data['thread']['thread_post'][0]->message) !!}
                 </div>
@@ -295,7 +295,7 @@
                                         <a href="/suki-userhome-{{$value->authorid}}.html" style="cursor: pointer">
                                             {{avatar($value->authorid,80,100,'post-avatar','normal')}}
                                         </a>
-                                        <a href="suki-userhome-{{$value->authorid}}.html" style="color: #544349;width: 80px;text-align: center;display: inline-block;margin-top: 5px">{{$value->author}}</a>
+                                        <a href="suki-userhome-{{$value->authorid}}.html" class="trans" style="color: #544349;width: 80px;text-align: center;display: inline-block;margin-top: 5px">{{$value->author}}</a>
                                     @endif
 
                                 </div>
@@ -322,7 +322,7 @@
                     @endif
                 @endforeach
                 @if(count($data['thread']['thread_post']) < \App\Http\Controllers\System\CoreController::THREAD_REPLY_PAGE)
-                    <div class="" style="padding: 20px;color: #bfbfbf;border: 4px dashed;width: 95%;margin-top:20px;margin-left: 15px;text-align: center;border-radius: 20px;">暂无更多</div>
+                    <div class="" style="padding: 20px;color: #bfbfbf;border: 2px dashed;width: 95%;margin-top:20px;margin-left: 15px;text-align: center;border-radius: 5px;">暂无更多</div>
                 @else
                     <span style="margin-top:20px;" class="get_more_posts trans">+</span>
                 @endif
@@ -422,7 +422,7 @@
                 todo : $(this).attr("status"),
             };
             $.post("/add_suki_like",data,function (e) {
-                alert(e.msg)
+//                alert(e.msg)
                 if($(".do_follow").attr("status") == "follow")
                 {
                     $(".do_follow").attr("status","unfollow")

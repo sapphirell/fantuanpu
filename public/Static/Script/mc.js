@@ -16,8 +16,10 @@ $(document).ready(function(){
         var $contents = $(this).attr("message")? $(this).attr("message") :$titles;
         var xy = $(this).offset();
         var hei = $(this).height();
-        var tops = xy.top + hei + 3;
+        var tops = $(this).attr("top") ? $(this).attr("top") : (xy.top + hei + 3);
+        var left = $(this).attr("left") ? $(this).attr("left") : xy.left;
         var $position = "top:"+tops+"px;left:"+xy.left+"px;";
+        console.log($position)
         var $app = "<div class='about' id='"+randthis+"' style='"+$position+"'><div class='ab'></div><p>"+$contents+"</p></div>";
 
         t = setTimeout(function(){

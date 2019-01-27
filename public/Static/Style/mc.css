@@ -23,7 +23,7 @@ body {
 
     /*background: #fafafa;*/
 }
-a{color: #0084B4;cursor: pointer}
+a{color: #0084B4;cursor: pointer;}
 a.no_attn {    text-decoration: none;  color: #444;cursor: pointer}/*不引起注意的链接*/
 a:hover{}
 p{margin: 0 5px;    font-family: "Hiragino Sans GB","futura-pt",Helvetica,Arial,"Hiragino Sans GB W3","Microsoft YaHei",sans-serif;

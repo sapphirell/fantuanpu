@@ -19,7 +19,7 @@
             border: 0px;
             color: #353331;
             height: 12px;
-            font-size: 15px;
+            font-size: 12px;
             font-family: 'PingFang SC', 'Helvetica Neue', 'Helvetica', 'STHeitiSC-Light', 'Arial', sans-serif;
             font-weight: 200;
             border: 1px solid #fff;
@@ -31,6 +31,8 @@
             border-radius: 50px;
             width: 25px;
             padding-left: 20px;
+            box-shadow: 0 0 5px #ffcaca;
+
         }
         .search_box:hover ,.search_box:active,.search_box:focus {
             border-color: #FFFFFF!important;
@@ -41,7 +43,7 @@
         .hd li {
             list-style: none;
             display: inline-block;
-            padding: 5px 10px 10px 10px;
+            padding: 6px 10px 11px 10px;
             color: #464646;
             font-size: 13px;
             cursor: pointer;
@@ -51,9 +53,14 @@
         }
         .hd li:hover {
             box-shadow: 0 -25px 21px inset #e68a9d;
+
+        }
+        .hd li a:hover {
+            text-decoration: none;
+            text-shadow: 0 0 4px;
         }
         .user_info_panel a {
-            text-decoration: none;
+
         }
         .user_info_panel a:hover {
             color: #F09C9C!important;
@@ -206,7 +213,7 @@
         <div class="search">
             <from action="">
                 <input type="text" name="" class="search_box trans" placeholder="Searching..">
-                <i style="color: #fcd4d1;position: relative;left: -34px;top: -2.3px;font-size: 14px;text-shadow: 0 0 3px #f7dfdc;" class="fa fa-search fa-fw fa-lg toggle_search"></i>
+                <i style="color: #fcd4d1;position: relative;left: -34px;top: -1.3px;font-size: 14px;text-shadow: 0 0 3px #f7dfdc;" class="fa fa-search fa-fw fa-lg toggle_search"></i>
             </from>
         </div>
         <ul class='hd'>

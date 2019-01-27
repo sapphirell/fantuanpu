@@ -11,4 +11,6 @@ class ForumPostModel extends Model
     public $table='pre_forum_post';
     public $timestamps = false;
     public $primaryKey = ['tid','position'];
+
+
 }

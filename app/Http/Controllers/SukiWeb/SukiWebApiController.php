@@ -6,6 +6,7 @@ use App\Http\Controllers\Forum\ThreadApiController;
 use App\Http\Controllers\Sukiapp\CommonApiController;
 use App\Http\DbModel\CommonMemberCount;
 use App\Http\DbModel\Forum_forum_model;
+use App\Http\DbModel\ForumPostModel;
 use App\Http\DbModel\ForumThreadModel;
 use App\Http\DbModel\MemberFieldForumModel;
 use App\Http\DbModel\MyLikeModel;
@@ -320,5 +321,15 @@ class SukiWebApiController extends Controller
         $anonymous = in_array($data[0]->fid,self::$anonymous_forum);
 
         return $request->input('need') == 'html' ? view("PC/Suki/SukiReply")->with('data',['thread_post'=>$data,'anonymous'=>$anonymous]): self::response($data);
+    }
+    //修改suki的帖子 (标题不可以修改)
+    public function update_suki_thread(Request $request)
+    {
+        $check = self::checkRequest($request,["old_password","new_password","repeat_password"]);
+        Thread_model::updatePost(
+            $request->input("tid"),
+            $request->input("position")
+        );
+        return self::response();
     }
 }

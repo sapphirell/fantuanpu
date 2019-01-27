@@ -202,7 +202,7 @@
             <h1 style="display:inline-block;font-size: 15px;font-family: 微软雅黑;font-weight: 900;text-align: left;">{{$data['thread']['thread_subject']->subject}}</h1>
 
         </div>
-        <div class="author-message" style="">
+        <div class="author-message" style="padding-bottom: 0px;">
             <div class="user_info author" style="display: inline-block;width: 160px">
 
                 {{avatar($data['thread']['thread_subject']->authorid,150,5,'author-avatar','big')}}
@@ -238,7 +238,7 @@
                 </div>
 
             </div>
-            <div class="author_message" style="width: 100%;float:left;flex-grow: 1;">
+            <div class="author_message" style="width: 100%;float:left;flex-grow: 1;padding-bottom: 20px;">
                 <div class="bbcode_container">
                     {!! bbcode2html($data['thread']['thread_post'][0]->message) !!}
                 </div>

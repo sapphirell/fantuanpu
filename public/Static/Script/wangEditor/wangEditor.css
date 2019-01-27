@@ -360,7 +360,7 @@
 }
 .w-e-text blockquote {
   display: block;
-  border-left: 8px solid #d0e5f2;
+  border-left: 0px solid #d0e5f2;
   padding: 5px 10px;
   margin: 10px 0;
   line-height: 1.4;

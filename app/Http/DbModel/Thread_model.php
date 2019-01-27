@@ -19,7 +19,9 @@ class Thread_model extends Model
 
         $res['thread_subject']  =   Cache::remember($thread_cache_key['key'].$tid,$thread_cache_key['time'],
                                     function () use ($tid) {
-                                        return DB::table($this->table_thread)->select()->where(['tid'=>$tid])->first();
+                                        $data = DB::table($this->table_thread)->select()->where(['tid'=>$tid])->first();
+                                        $data->sightml = MemberFieldForumModel::find($data->authorid)->sightml;
+                                        return $data;
                                     });
 
         $res['thread_post']     =   $this->getPostOfThread($tid,$page);
@@ -49,6 +51,10 @@ class Thread_model extends Model
 //        dd($value);
         return $cache;
     }
+    public static function position2Page(int $position)
+    {
+        return ceil($position/CoreController::THREAD_REPLY_PAGE);
+    }
     /**
     * @path
     **/
@@ -58,6 +64,18 @@ class Thread_model extends Model
             ->where('fid',$fid)
             ->orderBy('lastpost','desc')
             ->select()->offset(($page-1)*20)->limit(20)->get();
+    }
+    //修改post的信息
+    public static function updatePost(int $tid,int $position,$data)
+    {
+        $post = DB::table(self::$table_post)
+            ->select()
+            ->where(['tid' => $tid, "position" => $position])->first();
+        $post->message = $data;
+        $position->save();
+        //清除缓存
+        $posts_cache_key    = CoreController::POSTS_VIEW;
+        Cache::forget($posts_cache_key['key']."{$tid}_".self::position2Page($position));
     }
 }
 

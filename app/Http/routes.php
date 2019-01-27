@@ -39,6 +39,7 @@ Route::group([
     Route::get('/send_validate_email', ['uses' => 'UserBaseController@send_validate_email', 'as' => 'send_validate_email']);# 等待验证会员验证电子邮箱
     Route::get('/update_user_avatar', 'UserBaseController@update_user_avatar');#修改用户头像
     Route::post('/uc-do-upload-avatar', 'UserBaseController@DoUploadAvatar');#修改头像
+
 });
 Route::group([
     'namespace' => 'Forum',
@@ -264,6 +265,7 @@ Route::group([
     Route::post('/setting_clock', ['uses' => 'SukiWebApiController@setting_clock', 'as' => 'setting_clock']);#闹钟增删改查
     Route::get('/setting_clock_alert', ['uses' => 'SukiWebApiController@setting_clock_alert', 'as' => 'setting_clock_alert']);#闹钟提醒方式修改
     Route::post('/update_suki_user_info', ['uses' => 'SukiWebApiController@update_suki_user_info', 'as' => 'update_suki_user_info']);#修改suki的用户信息
+    Route::post('/update_suki_thread', ['uses' => 'SukiWebApiController@update_suki_thread', 'as' => 'update_suki_thread']);#重新编辑suki的帖子
 
 
 });

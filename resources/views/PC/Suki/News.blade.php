@@ -115,7 +115,7 @@
         position: absolute;
         width: 15px;
         left: 15px;
-        top: 11px;
+        top: 13px;
     }
     #alert_poster.mini .poster_button{
         width: 16px;
