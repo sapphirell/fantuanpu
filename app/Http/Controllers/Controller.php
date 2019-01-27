@@ -35,6 +35,8 @@ class Controller extends BaseController
     const DOMAIN = 'http://www.fantuanpu.com/';
     const FANTUANPU_DOMAIN = 'http://fantuanpu.com/';
     const LOLITA_DOMAIN = 'http://suki-suki.me/';
+
+
     public static $lolita_domain = [
         'sukisuki.org',
         'www.sukisuki.org',
@@ -54,6 +56,8 @@ class Controller extends BaseController
     public static $fantuanpu_forum = [1,36,41,49,52,56,64,2,37,38,123,125,126,44,66,50,51,69,93,114,57,73,75,65,71,83,85];
     //在这些板块里发帖会匿名
     public static $anonymous_forum = [160];
+    //超级管理员
+    const MASTER_USER = [1,2];
     /**
      * 帖子回帖分页数量
      */
@@ -80,6 +84,9 @@ class Controller extends BaseController
             $this->data['user_has_sign'] = Cache::get($user_has_sign['key'] . $this->data['user_info'] ->uid .'_'. date("Ymd"));
             //签名档
             $this->data['field_forum'] = MemberFieldForumModel::find($this->data['user_info']->uid);
+            //用户权限级别 1 普通用户 2 管理员 3 超级管理
+            $this->data["auth_level"] = 1;
+            in_array($this->data["auth_level"],self::MASTER_USER) && $this->data["auth_level"] = 3;
         }
         //获取IM
         $this->data = array_merge($this->data,$this->get_im_message());

@@ -325,10 +325,13 @@ class SukiWebApiController extends Controller
     //修改suki的帖子 (标题不可以修改)
     public function update_suki_thread(Request $request)
     {
-        $check = self::checkRequest($request,["old_password","new_password","repeat_password"]);
+        $check = self::checkRequest($request,["tid","position","message"]);
+        if ($check !== true)
+            return self::response(40001,[],"缺少参数{$check}");
         Thread_model::updatePost(
             $request->input("tid"),
-            $request->input("position")
+            $request->input("position"),
+            $request->input("message")
         );
         return self::response();
     }

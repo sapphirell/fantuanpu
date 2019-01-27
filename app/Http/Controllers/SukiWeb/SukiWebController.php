@@ -5,6 +5,7 @@ namespace App\Http\Controllers\SukiWeb;
 use App\Http\Controllers\Forum\ThreadController;
 use App\Http\DbModel\CommonMemberCount;
 use App\Http\DbModel\Forum_forum_model;
+use App\Http\DbModel\ForumPostModel;
 use App\Http\DbModel\ForumThreadModel;
 use App\Http\DbModel\MemberFieldForumModel;
 use App\Http\DbModel\MyLikeModel;
@@ -104,7 +105,7 @@ class SukiWebController extends Controller
             $this->data['user_info']->uid?:0,
             $this->data['thread']['thread_subject']->tid,
             3);
-
+//        dd($this->data);
         return view('PC/Suki/SukiThread')->with('data',$this->data);
     }
 
@@ -221,4 +222,15 @@ class SukiWebController extends Controller
     {
 //        ForumThreadModel::
     }
+    //编辑帖子
+    public function suki_editor_post_view(Request $request)
+    {
+        $this->data['posts'] = ForumPostModel::where([
+            "tid"       => $request->input("tid"),
+            "position"  => $request->input("position")
+        ])->first();
+//        dd($this->data['posts']);
+        return view('PC/Suki/SukiEditThread')->with('data',$this->data);
+    }
+
 }

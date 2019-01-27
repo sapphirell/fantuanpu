@@ -112,6 +112,30 @@ h1.thread_title{    padding-top: 27px;}
 .post_msg img {
     max-width: 100%;
 }
+.w-e-text-container
+{
+    border-width: 0px!important;
+}
+.w-e-toolbar {
+    border-color: #eee!important;
+}
+
+.w-e-toolbar {
+    padding: 0 5px!important;
+    border-color: #eee!important;
+    background: #efefef!important;
+}
+.w-e-toolbar .w-e-menu {
+    position: relative;
+    text-align: center;
+    padding: 5px 10px!important;
+    cursor: pointer;!important
+}
+
+#editor {
+    background-color: #fff;
+    box-shadow: 0 0 5px #eee;
+}
 /***自适应***/
 @media screen and (max-width: 960px) {
     .banner,.banner img{width: 100%!important;}
@@ -145,10 +169,12 @@ h1.thread_title{    padding-top: 27px;}
     }
     .author_message {
         position: relative;
-        top: -30px;
+        top: -20px;
+        left: 5px;
     }
     .author-message {
         display: block!important;
+        padding-bottom: 30px;
     }
     .author-name {
         width: auto!important;

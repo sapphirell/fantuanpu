@@ -1226,7 +1226,7 @@ if (! function_exists('bbcode2html')) {
         }
 
         $message = nl2br(str_replace(array("", '   ', '  '), array('&nbsp; &nbsp; &nbsp; &nbsp; ', '&nbsp; &nbsp;', '&nbsp;&nbsp;'), $message));
-        return $message;
+        return "<div>{$message}</div>";
         return $htmlon ? $message : nl2br(str_replace(array("", '   ', '  '), array('&nbsp; &nbsp; &nbsp; &nbsp; ', '&nbsp; &nbsp;', '&nbsp;&nbsp;'), $message));
     }
     function threadListPages($allPages,$fid,$page)

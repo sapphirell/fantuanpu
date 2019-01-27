@@ -189,6 +189,26 @@
     .w-e-text blockquote {
         border:0px;
     }
+    .title_container {
+        position: relative;
+    }
+    .thread_action {
+        position: absolute;
+        right: 0px;
+        background: #fff;
+        z-index: 9;
+        padding: 5px;
+        box-shadow: 0 0 5px #ddd;
+        border-radius: 5px;
+        top: 20px;
+    }
+    .thread_action li {
+        list-style: none;
+        padding: 4px 19px;
+    }
+    .thread_action li a {
+        color: #806767
+    }
 </style>
 <script>
     $(document).ready(function () {
@@ -232,9 +252,15 @@
 
             </a>
             <i style="float: right;font-size: 20px;color: #909090;" class="fa fa-angle-down trans" aria-hidden="true"></i>
-
-
-
+            <ul class="thread_action">
+                <li><a href="">举报</a></li>
+                @if($data["auth_level"] == 3 || $data["user_info"]->uid == $data['thread']['thread_subject']->authorid )
+                <li><a class="editor_thread" href="" tid="{{$data['thread']['thread_subject']->tid}}" position="1">编辑</a></li>
+                @endif
+                @if($data["auth_level"] == 2 || $data["auth_level"] == 3 )
+                <li><a href="">删除</a></li>
+                @endif
+            </ul>
         </div>
         <div class="author-message" style="">
             <div class="user_info author" style="display: inline-block;width: 160px">
@@ -242,12 +268,9 @@
                     <span >{{avatar(0,120,5,'author-avatar','big')}}</span>
                 @else
                     <a  href="suki-userhome-{{$data['thread']['thread_subject']->authorid}}.html">{{avatar($data['thread']['thread_subject']->authorid,120,5,'author-avatar','big')}}</a>
-
                     <p class="author-sign trans" style="width: inherit;width: inherit;margin: 8px;color: #b7b7b7;width: 120px;">
                         {{$data['thread']['thread_subject']->anonymous == 2 ? "" : ($data['thread']['thread_subject']->sightml?:"暂未设置签名") }}
                     </p>
-
-
                 @endif
 
 
@@ -358,6 +381,10 @@
 
 </div>
 <script>
+    /**
+     * 点击回复帖子
+     * @param pid
+     */
     function reply(pid)
     {
         var str = $("#"+pid).html();
@@ -434,6 +461,23 @@
                     $(".do_follow>img").attr("src","/Static/image/common/collection.png")
                 }
             })
+        });
+        //重新编辑帖子
+        $(".editor_thread").click(function (e) {
+            var width = window.innerWidth > 500 ? "500px" : window.width + "px"
+            e.preventDefault();
+            var tid = $(this).attr("tid");
+            var position = $(this).attr("position");
+            layer.open({
+                type: 2,
+                title: false,
+                closeBtn: 0, //不显示关闭按钮
+                shade: 0.8,
+//                shadeClose: true,
+                area: [width, '405px'],
+                offset: '100px',
+                content: ['/suki_editor_post_view?tid='+tid+'&position='+position ,'no']
+            });
         });
     })
 

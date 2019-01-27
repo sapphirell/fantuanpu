@@ -253,6 +253,7 @@ Route::group([
     Route::get('/suki_alarm_clock', ['uses' => 'SukiWebController@suki_alarm_clock', 'as' => 'suki_alarm_clock']);#suki的补款闹钟页面
     Route::get('/suki_clock_setting', ['uses' => 'SukiWebController@suki_clock_setting', 'as' => 'suki_clock_setting']);#suki新建一个闹钟
     Route::get('/suki_user_info', ['uses' => 'SukiWebController@suki_user_info', 'as' => 'suki_user_info']);#suki我的信息
+    Route::get('/suki_editor_post_view', ['uses' => 'SukiWebController@suki_editor_post_view', 'as' => 'suki_editor_post_view']);#编辑帖子页面
 
 
 
