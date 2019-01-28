@@ -22,7 +22,7 @@
             font-size: 12px;
             font-family: 'PingFang SC', 'Helvetica Neue', 'Helvetica', 'STHeitiSC-Light', 'Arial', sans-serif;
             font-weight: 200;
-            border: 1px solid #fff;
+            border: 0px solid #fff;
             margin-top: 8px;
             margin-right: 5px;
             border-radius: 2px;
