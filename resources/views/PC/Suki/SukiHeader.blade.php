@@ -108,7 +108,10 @@
             color: #927979;
             margin: 1px;
             display: inline-block;
-
+            text-decoration: none;
+        }
+        .user_info_content a {
+            text-decoration: none;
         }
         .panel_btn_list li a:hover {
             color: #00A0FF;
