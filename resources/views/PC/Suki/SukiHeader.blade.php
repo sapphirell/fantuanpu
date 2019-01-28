@@ -26,7 +26,7 @@
             margin-top: 8px;
             margin-right: 5px;
             border-radius: 2px;
-            padding: 11px;
+            padding: 12px;
             display: inline-block;
             border-radius: 50px;
             width: 25px;
