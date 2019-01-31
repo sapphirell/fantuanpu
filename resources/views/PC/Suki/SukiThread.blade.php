@@ -200,7 +200,7 @@
         padding: 5px;
         box-shadow: 0 0 5px #ddd;
         border-radius: 5px;
-        top: 20px;
+        top: 23px;
     }
     .thread_action li {
         list-style: none;
@@ -209,6 +209,10 @@
     .thread_action li a {
         color: #806767
     }
+    .thread_action {
+        display: none;
+    }
+
 </style>
 <script>
     $(document).ready(function () {
@@ -251,9 +255,9 @@
                 @endif
 
             </a>
-            <i style="float: right;font-size: 20px;color: #909090;" class="fa fa-angle-down trans" aria-hidden="true"></i>
-            <ul class="thread_action">
-                <li><a href="">举报</a></li>
+            <i style="float: right;font-size: 20px;color: #909090;" class="fa fa-angle-down trans action_down" down="0" aria-hidden="true"></i>
+            <ul class="thread_action" id="down_0">
+                <li><a href="" class="report_thread">举报</a></li>
                 @if($data["auth_level"] == 3 || $data["user_info"]->uid == $data['thread']['thread_subject']->authorid )
                 <li><a class="editor_thread" href="" tid="{{$data['thread']['thread_subject']->tid}}" position="1">编辑</a></li>
                 @endif
@@ -287,6 +291,7 @@
                     {{$data['thread']['thread_subject']->views}}
                     回复
                     {{$data['thread']['thread_subject']->replies}}
+                    {{$data['thread']['thread_subject']->replies}}
                 </p>
             </div>
         </div>
@@ -313,6 +318,7 @@
                                         <span>
                                             {{avatar(0,80,100,'post-avatar','normal')}}
                                         </span>
+                                        </span>
                                         <p style="color: #544349;width: 80px;text-align: center;display: inline-block;margin-top: 5px">匿名</p>
                                     @else
                                         <a href="/suki-userhome-{{$value->authorid}}.html" style="cursor: pointer">
@@ -322,6 +328,16 @@
                                     @endif
 
                                 </div>
+                                <i style="float: right;font-size: 20px;color: #909090;" class="fa fa-angle-down trans action_down" down="{{$value->pid}}" aria-hidden="true"></i>
+                                <ul class="thread_action" id="down_{{$value->pid}}">
+                                    <li><a href="">举报</a></li>
+                                    @if($data["auth_level"] == 3 || $data["user_info"]->uid == $data['thread']['thread_subject']->authorid )
+                                        <li><a class="editor_thread" href="" tid="{{$data['thread']['thread_subject']->tid}}" position="1">编辑</a></li>
+                                    @endif
+                                    @if($data["auth_level"] == 2 || $data["auth_level"] == 3 )
+                                        <li><a href="">删除</a></li>
+                                    @endif
+                                </ul>
                                 <div class="post_content" style="width: 70%;display: inline-block;float:left;">
                                     <div id="{{$value->pid}}" style="padding: 5px;">{!! bbcode2html($value->message) !!}</div>
 
@@ -479,6 +495,35 @@
                 content: ['/suki_editor_post_view?tid='+tid+'&position='+position ,'no']
             });
         });
+        //点击action_down展开操作面板
+        $(".action_down").click(function (e) {
+            var id = $(this).attr("down")
+            if ($("#down_"+id).css("display") == "none")
+            {
+                $(".thread_action").slideUp();
+                $("#down_"+id).slideDown();
+            }
+            else
+            {
+                $(".thread_action").slideUp();
+            }
+
+
+        })
+        //点击report_thread弹出举报帖子面板
+        $(".report_thread").click(function (e) {
+
+            layer.open({
+                type: 2,
+                title: false,
+                closeBtn: 0, //不显示关闭按钮
+                shade: 0.8,
+//                shadeClose: true,
+                area: [width, '405px'],
+                offset: '100px',
+                content: ['/suki_editor_post_view?tid='+tid+'&position='+position ,'no']
+            });
+        })
     })
 
 </script>

@@ -136,8 +136,14 @@ h1.thread_title{    padding-top: 27px;}
     background-color: #fff;
     box-shadow: 0 0 5px #eee;
 }
+.news_author_avatar_cotainer {
+    width: 100px;
+}
 /***自适应***/
 @media screen and (max-width: 960px) {
+    .news_author_avatar_cotainer {
+        width: 80px;
+    }
     .banner,.banner img{width: 100%!important;}
     ._3_1_left{width: 100%;}
     ._3_1_right{display: none;}
