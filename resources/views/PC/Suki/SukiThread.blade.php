@@ -414,7 +414,7 @@
         $("html,body").animate({scrollTop:$("#editor").offset().top-80},1000);
     }
     $(document).ready(function () {
-        var layer_smart_width = window.innerWidth > 500 ? "500px" : window.width + "px"
+        var layer_smart_width = window.innerWidth > 650 ? "650px" : window.width + "px"
         var subject = $('#subject').val()
         var fid     = $('#fid').val()
         var tid     = $('#tid').val()
@@ -512,6 +512,7 @@
         })
         //点击report_thread弹出举报帖子面板
         $(".report_thread").click(function (e) {
+            var layer_smart_width = window.innerWidth > 450 ? "450px" : window.width + "px"
             e.preventDefault()
             var origin = $(this).attr("pid")
             layer.open({

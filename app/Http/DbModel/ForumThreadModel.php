@@ -25,7 +25,9 @@ class ForumThreadModel extends Model
             $fid_arr = [];
 
 
-        $data = Cache::remember($cacheKey['key'].json_encode($fid_arr)."_page_".$page,$cacheKey["time"],
+        $data = Cache::remember($cacheKey['key'].json_encode($fid_arr)."_page_".$page,
+                0,
+//                $cacheKey["time"],
                 function () use ($fid_arr,$thread_mod ,$page) {
 
                         $data = ForumThreadModel::orderBy('lastpost','desc');
@@ -46,11 +48,19 @@ class ForumThreadModel extends Model
                                 preg_match_all("/\[img\].*?\[\/img\]/",$flor->message,$tmp);// 取前几楼的图片
                                 $subject_images = array_merge($subject_images,$tmp[0]);
                             }
-                            //帖子预览
+                            //帖子预览(图文)
                             $value['preview'] = preg_replace("/\[img\].*?\[\/img\]/",'[图片]',$post_image[0]->message);
-                            //取图片地址
-                            foreach ($subject_images as &$str)
-                                $str = mb_substr($str,5,mb_strlen($str)-11,'utf-8');
+                            //取图片地址,并且去掉过小的图片
+                            foreach ($subject_images as $key => &$str)
+                            {
+                                $link = mb_substr($str,5,mb_strlen($str)-11,'utf-8');
+                                $size = getimagesize($link);
+                                if ($size[0] > 120 && $size > 120)
+                                    $str = $link;
+                                else
+                                    unset($subject_images[$key]);
+                            }
+
                             $value['subject_images'] = $subject_images;
                             //获取板块名称
                             $value["suki_fname"] = Forum_forum_model::$suki_forum[$value["fid"]];
