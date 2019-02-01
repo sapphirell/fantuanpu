@@ -26,8 +26,8 @@ class ForumThreadModel extends Model
 
 
         $data = Cache::remember($cacheKey['key'].json_encode($fid_arr)."_page_".$page,
-                0,
-//                $cacheKey["time"],
+//                0,
+                $cacheKey["time"],
                 function () use ($fid_arr,$thread_mod ,$page) {
 
                         $data = ForumThreadModel::orderBy('lastpost','desc');
