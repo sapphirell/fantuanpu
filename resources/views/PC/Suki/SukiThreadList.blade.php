@@ -35,7 +35,8 @@
                     @if(!empty($value['subject_images']))
                         <div class="thread_image_list" style="width:100%;float: left;">
                             @foreach($value['subject_images'] as $image)
-                                <img  style="width: 90px;height: 90px;float: left;margin: 5px" src="{{$image}}">
+                                <div style="background: url({{$image}});background-size: cover;width: 90px;height: 90px;float: left;margin: 5px"></div>
+{{--                                <img style="width: 90px;height: 90px;float: left;margin: 5px" src="{{$image}}">--}}
                             @endforeach
                         </div>
                     @endif
