@@ -257,7 +257,7 @@
             </a>
             <i style="float: right;font-size: 20px;color: #909090;" class="fa fa-angle-down trans action_down" down="0" aria-hidden="true"></i>
             <ul class="thread_action" id="down_0">
-                <li><a href="" class="report_thread">举报</a></li>
+                <li><a href="" class="report_thread" pid="{{$data['thread']['thread_post'][0]->pid}}">举报</a></li>
                 @if($data["auth_level"] == 3 || $data["user_info"]->uid == $data['thread']['thread_subject']->authorid )
                 <li><a class="editor_thread" href="" tid="{{$data['thread']['thread_subject']->tid}}" position="1">编辑</a></li>
                 @endif
@@ -290,7 +290,6 @@
                     查看
                     {{$data['thread']['thread_subject']->views}}
                     回复
-                    {{$data['thread']['thread_subject']->replies}}
                     {{$data['thread']['thread_subject']->replies}}
                 </p>
             </div>
@@ -330,9 +329,9 @@
                                 </div>
                                 <i style="float: right;font-size: 20px;color: #909090;" class="fa fa-angle-down trans action_down" down="{{$value->pid}}" aria-hidden="true"></i>
                                 <ul class="thread_action" id="down_{{$value->pid}}">
-                                    <li><a href="">举报</a></li>
+                                    <li><a href="" class="report_thread" pid="{{$value->pid}}">举报</a></li>
                                     @if($data["auth_level"] == 3 || $data["user_info"]->uid == $data['thread']['thread_subject']->authorid )
-                                        <li><a class="editor_thread" href="" tid="{{$data['thread']['thread_subject']->tid}}" position="1">编辑</a></li>
+                                        <li><a class="editor_thread" href="" tid="{{$data['thread']['thread_subject']->tid}}" position="{{$value->position}}">编辑</a></li>
                                     @endif
                                     @if($data["auth_level"] == 2 || $data["auth_level"] == 3 )
                                         <li><a href="">删除</a></li>
@@ -415,6 +414,7 @@
         $("html,body").animate({scrollTop:$("#editor").offset().top-80},1000);
     }
     $(document).ready(function () {
+        var layer_smart_width = window.innerWidth > 500 ? "500px" : window.width + "px"
         var subject = $('#subject').val()
         var fid     = $('#fid').val()
         var tid     = $('#tid').val()
@@ -480,7 +480,7 @@
         });
         //重新编辑帖子
         $(".editor_thread").click(function (e) {
-            var width = window.innerWidth > 500 ? "500px" : window.width + "px"
+
             e.preventDefault();
             var tid = $(this).attr("tid");
             var position = $(this).attr("position");
@@ -490,7 +490,7 @@
                 closeBtn: 0, //不显示关闭按钮
                 shade: 0.8,
 //                shadeClose: true,
-                area: [width, '405px'],
+                area: [layer_smart_width, '405px'],
                 offset: '100px',
                 content: ['/suki_editor_post_view?tid='+tid+'&position='+position ,'no']
             });
@@ -512,16 +512,17 @@
         })
         //点击report_thread弹出举报帖子面板
         $(".report_thread").click(function (e) {
-
+            e.preventDefault()
+            var origin = $(this).attr("pid")
             layer.open({
                 type: 2,
                 title: false,
                 closeBtn: 0, //不显示关闭按钮
                 shade: 0.8,
-//                shadeClose: true,
-                area: [width, '405px'],
+                shadeClose: true,
+                area: [layer_smart_width, '405px'],
                 offset: '100px',
-                content: ['/suki_editor_post_view?tid='+tid+'&position='+position ,'no']
+                content: ['/suki_report?pid=' + origin ,'no']
             });
         })
     })

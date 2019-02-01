@@ -8,4 +8,5 @@ class UserReportModel extends Model
 {
     public $table='pre_user_report';
     public $timestamps = false;
+
 }

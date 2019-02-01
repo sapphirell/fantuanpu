@@ -198,7 +198,7 @@
 <div class="header pink_bg">
     <div style="max-width: 960px;margin: 0 auto;">
         <p class="title none_960">
-            <a href="{{\App\Http\Controllers\Controller::LOLITA_DOMAIN}}" style="font-weight: 900;text-shadow: 0 0 3px #af2e2e;margin-left: 20px;"><img style="width: 60px;margin: 4px;" src="/Image/SUKI.png"></a>
+            <a href="{{\App\Http\Controllers\Controller::LOLITA_DOMAIN}}" style="font-weight: 900;text-shadow: 0 0 3px #af2e2e;"><img style="width: 60px;margin: 4px;" src="/Image/SUKI.png"></a>
         </p>
         {{--<h1 style="display: inline;margin:0px;float:right;"></h1>--}}
 

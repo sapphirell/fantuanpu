@@ -220,7 +220,6 @@ class SukiWebController extends Controller
     //suki 搜索
     public function suki_search(Request $request)
     {
-//        ForumThreadModel::
     }
     //编辑帖子
     public function suki_editor_post_view(Request $request)
@@ -229,8 +228,13 @@ class SukiWebController extends Controller
             "tid"       => $request->input("tid"),
             "position"  => $request->input("position")
         ])->first();
-//        dd($this->data['posts']);
         return view('PC/Suki/SukiEditThread')->with('data',$this->data);
     }
-
+    //举报
+    public function suki_report(Request $request)
+    {
+        $posts = ForumPostModel::where("pid",$request->input("pid"))->first();
+        $this->data['origin'] = json_encode($posts);
+        return view('PC/Suki/SukiReport')->with('data',$this->data);
+    }
 }

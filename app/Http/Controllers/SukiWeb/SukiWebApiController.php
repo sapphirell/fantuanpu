@@ -16,6 +16,7 @@ use App\Http\DbModel\SukiMessageBoardModel;
 use App\Http\DbModel\Thread_model;
 use App\Http\DbModel\UCenter_member_model;
 use App\Http\DbModel\User_model;
+use App\Http\DbModel\UserReportModel;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -334,5 +335,23 @@ class SukiWebApiController extends Controller
             $request->input("message")
         );
         return self::response();
+    }
+    //发起举报
+    public function suki_post_report(Request $request)
+    {
+        $check = self::checkRequest($request,["type","message"]);
+        if ($check !== true)
+            return self::response(40001,[],"缺少参数{$check}");
+
+        $report = new UserReportModel();
+        $report->message = $request->input("message");
+        $report->uid = $this->data['user_info']->uid;
+        $report->user_name = $this->data['user_info']->username;
+        $report->message = $request->input("message");
+        $report->title = "suki用户举报/反馈";
+        $report->type = $request->input("type");
+        $report->origin = $request->input("origin");
+        $report->save();
+        return self::response([],200,"举报成功,反馈结果会以站内私信的形式通知您。如果您非常急切得到反馈,可以在站内发帖联系我们。");
     }
 }
