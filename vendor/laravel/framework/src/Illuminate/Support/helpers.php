@@ -1270,6 +1270,7 @@ if (! function_exists('format_time'))
         $now = time();
         $now_ymd = date("Ymd",$now);
         $_1h = 60*60;
+        $_1m = 60;
         if ($time > $now)
         {
             if ($now_ymd != $time_ymd)
@@ -1285,6 +1286,8 @@ if (! function_exists('format_time'))
                 return date($default_format,$time);
             if ($now -$time < $_1h)
                 return floor(($now-$time)/60) . "分钟前";
+            if ($now -$time < $_1m)
+                return "刚刚";
             if ( $now - $time  > $_1h)
                 return floor(($now-$time)/3600) . "小时前";
         }
