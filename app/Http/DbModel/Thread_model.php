@@ -13,6 +13,7 @@ class Thread_model extends Model
     public static $table_post   = 'pre_forum_post';
     public $timestamps = false;
 
+
     public function getThread(int $tid,$page=1)
     {
         $thread_cache_key   = CoreController::THREAD_VIEW;
@@ -56,12 +57,15 @@ class Thread_model extends Model
         return ceil($position/CoreController::THREAD_REPLY_PAGE);
     }
     /**
+     * 取出没被删除和并且没有置顶的帖子
     * @path
     **/
     public function getThreadList($fid,$page,$remove_tid=[])
     {
         return DB::table(self::$table_thread)
             ->where('fid',$fid)
+            ->where("isdel",1)
+            ->where("istop",1)
             ->orderBy('lastpost','desc')
             ->select()->offset(($page-1)*20)->limit(20)->get();
     }

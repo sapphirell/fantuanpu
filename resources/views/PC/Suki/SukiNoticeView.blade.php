@@ -68,12 +68,9 @@
     <div style="float: left;    flex-grow: 1;">
         @if($data["request"]["type"]=="reply_me")
             @foreach($data["reply_me"] as $key => $value)
-                <div style="    display: flex;
-    margin: 20px;
-    border-bottom: 1px solid #f5f5f5;
-    padding-bottom: 10px;">
+                <div style="display: flex;margin: 20px;border-bottom: 1px solid #f5f5f5;padding-bottom: 10px;">
                     <div class="" style="    display: inline-block;float: left;width: 100px;flex: none;">
-                        <a href="" style="display: inline-block;margin: 5px 30px">
+                        <a href="/suki-userhome-{{$value->authorid}}.html" style="display: inline-block;margin: 5px 30px">
                             {{avatar($value->authorid,50,100)}}
                         </a>
 
@@ -81,7 +78,7 @@
                     <div style="float: left;display: inline-block;    flex-grow: 1;">
                         <div>
                             <div style="    margin-bottom: 5px;">
-                                <a href="" style="font-weight: 900;color: #8e6262;">{{$value->author}}</a>
+                                <a href="/suki-userhome-{{$value->authorid}}.html" style="font-weight: 900;color: #8e6262;">{{$value->author}}</a>
                                 <span style="font: 13px/1.5 'PingFang SC', 'Helvetica Neue', 'Helvetica', 'STHeitiSC-Light', 'Arial', sans-serif; float: right;   color: #cccccc;padding-left: 5px;">
                                     {{format_time($value->notice_time,"Y·m·d")}}
                                 </span>
@@ -108,7 +105,7 @@
         @elseif($data['request']['type'] == "friends_request")
             @foreach($data['friends_request'] as $value)
                 <div style="margin: 10px 0px">
-                    <div style="margin: 5px 10px 5px 30px;float:left;">{{avatar($value->uid,50,100)}}</div>
+                    <a href="/suki-userhome-{{$value->uid}}.html" style="margin: 5px 10px 5px 30px;float:left;">{{avatar($value->uid,50,100)}}</a>
                     <div style="margin: 5px;float:left;">
                         <p>
                             <span>{{$value->nickname}}</span>

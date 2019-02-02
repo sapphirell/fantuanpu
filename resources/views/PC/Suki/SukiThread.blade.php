@@ -233,7 +233,7 @@
 <script>
     function resize_window() {
         var width = $(".post_msg").width();
-        $(".post_content").width(width-100);
+        $(".post_content").width(width-120);
 
         var title_container = $(".title_container").width()
         var author_width = $(".author-name").width() + 150;
@@ -266,6 +266,9 @@
 
 <div class="wp web_body " style="margin-top: 10px;">
     <div class="thread_container" style="">
+        @if($data['thread']['thread_subject']->isdel == 2)
+        <div style="    color: #e68686;text-align: center;border-bottom: 1px dashed;padding: 5px 0px 10px 0px;margin-bottom: 5px;">帖子已经被删除</div>
+        @endif
         <div class="title_container">
             <div class="show_960 author-head-box">
                 @if($data['thread']['thread_subject']->anonymous == 2)
@@ -300,7 +303,7 @@
                 <li><a class="editor_thread" href="" tid="{{$data['thread']['thread_subject']->tid}}" position="1">编辑</a></li>
                 @endif
                 @if($data["auth_level"] == 2 || $data["auth_level"] == 3 )
-                <li><a href="">删除</a></li>
+                <li><a class="delthread" href="/del_thread?tid={{$data['thread']['thread_subject']->tid}}">删除</a></li>
                 @endif
             </ul>
         </div>
@@ -373,11 +376,17 @@
                                         <li><a class="editor_thread" href="" tid="{{$data['thread']['thread_subject']->tid}}" position="{{$value->position}}">编辑</a></li>
                                     @endif
                                     @if($data["auth_level"] == 2 || $data["auth_level"] == 3 )
-                                        <li><a href="">删除</a></li>
+                                        <li><a class="delthread" href="/del_post?pid={{$value->pid}}">删除</a></li>
                                     @endif
                                 </ul>
                                 <div class="post_content" style="width: 70%;display: inline-block;float:left;">
-                                    <div id="{{$value->pid}}" style="padding: 5px;">{!! bbcode2html($value->message) !!}</div>
+                                    <div id="{{$value->pid}}" style="padding: 5px;">
+                                        @if($value->isdel == 1)
+                                        {!! bbcode2html($value->message) !!}
+                                        @else
+                                        <span style="color: #2E2D3C">该回复已被删除</span>
+                                        @endif
+                                    </div>
 
                                     <div style="    width: 100%;display: inline-block;float: left;position: absolute;     bottom: 28px;right: 3px;">
                                         {{--<img src="/Static/daimeng.gif">--}}
@@ -564,6 +573,14 @@
                 offset: '100px',
                 content: ['/suki_report?pid=' + origin ,'no']
             });
+        })
+        //点击删除,远程请求删除接口
+        $(".delthread").click(function (e) {
+            e.preventDefault();
+            var link = $(this).attr("href");
+            $.get(link,{},function (e) {
+                alert(e.msg)
+            })
         })
     })
 

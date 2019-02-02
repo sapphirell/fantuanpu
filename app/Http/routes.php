@@ -108,6 +108,8 @@ Route::group([
     Route::get('/ping', ['uses' => 'TestController@ping', 'as' => 'test']);#test
     Route::get('/avatar', ['uses' => 'PictureController@show_avatar', 'as' => 'show_avatar']);#传uid返回头像链接
     Route::get('/clock_alert', ['uses' => 'ServeController@clock_alert', 'as' => 'clock_alert']);#闹钟提醒
+    Route::get('/del_thread', ['uses' => 'ServeController@del_thread', 'as' => 'del_thread']);#删除帖子
+    Route::get('/del_post', ['uses' => 'ServeController@del_post', 'as' => 'del_post']);#删除回复
 
 
 });

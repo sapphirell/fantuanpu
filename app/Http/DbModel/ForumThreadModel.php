@@ -5,12 +5,37 @@ namespace App\Http\DbModel;
 use App\Http\Controllers\System\CoreController;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class ForumThreadModel extends Model
 {
     public $table='pre_forum_thread';
     public $timestamps = false;
     public $primaryKey = 'tid';
+    /**
+     * 软删除帖子
+     * @param $tid
+     */
+    public static function delThread($tid)
+    {
+        $thread =  self::where(['tid' => $tid])->first();
+        self::where(['tid' => $tid])->update(['isdel'=>2]);
+        //并且清除对应板块的缓存,一般来说要删除的帖子都在前三页,那么只清除该板块前三页的缓存即可
+        $cacheKey = CoreController::THREAD_LIST;
+        Cache::forget($cacheKey['key'].json_encode([$thread->fid])."_page_1");
+        Cache::forget($cacheKey['key'].json_encode([$thread->fid])."_page_2");
+        Cache::forget($cacheKey['key'].json_encode([$thread->fid])."_page_3");
+        //清除thread本身的缓存
+        $thread_cache_key   = CoreController::THREAD_VIEW;
+
+        $res['thread_subject']  =   Cache::forget($thread_cache_key['key'].$tid);
+    }
+    /**
+     * 获取一部分板块内帖子,除了被删除和置顶的
+     * @param array $fid_arr
+     * @param int   $page
+     * @返回 mixed
+     */
     public static function get_new_thread($fid_arr = [],$page=1)
     {
         $cacheKey   = CoreController::THREAD_LIST;
@@ -32,9 +57,9 @@ class ForumThreadModel extends Model
 
                         $data = ForumThreadModel::orderBy('lastpost','desc');
                         if (empty($fid_arr))
-                            $data = $data->where('fid','!=','63')->orderBy('lastpost','desc')->offset(15*($page-1))->limit(15)->get();
+                            $data = $data->where('fid','!=','63')->where("isdel",1)->where("istop",1)->orderBy('lastpost','desc')->offset(15*($page-1))->limit(15)->get();
                         else
-                            $data = $data->whereIn('fid',$fid_arr)->orderBy('lastpost','desc')->offset(15*($page-1))->limit(15)->get();
+                            $data = $data->whereIn('fid',$fid_arr)->where("isdel",1)->where("istop",1)->orderBy('lastpost','desc')->offset(15*($page-1))->limit(15)->get();
                         $data = $data->isEmpty() ? [] : $data->toArray();
                         foreach ($data as &$value)
                         {

@@ -7,6 +7,8 @@ use App\Http\Controllers\News\SukiController;
 use App\Http\Controllers\SukiWeb\SukiWebController;
 use App\Http\Controllers\User\UserBaseController;
 use App\Http\DbModel\Forum_forum_model;
+use App\Http\DbModel\ForumPostModel;
+use App\Http\DbModel\ForumThreadModel;
 use App\Http\DbModel\SukiClockModel;
 use App\Http\DbModel\Thread_model;
 use App\Http\DbModel\User_model;
@@ -69,5 +71,31 @@ class ServeController extends Controller
             return MailController::email_to($user->email,"RemindersMail",$param,function () {});
         }
         return "ok";
+    }
+
+    public function del_thread(Request $request)
+    {
+        if (!$request->input("tid"))
+            return self::response([],40001,"缺少参数tid");
+
+        if (!$this->data["user_info"]->uid)
+            return self::response([],40002,"请先登录");
+        if (!in_array($this->data["user_info"]->uid,self::MASTER_USER))
+            return self::response([],40003,"您无权操作");
+        ForumThreadModel::delThread($request->input("tid"));
+        return self::response();
+    }
+
+    public function del_post(Request $request)
+    {
+        if (!$request->input("pid"))
+            return self::response([],40001,"缺少参数pid");
+        if (!$this->data["user_info"]->uid)
+            return self::response([],40002,"请先登录");
+        if (!in_array($this->data["user_info"]->uid,self::MASTER_USER))
+            return self::response([],40003,"您无权操作");
+        ForumPostModel::delPosts($request->input("pid"));
+
+        return self::response();
     }
 }
