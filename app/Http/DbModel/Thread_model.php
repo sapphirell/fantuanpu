@@ -20,7 +20,7 @@ class Thread_model extends Model
         $res['thread_subject']  =   Cache::remember($thread_cache_key['key'].$tid,$thread_cache_key['time'],
                                     function () use ($tid) {
                                         $data = DB::table(self::$table_thread)->select()->where(['tid'=>$tid])->first();
-                                        $data->sightml = MemberFieldForumModel::find($data->authorid)->sightml;
+                                        $data && $data->sightml = MemberFieldForumModel::find($data->authorid)->sightml;
                                         return $data;
                                     });
 
