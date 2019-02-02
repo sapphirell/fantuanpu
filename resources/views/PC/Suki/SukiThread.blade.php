@@ -266,9 +266,6 @@
 
 <div class="wp web_body " style="margin-top: 10px;">
     <div class="thread_container" style="">
-        @if($data['thread']['thread_subject']->isdel == 2)
-        <div style="    color: #e68686;text-align: center;border-bottom: 1px dashed;padding: 5px 0px 10px 0px;margin-bottom: 5px;">帖子已经被删除</div>
-        @endif
         <div class="title_container">
             <div class="show_960 author-head-box">
                 @if($data['thread']['thread_subject']->anonymous == 2)
@@ -303,7 +300,11 @@
                 <li><a class="editor_thread" href="" tid="{{$data['thread']['thread_subject']->tid}}" position="1">编辑</a></li>
                 @endif
                 @if($data["auth_level"] == 2 || $data["auth_level"] == 3 )
-                <li><a class="delthread" href="/del_thread?tid={{$data['thread']['thread_subject']->tid}}">删除</a></li>
+                <li>
+                    <a class="delthread" href="/del_thread?tid={{$data['thread']['thread_subject']->tid}}&todo={{$data['thread']['thread_subject']->isdel == 2 ? 1 : 2}}">
+                        {{$data['thread']['thread_subject']->isdel == 2 ? "恢复" : "删除"}}
+                    </a>
+                </li>
                 @endif
             </ul>
         </div>
@@ -324,7 +325,13 @@
             </div>
             <div class="author_message" style="width: 100%;float:left;flex-grow: 1;padding-left: 10px;position: relative;padding-bottom: 15px;">
                 <div class="bbcode_container clear">
-                    {!! bbcode2html($data['thread']['thread_post'][0]->message) !!}
+
+
+                    @if($data['thread']['thread_subject']->isdel == 2)
+                        <p> 帖子已被删除</p>
+                    @else
+                        {!! bbcode2html($data['thread']['thread_post'][0]->message) !!}
+                    @endif
                 </div>
                 <p style="    font-size: 12px;position: absolute;right: 8px;color: #ccc9c9;bottom: 0px">
                     {{$data['thread']['thread_subject']->dateline}}
@@ -376,7 +383,7 @@
                                         <li><a class="editor_thread" href="" tid="{{$data['thread']['thread_subject']->tid}}" position="{{$value->position}}">编辑</a></li>
                                     @endif
                                     @if($data["auth_level"] == 2 || $data["auth_level"] == 3 )
-                                        <li><a class="delthread" href="/del_post?pid={{$value->pid}}">删除</a></li>
+                                        <li><a class="delthread" href="/del_post?pid={{$value->pid}}&todo={{$value->isdel == 2 ? 1 : 2}}">{{$value->isdel == 2 ? "恢复" : "删除"}}</a></li>
                                     @endif
                                 </ul>
                                 <div class="post_content" style="width: 70%;display: inline-block;float:left;">
@@ -580,6 +587,7 @@
             var link = $(this).attr("href");
             $.get(link,{},function (e) {
                 alert(e.msg)
+                location.reload();
             })
         })
     })

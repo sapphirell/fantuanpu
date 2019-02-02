@@ -265,7 +265,7 @@
             </div>
             {{--<div style="display: inline-block;float:left;      margin: 10px 20px 12px 20px;"></div>--}}
             <div style="float:left;">
-                <h2 style="     font-size: 17px;color: #6a6c7f;margin-top: 15px;">{{$data["user_info"]->username}}</h2>
+                <a style="text-decoration: none" href="/suki-userhome-{{$data["user_info"]->uid}}.html"><h2 style="     font-size: 17px;color: #6a6c7f;margin-top: 15px;">{{$data["user_info"]->username}}</h2></a>
                 <p style="    width: 100px;font-size: 12px;color: #8e8e8e;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">{{ $data['field_forum']->sightml ?: "暂未设置签名档" }}</p>
             </div>
             <div class="clear"></div>

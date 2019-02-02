@@ -16,10 +16,10 @@ class ForumThreadModel extends Model
      * 软删除帖子
      * @param $tid
      */
-    public static function delThread($tid)
+    public static function delThread($tid,$todo)
     {
         $thread =  self::where(['tid' => $tid])->first();
-        self::where(['tid' => $tid])->update(['isdel'=>2]);
+        self::where(['tid' => $tid])->update(['isdel'=>$todo]);
         //并且清除对应板块的缓存,一般来说要删除的帖子都在前三页,那么只清除该板块前三页的缓存即可
         $cacheKey = CoreController::THREAD_LIST;
         Cache::forget($cacheKey['key'].json_encode([$thread->fid])."_page_1");

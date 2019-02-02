@@ -1,5 +1,8 @@
 @include('PC.Suki.SukiHeader')
 <style>
+    a {
+        text-decoration: none;
+    }
     .my_alert_list li{
         list-style: none;
         display: block;
@@ -71,9 +74,9 @@
             @foreach($data['my_follow'] as $value)
 
                 <div style="    width: 260px;float: left;">
-                    <div style="display: inline-block;float:left;margin: 15px 20px;">{{avatar($value->user->uid,50,100)}}</div>
+                    <a href="/suki-userhome-{{$value->user->uid}}.html" style="display: inline-block;float:left;margin: 15px 20px;">{{avatar($value->user->uid,50,100)}}</a>
                     <div style="display: inline-block;float:left;">
-                        <p style="display: block;float:left;    width: 100%;line-height: 45px;">{{$value->user->username}}</p>
+                        <a  href="/suki-userhome-{{$value->user->uid}}.html" style="display: block;float:left;    width: 100%;line-height: 45px;">{{$value->user->username}}</a>
                         <a  class="follow trans"
                             uid="{{$data['user_info']->uid}}"
                             to_uid="{{$value->user->uid}}"
@@ -95,9 +98,9 @@
             @endif
             @foreach($data['follow_me'] as $value)
                 <div style="    width: 260px;float: left;">
-                    <div style="display: inline-block;float:left;margin: 15px 20px;">{{avatar($value->user->uid,50,100)}}</div>
+                    <a href="/suki-userhome-{{$value->user->uid}}.html" style="display: inline-block;float:left;margin: 15px 20px;">{{avatar($value->user->uid,50,100)}}</a>
                     <div style="display: inline-block;float:left;">
-                        <p style="display: block;float:left;    width: 100%;line-height: 45px;">{{$value->user->username}}</p>
+                        <a href="/suki-userhome-{{$value->user->uid}}.html" style="display: block;float:left;    width: 100%;line-height: 45px;">{{$value->user->username}}</a>
                         <a  class="follow trans"
                             uid="{{$data['user_info']->uid}}"
                             to_uid="{{$value->user->uid}}"
@@ -119,9 +122,9 @@
         @elseif($data['request']['type'] == "friends")
             @foreach($data['my_friends'] as $value)
                 <div style="    width: 260px;float: left;">
-                    <div style="display: inline-block;float:left;margin: 15px 20px;">{{avatar($value->user->uid,50,100)}}</div>
+                    <a href="/suki-userhome-{{$value->user->uid}}.html" style="display: inline-block;float:left;margin: 15px 20px;">{{avatar($value->user->uid,50,100)}}</a>
                     <div style="display: inline-block;float:left;">
-                        <p style="display: block;float:left;    width: 100%;line-height: 45px;">{{$value->user->username}}</p>
+                        <a href="/suki-userhome-{{$value->user->uid}}.html" style="display: block;float:left;    width: 100%;line-height: 45px;">{{$value->user->username}}</a>
                         <a  class="trans"
                             uid="{{$data['user_info']->uid}}"
                             to_uid="{{$value->user->uid}}"

@@ -82,7 +82,7 @@ class ServeController extends Controller
             return self::response([],40002,"请先登录");
         if (!in_array($this->data["user_info"]->uid,self::MASTER_USER))
             return self::response([],40003,"您无权操作");
-        ForumThreadModel::delThread($request->input("tid"));
+        ForumThreadModel::delThread($request->input("tid"),$request->input("todo"));
         return self::response();
     }
 
@@ -94,7 +94,7 @@ class ServeController extends Controller
             return self::response([],40002,"请先登录");
         if (!in_array($this->data["user_info"]->uid,self::MASTER_USER))
             return self::response([],40003,"您无权操作");
-        ForumPostModel::delPosts($request->input("pid"));
+        ForumPostModel::delPosts($request->input("pid"),$request->input("todo"));
 
         return self::response();
     }

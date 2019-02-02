@@ -14,10 +14,10 @@ class ForumPostModel extends Model
     public $timestamps = false;
     public $primaryKey = ['tid','position'];
 
-    public static function delPosts($pid)
+    public static function delPosts($pid,$todo)
     {
         $posts = self::where('pid',$pid)->first();
-        self::where('pid',$pid)->update(["isdel"=>2]);
+        self::where('pid',$pid)->update(["isdel"=>$todo]);
         //先获取到所在page,再删除缓存
         $page = Thread_model::position2Page($posts->position);
         $posts_cache_key    = CoreController::POSTS_VIEW;
