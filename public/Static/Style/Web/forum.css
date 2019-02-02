@@ -94,6 +94,7 @@
     color: #ffb0b0;
 }
 .bbcode_container img {max-width:100%;}
+
 /*帖子详情页面*/
 .post_msg
 {
@@ -177,8 +178,8 @@
     .author_message {
         position: relative;
         left: 5px;
-        padding-top: 15px;
-        padding-bottom: 20px!important;
+        padding-top: 5px;
+        padding-bottom: 33px!important;
     }
     .author-name {
         width: auto!important;
@@ -188,5 +189,11 @@
     .user_medal {
         display: none;
     }
-
+    .author-head-box,.author-name {
+        position: relative;
+        bottom:10px;
+    }
+    .title_container .thread_title{
+        top: 0px;
+    }
 }

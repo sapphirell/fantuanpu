@@ -345,6 +345,14 @@ ul{padding: 0px;margin: 0px}
     filter: blur(0px);
 }
 
+/*一行超出隐藏**/
+.aline {
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow:ellipsis;
+
+}
 .form-control:focus {    border-color: #7ddce6!important;}
 /*动画 变型入场**/
 @-webkit-keyframes rubberBand {

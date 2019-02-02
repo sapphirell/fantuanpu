@@ -212,10 +212,36 @@
     .thread_action {
         display: none;
     }
+    .thread_container {
+        background: #FFFFFF;
+        margin: 15px;
+        padding: 15px;
+        padding-bottom:0px;
+        border-radius: 5px;
+        box-shadow: 0px 1px 3px #e4e4e4;
+        position: relative;
+        margin-bottom: 0px;
+        padding-top: 10px;
+    }
+
+    .thread_title {
+        position: relative;
+        top:10px;
+    }
 
 </style>
 <script>
+    function resize_window() {
+        var width = $(".post_msg").width();
+        $(".post_content").width(width-100);
+
+        var title_container = $(".title_container").width()
+        var author_width = $(".author-name").width() + 150;
+        var title_max_width = title_container - author_width;
+        $(".thread_title").width(title_max_width);
+    }
     $(document).ready(function () {
+        resize_window();
         $(".show_date").mouseout(function () {
             $(this).hide().siblings('.show_time').show()
 
@@ -232,22 +258,16 @@
         })
         //窗口宽度改变的时候修改post_item以及内部的宽度
         $(window).resize(function(){
-            var width = $(".post_msg").width();
-            $(".post_content").width(width-100);
-
-            var title_container = $(".title_container").width()
-            var author_width = $(".author-name").width() + 150;
-            var title_max_width = title_container - author_width;
-            $(".thread_title").width(title_max_width);
+            resize_window();
         });
     })
 </script>
 <body>
 
 <div class="wp web_body " style="margin-top: 10px;">
-    <div class="thread_container" style="background: #FFFFFF;margin: 15px;padding: 15px;padding-bottom:0px;border-radius: 5px;box-shadow: 0px 1px 3px #e4e4e4;position: relative;    margin-bottom: 0px;">
+    <div class="thread_container" style="">
         <div class="title_container">
-            <div class="show_960">
+            <div class="show_960 author-head-box">
                 @if($data['thread']['thread_subject']->anonymous == 2)
                     <span >{{avatar(0,40,5,'author-avatar','big')}}</span>
                 @else
@@ -259,7 +279,7 @@
             </div>
 
             <span class="author-name" style="">{{$data['thread']['thread_subject']->anonymous == 2 ? "匿名" : $data['thread']['thread_subject']->author}}</span>
-            <h1 class="thread_title" style="display:inline-block;font-size: 15px;font-family: 微软雅黑;font-weight: 900;text-align: left;">
+            <h1 class="thread_title aline" style="display:inline-block;font-size: 15px;font-family: 微软雅黑;font-weight: 900;text-align: left;">
                 {{$data['thread']['thread_subject']->subject}}
                 <a  style="text-decoration-line: none;" class="do_follow"
                     status="@if($data['has_collection'] === true){{"unfollow"}}@else{{"follow"}}@endif"
