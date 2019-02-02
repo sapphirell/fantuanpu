@@ -13,7 +13,7 @@ class Thread_model extends Model
     public static $table_post   = 'pre_forum_post';
     public $timestamps = false;
 
-    public function getThread($tid,$page=1)
+    public function getThread(int $tid,$page=1)
     {
         $thread_cache_key   = CoreController::THREAD_VIEW;
 
