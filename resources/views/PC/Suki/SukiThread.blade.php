@@ -234,27 +234,45 @@
         $(window).resize(function(){
             var width = $(".post_msg").width();
             $(".post_content").width(width-100);
+
+            var title_container = $(".title_container").width()
+            var author_width = $(".author-name").width() + 150;
+            var title_max_width = title_container - author_width;
+            $(".thread_title").width(title_max_width);
         });
     })
 </script>
 <body>
 
 <div class="wp web_body " style="margin-top: 10px;">
-    <div style="background: #FFFFFF;margin: 15px;padding: 15px;padding-bottom:0px;border-radius: 5px;box-shadow: 0px 1px 3px #e4e4e4;position: relative;    margin-bottom: 0px;">
+    <div class="thread_container" style="background: #FFFFFF;margin: 15px;padding: 15px;padding-bottom:0px;border-radius: 5px;box-shadow: 0px 1px 3px #e4e4e4;position: relative;    margin-bottom: 0px;">
         <div class="title_container">
-            <span class="author-name" style="">{{$data['thread']['thread_subject']->anonymous == 2 ? "匿名" : $data['thread']['thread_subject']->author}}</span>
-            <h1 style="display:inline-block;font-size: 15px;font-family: 微软雅黑;font-weight: 900;text-align: left;">{{$data['thread']['thread_subject']->subject}}</h1>
-
-            <a  style="text-decoration-line: none;" class="do_follow"
-                status="@if($data['has_collection'] === true){{"unfollow"}}@else{{"follow"}}@endif"
-            >
-                @if($data['has_collection'] == true)
-                    <img src="/Static/image/common/collection_pre.png" style="line-height: 12px;    width: 15px;display: inline-block;padding-bottom: 5px;">
+            <div class="show_960">
+                @if($data['thread']['thread_subject']->anonymous == 2)
+                    <span >{{avatar(0,40,5,'author-avatar','big')}}</span>
                 @else
-                    <img src="/Static/image/common/collection.png"  style="line-height: 12px;    width: 15px;display: inline-block;padding-bottom: 5px;">
+                    <a  href="suki-userhome-{{$data['thread']['thread_subject']->authorid}}.html">{{avatar($data['thread']['thread_subject']->authorid,40,5,'author-avatar','big')}}</a>
+                    <p class="author-sign trans" style="width: inherit;width: inherit;margin: 8px;color: #b7b7b7;width: 120px;">
+                        {{$data['thread']['thread_subject']->anonymous == 2 ? "" : ($data['thread']['thread_subject']->sightml?:"暂未设置签名") }}
+                    </p>
                 @endif
+            </div>
 
-            </a>
+            <span class="author-name" style="">{{$data['thread']['thread_subject']->anonymous == 2 ? "匿名" : $data['thread']['thread_subject']->author}}</span>
+            <h1 class="thread_title" style="display:inline-block;font-size: 15px;font-family: 微软雅黑;font-weight: 900;text-align: left;">
+                {{$data['thread']['thread_subject']->subject}}
+                <a  style="text-decoration-line: none;" class="do_follow"
+                    status="@if($data['has_collection'] === true){{"unfollow"}}@else{{"follow"}}@endif"
+                >
+                    @if($data['has_collection'] == true)
+                        <img src="/Static/image/common/collection_pre.png" style="line-height: 12px;    width: 15px;display: inline-block;padding-bottom: 5px;">
+                    @else
+                        <img src="/Static/image/common/collection.png"  style="line-height: 12px;    width: 15px;display: inline-block;padding-bottom: 5px;">
+                    @endif
+                </a>
+            </h1>
+
+
             <i style="float: right;font-size: 20px;color: #909090;" class="fa fa-angle-down trans action_down" down="0" aria-hidden="true"></i>
             <ul class="thread_action" id="down_0">
                 <li><a href="" class="report_thread" pid="{{$data['thread']['thread_post'][0]->pid}}">举报</a></li>
@@ -297,6 +315,7 @@
 
         <div class="clear"></div>
     </div>
+
     <div class="3-1">
         <div class="_3_1_left" >
             <div>

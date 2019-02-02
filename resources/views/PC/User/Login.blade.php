@@ -31,8 +31,8 @@
                 {{--</div>--}}
                 <input type="hidden" name="form" value="{{$data['form']}}">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                <span style="    position: relative;color: #b1a1a1; top: 12px;margin-left: 94px;">使用第三方账号登录</span>
-                <hr style="margin-top: 0px">
+                {{--<span style="    position: relative;color: #b1a1a1; top: 12px;margin-left: 94px;">使用第三方账号登录</span>--}}
+                {{--<hr style="margin-top: 0px">--}}
             </form>
         </div>
     </div>

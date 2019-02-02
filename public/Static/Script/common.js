@@ -37,7 +37,7 @@ $(function() {
             shade: 0.8,
             shadeClose: true,
             // title:'登录',
-            area: ['300px', '460px'],
+            area: ['280px', '360px'],
             offset: '100px',
             // skin: 'layui-layer-rim', //加上边框
             content: ['/login?form=layer', 'no']

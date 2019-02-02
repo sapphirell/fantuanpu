@@ -67,7 +67,7 @@
     font-size: 13px;
     text-align: center;
     color: #9C9C9C;text-align: center;width: 100%;display: inline-block;    font-family: PingHei,STHeitiSC-Light,Lucida Grande,Lucida Sans Unicode,Helvetica,Arial,Verdana,sans-serif;}
-h1.thread_title{    padding-top: 27px;}
+/*h1.thread_title{    padding-top: 27px;}*/
 .wp .message{    padding: 35px;}
 
 /****threadlist****/
@@ -139,8 +139,14 @@ h1.thread_title{    padding-top: 27px;}
 .news_author_avatar_cotainer {
     width: 100px;
 }
+.show_960 {
+    display: none;
+}
 /***自适应***/
 @media screen and (max-width: 960px) {
+    .show_960 {
+        display: inline-block;
+    }
     .news_author_avatar_cotainer {
         width: 80px;
     }
@@ -149,17 +155,12 @@ h1.thread_title{    padding-top: 27px;}
     ._3_1_right{display: none;}
     .mod_tab li span {    padding: 4px 4px;}
     .user_info.author {
-        position: relative;
-        top: -44px;
-        left: -10px;
+        display: none!important;
+        /*position: relative;*/
+        /*top: -44px;*/
+        /*left: -10px;*/
     }
-    .user_info.author img {
-        width: 40px!important;
-        height: 40px!important;
-        left: 18px;
-        position: relative;
-        top: 5px;
-        border:0px;
+    .title_container .show_960 img {
         padding: 2px;
         box-shadow: 0 2px 5px #c3def7;
         border-radius: 100%!important;
@@ -175,17 +176,14 @@ h1.thread_title{    padding-top: 27px;}
     }
     .author_message {
         position: relative;
-        top: -20px;
         left: 5px;
-    }
-    .author-message {
-        display: block!important;
-        padding-bottom: 30px;
+        padding-top: 15px;
+        padding-bottom: 20px!important;
     }
     .author-name {
         width: auto!important;
         font-size: 12px!important;
-        margin-left: 33px;
+        margin-left: 10px;
     }
     .user_medal {
         display: none;
