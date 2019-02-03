@@ -69,7 +69,7 @@ class SukiWebController extends Controller
     public function suki_userhome($uid)
     {
         $this->data['user'] = User_model::find($uid);
-        $this->data['thread'] = ForumThreadModel::get_user_thread($uid,1,2);
+        $this->data['thread'] = ForumThreadModel::get_user_thread($uid,1,2,self::$suki_forum);
         $this->data['has_follow'] = MyLikeModel::has_like($this->data["user_info"]->uid,$uid,4);
         $this->data['message_board'] = SukiMessageBoardModel::get_user_message($uid,1);
 
@@ -84,7 +84,7 @@ class SukiWebController extends Controller
         $check = self::checkRequest($request,["uid","page","need"]);
         if ($check !== true)
             return self::response([],40001,"缺少参数".$check);
-        $this->data['thread'] = ForumThreadModel::get_user_thread($request->input("uid"),$request->input("page"));
+        $this->data['thread'] = ForumThreadModel::get_user_thread($request->input("uid"),$request->input("page"),self::$suki_forum);
 
 
         return $request->input("need")  == "html" ? view("PC/Suki/SukiUcThreadlist")->with("data",$this->data) :self::response($this->data['thread']);

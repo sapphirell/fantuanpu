@@ -49,17 +49,18 @@
     }
 </style>
 <div class="wp" style="margin-top:70px;margin-bottom: 20px">
-    <div style="border-bottom: 2px dashed #fdc6c7;padding-bottom: 20px;background: #FFFFFF;box-shadow: 0 0 5px #eee;padding: 20px;margin-bottom: 10px;">
+    <div style="padding-bottom: 20px;background: #FFFFFF;box-shadow: 0 0 5px #eee;padding: 20px;margin-bottom: 10px;">
         <div style="width: 70%;float:left;">
             <div style="width: 120px ; padding: 3px;border: 1px dashed #c1c1c1;border-radius: 28px;float: left;">{{avatar($data['user']->uid,110,"20")}}</div>
             <div style="    float: left;margin-left: 20px;">
                 <h1 style=" display: inline-block ; text-align: left;font-size: 16px;font-weight: 900;color: #524a4f;">{{$data['user']->username}}</h1>
-                <p style="margin: 10px 5px;">这个人很懒还没有设置个人签名</p>
+                <p style="margin: 10px 5px;">{{$data["field_forum"]->sightml}}</p>
             </div>
             <div class="clear"></div>
         </div>
 
         <div style="float: left;width: 30% ">
+            @if($data["user_info"]->uid != $data['user']->uid)
             <div>
                 <a href="" class="post_letter trans">私信</a>
                 <a href="/add_suki_friend_view" class="add_suki_friend trans" friend_uid="{{$data['user']->uid}}">加好友</a>
@@ -76,7 +77,7 @@
                 </a>
                 <div class="clear"></div>
             </div>
-
+            @endif
             <div class="user_info_content" style="border: 0px;margin: 30px 5px 0px 0px;float: right;width: 200px;">
                 <div>
                     <a href="/suki-myfollow?like_type=1" class="user_info_content_value trans">10</a>
@@ -88,6 +89,7 @@
                 </div>
             </div>
         </div>
+
         <div class="clear"></div>
     </div>
     <div style="float: left;    width: 70%;">
@@ -102,8 +104,8 @@
     <div style="float: right;width: 30%;background: #FFFFFF;margin-top: 10px;padding: 10px;box-shadow: 0 0 5px #eee;border-radius: 5px;">
         <h3 style="font-size: 16px;font-weight: 900;color: #866767;margin-bottom: 20px;margin-left: 20px;">留言板</h3>
         @include('PC.Suki.SukiUcMessageBoard')
-        <textarea class="form-control board_message"></textarea>
-        <input type="submit" class="form-control add_board_message" uid="{{$data['user']->uid}}" >
+        <textarea class="form-control board_message" style="margin-bottom: 10px;background: #fafafa;margin-left: 10px;margin-right: 10px;width: 100%;width: 250px;border: 0px;"></textarea>
+        <input type="submit" class="form-control add_board_message" style="margin-left: 10px;width: 100px" uid="{{$data['user']->uid}}" >
 
     </div>
 

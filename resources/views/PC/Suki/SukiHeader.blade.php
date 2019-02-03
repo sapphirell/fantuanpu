@@ -171,7 +171,22 @@
             top: -15px;
             right: 20px;
         }
-
+        .layui-layer-setwin .layui-layer-close2 {
+            position: absolute;
+            right: -10px!important;
+            top: -8px!important;
+            width: 30px;
+        }
+        .head_sig {
+            overflow:hidden;
+            text-overflow:ellipsis;
+            display:-webkit-box;
+            -webkit-box-orient:vertical;
+            -webkit-line-clamp:2;
+            width: 120px;
+            font-size: 11px;
+            line-height: 17px;
+        }
         @media screen and (max-width: 960px) {
             .user_info_panel {
                 position: fixed;
@@ -209,7 +224,7 @@
                 </li>
             @else
                 <li class="" id="alert_ajax_login" class=" trans">
-                    <img src="/Image/denglu-copy.png" style="width: 30px;border: 2px solid #fff;padding: 2px;border-radius: 100%;">
+                    <img src="/Image/denglu-copy.png" style="    width: 25px;border: 2px solid #fff;padding: 2px;border-radius: 100%;margin-top: 2px;">
                 </li>
             @endif
         </ul>
@@ -266,14 +281,14 @@
             {{--<div style="display: inline-block;float:left;      margin: 10px 20px 12px 20px;"></div>--}}
             <div style="float:left;">
                 <a style="text-decoration: none" href="/suki-userhome-{{$data["user_info"]->uid}}.html"><h2 style="     font-size: 17px;color: #6a6c7f;margin-top: 15px;">{{$data["user_info"]->username}}</h2></a>
-                <p style="    width: 100px;font-size: 12px;color: #8e8e8e;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">{{ $data['field_forum']->sightml ?: "暂未设置签名档" }}</p>
+                <p class="head_sig">{{ $data['field_forum']->sightml ?: "暂未设置签名档" }}</p>
             </div>
             <div class="clear"></div>
             <div class="user_info_content">
 
                 <div>
-                    <a href="" class="user_info_content_value trans">{{$data["count"]["sukithreads"]?:0}}</a>
-                    <a href=""  class="user_info_content_description trans">帖子</a>
+                    <a href="/suki-userhome-{{$data["user_info"]->uid}}.html" class="user_info_content_value trans">{{$data["count"]["sukithreads"]?:0}}</a>
+                    <a href="/suki-userhome-{{$data["user_info"]->uid}}.html"  class="user_info_content_description trans">帖子</a>
                 </div>
                 <div>
                     <a href="/suki_relationship?type=my_follow" class="user_info_content_value trans">{{$data["count"]["followsuki"]?:0}}</a>

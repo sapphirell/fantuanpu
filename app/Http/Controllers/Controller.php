@@ -54,6 +54,7 @@ class Controller extends BaseController
         'localhost',
     ];
     public static $fantuanpu_forum = [1,36,41,49,52,56,64,2,37,38,123,125,126,44,66,50,51,69,93,114,57,73,75,65,71,83,85];
+    public static $suki_forum = [157,158,159,160,161,162];
     //在这些板块里发帖会匿名
     public static $anonymous_forum = [160];
     //超级管理员

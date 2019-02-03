@@ -3,7 +3,7 @@
 @endif
 
 @foreach($data["message_board"] as $value)
-    <div style=" padding-left: 20px;">
+    <div style=" padding-left: 10px;padding-right: 10px;">
         <div style="   ">
             <div style="float: left">
                 <a href="/suki-userhome-{{$value->authorid}}.html">{{avatar($value->authorid,40,100)}}</a>
@@ -15,7 +15,7 @@
             <div class="clear"></div>
         </div>
         
-        <p style="margin: 10px 0px;padding: 0px 5px;">{{$value->message}}</p>
+        <p style="margin: 10px 0px;padding: 0px 5px;background: #fafafa;border-radius: 5px;padding: 10px;display: inline-block;width: 100%">{{$value->message}}</p>
 
 
     </div>

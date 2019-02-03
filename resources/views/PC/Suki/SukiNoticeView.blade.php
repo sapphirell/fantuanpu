@@ -14,7 +14,7 @@
         padding: 10px 30px;
     }
     .reply_me_content {
-        padding: 5px 10 5px 0px;
+        padding: 5px 10px 5px 0px;
         flex-grow: 1;
     }
     .reply_me_content img{

@@ -99,9 +99,9 @@ class ForumThreadModel extends Model
     /**
      * 获取一个人发的帖子
      */
-    public static function get_user_thread($uid,$page,$ascription =1)
+    public static function get_user_thread($uid,$page,$ascription =1,$fid=[])
     {
-        return self::where('authorid',$uid)->where('ascription',$ascription)->orderBy('tid','desc')->limit(15)->offset(($page-1)*15)->get();
+        return self::whereIn("fid",$fid)->where('authorid',$uid)->where('ascription',$ascription)->orderBy('tid','desc')->limit(15)->offset(($page-1)*15)->get();
     }
     /**
      * 根据名字模糊搜索帖子

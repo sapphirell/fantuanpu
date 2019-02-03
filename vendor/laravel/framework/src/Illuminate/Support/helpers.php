@@ -1284,10 +1284,10 @@ if (! function_exists('format_time'))
         {
             if ($now_ymd != $time_ymd)
                 return date($default_format,$time);
-            if ($now -$time < $_1h)
-                return floor(($now-$time)/60) . "分钟前";
             if ($now -$time < $_1m)
                 return "刚刚";
+            if ($now - $time < $_1h)
+                return floor(($now-$time)/60) . "分钟前";
             if ( $now - $time  > $_1h)
                 return floor(($now-$time)/3600) . "小时前";
         }

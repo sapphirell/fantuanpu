@@ -336,11 +336,11 @@ $(document).ready(function () {
         layer.open({
             type: 2,
             title: false,
-            closeBtn: 0, //不显示关闭按钮
+            closeBtn: 2, //不显示关闭按钮
             shade: 0.8,
             shadeClose: true,
             // title:'登录',
-            area: ['300px', '290px'],
+            area: ['300px', '350px'],
             offset: '100px',
             // skin: 'layui-layer-rim', //加上边框
             content: ['/update_user_avatar', 'no']

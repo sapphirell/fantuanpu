@@ -124,7 +124,8 @@ class SukiWebApiController extends Controller
         $check = self::checkRequest($request,["uid","to_uid","to_do"]);
         if ($check !== true)
             return self::response([],40001,"缺少参数$check");
-
+        if ($request->input("uid") == $request->input("to_uid"))
+            return self::response([],40003,"不能关注或取关自己");
         $like_all = MyLikeModel::get_user_like($request->input("uid"),4);
         $uid_arr =[];
         foreach ($like_all as $value)
@@ -177,7 +178,8 @@ class SukiWebApiController extends Controller
         $check = self::checkRequest($request,["friend_id","message"]);
         if ($check !== true)
             return self::response([],40001,"缺少参数".$check);
-
+        if ($request->input("friend_id") == $this->data["user_info"]->uid)
+            return self::response([],40002,"您不能和自己成为朋友-_-");
         $res = CommonApiController::_suki_send_friend_request($this->data["user_info"]->uid,$request->input("friend_id"),$request->input("message"));
 
         return $res ? self::response([],200,"已经发送申请") : self::response([],40002,"你们已经是好友了");

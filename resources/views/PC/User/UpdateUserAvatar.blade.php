@@ -31,7 +31,7 @@
 </style>
 <div class="" style="background: #ffffff">
     <div>
-        <div style="margin-top: 20px">
+        <div style="margin-top: 40px">
             <form action="/uc-do-upload-avatar" method="post" enctype="multipart/form-data" style="    margin: 0 auto;width: 200px;text-align: center;">
                 <div style="width: inherit;height: 200px;box-shadow: 0px -1px 4px #ddd;">
                     {{avatar(session('user_info')->uid,200,0,'user_change_avatar','big')}}

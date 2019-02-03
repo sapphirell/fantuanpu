@@ -236,7 +236,7 @@
         $(".post_content").width(width-120);
 
         var title_container = $(".title_container").width()
-        var author_width = $(".author-name").width() + 150;
+        var author_width = $(".author-name").width() + 160;
         var title_max_width = title_container - author_width;
         $(".thread_title").width(title_max_width);
     }
@@ -281,7 +281,7 @@
             <span class="author-name" style="">{{$data['thread']['thread_subject']->anonymous == 2 ? "匿名" : $data['thread']['thread_subject']->author}}</span>
             <h1 class="thread_title aline" style="display:inline-block;font-size: 15px;font-family: 微软雅黑;font-weight: 900;text-align: left;">
                 {{$data['thread']['thread_subject']->subject}}
-                <a  style="text-decoration-line: none;" class="do_follow"
+                <a  style="text-decoration-line: none;margin-left: 10px" class="do_follow"
                     status="@if($data['has_collection'] === true){{"unfollow"}}@else{{"follow"}}@endif"
                 >
                     @if($data['has_collection'] == true)
@@ -323,7 +323,7 @@
 
 
             </div>
-            <div class="author_message" style="width: 100%;float:left;flex-grow: 1;padding-left: 10px;position: relative;padding-bottom: 15px;">
+            <div class="author_message" style="width: 100%;float:left;flex-grow: 1;padding-left: 10px;position: relative;padding-bottom: 35px;">
                 <div class="bbcode_container clear">
 
 
@@ -333,7 +333,7 @@
                         {!! bbcode2html($data['thread']['thread_post'][0]->message) !!}
                     @endif
                 </div>
-                <p style="    font-size: 12px;position: absolute;right: 8px;color: #ccc9c9;bottom: 0px">
+                <p style="    font-size: 12px;position: absolute;right: 8px;color: #ccc9c9;bottom: 5px">
                     {{$data['thread']['thread_subject']->dateline}}
                     查看
                     {{$data['thread']['thread_subject']->views}}
