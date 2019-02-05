@@ -271,6 +271,7 @@ Route::group([
     Route::post('/update_suki_user_info', ['uses' => 'SukiWebApiController@update_suki_user_info', 'as' => 'update_suki_user_info']);#修改suki的用户信息
     Route::post('/update_suki_thread', ['uses' => 'SukiWebApiController@update_suki_thread', 'as' => 'update_suki_thread']);#重新编辑suki的帖子
     Route::post('/suki_post_report', ['uses' => 'SukiWebApiController@suki_post_report', 'as' => 'suki_post_report']);#suki发起举报
+    Route::get('/suki_set_top_thread', ['uses' => 'SukiWebApiController@suki_set_top_thread', 'as' => 'suki_set_top_thread']);#suki把帖子设置为置顶
 
 
 });

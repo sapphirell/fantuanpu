@@ -110,4 +110,15 @@ class ForumThreadModel extends Model
     {
         
     }
+    //1 == 正常 2= 置顶
+    public static function set_top_thread($tid,$todo = "top")
+    {
+        $thread = self::find($tid);
+        $thread->istop = $todo;
+        $thread->save();
+        //然后清除缓存
+        $thread_cache_key   = CoreController::THREAD_VIEW;
+        Cache::forget($thread_cache_key['key'].$tid);
+        return true;
+    }
 }

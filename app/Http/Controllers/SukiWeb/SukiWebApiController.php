@@ -356,4 +356,15 @@ class SukiWebApiController extends Controller
         $report->save();
         return self::response([],200,"举报成功,反馈结果会以站内私信的形式通知您。如果您非常急切得到反馈,可以在站内发帖联系我们。");
     }
+
+    public function suki_set_top_thread(Request $request)
+    {
+        $check = self::checkRequest($request,["tid","todo"]);
+
+        if (!in_array($this->data['user_info']->uid,self::MASTER_USER))
+            return self::response([],40002,"您无权操作");
+
+        $update = ForumThreadModel::set_top_thread($request->input("tid"),$request->input("todo"));
+        return self::response([],200,'设置成功');
+    }
 }

@@ -68,7 +68,7 @@ class ThreadController extends Controller
     }
 
     /**
-     * 设置帖子为置顶帖子
+     * 设置帖子为置顶帖子|饭团扑的
      * @param Request $request
      */
     public function set_top_thread(Request $request)

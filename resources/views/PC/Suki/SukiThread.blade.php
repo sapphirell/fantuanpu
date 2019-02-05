@@ -306,6 +306,13 @@
                     </a>
                 </li>
                 @endif
+                @if($data["auth_level"] == 3)
+                <li>
+                    <a href="/suki_set_top_thread?tid={{$data['thread']['thread_subject']->tid}}&todo={{$data['thread']['thread_subject']->istop == 1 ? 2 : 1}}" class="set_top_thread">
+                        {{$data['thread']['thread_subject']->istop == 2 ? "撤销置顶" : "置顶"}}
+                    </a>
+                </li>
+                @endif
             </ul>
         </div>
         <div class="author-message" style="">
@@ -590,6 +597,14 @@
                 location.reload();
             })
         })
+        //设置帖子为置顶帖
+        $(".set_top_thread").click(function (e) {
+            e.preventDefault();
+            var href = $(this).attr("href");
+            $.get(href,{},function (e) {
+                alert(e.msg)
+            });
+        });
     })
 
 </script>
