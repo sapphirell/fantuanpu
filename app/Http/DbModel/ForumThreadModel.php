@@ -48,19 +48,23 @@ class ForumThreadModel extends Model
                 $exception = true;
         if ($exception)
             $fid_arr = [];
-
+//        $start = time() + microtime();
 
         $data = Cache::remember($cacheKey['key'].json_encode($fid_arr)."_page_".$page,
-//                0,
-                $cacheKey["time"],
+                0,
+//                $cacheKey["time"],
                 function () use ($fid_arr,$thread_mod ,$page) {
 
-                        $data = ForumThreadModel::orderBy('lastpost','desc');
+                        $normal_thread = ForumThreadModel::orderBy('lastpost','desc');
                         if (empty($fid_arr))
-                            $data = $data->where('fid','!=','63')->where("isdel",1)->where("istop",1)->orderBy('lastpost','desc')->offset(15*($page-1))->limit(15)->get();
+                            $normal_thread = $normal_thread->where('fid','!=','63')->where("isdel",1)->where("istop",1)->orderBy('lastpost','desc')->offset(15*($page-1))->limit(15)->get();
                         else
-                            $data = $data->whereIn('fid',$fid_arr)->where("isdel",1)->where("istop",1)->orderBy('lastpost','desc')->offset(15*($page-1))->limit(15)->get();
-                        $data = $data->isEmpty() ? [] : $data->toArray();
+                            $normal_thread = $normal_thread->whereIn('fid',$fid_arr)->where("isdel",1)->where("istop",1)->orderBy('lastpost','desc')->offset(15*($page-1))->limit(15)->get();
+                        $normal_thread = $normal_thread->isEmpty() ? [] : $normal_thread->toArray();
+                        //如果获取的是第一页的帖子,应当再获取该板块的置顶帖,并合并在一起
+                        $top_thread = self::_get_top_of_forum($fid_arr);
+
+                        $data = array_merge($top_thread,$normal_thread);
                         foreach ($data as &$value)
                         {
                             $value['avatar'] = config('app.online_url') .\App\Http\Controllers\User\UserHelperController::GetAvatarUrl($value['authorid']);
@@ -73,29 +77,43 @@ class ForumThreadModel extends Model
                                 preg_match_all("/\[img\].*?\[\/img\]/",$flor->message,$tmp);// 取前几楼的图片
                                 $subject_images = array_merge($subject_images,$tmp[0]);
                             }
+
                             //帖子预览(图文)
                             $value['preview'] = preg_replace("/\[img\].*?\[\/img\]/",'[图片]',$post_image[0]->message);
-                            //取图片地址,并且去掉过小的图片
-                            foreach ($subject_images as $key => &$str)
+                            //非置顶帖子要显示略缩图,取图片地址,并且去掉过小的图片
+                            if ($value['istop'] == 1)
                             {
-                                $link = mb_substr($str,5,mb_strlen($str)-11,'utf-8');
-                                $size = getimagesize($link);
-                                if ($size[0] > 120 && $size > 120)
-                                    $str = $link;
-                                else
-                                    unset($subject_images[$key]);
-                            }
+                                foreach ($subject_images as $key => &$str)
+                                {
+                                    $link = mb_substr($str,5,mb_strlen($str)-11,'utf-8');
+                                    $size = getimagesize($link); // 这一步骤如果是网络图片,则会很慢很慢,后期上线后应该考虑实现为生成本地略缩图的方式
+                                    if ($size[0] > 120 && $size > 120)
+                                        $str = $link;
+                                    else
+                                        unset($subject_images[$key]);
+                                }
 
-                            $value['subject_images'] = $subject_images;
+                                $value['subject_images'] = $subject_images;
+                            }
                             //获取板块名称
                             $value["suki_fname"] = Forum_forum_model::$suki_forum[$value["fid"]];
                         }
 
                         return $data;
                 });
+
         return $data;
     }
 
+    /**
+     * 获取一个板块的置顶帖子
+     * @param $fid
+     */
+    public static function _get_top_of_forum(array $fid_arr)
+    {
+        $data = self::whereIn('fid',$fid_arr)->where("isdel",1)->where("istop",2)->orderBy('lastpost','desc')->get();
+        return $data->isEmpty() ? [] : $data->toArray();
+    }
     /**
      * 获取一个人发的帖子
      */

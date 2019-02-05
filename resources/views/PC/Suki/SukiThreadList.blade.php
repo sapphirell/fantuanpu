@@ -1,7 +1,7 @@
 <link rel="stylesheet" type="text/css" href="/Static/Style/Web/forum.css">
 <div class="thread_list" style="margin-top: 10px">
     @foreach($data["thread"] as $value)
-        <div class="fourm_thread_items @if($value['top'])top @endif" style="  margin: 10px;  box-shadow: 0 0 10px #f1f1f1;background: #ffffff;padding: 10px;border-radius: 5px;"  >
+        <div class="fourm_thread_items @if($value['istop'] == 2)suki_top_thread @endif" style="  margin: 10px;  box-shadow: 0 0 10px #f1f1f1;background: #ffffff;padding: 10px;border-radius: 5px;"  >
             <div style="display: flex;flex-flow:row;    overflow: hidden; ">
 
                 @if($value['anonymous'] == 2 )

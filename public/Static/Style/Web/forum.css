@@ -143,6 +143,10 @@
 .show_960 {
     display: none;
 }
+.suki_top_thread {
+    box-shadow: 0 0 10px #f7cfcf;
+    border: 2px solid #ffd6d6;
+}
 /***自适应***/
 @media screen and (max-width: 960px) {
     .show_960 {
