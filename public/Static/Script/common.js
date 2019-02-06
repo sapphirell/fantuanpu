@@ -43,6 +43,21 @@ $(function() {
             content: ['/login?form=layer', 'no']
         });
     })
+    $("#alert_ajax_login_suki").click(function (e) {
+        e.preventDefault();
+        layer.open({
+            type: 2,
+            title: false,
+            closeBtn: 0, //不显示关闭按钮
+            shade: 0.8,
+            shadeClose: true,
+            // title:'登录',
+            area: ['280px', '360px'],
+            offset: '100px',
+            // skin: 'layui-layer-rim', //加上边框
+            content: ['/suki_login?form=layer', 'no']
+        });
+    })
     $("#alert_ajax_reg").click(function (e)
     {
         e.preventDefault();

@@ -54,7 +54,6 @@ class ForumThreadModel extends Model
 //                0,
                 $cacheKey["time"],
                 function () use ($fid_arr,$thread_mod ,$page) {
-
                         $normal_thread = ForumThreadModel::orderBy('lastpost','desc');
                         if (empty($fid_arr))
                             $normal_thread = $normal_thread->where('fid','!=','63')->where("isdel",1)->where("istop",1)->orderBy('lastpost','desc')->offset(15*($page-1))->limit(15)->get();
@@ -62,7 +61,11 @@ class ForumThreadModel extends Model
                             $normal_thread = $normal_thread->whereIn('fid',$fid_arr)->where("isdel",1)->where("istop",1)->orderBy('lastpost','desc')->offset(15*($page-1))->limit(15)->get();
                         $normal_thread = $normal_thread->isEmpty() ? [] : $normal_thread->toArray();
                         //如果获取的是第一页的帖子,应当再获取该板块的置顶帖,并合并在一起
-                        $top_thread = self::_get_top_of_forum($fid_arr);
+                        if ($page == 1)
+                            $top_thread = self::_get_top_of_forum($fid_arr);
+                        else
+                            $top_thread = [];
+
 
                         $data = array_merge($top_thread,$normal_thread);
                         foreach ($data as &$value)

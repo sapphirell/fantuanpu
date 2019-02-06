@@ -135,6 +135,7 @@ $(document).ready(function () {
         e.preventDefault();
         var fd = {'view_forum':setting.lolita_viewing_forum,'need' : "html","page":load_thread_nextpage}
         console.log(fd)
+        $(".add_more_threadlist").text("加载中...")
         var thread_list = $.get("/suki-thread",fd,function (e) {
             console.log(e)
 //                console.log(todo)
@@ -142,10 +143,11 @@ $(document).ready(function () {
             {
                 load_thread_nextpage++
                 $(".list_container").append(e);
+                $(".add_more_threadlist").text("加载更多")
             }
             else
             {
-                alert("已经到底啦")
+                $(".add_more_threadlist").text("已经到底啦~")
             }
 
         });
@@ -283,10 +285,6 @@ $(document).ready(function () {
         $(".ava_glass").fadeToggle("fast");
         event.stopPropagation();
     })
-    //首页点击加载更多帖子
-    $(".add_more_threadlist").click(function (e) {
-        e.preventDefault();
-    });
     //同意或拒绝好友申请
     $(".apply_suki_friends").click(function (e) {
         e.preventDefault();

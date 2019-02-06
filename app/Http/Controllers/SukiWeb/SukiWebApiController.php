@@ -37,6 +37,7 @@ class SukiWebApiController extends Controller
         //                dd($request->input("view_forum"));
         //设置用户访问的板块
         self::set_suki_view(session("user_info")->uid ?: 0, $request->input("view_forum") ?: [157]);
+
         //获取帖子
         $this->data['thread'] = ForumThreadModel::get_new_thread(
             $request->input("view_forum"),

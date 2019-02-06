@@ -280,7 +280,9 @@
             <div class="author-name" style="">{{$data['thread']['thread_subject']->anonymous == 2 ? "匿名" : $data['thread']['thread_subject']->author}}</div>
             <div class="aline" style="display: inline-block;">
                 <h1 class="thread_title aline" style="display:inline-block;font-size: 15px;font-family: 微软雅黑;font-weight: 900;text-align: left;">{{$data['thread']['thread_subject']->subject}}</h1>
-                <a  style="text-decoration-line: none;margin-left: 10px" class="do_follow"
+            </div>
+            <div style="display: inline-block;float:right;">
+                <a  style="text-decoration-line: none;    margin-right: 10px;float: left;" class="do_follow"
                     status="@if($data['has_collection'] === true){{"unfollow"}}@else{{"follow"}}@endif"
                 >@if($data['has_collection'] == true)
                         <img src="/Static/image/common/collection_pre.png" style="line-height: 12px;    width: 15px;display: inline-block;padding-bottom: 5px;">
@@ -288,30 +290,29 @@
                         <img src="/Static/image/common/collection.png"  style="line-height: 12px;    width: 15px;display: inline-block;padding-bottom: 5px;">
                     @endif
                 </a>
+                <i style="float: right;font-size: 20px;color: #909090;" class="fa fa-angle-down trans action_down" down="0" aria-hidden="true"></i>
+                <ul class="thread_action" id="down_0">
+                    <li><a href="" class="report_thread" pid="{{$data['thread']['thread_post'][0]->pid}}">举报</a></li>
+                    @if($data["auth_level"] == 3 || $data["user_info"]->uid == $data['thread']['thread_subject']->authorid )
+                        <li><a class="editor_thread" href="" tid="{{$data['thread']['thread_subject']->tid}}" position="1">编辑</a></li>
+                    @endif
+                    @if($data["auth_level"] == 2 || $data["auth_level"] == 3 )
+                        <li>
+                            <a class="delthread" href="/del_thread?tid={{$data['thread']['thread_subject']->tid}}&todo={{$data['thread']['thread_subject']->isdel == 2 ? 1 : 2}}">
+                                {{$data['thread']['thread_subject']->isdel == 2 ? "恢复" : "删除"}}
+                            </a>
+                        </li>
+                    @endif
+                    @if($data["auth_level"] == 3)
+                        <li>
+                            <a href="/suki_set_top_thread?tid={{$data['thread']['thread_subject']->tid}}&todo={{$data['thread']['thread_subject']->istop == 1 ? 2 : 1}}" class="set_top_thread">
+                                {{$data['thread']['thread_subject']->istop == 2 ? "撤销置顶" : "置顶"}}
+                            </a>
+                        </li>
+                    @endif
+                </ul>
             </div>
 
-
-            <i style="float: right;font-size: 20px;color: #909090;" class="fa fa-angle-down trans action_down" down="0" aria-hidden="true"></i>
-            <ul class="thread_action" id="down_0">
-                <li><a href="" class="report_thread" pid="{{$data['thread']['thread_post'][0]->pid}}">举报</a></li>
-                @if($data["auth_level"] == 3 || $data["user_info"]->uid == $data['thread']['thread_subject']->authorid )
-                <li><a class="editor_thread" href="" tid="{{$data['thread']['thread_subject']->tid}}" position="1">编辑</a></li>
-                @endif
-                @if($data["auth_level"] == 2 || $data["auth_level"] == 3 )
-                <li>
-                    <a class="delthread" href="/del_thread?tid={{$data['thread']['thread_subject']->tid}}&todo={{$data['thread']['thread_subject']->isdel == 2 ? 1 : 2}}">
-                        {{$data['thread']['thread_subject']->isdel == 2 ? "恢复" : "删除"}}
-                    </a>
-                </li>
-                @endif
-                @if($data["auth_level"] == 3)
-                <li>
-                    <a href="/suki_set_top_thread?tid={{$data['thread']['thread_subject']->tid}}&todo={{$data['thread']['thread_subject']->istop == 1 ? 2 : 1}}" class="set_top_thread">
-                        {{$data['thread']['thread_subject']->istop == 2 ? "撤销置顶" : "置顶"}}
-                    </a>
-                </li>
-                @endif
-            </ul>
         </div>
         <div class="author-message" style="">
             <div class="user_info author" style="display: inline-block;width: 160px">

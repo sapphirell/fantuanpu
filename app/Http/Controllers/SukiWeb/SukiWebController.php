@@ -237,4 +237,11 @@ class SukiWebController extends Controller
         $this->data['origin'] = json_encode($posts);
         return view('PC/Suki/SukiReport')->with('data',$this->data);
     }
+    //登录
+    public function suki_login(Request $request)
+    {
+        $this->data['form'] = $request->input('form');
+        return view('PC/Suki/SukiLogin')->with('data',$this->data);
+    }
+
 }
