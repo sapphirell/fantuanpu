@@ -365,6 +365,6 @@ class SukiWebApiController extends Controller
             return self::response([],40002,"您无权操作");
 
         $update = ForumThreadModel::set_top_thread($request->input("tid"),$request->input("todo"));
-        return self::response([],200,'设置成功');
+        return self::response([],200,'设置成功,请等待一分钟后生效');
     }
 }

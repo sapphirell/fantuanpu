@@ -436,6 +436,7 @@
                     {{csrf_field('post_thread_token')}}
                 </form>
             </div>
+            <div class="clear"></div>
         </div>
         <div class="_3_1_right" style="margin-top: 15px;">
             {{--<div style="    float: right;width: 100%;    background: #80f5ff;margin-top: 15px;box-shadow: 2px 3px 3px #e4e4e4;margin-right: 18px;">--}}
@@ -451,6 +452,7 @@
 
             </div>
         </div>
+        <div class="clear"></div>
     </div>
 
 
@@ -600,7 +602,8 @@
             e.preventDefault();
             var href = $(this).attr("href");
             $.get(href,{},function (e) {
-                alert(e.msg)
+                alert(e.msg);
+                location.reload();
             });
         });
     })
