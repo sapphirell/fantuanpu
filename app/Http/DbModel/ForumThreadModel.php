@@ -51,8 +51,8 @@ class ForumThreadModel extends Model
 //        $start = time() + microtime();
 
         $data = Cache::remember($cacheKey['key'].json_encode($fid_arr)."_page_".$page,
-                0,
-//                $cacheKey["time"],
+//                0,
+                $cacheKey["time"],
                 function () use ($fid_arr,$thread_mod ,$page) {
 
                         $normal_thread = ForumThreadModel::orderBy('lastpost','desc');

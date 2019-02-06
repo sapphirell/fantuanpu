@@ -147,6 +147,12 @@
     box-shadow: 0 0 10px #f7cfcf;
     border: 2px solid #ffd6d6;
 }
+.wp.web_body
+{
+    position: relative;
+    top: 40px;
+    margin-bottom: 60px;
+}
 /***自适应***/
 @media screen and (max-width: 960px) {
     .show_960 {
@@ -171,7 +177,7 @@
         border-radius: 100%!important;
     }
     .title_container {
-        padding-left:20px;
+        padding-left:5px;
     }
     .author-sign {
         display: none;
@@ -185,17 +191,16 @@
         padding-top: 5px;
         padding-bottom: 33px!important;
     }
-    .author-name {
-        width: auto!important;
-        font-size: 12px!important;
-        margin-left: 10px;
-    }
     .user_medal {
         display: none;
     }
     .author-head-box,.author-name {
-        position: relative;
-        bottom:10px;
+        width: auto!important;
+        font-size: 12px!important;
+        margin:0px 5px 0px 5px!important;
+        /*margin-left: 10px;*/
+        /*position: relative;*/
+        /*bottom:10px;*/
     }
     .title_container .thread_title{
         top: 0px;

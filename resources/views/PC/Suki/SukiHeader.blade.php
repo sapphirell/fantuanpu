@@ -37,6 +37,7 @@
         .search_box:hover ,.search_box:active,.search_box:focus {
             border-color: #FFFFFF!important;
             border-radius: 20px;
+            border:0px !important;
             /*box-shadow: 0 0 5px #ff7979;*/
             /*border-style:dashed!important;*/
         }
@@ -183,7 +184,7 @@
             display:-webkit-box;
             -webkit-box-orient:vertical;
             -webkit-line-clamp:2;
-            width: 120px;
+            width: 100px;
             font-size: 11px;
             line-height: 17px;
         }

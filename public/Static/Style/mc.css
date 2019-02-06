@@ -351,7 +351,7 @@ ul{padding: 0px;margin: 0px}
     white-space: nowrap;
     overflow: hidden;
     text-overflow:ellipsis;
-
+    vertical-align: middle;/**对齐问题 https://www.cnblogs.com/jiangxi/p/5106568.html**/
 }
 .form-control:focus {    border-color: #7ddce6!important;}
 /*动画 变型入场**/

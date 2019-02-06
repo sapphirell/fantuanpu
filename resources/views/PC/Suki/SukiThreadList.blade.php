@@ -20,8 +20,8 @@
                     </div>
                 @endif
                 <div style="display: inline-block;float: left; flex: 1;">
-                    <div>
-                        <a href="suki-thread-{{$value['tid']}}-1.html" style="font-size: 15px;color: #754242;margin-bottom: 3px;display: inline-block;font-weight: 700;"  target="_blank">{{$value['subject']}}</a>
+                    <div style="margin-left: 5px">
+                        <h2 style="    margin: 0px;line-height: 15px;display: inline-block;"><a href="suki-thread-{{$value['tid']}}-1.html" style="font-size: 15px;color: #754242;margin-bottom: 3px;display: inline-block;font-weight: 700;"  target="_blank">{{$value['subject']}}</a></h2>
                         <span style="color: #000000;">(+{{$value['replies']}})</span>
                         <span class="show_date" style="color: #ccc;cursor: pointer;padding: 5px;float: right;font-size: 12px">{{ format_time($value['lastpost']) }}</span>
                     </div>

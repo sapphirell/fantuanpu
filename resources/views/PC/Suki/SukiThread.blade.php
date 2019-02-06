@@ -8,13 +8,13 @@
     .pstatus{
         display: block;
     }
-    .wp {
-        margin-top: 29px;
-        /*box-shadow: 0 0 11px #e6e6e6;*/
-        border-radius: 5px 5px 0px 0px;
-        overflow: hidden;
-        padding: 0px!important;
-    }
+    /*.wp {*/
+        /*margin-top: 29px;*/
+        /*!*box-shadow: 0 0 11px #e6e6e6;*!*/
+        /*border-radius: 5px 5px 0px 0px;*/
+        /*overflow: hidden;*/
+        /*padding: 0px!important;*/
+    /*}*/
     .wp .fourm_thread_items {
         margin: 0px;
     }
@@ -156,7 +156,7 @@
         border-radius: 5px;
     }
     .author-avatar {
-        border: 1px dashed #ddd;
+        border: 0px dashed #ddd;
         padding: 3px;
     }
     .author-name {
@@ -225,8 +225,7 @@
     }
 
     .thread_title {
-        position: relative;
-        top:10px;
+
     }
 
 </style>
@@ -266,7 +265,7 @@
 
 <div class="wp web_body " style="margin-top: 10px;">
     <div class="thread_container" style="">
-        <div class="title_container">
+        <div class="title_container" style="">
             <div class="show_960 author-head-box">
                 @if($data['thread']['thread_subject']->anonymous == 2)
                     <span >{{avatar(0,40,5,'author-avatar','big')}}</span>
@@ -278,19 +277,18 @@
                 @endif
             </div>
 
-            <span class="author-name" style="">{{$data['thread']['thread_subject']->anonymous == 2 ? "匿名" : $data['thread']['thread_subject']->author}}</span>
-            <h1 class="thread_title aline" style="display:inline-block;font-size: 15px;font-family: 微软雅黑;font-weight: 900;text-align: left;">
-                {{$data['thread']['thread_subject']->subject}}
+            <div class="author-name" style="">{{$data['thread']['thread_subject']->anonymous == 2 ? "匿名" : $data['thread']['thread_subject']->author}}</div>
+            <div class="aline" style="display: inline-block;">
+                <h1 class="thread_title aline" style="display:inline-block;font-size: 15px;font-family: 微软雅黑;font-weight: 900;text-align: left;">{{$data['thread']['thread_subject']->subject}}</h1>
                 <a  style="text-decoration-line: none;margin-left: 10px" class="do_follow"
                     status="@if($data['has_collection'] === true){{"unfollow"}}@else{{"follow"}}@endif"
-                >
-                    @if($data['has_collection'] == true)
+                >@if($data['has_collection'] == true)
                         <img src="/Static/image/common/collection_pre.png" style="line-height: 12px;    width: 15px;display: inline-block;padding-bottom: 5px;">
                     @else
                         <img src="/Static/image/common/collection.png"  style="line-height: 12px;    width: 15px;display: inline-block;padding-bottom: 5px;">
                     @endif
                 </a>
-            </h1>
+            </div>
 
 
             <i style="float: right;font-size: 20px;color: #909090;" class="fa fa-angle-down trans action_down" down="0" aria-hidden="true"></i>
