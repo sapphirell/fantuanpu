@@ -26,7 +26,7 @@
                 <div class="form-group" style="float: right;margin-right: 10px;position: absolute;bottom: 0px;right: 0px;">
 
                     <div class="col-sm-offset-2 col-sm-10">
-                        <a id="old_user" href="/login">已有账号?</a>
+                        <a id="old_user" href="/login">忘记账号?</a>
                         <button type="submit" class="btn  btn-info" id="do_reg">注册</button>
                     </div>
                 </div>

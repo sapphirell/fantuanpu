@@ -210,7 +210,7 @@ Route::group([
         'domain.lolita'
     ],
 ], function () {
-
+    Route::post('/suki_home_page', ['uses' => 'SukiAppResponseController@suki_home_page', 'as' => 'suki_home_page']);#Suki的首页 homepage
 
 });
 

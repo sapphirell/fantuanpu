@@ -53,11 +53,16 @@ class Forum_forum_model extends Model
     }
     public function get_bottom_nodes($fid,$type = 'forum')
     {
+        $cacheKey = CoreController::BOTTOM_NODES;
         //板块分区是group、板块是forum、小组是sub
-        $f = Forum_forum_model::where([
-            'type' => $type,
-            'fup' => $fid
-        ])->select()->orderBy('displayorder')->get()->toArray();
+        $f = Cache::remember($cacheKey['key'].$fid."_".$type,$cacheKey['time'],function () use($fid,$type)
+        {
+            return Forum_forum_model::where([
+                'type' => $type,
+                'fup' => $fid
+            ])->select()->orderBy('displayorder')->get()->toArray();
+        });
+
 
         return $f;
 

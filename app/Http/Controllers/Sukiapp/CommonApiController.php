@@ -59,4 +59,5 @@ class CommonApiController extends Controller
     {
         MyLikeModel::rm_user_like($uid,$tid,3);
     }
+
 }

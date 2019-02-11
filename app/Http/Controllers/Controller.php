@@ -70,10 +70,14 @@ class Controller extends BaseController
     public function __construct()
     {
         error_reporting(E_ERROR);
-        if (!session('access_id'))
+        if (!$access_id = session('access_id'))
         {
             $rand_code = md5(rand(0, 99999) .time()); // 没有登录的时候充当uid用
             session(['access_id' => $rand_code]);
+            $this->data['access_id'] = $rand_code;
+        }else
+        {
+            $this->data['access_id'] = $access_id;
         }
         $this->data['request']      =  request()->input();
         $this->data['title']        = false;
@@ -118,7 +122,7 @@ class Controller extends BaseController
     public function get_im_message()
     {
         //查询10条历史消息
-        $this->data['msg'] = ImModel::orderBy('id','desc')->paginate(15);
+        $this->data['msg'] = ImModel::orderBy('id','desc')->offset(0)->limit(15)->get();
         $user = session('user_info');
         if (!session('im_username'))
         {
