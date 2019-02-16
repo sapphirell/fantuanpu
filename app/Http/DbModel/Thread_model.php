@@ -76,7 +76,9 @@ class Thread_model extends Model
         $post->message = $data;
 //        dd($post);
         $post->save();
-        //清除缓存
+        //重新生成帖子预览图缓存
+        ForumThreadModel::flush_thread_preview_image($tid);
+        //清除帖子缓存
         $posts_cache_key    = CoreController::POSTS_VIEW;
         Cache::forget($posts_cache_key['key']."{$tid}_".self::position2Page($position));
     }

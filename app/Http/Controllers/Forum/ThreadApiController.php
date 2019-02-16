@@ -141,6 +141,9 @@ class ThreadApiController extends Controller
         }
         if($user_info->groupid == 4 || $user_info->groupid == 5)
             return self::response([],40003,'您的账户已被禁言');
+
+
+
         /**
          * 获取帖子自增长id
          */
@@ -235,7 +238,14 @@ class ThreadApiController extends Controller
         $posts_cache_key    = CoreController::POSTS_VIEW;
 //        dd($posts_cache_key['key'].$request->input('tid') ."_" . ceil($post->position/20));
         Cache::forget( $posts_cache_key['key'].$request->input('tid') ."_" . ceil($post->position/20));
+        /**
+         * 更新主题的预览图片,如果是前一页的楼层,就要更新
+         */
 
+        if ($post->position <= CoreController::THREAD_REPLY_PAGE)
+            ForumThreadModel::flush_thread_preview_image($request->input('tid'),"insert",$request->input('message'));
+
+        //完成动作
         ActionController::complete_action('RCT',$user_info->uid,$request->input('tid'));
         return self::response([],200,'回帖成功');
     }

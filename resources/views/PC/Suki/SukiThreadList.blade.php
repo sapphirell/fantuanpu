@@ -34,9 +34,11 @@
                     <p style="display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 1;    padding-right: 50px;overflow: hidden;">{{$value['preview']}}</p>
                     @if(!empty($value['subject_images']))
                         <div class="thread_image_list" style="width:100%;float: left;">
-                            @foreach($value['subject_images'] as $image)
-                                <div style="background: url({{$image}});background-size: cover;width: 90px;height: 90px;float: left;margin: 5px"></div>
+                            @foreach($value['subject_images'] as $key=>$image)
+                                @if($key < 5)
+                                <div style="background: url({{$image}});background-size: cover;width: 150px;height: 150px;float: left;margin: 5px"></div>
 {{--                                <img style="width: 90px;height: 90px;float: left;margin: 5px" src="{{$image}}">--}}
+                                @endif
                             @endforeach
                         </div>
                     @endif

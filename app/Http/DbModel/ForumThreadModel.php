@@ -51,8 +51,8 @@ class ForumThreadModel extends Model
 //        $start = time() + microtime();
 
         $data = Cache::remember($cacheKey['key'].json_encode($fid_arr)."_page_".$page,
-//                0,
-                $cacheKey["time"],
+                0,
+//                $cacheKey["time"],
                 function () use ($fid_arr,$thread_mod ,$page) {
                         $normal_thread = ForumThreadModel::orderBy('lastpost','desc');
                         if (empty($fid_arr))
@@ -91,21 +91,28 @@ class ForumThreadModel extends Model
                             //非置顶帖子要显示略缩图,取图片地址,并且去掉过小的图片
                             if ($value['istop'] == 1)
                             {
-                                foreach ($subject_images as $key => &$str)
-                                {
-                                    $link = mb_substr($str, 5, mb_strlen($str) - 11, 'utf-8');
-                                    $size = getimagesize($link); // 这一步骤如果是网络图片,则会很慢很慢,后期上线后应该考虑实现为生成本地略缩图的方式
-                                    if ($size[0] > 120 && $size > 120)
-                                    {
-                                        $str = $link;
-                                    }
-                                    else
-                                    {
-                                        unset($subject_images[$key]);
-                                    }
-                                }
+                                $cacheKey = CoreController::THREAD_PREVIEW_IMAGE;
 
-                                $value['subject_images'] = array_values($subject_images);
+                                $value['subject_images'] = Cache::remember($cacheKey['key'].$value["tid"], $cacheKey["time"],
+                                    function () use ($value){
+                                        $data = self::where("tid",$value["tid"])->first();
+                                        return empty($data) ? [] : json_decode($data->previewimg,true);
+                                });
+//                                foreach ($subject_images as $key => &$str)
+//                                {
+//                                    $link = mb_substr($str, 5, mb_strlen($str) - 11, 'utf-8');
+//                                    $size = getimagesize($link); // 这一步骤如果是网络图片,则会很慢很慢,后期上线后应该考虑实现为生成本地略缩图的方式
+//                                    if ($size[0] > 120 && $size > 120)
+//                                    {
+//                                        $str = $link;
+//                                    }
+//                                    else
+//                                    {
+//                                        unset($subject_images[$key]);
+//                                    }
+//                                }
+//
+//                                $value['subject_images'] = array_values($subject_images);
                             }
                             //获取板块名称
                             $value["suki_fname"] = Forum_forum_model::$suki_forum[$value["fid"]];
@@ -117,6 +124,13 @@ class ForumThreadModel extends Model
 
         return $data;
     }
+
+    /**
+     * 传入一个url更新一个帖子的图片预览缓存,或者获取一个帖子的图片预览缓存
+     * @param      $tid
+     * @param bool $url
+     * @返回 mixed
+     */
     public static function remember_preview_image($tid,$url=false)
     {
         $cacheKey = CoreController::THREAD_PREVIEW_IMAGE;
@@ -142,6 +156,64 @@ class ForumThreadModel extends Model
             });
 
     }
+    //更新帖子的图片预览缓存
+    public static function flush_thread_preview_image($tid,$flag="flush",$content="")
+    {
+        $cacheKey = CoreController::THREAD_PREVIEW_IMAGE;
+        $data = self::where("tid",$tid)->first();
+        //编辑帖子的话要刷新,而回复(20楼层以内),则只需要插入
+        if ($flag == "flush")
+        {
+            $thread_mod = new Thread_model();
+            $post_image = $thread_mod->getPostOfThread($tid);
+            $subject_images = [];
+            foreach ($post_image as $flor)
+            {
+                preg_match_all("/\[img\].*?\[\/img\]/", $flor->message, $tmp);// 取前几楼的图片
+                $subject_images = array_merge($subject_images, $tmp[0]);
+            }
+
+            foreach ($subject_images as $key => &$str)
+            {
+                $link = mb_substr($str, 5, mb_strlen($str) - 11, 'utf-8');
+                $size = getimagesize($link); // 这一步骤如果是网络图片,则会很慢很慢,后期上线后应该考虑实现为生成本地略缩图的方式
+                if ($size[0] > 120 && $size > 120)
+                {
+                    $str = $link;
+                }
+                else
+                {
+                    unset($subject_images[$key]);
+                }
+            }
+        }
+        else
+        {
+            //对传入的$content (回帖内容)进行筛选,得出尺寸符合的图片,插入previewimg字段
+            preg_match_all("/\[img\].*?\[\/img\]/", $content, $subject_images);// 筛选出img标签
+//            ddd($subject_images);
+            $subject_images = $subject_images[0];
+            foreach ($subject_images as $key => &$str)
+            {
+                $link = mb_substr($str, 5, mb_strlen($str) - 11, 'utf-8');
+                $size = getimagesize($link);
+                if ($size[0] > 120 && $size > 120)
+                    $str = $link;
+                else
+                    unset($subject_images[$key]);
+            }
+
+        }
+        //对数组数据进行最后一步整理
+        $subject_images = array_values($subject_images);
+
+
+        $data->previewimg = json_encode($subject_images);
+        $data->save();
+        Cache::forget($cacheKey['key'] .$tid);
+
+    }
+
     /**
      * 获取一个板块的置顶帖子
      * @param $fid

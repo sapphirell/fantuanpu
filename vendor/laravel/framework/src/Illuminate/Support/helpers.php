@@ -514,7 +514,22 @@ if (! function_exists('dd')) {
         die(1);
     }
 }
+if (! function_exists('ddd')) {
+    /**
+     * Dump the passed variables and end the script.
+     *
+     * @param  mixed
+     * @return void
+     */
+    function ddd($x)
+    {
+        echo "<pre>";
+        var_dump($x);
+        echo "</pre>";
 
+        die(1);
+    }
+}
 if (! function_exists('e')) {
     /**
      * Escape HTML entities in a string.

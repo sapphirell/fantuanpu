@@ -34,6 +34,7 @@
         });
         $(".submit").click(function (e) {
             e.preventDefault()
+            $(this).attr("disabled","disabled").css({"color":"#ddd","borderColor":"#ddd"}).value("请等待");
             var edHtml = html2ubb(editor.txt.html())
             var postData = {
                 "message": edHtml,
@@ -47,6 +48,9 @@
                 if (event.ret == 200)
                 {
                     window.parent.location.reload()
+                }
+                else{
+                    $(".submit").removeAttr("disabled").css({"color":"#ef8a96","borderColor":"#ef8a96"}).value("提交");;
                 }
             })
 
