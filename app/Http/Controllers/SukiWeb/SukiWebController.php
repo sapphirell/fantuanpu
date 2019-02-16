@@ -27,6 +27,7 @@ class SukiWebController extends Controller
     {
         parent::__construct();
         $this->data["count"] = CommonMemberCount::find($this->data['user_info']->uid);
+
     }
     public function index(Request $request)
     {
@@ -72,6 +73,9 @@ class SukiWebController extends Controller
         $this->data['thread'] = ForumThreadModel::get_user_thread($uid,1,2,self::$suki_forum);
         $this->data['has_follow'] = MyLikeModel::has_like($this->data["user_info"]->uid,$uid,4);
         $this->data['message_board'] = SukiMessageBoardModel::get_user_message($uid,1);
+        //查找该用户关注的和粉丝
+
+        $this->data["user_relation"] =  CommonMemberCount::find($uid);
 
         return view("PC/Suki/SukiUserHome")->with("data",$this->data);
     }

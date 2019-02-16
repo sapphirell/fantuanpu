@@ -54,7 +54,12 @@
                     <p class="none_960" style="color: #ff9999;display: inline-block">公告</p>
                 </a>
             </li>
-
+            <li>
+                <a href="https://sukisuki.org"  class="header_items">
+                    <i class="fa fa-window-restore" style="color: #ffffff;line-height: 23px" aria-hidden="true"></i>
+                    <p class="none_960" style="color: #fff;display: inline-block">Suki!</p>
+                </a>
+            </li>
         </ul>
 
 

@@ -231,7 +231,7 @@ Route::group([
     Route::get('/suki_login', ['uses' => 'SukiWebController@suki_login', 'as' => 'suki_login']);#suki的登录页面
 
 
-    Route::get('/suki-thread', ['uses' => 'SukiWebApiController@get_thread', 'as' => 'get_thread']);#获取suki的帖子
+    Route::post('/suki-thread', ['uses' => 'SukiWebApiController@get_thread', 'as' => 'get_thread']);#获取suki的帖子
     Route::post('/suki-new-thread', ['uses' => 'SukiWebApiController@suki_new_thread', 'as' => 'suki-new-thread']);#获取suki的帖子
     Route::post('/suki_next_page', ['uses' => 'SukiWebApiController@suki_next_page', 'as' => 'suki_next_page']);#看下一页帖子 suki
 

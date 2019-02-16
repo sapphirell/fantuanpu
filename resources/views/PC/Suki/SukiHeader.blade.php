@@ -224,7 +224,7 @@
                     {{avatar(session("user_info")->uid,30,50,"","big")}}
                 </li>
             @else
-                <li class="" id="alert_ajax_login_suki" class=" trans">
+                <li id="alert_ajax_login_suki" class="trans">
                     <img src="/Image/denglu-copy.png" style="    width: 25px;border: 2px solid #fff;padding: 2px;border-radius: 100%;margin-top: 2px;">
                 </li>
             @endif

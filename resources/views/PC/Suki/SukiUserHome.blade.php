@@ -80,12 +80,12 @@
             @endif
             <div class="user_info_content" style="border: 0px;margin: 30px 5px 0px 0px;float: right;width: 200px;">
                 <div>
-                    <a href="/suki-myfollow?like_type=1" class="user_info_content_value trans">10</a>
-                    <a href="/suki-myfollow?like_type=1" class="user_info_content_description trans">关注</a>
+                    <p href="/suki-myfollow?like_type=1" class="user_info_content_value trans">{{$data['user_relation']["sukifollow"]}}</p>
+                    <p href="/suki-myfollow?like_type=1" class="user_info_content_description trans">关注</p>
                 </div>
                 <div>
-                    <a href="/suki-myfollow?like_type=1" class="user_info_content_value trans">10</a>
-                    <a href="/suki-myfollow?like_type=1" class="user_info_content_description trans">关注</a>
+                    <p href="/suki-myfollow?like_type=1" class="user_info_content_value trans">{{$data['user_relation']["followsuki"]}}</p>
+                    <p href="/suki-myfollow?like_type=1" class="user_info_content_description trans">粉丝</p>
                 </div>
             </div>
         </div>
@@ -102,7 +102,7 @@
 
     </div>
     <div style="float: right;width: 30%;background: #FFFFFF;margin-top: 10px;padding: 10px;box-shadow: 0 0 5px #eee;border-radius: 5px;">
-        <h3 style="font-size: 16px;font-weight: 900;color: #866767;margin-bottom: 20px;margin-left: 20px;">留言板</h3>
+        <h3 style="font-size: 16px;font-weight: 900;color: #866767;margin-bottom: 20px;margin-left: 10px;">留言板</h3>
         @include('PC.Suki.SukiUcMessageBoard')
         <textarea class="form-control board_message" style="margin-bottom: 10px;background: #fafafa;margin-left: 10px;margin-right: 10px;width: 100%;width: 250px;border: 0px;"></textarea>
         <input type="submit" class="form-control add_board_message" style="margin-left: 10px;width: 100px" uid="{{$data['user']->uid}}" >

@@ -122,7 +122,7 @@ $(document).ready(function () {
 //            console.log(fid,todo)
         var setting = setting_and_return(fid,todo);
         reset_checkout_forum();
-        var thread_list = $.get("/suki-thread",{'view_forum':setting,'need' : "html"},function (e) {
+        var thread_list = $.post("/suki-thread",{'view_forum':setting,'need' : "html"},function (e) {
 //                console.log(e)
 //                console.log(todo)
             $(".thread_list").remove();
@@ -136,7 +136,7 @@ $(document).ready(function () {
         var fd = {'view_forum':setting.lolita_viewing_forum,'need' : "html","page":load_thread_nextpage}
         console.log(fd)
         $(".add_more_threadlist").text("加载中...")
-        var thread_list = $.get("/suki-thread",fd,function (e) {
+        var thread_list = $.post("/suki-thread",fd,function (e) {
             console.log(e)
 //                console.log(todo)
             if (e)

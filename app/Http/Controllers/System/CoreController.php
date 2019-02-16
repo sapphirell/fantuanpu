@@ -113,4 +113,8 @@ class CoreController extends Controller
      * 用户系统配置
      */
     const USER_SETTING = ['key' => 'user_setting_','time' => 60*24*5 ];
+    /**
+     * 帖子的预览图片的缓存,缓存50天
+     */
+    const THREAD_PREVIEW_IMAGE = ['key' => 'thread_preview_image','time' => 60*24*50];
 }

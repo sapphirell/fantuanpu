@@ -48,9 +48,13 @@ class SukiWebApiController extends Controller
         {
             return empty($this->data['thread']) ? "" : view('PC/Suki/SukiThreadList')->with('data', $this->data);
         }
-        else
+        elseif($request->input("need") == 'json')
         {
             return self::response($this->data);
+        }
+        else
+        {
+            return self::response([],40000,"缺少参数need");
         }
 
     }
@@ -162,8 +166,7 @@ class SukiWebApiController extends Controller
             }
             else
             {
-
-                return self::response([],40002,"您还未关注");
+                return self::response($request->input(),40002,"您还未关注");
             }
 
 

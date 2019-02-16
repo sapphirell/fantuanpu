@@ -51,8 +51,8 @@ class ForumThreadModel extends Model
 //        $start = time() + microtime();
 
         $data = Cache::remember($cacheKey['key'].json_encode($fid_arr)."_page_".$page,
-                0,
-//                $cacheKey["time"],
+//                0,
+                $cacheKey["time"],
                 function () use ($fid_arr,$thread_mod ,$page) {
                         $normal_thread = ForumThreadModel::orderBy('lastpost','desc');
                         if (empty($fid_arr))
@@ -88,7 +88,6 @@ class ForumThreadModel extends Model
                             $value['preview'] = preg_replace("/\[img\].*?\[\/img\]/", '', $post_image[0]->message);
                             $value['preview'] = preg_replace("/\n/", '', $value['preview']);
                             $value['preview'] = preg_replace("/\r/", '', $value['preview']);
-
                             //非置顶帖子要显示略缩图,取图片地址,并且去掉过小的图片
                             if ($value['istop'] == 1)
                             {
@@ -110,13 +109,39 @@ class ForumThreadModel extends Model
                             }
                             //获取板块名称
                             $value["suki_fname"] = Forum_forum_model::$suki_forum[$value["fid"]];
+                            //帖子人性化时间
+                            $value["sim_time"] = format_time($value["lastpost"]);
                         }
                         return $data;
                 });
 
         return $data;
     }
+    public static function remember_preview_image($tid,$url=false)
+    {
+        $cacheKey = CoreController::THREAD_PREVIEW_IMAGE;
+        if ($url)
+        {
+            $data = self::where("tid",$tid)->first();
+            if (empty($data))
+                $previewimg = [$url];
+            else
+            {
+                $previewimg = json_decode($data->previewimg,true);
+                $previewimg[] = $url;
 
+            }
+            $data->previewimg = json_encode($previewimg);
+            $data->save();
+            Cache::forget($cacheKey['key'] .$tid);
+        }
+        return Cache::remember($cacheKey['key'].$tid, $cacheKey["time"],
+            function () use ($tid){
+                $data = self::where("tid",$tid)->first();
+                return empty($data) ? [] : json_decode($data->previewimg,true);
+            });
+
+    }
     /**
      * 获取一个板块的置顶帖子
      * @param $fid

@@ -27,21 +27,26 @@
         margin: 10px 0px;
     }
     ._3_1_right .form-control {
-        border: 1px solid #d6b7b7;
+        border: 1px solid #DDDDDD;
+        font-size: 12px;
     }
     ._3_1_right .input-group-text
     {
-        background-color: #efe9e9;
-        border: 1px solid #d6b7b7;
+        background-color: #CABFC0;
+        border: 1px solid #DDDDDD;
+        color: #7B6164;
     }
     .clock_line {
         margin:8px 0px;
+        border-bottom: 1px solid #F6F6F6;
+        padding-bottom: 5px;
+        color: #7B6164;
     }
     .clock_line span {
-        font-size:16px;
-        text-shadow: 0 0 3px #d8c1c1;
+        font-size:15px;
+        /*text-shadow: 0 0 3px #d8c1c1;*/
     }
-    .clock_line
+
 </style>
 <div class="wp" style="margin-top: 60px;">
     <div class="alert">补款闹钟功能尚在测试中,功能确定后将同步开发到App中,如果有更好的功能建议,可以<a href="">点这里</a>提交意见反馈。</div>
@@ -49,24 +54,32 @@
     <div class="3_1">
         <div class="_3_1_left">
             <div class="clock_container">
-                <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                <div class="clock_head">
+                    <div class="" style="float: left;color:#7B6164;font-size: 16px">
+                        <i class="fa fa-list-ul" aria-hidden="true"></i>
+                        <span>补款列表</span>
+                    </div>
+                    <div class="btn-group" role="group" style="float:right;" aria-label="Button group with nested dropdown">
 
-                    <div class="btn-group" role="group">
-                        <button
-                                style="border: 0px;color: #fff;background-color: #fdbec1;padding: 3px 15px;margin-left: 0px;margin-bottom: 15px;"
-                                id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            @if($data['request']['group']=='ym')
-                                按月汇总
-                            @else
-                                查看全部
-                            @endif
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                            <a href="/suki_alarm_clock" class="dropdown-item" href="#">查看全部</a>
-                            <a href="/suki_alarm_clock?group=ym" class="dropdown-item" href="#">按月分组</a>
+                        <div class="btn-group" role="group">
+                            <button
+                                    style="border: 0px;    color: #ff9e9e;background-color: #ffffff;padding: 3px 15px;margin-left: 0px;margin-bottom: 15px;"
+                                    id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                @if($data['request']['group']=='ym')
+                                    按月汇总
+                                @else
+                                    查看全部
+                                @endif
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                <a href="/suki_alarm_clock" class="dropdown-item" href="#">查看全部</a>
+                                <a href="/suki_alarm_clock?group=ym" class="dropdown-item" href="#">按月分组</a>
+                            </div>
                         </div>
                     </div>
+                    <div class="clear"></div>
                 </div>
+
                 @if($data['my_clock']->isEmpty())
                     <br >
                     <img style="    margin: 0 auto;display: block;" src="/Static/image/common/none.png">
@@ -76,37 +89,46 @@
                     {{--{{dd($data)}}--}}
                     @foreach($data['my_clock'] as $value)
                         <div class="clock_line">
-                            <span style="width: 120px;display: inline-block">{{$value['ym']}}</span>
-                            <span style="width: 120px;display: inline-block">{{$value['count']?:0}}个补款项</span>
-                            <span style="width: 80px;display: inline-block">共计￥{{$value['sum']}}</span>
+                            <span style="width: 100px;display: inline-block">{{$value['ym']}}</span>
+                            <span style="width: 100px;display: inline-block">{{$value['count']?:0}}个补款项</span>
+                            <span style="width: 250px;display: inline-block">共计￥{{$value['sum']}}</span>
                         </div>
                     @endforeach
                 @else
                     @foreach($data['my_clock'] as $value)
                         <div  class="clock_line" style="font-size: 15px;color: #7d6565;    line-height: 25px;">
-
-                            <span style="width: 120px;display: inline-block">{{$value['clock_name']}}</span>
-                            <span style="width: 80px;display: inline-block">￥{{$value['sum']}}</span>
-                            <span>{{date("Y·m·d",strtotime($value['clock_date']))}} - {{date("Y·m·d",strtotime($value['clock_end']))}}</span>
-                            <div class="btn-group" role="group">
-                                <button style="border: 0px;color: #000;background-color: #fff;padding: 3px 15px;margin-left: 10px;"  type="button" class="btn btn-secondary dropdown-toggle tb" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    @if($value["alert_type"] == '1')
-                                        <a >不要提醒</a>
-                                    @elseif($value["alert_type"] == '2')
-                                        邮件提醒
-                                    @elseif($value["alert_type"] == '3')
-                                        App提醒
-                                    @endif
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                    <a href="/setting_clock_alert?id={{$value['cid']}}&alert_type=1" class="dropdown-item setting_clock_alert" >不要提醒</a>
-                                    <a href="/setting_clock_alert?id={{$value['cid']}}&alert_type=2" class="dropdown-item setting_clock_alert" >邮件提醒</a>
-                                    {{--<a href="/setting_clock_alert?id={{$value['cid']}}&alert_type=3" class="dropdown-item setting_clock_alert" >App提醒</a>--}}
-                                    <p style="color: #bbb6b6;padding-left: 19px;margin: 0px" disabled href="/setting_clock_alert?id={{$value['cid']}}&alert_type=3" class="dropdown-item setting_clock_alert" >短信提醒
-                                        <i class="fa-question-circle fa" title="意见征集中:启用该功能,需要自付短信费。如果用的人不多就不开发这个功能了..." style="float: right;margin: 5px;"></i>
-                                    </p>
-                                </div>
+                            <div style="float:left;    width: 530px;overflow-x: scroll;height: 30px;">
+                                <span style="display: inline-block;margin-right: 5px">{{$value['clock_name']}}</span>
+                                |
+                                <span style="display: inline-block;margin-right: 5px;">￥{{$value['sum']}}</span>
+                                |
+                                <span>{{date("Y·m·d",strtotime($value['clock_date']))}} - {{date("Y·m·d",strtotime($value['clock_end']))}}</span>
                             </div>
+                            <div style="float:right;">
+                                <a style="color: #999999;    font-size: 13px;">删除</a>
+                                <div class="btn-group" style="" role="group">
+                                    <button style="border: 0px;color: #999999;background-color: #fff;padding: 3px 15px;margin-left: 10px;"  type="button" class="btn btn-secondary dropdown-toggle tb" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        @if($value["alert_type"] == '1')
+                                            <a >不要提醒</a>
+                                        @elseif($value["alert_type"] == '2')
+                                            邮件提醒
+                                        @elseif($value["alert_type"] == '3')
+                                            App提醒
+                                        @endif
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                        <a href="/setting_clock_alert?id={{$value['cid']}}&alert_type=1" class="dropdown-item setting_clock_alert" >不要提醒</a>
+                                        <a href="/setting_clock_alert?id={{$value['cid']}}&alert_type=2" class="dropdown-item setting_clock_alert" >邮件提醒</a>
+                                        {{--<a href="/setting_clock_alert?id={{$value['cid']}}&alert_type=3" class="dropdown-item setting_clock_alert" >App提醒</a>--}}
+                                        <p style="color: #bbb6b6;padding-left: 19px;margin: 0px" disabled href="/setting_clock_alert?id={{$value['cid']}}&alert_type=3" class="dropdown-item setting_clock_alert" >短信提醒
+                                            <i class="fa-question-circle fa" title="意见征集中:启用该功能,需要自付短信费。如果用的人不多就不开发这个功能了..." style="float: right;margin: 5px;"></i>
+                                        </p>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <span class="clear"></span>
+                           
                         </div>
                     @endforeach
                 @endif
@@ -139,7 +161,7 @@
                     </div>
                     <input type="text" class="form-control clock_end" id="pick_date_end" placeholder="选择日期" aria-label="选择日期" aria-describedby="btnGroupAddon">
                 </div>
-                <input type="submit" class="sub_clock" style="color: #000;    background: #fcbec3;border: 0px;width: 100%;">
+                <input type="submit" class="sub_clock" style="color: #fff;    background: #fcbec3;border: 0px;width: 100%;">
             </div>
 
         </div>
