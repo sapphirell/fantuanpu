@@ -394,13 +394,7 @@
                                     @endif
                                 </ul>
                                 <div class="post_content" style="width: 70%;display: inline-block;float:left;">
-                                    <div id="{{$value->pid}}" style="padding: 5px;">
-                                        @if($value->isdel == 1)
-                                        {!! bbcode2html($value->message) !!}
-                                        @else
-                                        <span style="color: #2E2D3C">该回复已被删除</span>
-                                        @endif
-                                    </div>
+                                    <div id="{{$value->pid}}" style="padding: 5px;">@if($value->isdel == 1){!! bbcode2html($value->message) !!}@else<span style="color: #2E2D3C">该回复已被删除</span>@endif</div>
 
                                     <div style="    width: 100%;display: inline-block;float: left;position: absolute;     bottom: 28px;right: 3px;">
                                         {{--<img src="/Static/daimeng.gif">--}}

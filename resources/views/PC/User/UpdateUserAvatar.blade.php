@@ -55,7 +55,8 @@
                     <input type="submit" style="margin: 0px;" class="btn btn-default croping" value="裁切">
                     <input id="setCanvasData" type="hidden" name="position">
                 </div>
-
+                <p style="margin-top: 8px">* 请选择2MB以下的图片</p>
+                <p>* 裁切满意后刷新网页即可。</p>
             </form>
         </div>
     </div>
