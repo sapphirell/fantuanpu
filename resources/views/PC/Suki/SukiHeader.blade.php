@@ -302,12 +302,14 @@
             </div>
             <div class="user_info_item">
                 <ul class="panel_btn_list">
+                    <li class="trans"><a href="/suki_user_info" class="trans"><img style="" src="/Image/print.png">个人信息</a></li>
+                    <li class="trans"><a href="/suki_notice?type=reply_me" class="trans"><img style="" src="/Image/tixing2.png">站内消息</a></li>
                     <li class="trans rough"><a href="" class="trans"><img style="" src="/Image/star-pink.png">我的收藏</a></li>
                     <li class="trans rough"><a href="" class="trans"><img style="" src="/Image/history.png">浏览历史</a></li>
                     <li class="trans"><a href="/suki_relationship?type=friends" class="trans"><img style="" src="/Image/friends.png">通讯录</a></li>
                     <li class="trans rough"><a href="" class="trans"><img style="" src="/Image/nearby.png">附近同好</a></li>
-                    <li class="trans"><a href="/suki_user_info" class="trans"><img style="" src="/Image/print.png">个人信息</a></li>
-                    <li class="trans"><a href="/suki_notice?type=reply_me" class="trans"><img style="" src="/Image/tixing2.png">站内消息</a></li>
+
+
                     <li class="trans">
                         <a href="/suki_alarm_clock?type=view" class="trans"><img style="" src="/Image/tixing2.png">补款闹钟</a>
                         <span style="    font-size: 10px;font-weight: 400;color: #bf0000;position: absolute;" title="...这个new似乎没有意义">new</span>

@@ -51,8 +51,8 @@ class ForumThreadModel extends Model
 //        $start = time() + microtime();
 
         $data = Cache::remember($cacheKey['key'].json_encode($fid_arr)."_page_".$page,
-                0,
-//                $cacheKey["time"],
+//                0,
+                $cacheKey["time"],
                 function () use ($fid_arr,$thread_mod ,$page) {
                         $normal_thread = ForumThreadModel::orderBy('lastpost','desc');
                         if (empty($fid_arr))
@@ -98,21 +98,6 @@ class ForumThreadModel extends Model
                                         $data = self::where("tid",$value["tid"])->first();
                                         return empty($data) ? [] : json_decode($data->previewimg,true);
                                 });
-//                                foreach ($subject_images as $key => &$str)
-//                                {
-//                                    $link = mb_substr($str, 5, mb_strlen($str) - 11, 'utf-8');
-//                                    $size = getimagesize($link); // 这一步骤如果是网络图片,则会很慢很慢,后期上线后应该考虑实现为生成本地略缩图的方式
-//                                    if ($size[0] > 120 && $size > 120)
-//                                    {
-//                                        $str = $link;
-//                                    }
-//                                    else
-//                                    {
-//                                        unset($subject_images[$key]);
-//                                    }
-//                                }
-//
-//                                $value['subject_images'] = array_values($subject_images);
                             }
                             //获取板块名称
                             $value["suki_fname"] = Forum_forum_model::$suki_forum[$value["fid"]];

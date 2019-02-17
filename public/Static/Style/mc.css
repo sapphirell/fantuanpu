@@ -132,12 +132,13 @@ ul{padding: 0px;margin: 0px}
 .footer li{float: left;  float: right;background: #eee;border: 1px solid #ccc;border-width: 1px 1px 0px 1px;margin: 0px 8px;padding: 8px;border-radius: 5px 5px 0 0;cursor: pointer;}
 .wpfooter{    border-top: 8px dashed #E0E0E0;width: 960px;margin: 0 auto;margin-top: 8px;}
 .inline_block_960{display: none!important;/*960px 以下隐藏*/}
+.show_960{display: none;}
 @media screen and (max-width: 960px) {
     .wp{width: 100%;margin: 0 auto;}
     .wpfooter{    border-top: 8px dashed #E0E0E0;width: 100%;margin: 0 auto;margin-top: 8px;}
     .inline_block_960{display: inline-block!important;}
     .none_960{display: none!important;}
-
+    .show_960{display: block;}
 
 }
 /*

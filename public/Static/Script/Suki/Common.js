@@ -204,6 +204,22 @@ $(document).ready(function () {
             $(".suki_get_user_thread").attr("page",  $(".suki_get_user_thread").attr("page")+1)
         })
     });
+    //uc点击uc_add_more_thread加载更多该用户的帖子
+    $(".uc_add_more_thread").click(function (e) {
+        e.preventDefault();
+        var page =  $(this).attr("page");
+        var postData = {
+            "uid": $(this).attr("uid"),
+            "page": page,
+            "need" : "html"
+        };
+        $(this).attr("page",parseInt(page)+1)
+        $.post("/suki_get_user_thread",postData,function (event) {
+//                console.log(event)
+            $(".uc_user_thread:last").after(event)
+            $(".suki_get_user_thread").attr("page",  $(".suki_get_user_thread").attr("page")+1)
+        })
+    });
     //点击关注
     $(".follow").click(function (e) {
         e.preventDefault();
