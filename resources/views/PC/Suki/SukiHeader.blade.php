@@ -233,7 +233,7 @@
                 <li class="trans user_info_btn" style="position:relative;    padding: 5px;border-radius: 100%;margin-right: 20px">
                     {{avatar($data["user_info"]->uid,30,50,"","big")}}
 
-                    @if(!empty($data["user_info"]->useralert["suki"]["reply"])))
+                    @if(!empty($data["user_info"]->useralert["suki"]["reply"]))
                     <span class="alert_pointer" style="right: 3px;bottom: 3px;"></span>
                     @endif
                 </li>
