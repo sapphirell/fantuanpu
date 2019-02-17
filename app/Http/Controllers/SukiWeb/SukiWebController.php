@@ -133,6 +133,13 @@ class SukiWebController extends Controller
         {
             case "reply_me" :
                 $this->data["reply_me"] = SukiNoticeModel::find_user_notice($this->data['user_info']->uid,1);
+                //清理掉用户的小红点
+                $user = User_model::find($this->data['user_info']->uid);
+                $alert = json_decode($user->useralert,true);
+                $alert["suki"]["reply"] = 0;
+                $user->useralert = json_encode($alert,true);
+                $user->save();
+                User_model::flushUserCache($this->data['user_info']->uid);
                 break;
             case "my_message": //我的私信
                 break;

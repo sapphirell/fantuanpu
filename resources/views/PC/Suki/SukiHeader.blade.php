@@ -102,6 +102,7 @@
             float: left;
             box-sizing: border-box;
             width: 110px;
+            position: relative;
         }
         .panel_btn_list li a {
             padding: 3px;
@@ -188,6 +189,15 @@
             font-size: 11px;
             line-height: 17px;
         }
+        .alert_pointer {
+            border-radius: 100%;
+            width: 8px;
+            height: 8px;
+            background: #ff5a5a;
+            display: inline-block;
+            position: absolute;
+            box-shadow: 0 0 7px #ff5a5a;
+        }
         @media screen and (max-width: 960px) {
             .user_info_panel {
                 position: fixed;
@@ -220,8 +230,12 @@
 
         <ul style="float: right;" class='hd'>
             @if(session("user_info")->uid)
-                <li class="trans user_info_btn" style="    padding: 5px;border-radius: 100%;margin-right: 20px">
-                    {{avatar(session("user_info")->uid,30,50,"","big")}}
+                <li class="trans user_info_btn" style="position:relative;    padding: 5px;border-radius: 100%;margin-right: 20px">
+                    {{avatar($data["user_info"]->uid,30,50,"","big")}}
+
+                    @if(!empty($data["user_info"]->useralert["suki"]["reply"])))
+                    <span class="alert_pointer" style="right: 3px;bottom: 3px;"></span>
+                    @endif
                 </li>
             @else
                 <li id="alert_ajax_login_suki" class="trans">
@@ -303,7 +317,14 @@
             <div class="user_info_item">
                 <ul class="panel_btn_list">
                     <li class="trans"><a href="/suki_user_info" class="trans"><img style="" src="/Image/print.png">个人信息</a></li>
-                    <li class="trans"><a href="/suki_notice?type=reply_me" class="trans"><img style="" src="/Image/tixing2.png">站内消息</a></li>
+                    <li class="trans">
+                        <a href="/suki_notice?type=reply_me" class="trans">
+                            <img style="" src="/Image/tixing2.png">站内消息
+                        </a>
+                        @if(!empty($data["user_info"]->useralert["suki"]["reply"]))
+                            <span class="alert_pointer" style="right: 23px;bottom: 15px;"></span>
+                        @endif
+                    </li>
                     <li class="trans rough"><a href="" class="trans"><img style="" src="/Image/star-pink.png">我的收藏</a></li>
                     <li class="trans rough"><a href="" class="trans"><img style="" src="/Image/history.png">浏览历史</a></li>
                     <li class="trans"><a href="/suki_relationship?type=friends" class="trans"><img style="" src="/Image/friends.png">通讯录</a></li>

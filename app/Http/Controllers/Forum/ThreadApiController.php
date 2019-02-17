@@ -11,6 +11,7 @@ use App\Http\DbModel\ForumPostTableidModel;
 use App\Http\DbModel\ForumThreadModel;
 use App\Http\DbModel\HomeNotification;
 use App\Http\DbModel\SukiNoticeModel;
+use App\Http\DbModel\User_model;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -220,6 +221,18 @@ class ThreadApiController extends Controller
              * 用户统计更新
              */
             CommonMemberCount::AddUserCount($user_info->uid,'sukiposts',1);
+            /**
+             * 界面上显示小红点
+             */
+            $author = User_model::find($thread->authorid);
+            $useralert =  $author->useralert ? json_decode($author->useralert,true) : [];
+
+            $useralert['suki']['reply'] = 1;
+
+            $author->useralert = json_encode($useralert);
+//            ddd( $author->useralert);
+            $author->save();
+            User_model::flushUserCache($thread->authorid);
         }
 
         /**

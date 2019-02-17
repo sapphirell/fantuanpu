@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\System\CoreController;
 use App\Http\DbModel\ImModel;
 use App\Http\DbModel\MemberFieldForumModel;
+use App\Http\DbModel\User_model;
 use App\Http\DbModel\UserSettingModel;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -81,7 +82,7 @@ class Controller extends BaseController
         }
         $this->data['request']      =  request()->input();
         $this->data['title']        = false;
-        $this->data['user_info']    = session('user_info');
+        $this->data['user_info']    = User_model::find(session("user_info")->uid);
         if ($this->data['user_info']->uid)
         {
             //用户是否签到
@@ -92,6 +93,9 @@ class Controller extends BaseController
             //用户权限级别 1 普通用户 2 管理员 3 超级管理
             $this->data["auth_level"] = 1;
             in_array($this->data["auth_level"],self::MASTER_USER) && $this->data["auth_level"] = 3;
+            //用户提醒
+            $this->data['user_info']->useralert = $this->data['user_info']->useralert ? json_decode($this->data['user_info']->useralert,true) : [];
+//            dd($this->data['user_info']->useralert);
         }
         //获取IM
         $this->data = array_merge($this->data,$this->get_im_message());
