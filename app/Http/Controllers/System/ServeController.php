@@ -6,12 +6,15 @@ use App\Http\Controllers\Forum\ForumBaseController;
 use App\Http\Controllers\News\SukiController;
 use App\Http\Controllers\SukiWeb\SukiWebController;
 use App\Http\Controllers\User\UserBaseController;
+use App\Http\DbModel\CommonMemberCount;
 use App\Http\DbModel\Forum_forum_model;
 use App\Http\DbModel\ForumPostModel;
 use App\Http\DbModel\ForumThreadModel;
 use App\Http\DbModel\SukiClockModel;
 use App\Http\DbModel\Thread_model;
+use App\Http\DbModel\UCenter_member_model;
 use App\Http\DbModel\User_model;
+use App\User;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -20,7 +23,8 @@ use App\Http\Controllers\Controller;
 class ServeController extends Controller
 {
     public static function ss(){
-        dd(session()->all());
+//        dd(session()->all());
+        self::change_username();
     }
     public static function info(){
         phpinfo();
@@ -97,5 +101,20 @@ class ServeController extends Controller
         ForumPostModel::delPosts($request->input("pid"),$request->input("todo"));
 
         return self::response();
+    }
+
+    public function change_username()
+    {
+        $uid = 1;
+        $newName = "Ran";
+        $user = User_model::find($uid);
+        $user->username = $newName;
+        $user->save();
+        User_model::flushUserCache($uid);
+        $user = UCenter_member_model::find($uid);
+        $user->username = $newName;
+        $user->save();
+        ForumThreadModel::where(['authorid'=>$uid])->update(['author'=>$newName]);
+        ForumPostModel::where(['authorid'=>$uid])->update(['author'=>$newName]);
     }
 }

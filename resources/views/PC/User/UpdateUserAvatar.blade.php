@@ -28,6 +28,11 @@
         border-color: #FFFFFF!important;
     }
     body {background: #ffffff}
+    .croping:active {
+        position: relative;
+        top:2px;
+        background: #eee;
+    }
 </style>
 <div class="" style="background: #ffffff">
     <div>
@@ -47,7 +52,7 @@
                     </label>
 
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                    <input type="submit" style="margin: 0px;" class="btn btn-default" value="裁切">
+                    <input type="submit" style="margin: 0px;" class="btn btn-default croping" value="裁切">
                     <input id="setCanvasData" type="hidden" name="position">
                 </div>
 

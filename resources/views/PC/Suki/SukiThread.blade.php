@@ -359,6 +359,7 @@
                     @if($key == 0)
                         {{--帖子一楼--}}
                     @else
+                        @if($value->isdel == 1)
                         <div class="post_item" name="{{$value->pid}}">
                             <?php $rand_border = ['#bbb0ff','#e7b0ff','#dbffb0','#b5ecff','#ffb5b5']; ?>
                             <div class="post_msg"  style="z-index: 1; position: relative;    margin-right: 20px;
@@ -417,7 +418,7 @@
                             </div>
                             <div class="clear"></div>
                         </div>
-
+                        @endif
                     @endif
                 @endforeach
                 @if(count($data['thread']['thread_post']) < \App\Http\Controllers\System\CoreController::THREAD_REPLY_PAGE)
