@@ -40,6 +40,7 @@ function construct_edtior(id)
         '#f9963b',
         '#ffffff'
     ]
+
     editor.customConfig.menus = [
         'bold',  // 粗体
         'fontSize',  // 字号
@@ -51,8 +52,8 @@ function construct_edtior(id)
     console.log(editor.customConfig);
     editor.customConfig.pasteFilterStyle = false
     editor.customConfig.uploadImgServer = 'https://image.fantuanpu.com/upload_file'
-    editor.customConfig.uploadImgMaxSize = 1.9 * 1024 * 1024
-    editor.customConfig.uploadImgMaxLength = 5 // 一次可上传的图片数量
+    editor.customConfig.uploadImgMaxSize = 8 * 1024 * 1024
+    editor.customConfig.uploadImgMaxLength = 1 // 一次可上传的图片数量
     editor.customConfig.uploadImgParams = {
         form: 'editor'
     }
