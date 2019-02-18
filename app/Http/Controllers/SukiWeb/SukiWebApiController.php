@@ -335,6 +335,7 @@ class SukiWebApiController extends Controller
         $check = self::checkRequest($request,["tid","position","message"]);
         if ($check !== true)
             return self::response(40001,[],"缺少参数{$check}");
+//        ddd($request->input("message"));
         Thread_model::updatePost(
             $request->input("tid"),
             $request->input("position"),

@@ -133,7 +133,9 @@
             text-align: center;
             line-height: 38px;
             top: 200px;
-            box-shadow: 0 0 5px #ff191942;}
+            box-shadow: 0 0 5px #ff191942;
+            position: fixed;
+        }
         .pos_text {display: none}
     }
 </style>

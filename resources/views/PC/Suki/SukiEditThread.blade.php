@@ -34,7 +34,8 @@
         });
         $(".submit").click(function (e) {
             e.preventDefault()
-            $(this).attr("disabled","disabled").css({"color":"#ddd","borderColor":"#ddd"}).value("请等待");
+            $(this).attr("disabled","disabled").css({"color":"#ddd","borderColor":"#ddd"});
+
             var edHtml = html2ubb(editor.txt.html())
             var postData = {
                 "message": edHtml,
@@ -50,7 +51,7 @@
                     window.parent.location.reload()
                 }
                 else{
-                    $(".submit").removeAttr("disabled").css({"color":"#ef8a96","borderColor":"#ef8a96"}).value("提交");;
+                    $(".submit").removeAttr("disabled").css({"color":"#ef8a96","borderColor":"#ef8a96"});
                 }
             })
 
