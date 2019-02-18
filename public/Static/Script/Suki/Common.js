@@ -197,15 +197,17 @@ $(document).ready(function () {
             "page": page,
             "need" : "html"
         };
+        console.log(postData)
         $(this).attr("page",parseInt(page)+1)
         $.post("/suki_get_user_thread",postData,function (event) {
 //                console.log(event)
-            $(".uc_user_thread:last").after(event)
-            $(".suki_get_user_thread").attr("page",  $(".suki_get_user_thread").attr("page")+1)
+            $(".suki_m .uc_user_thread:last").after(event)
+            $(".suki_w .uc_user_thread:last").after(event)
+            $(".suki_get_user_thread").attr("page",  page +1)
         })
     });
     //uc点击uc_add_more_thread加载更多该用户的帖子
-    $(".uc_add_more_thread").click(function (e) {
+    $(".suki_uc_add_more_thread").click(function (e) {
         e.preventDefault();
         var page =  $(this).attr("page");
         var postData = {

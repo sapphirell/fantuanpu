@@ -210,6 +210,7 @@ class ForumThreadModel extends Model
     }
     /**
      * 获取一个人发的帖子
+     * $ascription 1=fantuanpu 2=suki
      */
     public static function get_user_thread($uid,$page,$ascription =1,$fid=[])
     {

@@ -6,3 +6,4 @@
     </p>
 
 @endforeach
+<p class="clear"></p>

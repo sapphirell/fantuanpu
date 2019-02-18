@@ -121,7 +121,7 @@
         <div class="clear"></div>
     </div>
     <div style="float: left;    width: 70%;">
-        <div style="margin: 10px 20px 0px 0px;background: #fff;padding: 10px;box-shadow: 0 0 5px #eee;border-radius: 5px;">
+        <div class="suki_w" style="margin: 10px 20px 0px 0px;background: #fff;padding: 10px;box-shadow: 0 0 5px #eee;border-radius: 5px;">
             <h2 style="font-size: 16px;font-weight: 900;color: #866767;">我的帖子</h2>
             @include('PC.Suki.SukiUcThreadlist')
             <a href="" page="2" uid="{{$data['user']->uid}}" class="uc_add_more_thread">加载更多</a>
@@ -197,11 +197,22 @@
             </div>
         </div>
         <div class="tab_m">
-            <div>
+            <div class="suki_m">
+                @if($data["thread"]->isEmpty())
+                    <p style="color: #ddd;text-align: center;margin: 20px;">ta还没有发帖子哦</p>
+                @endif
                 @include('PC.Suki.SukiUcThreadlist')
-                <a href="" page="2" uid="{{$data['user']->uid}}" class="uc_add_more_thread">加载更多</a>
+                <a href="" style="    margin: 20px 10px;display: block;float:none;text-align: center;color: #866c6f;" page="2" uid="{{$data['user']->uid}}" class="uc_add_more_thread">加载更多</a>
+                <div class="clear"></div>
             </div>
-            <div>留言</div>
+            <div>
+                <div style="margin-top: 10px;padding: 10px;border-radius: 5px;">
+                    @include('PC.Suki.SukiUcMessageBoard')
+                    <textarea class="form-control board_message" style="margin-bottom: 10px;background: #fafafa;margin-left: 10px;margin-right: 10px;width: 100%;width: 250px;border: 0px;"></textarea>
+                    <input type="submit" class="form-control add_board_message" style="margin-left: 10px;width: 100px" uid="{{$data['user']->uid}}" >
+
+                </div>
+            </div>
         </div>
     </div>
 </div>
