@@ -108,11 +108,11 @@
             @endif
             <div class="user_info_content" style="border: 0px;margin: 30px 5px 0px 0px;float: right;width: 200px;">
                 <div>
-                    <p href="/suki-myfollow?like_type=1" class="user_info_content_value trans">{{$data['user_relation']["sukifollow"]}}</p>
+                    <p href="/suki-myfollow?like_type=1" class="user_info_content_value trans">{{$data['user_relation']["followsuki"]}}</p>
                     <p href="/suki-myfollow?like_type=1" class="user_info_content_description trans">关注</p>
                 </div>
                 <div>
-                    <p href="/suki-myfollow?like_type=1" class="user_info_content_value trans">{{$data['user_relation']["followsuki"]}}</p>
+                    <p href="/suki-myfollow?like_type=1" class="user_info_content_value trans">{{$data['user_relation']["sukifollow"]}}</p>
                     <p href="/suki-myfollow?like_type=1" class="user_info_content_description trans">粉丝</p>
                 </div>
             </div>
@@ -175,11 +175,11 @@
             <p style="margin: 10px 5px;">{{$data["field_forum"]->sightml}}</p>
             <div class="user_info_content" style="border: 0px;margin: 30px 5px 0px 0px;float: right;width: 200px;">
                 <div>
-                    <p href="/suki-myfollow?like_type=1" class="user_info_content_value trans">{{$data['user_relation']["sukifollow"]}}</p>
+                    <p href="/suki-myfollow?like_type=1" class="user_info_content_value trans">{{$data['user_relation']["followsuki"]}}</p>
                     <p href="/suki-myfollow?like_type=1" class="user_info_content_description trans">关注</p>
                 </div>
                 <div>
-                    <p href="/suki-myfollow?like_type=1" class="user_info_content_value trans">{{$data['user_relation']["followsuki"]}}</p>
+                    <p href="/suki-myfollow?like_type=1" class="user_info_content_value trans">{{$data['user_relation']["sukifollow"]}}</p>
                     <p href="/suki-myfollow?like_type=1" class="user_info_content_description trans">粉丝</p>
                 </div>
             </div>

@@ -147,9 +147,10 @@ class SukiWebApiController extends Controller
             }
             else
             {
+                //sukifollow 被关注 followsuki 关注
                 MyLikeModel::add_user_like($this->data["user_info"]->uid,$request->input("to_uid"),4);
                 CommonMemberCount::AddUserCount($this->data["user_info"]->uid,"followsuki");
-                CommonMemberCount::AddUserCount($request->input("to_uid"),"followsuki");
+                CommonMemberCount::AddUserCount($request->input("to_uid"),"sukifollow");
                 return self::response([],200,"关注成功了");
             }
 
@@ -159,9 +160,10 @@ class SukiWebApiController extends Controller
         {
             if (in_array($request->input("to_uid"),$uid_arr))
             {
+                //sukifollow 被关注 followsuki 关注
                 MyLikeModel::rm_user_like($this->data["user_info"]->uid,$request->input("to_uid"),4);
                 CommonMemberCount::AddUserCount($this->data["user_info"]->uid,"followsuki",-1);
-                CommonMemberCount::AddUserCount($request->input("to_uid"),"followsuki",-1);
+                CommonMemberCount::AddUserCount($request->input("to_uid"),"sukifollow",-1);
                 return self::response([],200,"取消关注成功");
             }
             else

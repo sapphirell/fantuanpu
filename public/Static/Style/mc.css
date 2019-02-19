@@ -211,16 +211,19 @@ ul{padding: 0px;margin: 0px}
 
 /*实现选项卡、两侧圆角、间隔线不重复等功能*/
 .tab{}
-.tab_h{border-bottom: 1px solid #ccc;}
-.tab_m{}
-.tab_h > div{display: inline-block;float: left;padding: 2px 8px;border: 1px solid #ccc;border-width: 1px 0px 0px 1px;cursor: pointer;}
-.tab_h > div:first-child{border-radius: 3px 0px 0px 0px;}
-.tab_h > div:last-child{border-right: 1px solid #ccc;border-radius: 0px 3px 0px 0px;}
+/*.tab_h{border-bottom: 1px solid #ccc;}*/
+/*.tab_m{}*/
+.tab_h > div{display: inline-block;float: left;cursor: pointer;}
+/*.tab_h > div:first-child{border-radius: 3px 0px 0px 0px;}*/
+/*.tab_h > div:last-child{border-right: 1px solid #ccc;border-radius: 0px 3px 0px 0px;}*/
 
 .tab_h:after{content:"."; display:block; height:0; visibility:hidden; clear:both;}
-.tab_m > div{display: none}
+.tab_h > div {color: #cccccc}
+.tab_h > div.onchange {color: #928282;}
+.tab_m > div{display: none;}
+
 .tab_m > div:first-child{display: block;}
-.onchange{background: #fff}
+/*.onchange{background: #fff}*/
 
 /*布置展开菜单*/
 .ul{border: 1px solid;border-bottom-width: 0px!important;background: #fff;}

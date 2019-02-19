@@ -75,18 +75,19 @@
     .get_more_posts {
         padding: 0px;
         color: #afa1a1;
-        border: 4px dashed;
+        border: 2px dashed;
         width: 95%;
         margin-left: 15px;
         text-align: center;
-        font-size: 50px;
+        font-size: 35px;
         display: inline-block;
         background: #ffffff29;
         text-decoration: none;
         cursor: pointer;
-        border-radius: 20px;
+        border-radius: 7px;
         line-height: 50px;
-        padding-bottom: 10px;
+        padding-bottom: 5px;
+        font-weight: 500;
 
     }
     .get_more_posts:hover
