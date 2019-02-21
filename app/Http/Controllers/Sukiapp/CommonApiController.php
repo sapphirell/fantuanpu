@@ -47,6 +47,8 @@ class CommonApiController extends Controller
         $friend_request->time = time();
         $friend_request->nickname = User_model::find($uid)->username;
         $friend_request->save();
+        //添加一个提醒标记
+        User_model::setUserAlert($uid,"suki","friend_request");
         return true;
     }
     //添加suki喜欢的帖子

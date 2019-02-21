@@ -333,19 +333,32 @@ $(document).ready(function () {
     var mini_alert_poster = $("#alert_poster").hasClass("mini")
     //宽度改变
     $(window).resize(function () {          //当浏览器大小变化时
-        var height = $(window).width();
-        if (height < 575 && !mini_alert_poster)
+        var width = $(window).width();
+        if (width < 960)
         {
-            $("#alert_poster").addClass("mini");
-            $("#alert_poster .pos_text").text("");
-            mini_alert_poster = true;
+            if (width < 575 && !mini_alert_poster)
+            {
+                $("#alert_poster").addClass("mini");
+                $("#alert_poster .pos_text").text("");
+                mini_alert_poster = true;
+            }
+            if (width > 575 && mini_alert_poster)
+            {
+                $("#alert_poster").removeClass("mini");
+                $("#alert_poster .pos_text").text("我要发帖");
+                mini_alert_poster = false;
+            }
+            //suki banner 自适应
+            var ratio = 245/940; //宽高比例
+
+            $(".banner_item").css({width:width-20,height:width*ratio})
         }
-        if (height > 575 && mini_alert_poster)
+        else
         {
-            $("#alert_poster").removeClass("mini");
-            $("#alert_poster .pos_text").text("我要发帖");
-            mini_alert_poster = false;
+            $(".banner_item").css({width:940})
         }
+
+
     });
     //更换头像
     $(".my_avatar").click(function (e) {
@@ -362,5 +375,7 @@ $(document).ready(function () {
             // skin: 'layui-layer-rim', //加上边框
             content: ['/update_user_avatar', 'no']
         });
-    })
+    });
+
+
 })

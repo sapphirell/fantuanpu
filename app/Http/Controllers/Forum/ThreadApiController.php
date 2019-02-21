@@ -224,15 +224,8 @@ class ThreadApiController extends Controller
             /**
              * 界面上显示小红点
              */
-            $author = User_model::find($thread->authorid);
-            $useralert =  $author->useralert ? json_decode($author->useralert,true) : [];
+            User_model::setUserAlert($thread->authorid,"suki","reply");
 
-            $useralert['suki']['reply'] = 1;
-
-            $author->useralert = json_encode($useralert);
-//            ddd( $author->useralert);
-            $author->save();
-            User_model::flushUserCache($thread->authorid);
         }
 
         /**

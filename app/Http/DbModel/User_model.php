@@ -58,4 +58,17 @@ class User_model extends Model
             $user->avatar = config('app.online_url').\App\Http\Controllers\User\UserHelperController::GetAvatarUrl($user->uid);
         return $user;
     }
+    //添加一个小红点提醒
+    public static function setUserAlert(int $uid,string $from,string $name)
+    {
+        /**
+         * 界面上显示小红点
+         */
+        $author     = self::find($uid);
+        $useralert  =  $author->useralert ? json_decode($author->useralert,true) : [];
+        $useralert[$from][$name] = 1;
+        $author->useralert = json_encode($useralert);
+        $author->save();
+        User_model::flushUserCache($uid);
+    }
 }

@@ -232,8 +232,7 @@
             @if(session("user_info")->uid)
                 <li class="trans user_info_btn" style="position:relative;    padding: 5px;border-radius: 100%;margin-right: 20px">
                     {{avatar($data["user_info"]->uid,30,50,"","big")}}
-
-                    @if(!empty($data["user_info"]->useralert["suki"]["reply"]))
+                    @if(!empty($data["user_info"]->useralert["suki"]["reply"])|| !empty($data["user_info"]->useralert["suki"]["friend_request"]))
                     <span class="alert_pointer" style="right: 3px;bottom: 3px;"></span>
                     @endif
                 </li>
@@ -321,7 +320,7 @@
                         <a href="/suki_notice?type=reply_me" class="trans">
                             <img style="" src="/Image/tixing2.png">站内消息
                         </a>
-                        @if(!empty($data["user_info"]->useralert["suki"]["reply"]))
+                        @if(!empty($data["user_info"]->useralert["suki"]["reply"])|| !empty($data["user_info"]->useralert["suki"]["friend_request"]))
                             <span class="alert_pointer" style="right: 23px;bottom: 15px;"></span>
                         @endif
                     </li>

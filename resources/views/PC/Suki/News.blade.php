@@ -142,7 +142,10 @@
 <div class="wp index_body">
 
     <div class="suki_banner">
-        {{--<img src="/Image/testbanner.jpg">--}}
+
+        <a href="https://sukisuki.org/suki-thread-80161-1.html" class="banner_item" style="background: url(/Image/banner.jpg) no-repeat;
+            box-shadow: rgba(255, 105, 105, 0.33) 0px 0px 10px;cursor: pointer;display: block;
+        border-radius:5px;width: 940px;height: 245px;margin: 10px;background-size: cover;"></a>
     </div>
     <div class="part" style="    overflow-x: auto;white-space: nowrap;display: flex">
 
