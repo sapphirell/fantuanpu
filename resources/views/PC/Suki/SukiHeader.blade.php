@@ -324,7 +324,7 @@
                             <span class="alert_pointer" style="right: 23px;bottom: 15px;"></span>
                         @endif
                     </li>
-                    <li class="trans rough"><a href="" class="trans"><img style="" src="/Image/star-pink.png">我的收藏</a></li>
+                    <li class="trans rough"><a href="/suki_collection" class="trans"><img style="" src="/Image/star-pink.png">我的收藏</a></li>
                     <li class="trans rough"><a href="" class="trans"><img style="" src="/Image/history.png">浏览历史</a></li>
                     <li class="trans"><a href="/suki_relationship?type=friends" class="trans"><img style="" src="/Image/friends.png">通讯录</a></li>
                     <li class="trans rough"><a href="" class="trans"><img style="" src="/Image/nearby.png">附近同好</a></li>

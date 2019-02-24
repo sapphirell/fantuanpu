@@ -232,7 +232,7 @@ Route::group([
 
 
     Route::post('/suki-thread', ['uses' => 'SukiWebApiController@get_thread', 'as' => 'get_thread']);#获取suki的帖子
-    Route::post('/suki-new-thread', ['uses' => 'SukiWebApiController@suki_new_thread', 'as' => 'suki-new-thread']);#获取suki的帖子
+    Route::post('/suki-new-thread', ['uses' => 'SukiWebApiController@suki_new_thread', 'as' => 'suki-new-thread']);#suki发帖子
     Route::post('/suki_next_page', ['uses' => 'SukiWebApiController@suki_next_page', 'as' => 'suki_next_page']);#看下一页帖子 suki
 
 
@@ -258,6 +258,7 @@ Route::group([
     Route::get('/suki_user_info', ['uses' => 'SukiWebController@suki_user_info', 'as' => 'suki_user_info']);#suki我的信息
     Route::get('/suki_editor_post_view', ['uses' => 'SukiWebController@suki_editor_post_view', 'as' => 'suki_editor_post_view']);#编辑帖子页面
     Route::get('/suki_report', ['uses' => 'SukiWebController@suki_report', 'as' => 'suki_report']);#suki举报
+    Route::get('/suki_collection', ['uses' => 'SukiWebController@suki_collection', 'as' => 'suki_collection']);#suki收藏
 
 
     Route::post('/suki_reply_board', ['uses' => 'SukiWebApiController@suki_reply_board', 'as' => 'suki_reply_board']);#用户空间留言

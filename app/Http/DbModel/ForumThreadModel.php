@@ -30,6 +30,11 @@ class ForumThreadModel extends Model
 
         $res['thread_subject']  =   Cache::forget($thread_cache_key['key'].$tid);
     }
+    public static function flushThreadListCache($fid_arr = [],$page=1)
+    {
+        $cacheKey   = CoreController::THREAD_LIST;
+        Cache::forget($cacheKey['key'].json_encode($fid_arr)."_page_".$page);
+    }
     /**
      * 获取一部分板块内帖子,除了被删除和置顶的
      * @param array $fid_arr

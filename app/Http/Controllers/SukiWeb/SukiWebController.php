@@ -255,5 +255,13 @@ class SukiWebController extends Controller
         $this->data['form'] = $request->input('form');
         return view('PC/Suki/SukiLogin')->with('data',$this->data);
     }
+    //suki收藏
+    public function suki_collection(Request $request)
+    {
+        $this->data["my_collection"] = MyLikeModel::get_user_like($this->data["user_info"]->uid,3);
+
+//        dd($this->data["my_collection"]);
+        return view('PC/Suki/SukiCollection')->with('data',$this->data);
+    }
 
 }

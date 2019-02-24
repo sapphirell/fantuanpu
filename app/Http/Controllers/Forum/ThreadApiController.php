@@ -120,6 +120,10 @@ class ThreadApiController extends Controller
         if ($from == "suki")
             CommonMemberCount::AddUserCount($user_info->uid,"sukithreads",1);
         /**
+         * 清除帖子列表缓存
+         */
+
+        /**
          *  完成动作 发帖
          */
         return ActionController::complete_action('PNT',$user_info->uid,$this->threadModel->tid);

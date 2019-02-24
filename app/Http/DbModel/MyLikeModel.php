@@ -44,7 +44,17 @@ class MyLikeModel extends Model
 //            });
 
         $data = self::where(["uid"=>$uid,"like_type"=>$type])->get();
+//        dd($data);
+        //根据liketype,更新帖子
+        $thread_model = new Thread_model();
+        foreach ($data as &$value)
+        {
+            if ($value->like_type == 3)
+            {
+                $value->thread = $thread_model->getThread($value->like_id);
+            }
 
+        }
         return $data;
     }
 
