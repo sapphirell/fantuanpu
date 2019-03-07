@@ -211,6 +211,7 @@ Route::group([
     ],
 ], function () {
     Route::post('/suki_home_page', ['uses' => 'SukiAppResponseController@suki_home_page', 'as' => 'suki_home_page']);#Suki的首页 homepage
+    Route::post('/sukiapp_viewthread', ['uses' => 'SukiAppResponseController@sukiapp_viewThread', 'as' => 'sukiapp_viewThread']);#看suki的帖子
 
 });
 
