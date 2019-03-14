@@ -1,23 +1,5 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
-|
-*/
-use App\Http\UserAgent;
-//if( UserAgent::isMobile() ){
-//    //移动端
-//    Route::get('/', ['uses' => 'Controller@mobile', 'as' => 'mobile']);
-//}else{
-//pc端
-
-
 //通用
 Route::group([
     'namespace' => 'User',
@@ -41,6 +23,7 @@ Route::group([
     Route::post('/uc-do-upload-avatar', 'UserBaseController@DoUploadAvatar');#修改头像
 
 });
+
 Route::group([
     'namespace' => 'Forum',
 ], function () {
@@ -58,7 +41,7 @@ Route::group([
     ]
 ],function () {
     Route::get('/app/test', ['uses' => 'UserController@test', 'as' => 'app-user-test']);#app测试
-    Route::post('/app/user_center', ['uses' => 'UserController@user_center', 'as' => 'app-user-test']);#用户中心数据
+    Route::post('/app/user_center', ['uses' => 'UserController@user_center', 'as' => 'user_center']);#用户中心数据
     Route::post('/app/user_friends', ['uses' => 'UserController@user_friends', 'as' => 'app-user_friends']);#user_friends
     Route::post('/app/new_thread', ['uses' => 'ForumController@new_thread', 'as' => 'new_thread']);#app发新帖
     Route::post('/app/reply_thread', ['uses' => 'ForumController@reply_thread', 'as' => 'reply_thread']);#app回复帖子
@@ -73,6 +56,7 @@ Route::group([
 
 
 });
+
 //App 接口(非token)
 Route::group([
     'namespace' => 'App',
@@ -88,14 +72,13 @@ Route::group([
     Route::post('/app/version', ['uses' => 'ForumController@version', 'as' => 'version']);#获取App最新版本号
     Route::get('/app/hitokoto', ['uses' => 'ForumController@hitokoto', 'as' => 'hitokoto']);#一句话静态
     Route::post('/app/user_report', ['uses' => 'UserController@user_report', 'as' => 'user_report']);#用户反馈
-    Route::post('/app/test', ['uses' => 'UserController@test', 'as' => 'test']);#test
+    //    Route::post('/app/test', ['uses' => 'UserController@test', 'as' => 'test']);#test
     Route::post('/app/user_view', ['uses' => 'UserController@user_view', 'as' => 'user_view']);#其它用户主页
     Route::post('/app/get_user_thread', ['uses' => 'UserController@get_user_thread', 'as' => 'user_view']);#获取用户发的帖子
     Route::post('/app/complete_action', ['uses' => 'UserController@complete_action', 'as' => 'complete_action']);#用户完成动作
     Route::post('/app/add_user_coin', ['uses' => 'UserController@add_user_coin', 'as' => 'add_user_coin']);#用户修改资金
 
 });
-
 
 //服务
 Route::group([
@@ -105,7 +88,7 @@ Route::group([
     Route::get('/ss', ['uses' => 'ServeController@ss', 'as' => 'ss']);#查看session
     Route::get('/info', ['uses' => 'ServeController@info', 'as' => 'info']);#phpinfo
     Route::get('/test', ['uses' => 'TestController@index', 'as' => 'test']);#test
-    Route::get('/ping', ['uses' => 'TestController@ping', 'as' => 'test']);#test
+    Route::get('/ping', ['uses' => 'TestController@ping', 'as' => 'ping']);#test
     Route::get('/avatar', ['uses' => 'PictureController@show_avatar', 'as' => 'show_avatar']);#传uid返回头像链接
     Route::get('/clock_alert', ['uses' => 'ServeController@clock_alert', 'as' => 'clock_alert']);#闹钟提醒
     Route::get('/del_thread', ['uses' => 'ServeController@del_thread', 'as' => 'del_thread']);#删除帖子
@@ -114,7 +97,6 @@ Route::group([
 
 });
 
-
 //论坛
 Route::group([
     'namespace' => 'Forum',
@@ -122,7 +104,7 @@ Route::group([
         'domain.fantuanpu'
     ],
 ], function () {
-//    Route::get('/',             ['uses' => 'ForumBaseController@ForumIndex', 'as' => 'forum']);#论坛首页
+    //    Route::get('/',             ['uses' => 'ForumBaseController@ForumIndex', 'as' => 'forum']);#论坛首页
     Route::get('/forum.php',    ['uses' => 'ForumBaseController@ForumIndex', 'as' => 'forum-index']);#论坛首页
     Route::get('/index',        ['uses' => 'ForumBaseController@ForumIndex', 'as' => 'forum-index']);#论坛首页
     Route::get('/about', ['uses' => 'ForumBaseController@index', 'as' => 'about']);#about
@@ -186,6 +168,7 @@ Route::group([
 
 
 });
+
 //管理后台 IndexCp
 Route::group([
     'namespace' => 'Admincp',
@@ -251,7 +234,6 @@ Route::group([
 
     Route::get('/suki-myfollow', ['uses' => 'SukiWebController@suki_myfollow', 'as' => 'suki_myfollow']);#查看我的关注者
     Route::post('/suki_get_user_thread', ['uses' => 'SukiWebController@suki_get_user_thread', 'as' => 'suki_get_user_thread']);#获取用户的更多帖子
-    Route::post('/suki_reply_thread', ['uses' => 'SukiWebController@suki_reply_thread', 'as' => 'suki_reply_thread']);#回复suki帖子
     Route::get('/suki_notice', ['uses' => 'SukiWebController@suki_notice', 'as' => 'suki_notice']);#suki的站内提醒
     Route::get('/suki_relationship', ['uses' => 'SukiWebController@suki_relationship', 'as' => 'suki_relationship']);#suki的用户关系 关注 粉丝 好友
     Route::get('/suki_alarm_clock', ['uses' => 'SukiWebController@suki_alarm_clock', 'as' => 'suki_alarm_clock']);#suki的补款闹钟页面
@@ -264,10 +246,11 @@ Route::group([
 
     Route::post('/suki_reply_board', ['uses' => 'SukiWebApiController@suki_reply_board', 'as' => 'suki_reply_board']);#用户空间留言
     Route::post('/suki_follow_user', ['uses' => 'SukiWebApiController@suki_follow_user', 'as' => 'suki_follow_user']);#suki关注和取关
-    Route::post('/suki_reply_thread', ['uses' => 'SukiWebApiController@suki_reply_thread', 'as' => 'suki_reply_thread']);#suki回复帖子
+    Route::post('/suki_reply_thread', ['uses' => 'SukiWebApiController@suki_reply_thread', 'as' => 'suki_reply_thread_api']);#suki回复帖子api
     Route::post('/add_suki_friend', ['uses' => 'SukiWebApiController@add_suki_friend', 'as' => 'add_suki_friend']);#suki加好友
     Route::post('/add_suki_like', ['uses' => 'SukiWebApiController@add_suki_like', 'as' => 'add_suki_like']);#suki收藏帖子
     Route::post('/apply_suki_friends', ['uses' => 'SukiWebApiController@apply_suki_friends', 'as' => 'apply_suki_friends']);#批准suki好友申请
+
     Route::post('/setting_clock', ['uses' => 'SukiWebApiController@setting_clock', 'as' => 'setting_clock']);#闹钟增删改查
     Route::get('/setting_clock_alert', ['uses' => 'SukiWebApiController@setting_clock_alert', 'as' => 'setting_clock_alert']);#闹钟提醒方式修改
     Route::post('/update_suki_user_info', ['uses' => 'SukiWebApiController@update_suki_user_info', 'as' => 'update_suki_user_info']);#修改suki的用户信息
