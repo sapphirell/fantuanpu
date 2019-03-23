@@ -7,6 +7,8 @@ use App\Http\DbModel\CommonMemberCount;
 use App\Http\DbModel\Forum_forum_model;
 use App\Http\DbModel\ForumPostModel;
 use App\Http\DbModel\ForumThreadModel;
+use App\Http\DbModel\GroupBuyingItemModel;
+use App\Http\DbModel\GroupBuyingModel;
 use App\Http\DbModel\MemberFieldForumModel;
 use App\Http\DbModel\MyLikeModel;
 use App\Http\DbModel\SukiClockModel;
@@ -264,4 +266,22 @@ class SukiWebController extends Controller
         return view('PC/Suki/SukiCollection')->with('data',$this->data);
     }
 
+    //suki的团购
+    public function suki_group_buying(Request $request)
+    {
+        $this->data['lastGroupingInfo'] = GroupBuyingModel::getLastGroup();
+        $this->data['items'] = GroupBuyingItemModel::where("group_id",$this->data['lastGroupingInfo']->id)->get()->toArray();
+        foreach ($this->data['items'] as & $value)
+        {
+
+            $value['item_image'] = explode("|",$value['item_image']);
+            $value['item_color'] = explode("|",$value['item_color']);
+            $value['item_size'] = explode("|",$value['item_size']);
+        }
+
+        return view('PC/Suki/SukiGroupBuying')->with('data',$this->data);
+    }
+
+    public function suki_group_buying_item_info(Request $request)
+    {}
 }

@@ -264,13 +264,20 @@
                     <p class="none_960" style="color: #fff;display: inline-block">交流</p>
                 </a>
             </li>
-                <li class="trans">
-                    <a href="/suki_tribunal"  class="header_items">
-                        {{--<i class="fa  fa-gavel fa-fw fa-lg"  style="color: #ffffff;line-height: 23px"></i>--}}
-                        <img src="/Image/xinyu.png" style="width: 20px;">
-                        <p class="none_960" style="color: #fff;display: inline-block">信誉墙</p>
-                    </a>
-                </li>
+            <li class="trans">
+                <a href="/suki_tribunal"  class="header_items">
+                    {{--<i class="fa  fa-gavel fa-fw fa-lg"  style="color: #ffffff;line-height: 23px"></i>--}}
+                    <img src="/Image/xinyu.png" style="width: 20px;">
+                    <p class="none_960" style="color: #fff;display: inline-block">信誉墙</p>
+                </a>
+            </li>
+            <li class="trans">
+                <a href="/suki_group_buying"  class="header_items">
+                    {{--<i class="fa  fa-gavel fa-fw fa-lg"  style="color: #ffffff;line-height: 23px"></i>--}}
+                    <img src="/Image/xinyu.png" style="width: 20px;">
+                    <p class="none_960" style="color: #fff;display: inline-block">团购</p>
+                </a>
+            </li>
         </ul>
 
 

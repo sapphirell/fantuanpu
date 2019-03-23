@@ -181,7 +181,10 @@ Route::group([
     Route::get('/admincp/user-edit', ['uses' => 'AdmincpController@userEdit', 'as' => 'userManager']);#用户管理面板
     Route::get('/admincp/add_medal', ['uses' => 'OperateController@add_medal', 'as' => 'add_medal']);#添加新的勋章页面
     Route::get('/admincp/medal_list', ['uses' => 'OperateController@medal_list', 'as' => 'medal_list']);#勋章列表
+
     Route::post('/admincp/store_medal', ['uses' => 'OperateController@store_medal', 'as' => 'store_medal']);#添加新的勋章
+    Route::get('/admincp/add_group_buying_item', ['uses' => 'GroupBuyingController@add_group_buying_item', 'as' => 'add_group_buying_item']);#添加团购商品
+    Route::post('/admincp/add_group_buying_item', ['uses' => 'GroupBuyingController@add_action', 'as' => 'add_action']);#添加团购商品
 });
 
 
@@ -213,11 +216,14 @@ Route::group([
     Route::get('/suki_tribunal', ['uses' => 'SukiWebController@suki_tribunal', 'as' => 'suki_tribunal']);#suki法庭,公示墙
     Route::get('/suki_search', ['uses' => 'SukiWebController@suki_search', 'as' => 'suki_search']);#suki搜索
     Route::get('/suki_login', ['uses' => 'SukiWebController@suki_login', 'as' => 'suki_login']);#suki的登录页面
+    Route::get('/suki_group_buying', ['uses' => 'SukiWebController@suki_group_buying', 'as' => 'suki_group_buying']);#suki团购
+    Route::get('/suki_group_buying_item_info', ['uses' => 'SukiWebController@suki_group_buying_item_info', 'as' => 'suki_group_buying_item_info']);#suki团购商品详情
 
 
     Route::post('/suki-thread', ['uses' => 'SukiWebApiController@get_thread', 'as' => 'get_thread']);#获取suki的帖子
     Route::post('/suki-new-thread', ['uses' => 'SukiWebApiController@suki_new_thread', 'as' => 'suki-new-thread']);#suki发帖子
     Route::post('/suki_next_page', ['uses' => 'SukiWebApiController@suki_next_page', 'as' => 'suki_next_page']);#看下一页帖子 suki
+
 
 
 });
