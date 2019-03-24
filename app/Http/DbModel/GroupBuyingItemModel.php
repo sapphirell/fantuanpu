@@ -8,4 +8,6 @@ class GroupBuyingItemModel extends Model
 {
     public $table = "pre_group_buying_item";
     public $timestamps = false;
+    public $primaryKey = 'id';
+
 }

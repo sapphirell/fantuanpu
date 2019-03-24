@@ -8,6 +8,7 @@ use App\Http\DbModel\Forum_forum_model;
 use App\Http\DbModel\ForumPostModel;
 use App\Http\DbModel\ForumThreadModel;
 use App\Http\DbModel\GroupBuyingItemModel;
+use App\Http\DbModel\GroupBuyingLogModel;
 use App\Http\DbModel\GroupBuyingModel;
 use App\Http\DbModel\MemberFieldForumModel;
 use App\Http\DbModel\MyLikeModel;
@@ -283,5 +284,86 @@ class SukiWebController extends Controller
     }
 
     public function suki_group_buying_item_info(Request $request)
-    {}
+    {
+        //上一次购买记录
+        $this->data["last"] = GroupBuyingLogModel::where(["uid" => $this->data["user_info"]->uid])->orderBy("create_date","desc")->first();
+
+
+
+        $this->data["item_info"] = GroupBuyingItemModel::find($request->input("item_id"));
+        $this->data["group_info"] = GroupBuyingModel::find($this->data["item_info"]->group_id);
+
+        $this->data["item_info"]->item_image    = explode("|",$this->data["item_info"]->item_image);
+        $this->data["item_info"]->item_color    = explode("|",$this->data["item_info"]->item_color);
+        $this->data["item_info"]->item_size     = explode("|",$this->data["item_info"]->item_size);
+        $this->data["item_follow"] = GroupBuyingLogModel::where("item_id",$request->input("id"));
+
+//        dd($this->data["item_info"]);
+
+        return view('PC/Suki/SukiGroupBuyingItemInfo')->with('data',$this->data);;
+    }
+
+    public function suki_group_buying_item(Request $request)
+    {
+        $chk = $this->checkRequest($request,["name","address","telphone","order_info","item_id"]);
+        if ($chk !== true)
+            return self::response([],40001,"缺少参数".$chk);
+
+        $item = GroupBuyingItemModel::find($request->input("item_id"));
+        $item->item_color = explode("|",$item->item_color);
+        $item->item_size = explode("|",$item->item_size);
+
+        if (empty($item))
+            return self::response([],40002,"不存在该团购商品");
+
+        $order_info = json_decode($request->input("order_info"),true);
+        if (empty($order_info))
+            return self::response([],40002,"订单详情为空");
+
+        $order_price = 0;
+        $premium = 0;
+        foreach ($order_info as $key => $value)
+        {
+            $info =  explode("_",$key);
+            if (!in_array($info[0],$item->item_size))
+                return self::response([],40003,"商品不存在该尺寸");
+            if (!in_array($info[1],$item->item_color))
+                return self::response([],40003,"商品不存在该颜色".var_export($item->item_color,true));
+            $premium += $value * $item->premium ;
+            $order_price += $value * $item->premium + $value * $item->item_price; // 辛苦费+商品原价
+        }
+
+        $order_price += $item->item_freight / $item->min_members  + 15; //公摊运费+私人运费
+
+        $orderLog = new GroupBuyingLogModel();
+        $orderLog->uid = $this->data['user_info']->uid;
+        $orderLog->item_id = $item->id;
+        $orderLog->status = 1;
+        $orderLog->status = 1;
+        $orderLog->address = $request->input("address");
+        $orderLog->private_freight = 15;
+        $orderLog->name = $request->input("name");
+        $orderLog->telphone = $request->input("telphone");
+        $orderLog->premium = $premium;
+        $orderLog->create_date = date("Y-m-d H:i:s");
+        $orderLog->order_info = $request->input("order_info");
+        $orderLog->order_price = $order_price;
+        $orderLog->save();
+
+        return self::response();
+
+    }
+
+    public function suki_group_buying_myorders(Request $request)
+    {
+        $this->data["orders"] = GroupBuyingLogModel::where(["uid"=>$this->data['user_info']->uid])->get();
+        foreach ($this->data["orders"] as & $value)
+        {
+            $value->order_info = json_decode($value->order_info,true);
+
+        }
+//        dd($this->data["orders"] );
+
+        return view('PC/Suki/SukiGroupBuyingMyOrders')->with('data',$this->data);
+    }
 }

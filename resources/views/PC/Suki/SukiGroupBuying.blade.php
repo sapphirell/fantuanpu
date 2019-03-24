@@ -23,7 +23,7 @@
                     <button>{{$value}}</button>
                 @endforeach
                 <br>
-                <a style="margin: 10px">查看详情</a>
+                <a href="/suki_group_buying_item_info?item_id={{$item["id"]}}" style="margin: 10px">查看详情</a>
             </div>
 
         @endforeach

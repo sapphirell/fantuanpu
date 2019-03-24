@@ -218,6 +218,8 @@ Route::group([
     Route::get('/suki_login', ['uses' => 'SukiWebController@suki_login', 'as' => 'suki_login']);#suki的登录页面
     Route::get('/suki_group_buying', ['uses' => 'SukiWebController@suki_group_buying', 'as' => 'suki_group_buying']);#suki团购
     Route::get('/suki_group_buying_item_info', ['uses' => 'SukiWebController@suki_group_buying_item_info', 'as' => 'suki_group_buying_item_info']);#suki团购商品详情
+    Route::post('/suki_group_buying_item', ['uses' => 'SukiWebController@suki_group_buying_item', 'as' => 'suki_group_buying_item']);#suki团购购买一个商品
+    Route::get('/suki_group_buying_myorders', ['uses' => 'SukiWebController@suki_group_buying_myorders', 'as' => 'suki_group_buying_myorders']);#suki团购我的商品
 
 
     Route::post('/suki-thread', ['uses' => 'SukiWebApiController@get_thread', 'as' => 'get_thread']);#获取suki的帖子
