@@ -305,6 +305,7 @@ class SukiWebController extends Controller
 
     public function suki_group_buying_item(Request $request)
     {
+        $this->data['lastGroupingInfo'] = GroupBuyingModel::getLastGroup();
         $chk = $this->checkRequest($request,["name","address","telphone","order_info","item_id"]);
         if ($chk !== true)
             return self::response([],40001,"缺少参数".$chk);
@@ -346,6 +347,7 @@ class SukiWebController extends Controller
         $orderLog->telphone = $request->input("telphone");
         $orderLog->premium = $premium;
         $orderLog->create_date = date("Y-m-d H:i:s");
+        $orderLog->end_date =  $this->data['lastGroupingInfo']->enddate;
         $orderLog->order_info = $request->input("order_info");
         $orderLog->order_price = $order_price;
         $orderLog->save();
@@ -365,5 +367,44 @@ class SukiWebController extends Controller
 //        dd($this->data["orders"] );
 
         return view('PC/Suki/SukiGroupBuyingMyOrders')->with('data',$this->data);
+    }
+
+    public function suki_group_buying_cancel_orders(Request $request)
+    {
+        if (!$request->input("orderId"))
+        {
+            return self::response([], 40001, "缺少参数orderId");
+        }
+        $this->data["orders"] = GroupBuyingLogModel::where(["id"=>$request->input("orderId")])->first();
+        if (empty( $this->data["orders"]))
+            return self::response([],40002,"缺少orders");
+
+        if ( $this->data["orders"]->status != 1 && $this->data["orders"]->status != 2  )
+            return self::response([],40003 , "订单状态不对");
+        $this->data["orders"]->status = 4;
+        $this->data["orders"]->save();
+        return self::response();
+    }
+
+    public function suki_group_buying_paying(Request $request)
+    {
+
+        return view('PC/Suki/SukiGroupBuyingPaying')->with('data',$this->data);
+    }
+    public function suki_group_buying_confirm_orders(Request $request)
+    {
+        if (!$request->input("orderId"))
+        {
+            return self::response([], 40001, "缺少参数orderId");
+        }
+        $this->data["orders"] = GroupBuyingLogModel::where(["id"=>$request->input("orderId")])->first();
+        if (empty( $this->data["orders"]))
+            return self::response([],40002,"缺少orders");
+        if ( $this->data["orders"]->status != 2  )
+            return self::response([],40003 , "订单状态不对");
+        $this->data["orders"]->status = 8;
+        $this->data["orders"]->alipay_order_sn = $request->input("alipay_order_sn");
+        $this->data["orders"]->save();
+        return self::response();
     }
 }

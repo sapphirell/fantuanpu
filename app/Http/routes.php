@@ -220,6 +220,9 @@ Route::group([
     Route::get('/suki_group_buying_item_info', ['uses' => 'SukiWebController@suki_group_buying_item_info', 'as' => 'suki_group_buying_item_info']);#suki团购商品详情
     Route::post('/suki_group_buying_item', ['uses' => 'SukiWebController@suki_group_buying_item', 'as' => 'suki_group_buying_item']);#suki团购购买一个商品
     Route::get('/suki_group_buying_myorders', ['uses' => 'SukiWebController@suki_group_buying_myorders', 'as' => 'suki_group_buying_myorders']);#suki团购我的商品
+    Route::get('/suki_group_buying_cancel_orders', ['uses' => 'SukiWebController@suki_group_buying_cancel_orders', 'as' => 'suki_group_buying_cancel_orders']);#suki取消我的订单
+    Route::get('/suki_group_buying_paying', ['uses' => 'SukiWebController@suki_group_buying_paying', 'as' => 'suki_group_buying_paying']);#suki提交付款证明
+    Route::post('/suki_group_buying_confirm_orders', ['uses' => 'SukiWebController@suki_group_buying_confirm_orders', 'as' => 'suki_group_buying_confirm_orders']);#suki确认订单号
 
 
     Route::post('/suki-thread', ['uses' => 'SukiWebApiController@get_thread', 'as' => 'get_thread']);#获取suki的帖子
