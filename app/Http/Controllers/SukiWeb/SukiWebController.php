@@ -23,6 +23,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 class SukiWebController extends Controller
 {
@@ -271,7 +272,7 @@ class SukiWebController extends Controller
     public function suki_group_buying(Request $request)
     {
         $this->data['lastGroupingInfo'] = GroupBuyingModel::getLastGroup();
-        $this->data['items'] = GroupBuyingItemModel::where("group_id",$this->data['lastGroupingInfo']->id)->get()->toArray();
+        $this->data['items'] = GroupBuyingItemModel::getListInfo($this->data['lastGroupingInfo']->id);
         foreach ($this->data['items'] as & $value)
         {
 
@@ -358,7 +359,7 @@ class SukiWebController extends Controller
 
     public function suki_group_buying_myorders(Request $request)
     {
-        $this->data["orders"] = GroupBuyingLogModel::where(["uid"=>$this->data['user_info']->uid])->get();
+        $this->data["orders"] = GroupBuyingLogModel::where(["uid"=>$this->data['user_info']->uid])->orderBy("id","desc")->get();
         foreach ($this->data["orders"] as & $value)
         {
             $value->order_info = json_decode($value->order_info,true);

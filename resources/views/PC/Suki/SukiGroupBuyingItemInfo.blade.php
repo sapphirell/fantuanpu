@@ -3,7 +3,7 @@
 <style>
     .input-group-text {width: 80px}
 </style>
-<div class="wp" style="margin-top: 60px;">
+<div class="wp" style="margin-top: 60px;    background: #fff;padding: 20px;">
 
     <div>
         <nav aria-label="breadcrumb">
@@ -35,8 +35,8 @@
                     <span class="sr-only">Next</span>
                 </a>
             </div>
-            <ul class="list-group col-lg-4" style="float: left;width: 305px;">
-                <li class="list-group-item"><kbd class="">最低成团数:</kbd> {{$data["item_info"]->min_members}}个</li>
+            <ul class="list-group col-lg-4" style="float: left;width: 265px;">
+                <li class="list-group-item"><kbd class="">最低成团数:</kbd> {{$data["item_info"]->min_members}}个 (当前{{$data["item_info"]->count?:0}}个)</li>
                 <li class="list-group-item"><kbd class="">单价:</kbd> {{$data["item_info"]->item_price }}元</li>
                 <li class="list-group-item"><kbd class="">运费:</kbd> {{$data["item_info"]->item_freight}}</li>
                 <li class="list-group-item"><kbd class="">辛苦费/次:</kbd> {{$data["item_info"]->premium}}元</li>
@@ -107,6 +107,12 @@
                 </div>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">您的qq号</span>
+                    </div>
+                    <input type="text" class="form-control qq" placeholder=""  value="">
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
                         <span class="input-group-text" id="basic-addon1">订单详情</span>
                     </div>
                     <input type="text" class="form-control buying order_info" placeholder=""  readonly="readonly" name="" >
@@ -121,8 +127,8 @@
                 <input type="submit" value="确认参与拼团" class="submit_to_gb">
             </form>
         </div>
-        <p>购前须知:</p>
-        <ul>
+        <p style="font-size: 16px;margin-top: 10px">购前须知:</p>
+        <ul style="padding: 20px;padding-top: 0px;">
             <li>商品在截团日前未凑够最低成团数或当天付清货款的人不足最低成团数的,会流团</li>
             <li>商品最终价格为:商品原价*购买份数+公摊运费+私人运费</li>
             <li>截团前可以取消订单,截团后不可取消订单</li>
@@ -183,12 +189,25 @@
 
         $(".submit_to_gb").click(function (e) {
             e.preventDefault();
+            var name = $(".name").val()
+            var address = $(".address").val()
+            var telphone = $(".telphone").val()
+            var order_info = $(".order_info").val()
+            var item_id = $("#item_id").val()
+            var qq = $(".qq").val();
+
+            if (!name || !address || !telphone || !order_info || !item_id || !qq)
+            {
+                alert("缺少参数")
+                return false;
+            }
             var fd = {
                 name : $(".name").val(),
                 address : $(".address").val(),
                 telphone : $(".telphone").val(),
                 order_info : $(".order_info").val(),
-                item_id: $("#item_id").val()
+                item_id: $("#item_id").val(),
+                qq : $(".qq").val()
             }
             console.log(fd);
             $.post("/suki_group_buying_item",fd,function (e) {

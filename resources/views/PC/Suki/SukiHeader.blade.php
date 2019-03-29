@@ -274,7 +274,7 @@
             <li class="trans">
                 <a href="/suki_group_buying"  class="header_items">
                     {{--<i class="fa  fa-gavel fa-fw fa-lg"  style="color: #ffffff;line-height: 23px"></i>--}}
-                    <img src="/Image/xinyu.png" style="width: 20px;">
+                    <img src="/Image/tuangou2.png" style="width: 20px;">
                     <p class="none_960" style="color: #fff;display: inline-block">团购</p>
                 </a>
             </li>
@@ -341,7 +341,9 @@
                         <a href="/suki_alarm_clock?type=view" class="trans"><img style="" src="/Image/tixing2.png">补款闹钟</a>
                         <span style="    font-size: 10px;font-weight: 400;color: #bf0000;position: absolute;" title="...这个new似乎没有意义">new</span>
                     </li>
-
+                    <li class="trans">
+                        <a href="/suki_group_buying_myorders" class="trans"><img style="" src="/Image/tixing2.png">团购列表</a>
+                    </li>
 
                 </ul>
             </div>

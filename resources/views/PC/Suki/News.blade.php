@@ -148,7 +148,6 @@
         border-radius:5px;width: 940px;height: 245px;margin: 10px;background-size: cover;"></a>
     </div>
     <div class="part" style="    overflow-x: auto;white-space: nowrap;display: flex">
-
         @foreach($data['nodes'] as $value)
         <a href="/forum-{{$value['fid']}}-1.html"  class="trans part_item fid_{{$value["fid"]}}" fid="{{$value["fid"]}}">
             <div class="appimage">

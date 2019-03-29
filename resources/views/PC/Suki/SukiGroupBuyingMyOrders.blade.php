@@ -4,7 +4,7 @@
     .input-group-text {width: 80px}
 </style>
 <div class="wp" style="margin-top: 60px;">
-    <table class="table">
+    <table class="table" style="    background: #fff;padding: 10px;color: #562727;">
         <tr>
             <td>名字</td>
             <td>创建时间</td>
