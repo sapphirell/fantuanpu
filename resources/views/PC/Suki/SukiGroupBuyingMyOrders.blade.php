@@ -15,7 +15,7 @@
         </tr>
         @foreach($data['orders'] as $value)
             <tr>
-                <td>{{$value->name}}</td>
+                <td><a href="/suki_group_buying_item_info?item_id={{$value->item_id}}">{{$value->name}}</a></td>
                 <td>{{$value->create_date}}</td>
                 <td>{{$value->end_date}}</td>
                 <td>

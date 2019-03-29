@@ -307,7 +307,7 @@ class SukiWebController extends Controller
     public function suki_group_buying_item(Request $request)
     {
         $this->data['lastGroupingInfo'] = GroupBuyingModel::getLastGroup();
-        $chk = $this->checkRequest($request,["name","address","telphone","order_info","item_id"]);
+        $chk = $this->checkRequest($request,["name","address","telphone","order_info","item_id","qq"]);
         if ($chk !== true)
             return self::response([],40001,"缺少参数".$chk);
 
@@ -351,6 +351,7 @@ class SukiWebController extends Controller
         $orderLog->end_date =  $this->data['lastGroupingInfo']->enddate;
         $orderLog->order_info = $request->input("order_info");
         $orderLog->order_price = $order_price;
+        $orderLog->qq = $request->input("qq");
         $orderLog->save();
 
         return self::response();
