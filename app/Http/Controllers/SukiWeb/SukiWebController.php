@@ -272,14 +272,18 @@ class SukiWebController extends Controller
     public function suki_group_buying(Request $request)
     {
         $this->data['lastGroupingInfo'] = GroupBuyingModel::getLastGroup();
-        $this->data['items'] = GroupBuyingItemModel::getListInfo($this->data['lastGroupingInfo']->id);
-        foreach ($this->data['items'] as & $value)
+        if (  $this->data['lastGroupingInfo'])
         {
+            $this->data['items'] = GroupBuyingItemModel::getListInfo($this->data['lastGroupingInfo']->id);
+            foreach ($this->data['items'] as & $value)
+            {
 
-            $value['item_image'] = explode("|",$value['item_image']);
-            $value['item_color'] = explode("|",$value['item_color']);
-            $value['item_size'] = explode("|",$value['item_size']);
+                $value['item_image'] = explode("|",$value['item_image']);
+                $value['item_color'] = explode("|",$value['item_color']);
+                $value['item_size'] = explode("|",$value['item_size']);
+            }
         }
+
 
         return view('PC/Suki/SukiGroupBuying')->with('data',$this->data);
     }
@@ -297,9 +301,19 @@ class SukiWebController extends Controller
         $this->data["item_info"]->item_image    = explode("|",$this->data["item_info"]->item_image);
         $this->data["item_info"]->item_color    = explode("|",$this->data["item_info"]->item_color);
         $this->data["item_info"]->item_size     = explode("|",$this->data["item_info"]->item_size);
-        $this->data["item_follow"] = GroupBuyingLogModel::where("item_id",$request->input("id"));
+        $item_follow = GroupBuyingLogModel::where("item_id",$request->input("item_id"))->get();
 
-//        dd($this->data["item_info"]);
+        $this->data["item_follow"] = 0;
+        $this->data["item_member"] = 0;
+        foreach ($item_follow as $key => $value)
+        {
+            $this->data["item_member"]  += 1;
+            foreach (json_decode($value["order_info"], true) as $value)
+            {
+                $this->data["item_follow"] += $value;
+            }
+        }
+//        dd($this->data["item_follow"]);
 
         return view('PC/Suki/SukiGroupBuyingItemInfo')->with('data',$this->data);;
     }

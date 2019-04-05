@@ -2,6 +2,19 @@
 <link rel="stylesheet" type="text/css" href="/Static/Style/Web/forum.css">
 <style>
     .input-group-text {width: 80px}
+
+    .item_info_ul { padding: 0px;
+
+        display: inline-block;    float: left;}
+
+    .items_banner {width: 360px;float: left;margin-right: 10px}
+    .check_box{    margin-left: 15px;}
+    @media screen and (max-width: 960px) {
+        .item_info_ul {margin-top: 20px;}
+        .items_banner {width: 100%;height:250px;float: left;margin-right: 10px}
+
+        .check_box{    margin-left: 0px;    width: 100%; margin-bottom: 20px}
+    }
 </style>
 <div class="wp" style="margin-top: 60px;    background: #fff;padding: 20px;">
 
@@ -16,12 +29,12 @@
 
         <div>
 
-            <div id="carouselExampleControls" style="width: 420px;height:250px;float: left;margin-right: 10px" class="carousel slide" data-ride="carousel">
+            <div id="carouselExampleControls" class="items_banner" style="" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
                     @foreach($data["item_info"]->item_image as $value)
                         <div class="carousel-item active">
                             {{--<img class="d-block w-100" src="...">--}}
-                            <img class="d-block w-100"  src="{{$value}}" style="width: 420px;height: 250px;display: inline-block;float: left">
+                            <img class="d-block w-100"  src="{{$value}}" class="" style="height: 250px;display: inline-block;float: left">
                         </div>
                     @endforeach
 
@@ -35,17 +48,18 @@
                     <span class="sr-only">Next</span>
                 </a>
             </div>
-            <ul class="list-group col-lg-4" style="float: left;width: 265px;">
-                <li class="list-group-item"><kbd class="">最低成团数:</kbd> {{$data["item_info"]->min_members}}个 (当前{{$data["item_info"]->count?:0}}个)</li>
+
+            <ul class="list-group col-lg-4 item_info_ul" style="">
+                <li class="list-group-item"><kbd class="">最低成团数:</kbd> {{$data["item_info"]->min_members}}个 (当前{{$data["item_member"] . "人购买了" . $data["item_follow"]}}个)</li>
                 <li class="list-group-item"><kbd class="">单价:</kbd> {{$data["item_info"]->item_price }}元</li>
-                <li class="list-group-item"><kbd class="">运费:</kbd> {{$data["item_info"]->item_freight}}</li>
+                <li class="list-group-item"><kbd class="">阿里运费(公摊):</kbd> {{$data["item_info"]->item_freight}}</li>
                 <li class="list-group-item"><kbd class="">辛苦费/次:</kbd> {{$data["item_info"]->premium}}元</li>
                 <li class="list-group-item"><kbd class="">截团日期:</kbd> {{   $data["group_info"]->enddate }}</li>
-                <li class="list-group-item"><kbd class="">预收邮费:</kbd>  15元</li>
+                <li class="list-group-item"><kbd class="">预收邮费:</kbd>  10元</li>
 
 
             </ul>
-            <div style="padding: 11px;    border: 1px dashed #ff8686;background: #fff;display: inline-block;float: left">
+            <div class="check_box" style="padding: 11px;    border: 1px dashed #ff8686;background: #fff;display: inline-block;float: left">
                 <p>可选尺码</p>
                 <select style="width: 200px"  class="size" name="size" >
                     @foreach($data["item_info"]->item_size as $value)
@@ -133,7 +147,7 @@
             <li>商品最终价格为:商品原价*购买份数+公摊运费+私人运费</li>
             <li>截团前可以取消订单,截团后不可取消订单</li>
             <li>钱需要在最终截团前付清,方式为支付宝转账</li>
-            <li>统一预收个人邮费15元,费用计算为预收金额,公摊邮费和私人邮费多退少补。</li>
+            <li>统一预收个人邮费10元,费用计算为预收金额,公摊邮费和私人邮费多退少补。</li>
             <li>最终价格为(商品单价*购买数量) + 个人邮费 + 阿里邮费/真实成团数</li>
 
         </ul>
