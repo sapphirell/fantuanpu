@@ -16,7 +16,7 @@ class GroupBuyingItemModel extends Model
         return self
             ::leftJoin("pre_group_buying_log","pre_group_buying_log.item_id","=","pre_group_buying_item.id")
             ->select(DB::raw("pre_group_buying_item.*,count(pre_group_buying_log.id) as count"))
-            ->where("group_id",$id)
+            ->where("pre_group_buying_item.group_id",$id)
             ->groupBy("pre_group_buying_item.id")
             ->get()->toArray();
     }

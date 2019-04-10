@@ -7,7 +7,7 @@
 
         display: inline-block;    float: left;}
 
-    .items_banner {width: 360px;float: left;margin-right: 10px}
+    .items_banner {width: 360px;float: left;margin-right: 10px;position: relative}
     .check_box{    margin-left: 15px;}
     @media screen and (max-width: 960px) {
         .item_info_ul {margin-top: 20px;}
@@ -196,7 +196,7 @@
             for (var index in now_chat){
                 price += now_chat[index] * item_price + now_chat[index]* premium
             }
-            price += item_freight /min_members + private_freight
+//            price += item_freight /min_members + private_freight
             $(".your_pirce").val(price)
 
         });
@@ -227,7 +227,7 @@
             $.post("/suki_group_buying_item",fd,function (e) {
                 alert(e.msg)
                 if (e.ret == 200)
-                    window.location.reload()
+                    window.location.href = "/suki_group_buying_myorders?type=last"
             })
         })
     })
