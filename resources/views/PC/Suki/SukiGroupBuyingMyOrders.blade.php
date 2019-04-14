@@ -96,12 +96,12 @@
                     padding: 3px 15px;
                     border-radius: 5px 5px 0px 0px;">
             --
-            @if(order_commit_status !== 1)
-                暂不可付款
+            @if($data['order_commit_status'] != 1)
+                暂不可付款 -- (预计 {{$data['orders'][0]->end_date}}可以付款)
             @else
-                需要付款
+                需要付款 --
             @endif
-            --
+
         </div>
         <table class="table" style="background: #FFFFFF">
             <tr>
@@ -123,8 +123,11 @@
             <tr>
                 <td class="tb_title"></td>
                 <td class="tb_msg">
-                <a class="suki_group_buying_paying " orderId="{{$value->id}}"
-                   href="/suki_group_buying_paying">提交付款证明</a>
+                    @if($data["order_commit_status"])
+                        <a class="suki_group_buying_paying " orderId="{{$value->id}}"
+                           href="/suki_group_buying_paying">提交付款证明</a>
+                    @endif
+
                 </td>
 
             </tr>

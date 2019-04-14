@@ -441,7 +441,7 @@ class SukiWebController extends Controller
 
             foreach ($my_orders as $value)
             {
-                if ($value->status == 2)
+                if ($value->status == 2 || $value->status ==  7)
                 {
                     $this->data["order_commit_status"] = 1; //可以提交
                 }
@@ -457,8 +457,11 @@ class SukiWebController extends Controller
         $this->data["order_info"]["status"] = 0;
         foreach ($my_orders as $order)
         {
-            $this->data["order_info"]["all_price"] +=  $order->order_price;
-            $this->data["order_info"]["private_freight"] +=  $order->private_freight;
+            if ($order->status == 2)
+            {
+                $this->data["order_info"]["all_price"] +=  $order->order_price;
+                $this->data["order_info"]["private_freight"] +=  $order->private_freight;
+            }
             //订单的集合状态
             if (!$this->data["order_info"]["status"] || $this->data["order_info"]["status"] == $order->status)
                 $this->data["order_info"]["status"] = $order->status ;

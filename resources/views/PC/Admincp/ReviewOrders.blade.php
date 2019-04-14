@@ -19,7 +19,7 @@
                 <td>{{$value["follow"]}}</td>
                 <td>{{$value["item_count"]}}</td>
                 <td>{{$value["min_members"]}}</td>
-                <td>{{$value["item_freight"]/$value["follow"]}}元/每人</td>
+                <td>{{$value["follow"] ? $value["item_freight"]/$value["follow"] : "-"}}元/每人</td>
                 <td>{{$value["min_members"] > $value["item_count"] ? "流团" : "成团"}}</td>
             </tr>
         @endforeach
