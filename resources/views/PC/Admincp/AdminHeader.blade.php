@@ -24,7 +24,7 @@
         float: left;}
 </style>
 <body>
-<header class="navbar navbar-static-top bs-docs-nav" id="top" style="  position: fixed;width: 100%;  background-color: #000;box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);">
+<header class="navbar navbar-static-top bs-docs-nav" id="top" style="    z-index: 999;  position: fixed;width: 100%;  background-color: #000;box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);">
     <div class="container">
         <ul class="nav navbar-nav" style="display: block">
             <li>
@@ -39,7 +39,9 @@
             <li>
                 <a  class=" trans" href="/admincp/medal_list">运营</a>
             </li>
-
+            <li>
+                <a  class=" trans" href="/admincp/add_group_buying_item">团购</a>
+            </li>
         </ul>
     </div>
 </header>

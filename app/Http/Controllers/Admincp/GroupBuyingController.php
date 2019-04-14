@@ -11,13 +11,32 @@ use App\Http\Controllers\Controller;
 
 class GroupBuyingController extends Controller
 {
-    //
+    public function __construct()
+    {
+        $this->data['left_nav'] = [
+            'add_group_buying_item' => '添加商品',
+            'show_group_buying_list' => '团购管理'
+        ];
+    }
+
     public function add_group_buying_item()
     {
 
         return view('PC/Admincp/AddGroupBuyingItem')->with('data',$this->data);
     }
+    public function show_group_buying_list()
+    {
+        $this->data["list"] = GroupBuyingModel::get();
+//        dd( $this->data["list"]);
+        return view('PC/Admincp/ShowGroupBuyingList')->with('data',$this->data);
+    }
+    public function review_orders(Request $request)
+    {
+        $this->data["group_buying"] = GroupBuyingModel::find($request->input("id"));
 
+//        $this->data["items"] =
+        return view('PC/Admincp/ReviewOrders')->with('data',$this->data);
+    }
     public function add_action(Request $request)
     {
         $chk = $this->checkRequest($request,["item_name","item_image","item_size","item_color","item_price","premium","min_members","item_freight"]);

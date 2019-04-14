@@ -321,7 +321,6 @@ class SukiWebController extends Controller
             $this->data['items'] = GroupBuyingItemModel::getListInfo($this->data['lastGroupingInfo']->id);
             foreach ($this->data['items'] as & $value)
             {
-
                 $value['item_image'] = explode("|", $value['item_image']);
                 $value['item_color'] = explode("|", $value['item_color']);
                 $value['item_size'] = explode("|", $value['item_size']);
@@ -347,7 +346,7 @@ class SukiWebController extends Controller
         $this->data["item_info"]->item_image = explode("|", $this->data["item_info"]->item_image);
         $this->data["item_info"]->item_color = explode("|", $this->data["item_info"]->item_color);
         $this->data["item_info"]->item_size = explode("|", $this->data["item_info"]->item_size);
-        $item_follow = GroupBuyingLogModel::where("item_id", $request->input("item_id"))->get();
+        $item_follow = GroupBuyingLogModel::where(["item_id" => $request->input("item_id")])->where("status","!=", 4)->get();
 
         $this->data["item_follow"] = 0;
         $this->data["item_member"] = 0;

@@ -86,14 +86,13 @@
         @endforeach
     </table>
 
-
+    @if($data["request"]["type"] == "last")
     <div style="background-color: #ffb6c7;
                 background-image: linear-gradient(90deg, #fbded9 0%, #ffa5b2 93%);
                 color: #FFFFFF;
                 font-size: 15px;
                 padding: 3px 15px;
-                border-radius: 5px 5px 0px 0px;"
-    >
+                border-radius: 5px 5px 0px 0px;">
         订单
     </div>
     <table class="table" style="background: #FFFFFF">
@@ -114,6 +113,7 @@
             <td class="tb_msg"><span class="rmb">￥</span>10</td>
         </tr>
     </table>
+    @endif
 </div>
 <script>
     function cancelOrder(e) {
