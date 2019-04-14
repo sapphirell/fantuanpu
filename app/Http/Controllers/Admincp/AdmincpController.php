@@ -67,4 +67,5 @@ class AdmincpController extends Controller
         User_model::flushUserCache($request->input('uid'));
         return Redirect::back()->withInput();
     }
+
 }

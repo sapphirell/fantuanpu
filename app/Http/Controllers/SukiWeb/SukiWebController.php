@@ -357,7 +357,7 @@ class SukiWebController extends Controller
     public function suki_group_buying_item(Request $request)
     {
         $this->data['lastGroupingInfo'] = GroupBuyingModel::getLastGroup();
-        $chk = $this->checkRequest($request, ["name", "address", "telphone", "order_info", "item_id", "qq"]);
+        $chk = $this->checkRequest($request, ["order_info", "item_id"]);
         if ($chk !== true)
         {
             return self::response([], 40001, "缺少参数" . $chk);
@@ -406,16 +406,16 @@ class SukiWebController extends Controller
         $orderLog->item_id = $item->id;
         $orderLog->status = 1;
         $orderLog->group_id = $item->group_id;
-        $orderLog->address = $request->input("address");
+//        $orderLog->address = $request->input("address");
         $orderLog->private_freight = 0;
-        $orderLog->name = $request->input("name");
-        $orderLog->telphone = $request->input("telphone");
+//        $orderLog->name = $request->input("name");
+//        $orderLog->telphone = $request->input("telphone");
         $orderLog->premium = $premium;
         $orderLog->create_date = date("Y-m-d H:i:s");
         $orderLog->end_date = $this->data['lastGroupingInfo']->enddate;
         $orderLog->order_info = $request->input("order_info");
         $orderLog->order_price = $order_price;
-        $orderLog->qq = $request->input("qq");
+//        $orderLog->qq = $request->input("qq");
         $orderLog->save();
 
         return self::response();
@@ -437,7 +437,22 @@ class SukiWebController extends Controller
             $last_group = GroupBuyingModel::getLastGroup();
             $gid        = empty($last_group) ? 0 : $last_group->id;
             $my_orders  = $my_orders->where("pre_group_buying_log.group_id" ,$gid)->where("pre_group_buying_log.status","!=", "4")->get();
+            //当前是否可以提交付款证明
+
+            foreach ($my_orders as $value)
+            {
+                if ($value->status == 2)
+                {
+                    $this->data["order_commit_status"] = 1; //可以提交
+                }
+                else
+                {
+                    $this->data["order_commit_status"] = 0;//还不可以
+                    break;
+                }
+            }
         }
+//        dd( $this->data["order_commit_status"]);
         $this->data["orders"] = $my_orders;
         $this->data["order_info"]["status"] = 0;
         foreach ($my_orders as $order)
@@ -493,10 +508,12 @@ class SukiWebController extends Controller
 
     public function suki_group_buying_confirm_orders(Request $request)
     {
-        if (!$request->input("orderId"))
+        $chk = $this->checkRequest($request,[ "qq","name", "address", "telphone","orderId"]);
+        if ($chk !== true)
         {
-            return self::response([], 40001, "缺少参数orderId");
+            return self::response([], 40001, "缺少参数" . $chk);
         }
+
         $this->data["orders"] = GroupBuyingLogModel::where(["id" => $request->input("orderId")])->first();
         if (empty($this->data["orders"]))
         {

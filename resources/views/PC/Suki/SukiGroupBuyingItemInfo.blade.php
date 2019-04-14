@@ -86,7 +86,12 @@
                 </div>
                 <input type="submit" value="添加至待购清单" class="add_item">
             </div>
-
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">订单详情</span>
+                </div>
+                <input type="text" class="form-control buying order_info" placeholder=""  readonly="readonly" name="" >
+            </div>
             <div class="clear"></div>
         </div>
 
@@ -99,48 +104,9 @@
         <input type="hidden" value="15" id="private_freight">
 
 
-        <div style="border: 1px solid #ccc;padding: 10px">
-            <form>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1">收件人</span>
-                    </div>
-                    <input type="text" class="form-control name" placeholder=""  name=""  value="{{$data["last"]->name}}">
-                </div>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1">收货地址</span>
-                    </div>
-                    <input type="text" class="form-control address" placeholder=""  name=""  value="{{$data["last"]->address}}">
-                </div>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1">收货手机号</span>
-                    </div>
-                    <input type="text" class="form-control telphone" placeholder="" name="" value="{{$data["last"]->telphone}}">
-                </div>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1">您的qq号</span>
-                    </div>
-                    <input type="text" class="form-control qq" placeholder=""  value="{{$data["last"]->qq}}">
-                </div>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1">订单详情</span>
-                    </div>
-                    <input type="text" class="form-control buying order_info" placeholder=""  readonly="readonly" name="" >
-                </div>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1">您的费用</span>
-                    </div>
-                    <input type="text" class="form-control your_pirce" placeholder=""  readonly="readonly" value="0">
-                </div>
 
-                <input type="submit" value="确认参与拼团" class="submit_to_gb">
-            </form>
-        </div>
+
+        <input type="submit" value="确认参与拼团" class="submit_to_gb">
         <p style="font-size: 16px;margin-top: 10px">购前须知:</p>
         <ul style="padding: 20px;padding-top: 0px;">
             <li>商品在截团日前未凑够最低成团数或当天付清货款的人不足最低成团数的,会流团</li>
@@ -210,18 +176,18 @@
             var item_id = $("#item_id").val()
             var qq = $(".qq").val();
 
-            if (!name || !address || !telphone || !order_info || !item_id || !qq)
+            if (!order_info || !item_id )
             {
                 alert("缺少参数")
                 return false;
             }
             var fd = {
-                name : $(".name").val(),
-                address : $(".address").val(),
-                telphone : $(".telphone").val(),
+//                name : $(".name").val(),
+//                address : $(".address").val(),
+//                telphone : $(".telphone").val(),
                 order_info : $(".order_info").val(),
                 item_id: $("#item_id").val(),
-                qq : $(".qq").val()
+//                qq : $(".qq").val()
             }
             console.log(fd);
             $.post("/suki_group_buying_item",fd,function (e) {

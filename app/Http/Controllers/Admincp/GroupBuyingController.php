@@ -34,7 +34,8 @@ class GroupBuyingController extends Controller
     {
         $this->data["group_buying"] = GroupBuyingModel::find($request->input("id"));
 
-//        $this->data["items"] =
+        $this->data["list"] = GroupBuyingItemModel::getListInfo($request->input("id"));
+
         return view('PC/Admincp/ReviewOrders')->with('data',$this->data);
     }
     public function add_action(Request $request)
@@ -58,5 +59,19 @@ class GroupBuyingController extends Controller
         $item->min_members = $request->input("min_members");
         $item->save();
         return self::response();
+    }
+    //清算本期订单
+    public function settle_orders(Request $request)
+    {
+        $groupId = $request->input("id");
+        if (!$groupId)
+        {
+            return self::response([],40001,"缺少参数id");
+        }
+        $this->data["list"] = GroupBuyingItemModel::getListInfo($groupId);
+        foreach ($this->data["list"] as $value)
+        {
+
+        }
     }
 }

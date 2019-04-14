@@ -42,15 +42,22 @@
     <table class="table" style="background: #fff;padding: 10px;color: #795353;border: 1px solid #fad4d0;background-color: white;border-radius: 5px;">
         <tr style="background-color: #ffb6c7;background-image: linear-gradient(90deg, #fbded9 0%, #ffa5b2 93%);border-radius: 5px;overflow: hidden;">
             <td>名字</td>
+            <td>详情</td>
             <td>创建时间</td>
             <td>截单日</td>
             <td>状态</td>
-            <td>详情</td>
+
             <td>价格</td>
         </tr>
         @foreach($data['orders'] as $value)
             <tr>
-                <td><a style="    color: #d4838e;" href="/suki_group_buying_item_info?item_id={{$value->item_id}}">{{$value->name}}</a></td>
+                <td><a style="    color: #d4838e;" href="/suki_group_buying_item_info?item_id={{$value->item_id}}">{{$value->item_name}}</a></td>
+                <td>
+                    @foreach($value->order_info as $orderInfoKey =>  $orderInfoValue)
+                        {{$type = explode("_",$orderInfoKey)}}
+                        {{$type[0] ."码". $type[1]   . $orderInfoValue ."个"}} ,
+                    @endforeach
+                </td>
                 <td>{{$value->create_date}}</td>
                 <td>{{$value->end_date}}</td>
                 <td>
@@ -58,8 +65,8 @@
                         提交跟团 <a class="suki_group_buying_cancel_orders" onclick=""
                                 href="/suki_group_buying_cancel_orders" orderId="{{$value->id}}">取消订单</a>
                     @elseif($value->status == 2)
-                        等待确认付款 <a class="suki_group_buying_paying " orderId="{{$value->id}}"
-                                  href="/suki_group_buying_paying">提交付款证明</a>
+                        等待确认付款
+
                     @elseif($value->status == 3)
                         已经付款,等待他人付款
                     @elseif($value->status == 4)
@@ -74,12 +81,7 @@
                         等待确认到账
                     @endif
                 </td>
-                <td>
-                    @foreach($value->order_info as $orderInfoKey =>  $orderInfoValue)
-                        {{$type = explode("_",$orderInfoKey)}}
-                        {{$type[0] ."码". $type[1]   . $orderInfoValue ."个"}}
-                    @endforeach
-                </td>
+
                 <td>{{$value->order_price}}</td>
             </tr>
 
@@ -87,32 +89,85 @@
     </table>
 
     @if($data["request"]["type"] == "last")
-    <div style="background-color: #ffb6c7;
-                background-image: linear-gradient(90deg, #fbded9 0%, #ffa5b2 93%);
-                color: #FFFFFF;
-                font-size: 15px;
-                padding: 3px 15px;
-                border-radius: 5px 5px 0px 0px;">
-        订单
-    </div>
-    <table class="table" style="background: #FFFFFF">
-        <tr>
-            <td class="tb_title">商品原价总和</td>
-            <td class="tb_msg"><span class="rmb">￥</span>{{$data["order_info"]["all_price"]}}</td>
-        </tr>
-        <tr>
-            <td class="tb_title">公摊运费总和</td>
-            <td class="tb_msg"><span class="rmb">￥</span>{{$data["order_info"]["private_freight"] ? : "暂未计算"}}</td>
-        </tr>
-        <tr>
-            <td class="tb_title">个人运费</td>
-            <td class="tb_msg"><span class="rmb">￥</span>10</td>
-        </tr>
-        <tr>
-            <td class="tb_title">以上合计</td>
-            <td class="tb_msg"><span class="rmb">￥</span>10</td>
-        </tr>
-    </table>
+        <div style="background-color: #ffb6c7;
+                    background-image: linear-gradient(90deg, #fbded9 0%, #ffa5b2 93%);
+                    color: #FFFFFF;
+                    font-size: 15px;
+                    padding: 3px 15px;
+                    border-radius: 5px 5px 0px 0px;">
+            --
+            @if(order_commit_status !== 1)
+                暂不可付款
+            @else
+                需要付款
+            @endif
+            --
+        </div>
+        <table class="table" style="background: #FFFFFF">
+            <tr>
+                <td class="tb_title">商品原价总和</td>
+                <td class="tb_msg"><span class="rmb">￥</span>{{$data["order_info"]["all_price"]}}</td>
+            </tr>
+            <tr>
+                <td class="tb_title">公摊运费总和</td>
+                <td class="tb_msg"><span class="rmb">￥</span>{{$data["order_info"]["private_freight"] ? : "暂未计算"}}</td>
+            </tr>
+            <tr>
+                <td class="tb_title">个人运费</td>
+                <td class="tb_msg"><span class="rmb">￥</span>10</td>
+            </tr>
+            <tr>
+                <td class="tb_title">以上合计</td>
+                <td class="tb_msg"><span class="rmb">￥</span>10</td>
+            </tr>
+            <tr>
+                <td class="tb_title"></td>
+                <td class="tb_msg">
+                <a class="suki_group_buying_paying " orderId="{{$value->id}}"
+                   href="/suki_group_buying_paying">提交付款证明</a>
+                </td>
+
+            </tr>
+        </table>
+        @if($data["order_commit_status"] == 1)
+            <div style="border: 1px solid #ccc;padding: 10px">
+            <form>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">收件人</span>
+                    </div>
+                    <input type="text" class="form-control name" placeholder=""  name=""  value="{{$data["last"]->name}}">
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">收货地址</span>
+                    </div>
+                    <input type="text" class="form-control address" placeholder=""  name=""  value="{{$data["last"]->address}}">
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">收货手机号</span>
+                    </div>
+                    <input type="text" class="form-control telphone" placeholder="" name="" value="{{$data["last"]->telphone}}">
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">您的qq号</span>
+                    </div>
+                    <input type="text" class="form-control qq" placeholder=""  value="{{$data["last"]->qq}}">
+                </div>
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">您的费用</span>
+                    </div>
+                    <input type="text" class="form-control your_pirce" placeholder=""  readonly="readonly" value="0">
+                </div>
+
+
+            </form>
+        </div>
+        @endif
     @endif
 </div>
 <script>
