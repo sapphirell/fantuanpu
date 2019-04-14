@@ -23,15 +23,12 @@ class GroupBuyingItemModel extends Model
             ->groupBy("pre_group_buying_item.id")
             ->get()->toArray();
 //        dd($list);
+
+        //获取未group buy 前的数据
         foreach ($list as & $value)
         {
-            $value['buy_num'] = 0;
-
-
-            foreach (json_decode($value['order_info'],true) as $num)
-            {
-                $value['buy_num'] += $num;
-            }
+            $logCount = GroupBuyingLogModel::getNotCancelItemsLog($value["id"]);
+            $value['item_count'] =  $logCount["item_count"];
 
         }
         return $list;

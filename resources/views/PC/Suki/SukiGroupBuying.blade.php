@@ -11,8 +11,8 @@
         @foreach($data["items"] as $item)
             <div style="display: inline-block;float: left;padding: 10px;background: #FFFFFF;margin: 10px;box-shadow: 0 0 10px #ececec;border-radius: 5px;">
                 <p>名称:{{$item["item_name"]}}</p>
-                <p>最低成团数:{{$item["buy_num"]}} / {{$item["min_members"]}}个</p>
-                <p>当前团购人数:{{$item["follow"]}} 人</p>
+                <p>最低成团数: {{$item["min_members"]}}个</p>
+                <p>当前:{{$item["follow"]}}人购买了 {{$item["item_count"]}} 个</p>
                 <p>运费:{{$item["item_freight"]}}</p>
                 <p>辛苦费/次:{{$item["premium"]}}</p>
                 @foreach($item["item_image"] as $value)

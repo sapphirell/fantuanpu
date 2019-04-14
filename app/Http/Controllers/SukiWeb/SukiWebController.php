@@ -346,20 +346,10 @@ class SukiWebController extends Controller
         $this->data["item_info"]->item_image = explode("|", $this->data["item_info"]->item_image);
         $this->data["item_info"]->item_color = explode("|", $this->data["item_info"]->item_color);
         $this->data["item_info"]->item_size = explode("|", $this->data["item_info"]->item_size);
-        $item_follow = GroupBuyingLogModel::where(["item_id" => $request->input("item_id")])->where("status","!=", 4)->get();
+        $item_follow = GroupBuyingLogModel::getNotCancelItemsLog( $request->input("item_id"));
+        $this->data["item_follow"] = $item_follow["item_count"];
+        $this->data["item_member"] = $item_follow["member_count"];
 
-        $this->data["item_follow"] = 0;
-        $this->data["item_member"] = 0;
-        foreach ($item_follow as $key => $value)
-        {
-            $this->data["item_member"] += 1;
-            foreach (json_decode($value["order_info"], true) as $value)
-            {
-                $this->data["item_follow"] += $value;
-            }
-        }
-
-        //        dd($this->data["item_follow"]);
 
         return view('PC/Suki/SukiGroupBuyingItemInfo')->with('data', $this->data);;
     }
@@ -392,6 +382,10 @@ class SukiWebController extends Controller
         $premium = 0;
         foreach ($order_info as $key => $value)
         {
+            if ($value <= 0)
+            {
+                return self::response([], 40003, "欲购商品数量必须大于0");
+            }
             $info = explode("_", $key);
             if (!in_array($info[0], $item->item_size))
             {
@@ -431,17 +425,18 @@ class SukiWebController extends Controller
     public function suki_group_buying_myorders(Request $request)
     {
         $type = $request->input("type") ?: "all";
-        $my_orders = GroupBuyingLogModel::where(["uid" => $this->data['user_info']->uid]);
+        $my_orders = GroupBuyingLogModel::leftJoin("pre_group_buying_item","pre_group_buying_item.id","=","pre_group_buying_log.item_id")
+            ->where(["pre_group_buying_log.uid" => $this->data['user_info']->uid]);
 
         if ($type == "all")
         {
-            $my_orders = $my_orders->orderBy("id", "desc")->get();
+            $my_orders = $my_orders->orderBy("pre_group_buying_log.id", "desc")->get();
         }
         else
         {
             $last_group = GroupBuyingModel::getLastGroup();
             $gid        = empty($last_group) ? 0 : $last_group->id;
-            $my_orders  = $my_orders->where("group_id" ,$gid)->where("status","!=", "4")->get();
+            $my_orders  = $my_orders->where("pre_group_buying_log.group_id" ,$gid)->where("pre_group_buying_log.status","!=", "4")->get();
         }
         $this->data["orders"] = $my_orders;
         $this->data["order_info"]["status"] = 0;
