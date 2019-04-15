@@ -87,13 +87,42 @@ function setting_and_return(fid,todo='add')
 
     return setting.lolita_viewing_forum
 }
+
+function resize_window() {
+    var mini_alert_poster = $("#alert_poster").hasClass("mini")
+    var width = $(window).width();
+
+    if (width < 960)
+    {
+        if (width < 575 && !mini_alert_poster)
+        {
+            $("#alert_poster").addClass("mini");
+            $("#alert_poster .pos_text").text("");
+            mini_alert_poster = true;
+        }
+        if (width > 575 && mini_alert_poster)
+        {
+            $("#alert_poster").removeClass("mini");
+            $("#alert_poster .pos_text").text("我要发帖");
+            mini_alert_poster = false;
+        }
+        //suki banner 自适应
+        var ratio = 245/940; //宽高比例
+
+        $(".banner_item").css({width:width-20,height:width*ratio})
+    }
+    else
+    {
+        $(".banner_item").css({width:940})
+    }
+}
 $(document).ready(function () {
     var user_panel = 1;
     var user_poster = 1;
     var load_thread_nextpage = 2;
     construct_setting();
     construct_edtior();
-
+    resize_window()
     // console.log(setting);
     $(".user_info_btn").click(
         function () {
@@ -330,35 +359,10 @@ $(document).ready(function () {
             content: ['/suki_clock_setting', 'no']
         });
     });
-    var mini_alert_poster = $("#alert_poster").hasClass("mini")
+
     //宽度改变
     $(window).resize(function () {          //当浏览器大小变化时
-        var width = $(window).width();
-        if (width < 960)
-        {
-            if (width < 575 && !mini_alert_poster)
-            {
-                $("#alert_poster").addClass("mini");
-                $("#alert_poster .pos_text").text("");
-                mini_alert_poster = true;
-            }
-            if (width > 575 && mini_alert_poster)
-            {
-                $("#alert_poster").removeClass("mini");
-                $("#alert_poster .pos_text").text("我要发帖");
-                mini_alert_poster = false;
-            }
-            //suki banner 自适应
-            var ratio = 245/940; //宽高比例
-
-            $(".banner_item").css({width:width-20,height:width*ratio})
-        }
-        else
-        {
-            $(".banner_item").css({width:940})
-        }
-
-
+        resize_window();
     });
     //更换头像
     $(".my_avatar").click(function (e) {

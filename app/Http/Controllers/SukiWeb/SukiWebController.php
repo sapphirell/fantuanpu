@@ -10,6 +10,7 @@ use App\Http\DbModel\ForumThreadModel;
 use App\Http\DbModel\GroupBuyingItemModel;
 use App\Http\DbModel\GroupBuyingLogModel;
 use App\Http\DbModel\GroupBuyingModel;
+use App\Http\DbModel\GroupBuyingOrderModel;
 use App\Http\DbModel\MemberFieldForumModel;
 use App\Http\DbModel\MyLikeModel;
 use App\Http\DbModel\SukiClockModel;
@@ -452,20 +453,23 @@ class SukiWebController extends Controller
                 }
             }
         }
-//        dd( $this->data["order_commit_status"]);
+
         $this->data["orders"] = $my_orders;
+
         $this->data["order_info"]["status"] = 0;
-        foreach ($my_orders as $order)
-        {
-            if ($order->status == 2)
-            {
-                $this->data["order_info"]["all_price"] +=  $order->order_price;
-                $this->data["order_info"]["private_freight"] +=  $order->private_freight;
-            }
-            //订单的集合状态
-            if (!$this->data["order_info"]["status"] || $this->data["order_info"]["status"] == $order->status)
-                $this->data["order_info"]["status"] = $order->status ;
-        }
+        $orderInfo = GroupBuyingOrderModel::where("uid",$this->data["user_info"]->uid)->orderBy("id","desc")->first();
+        $this->data["order_info"]["private_freight"] = $orderInfo->private_freight;
+        $this->data["order_info"]["all_price"] = $orderInfo->order_price;
+        $this->data["order_info"]["id"] = $orderInfo->id;
+//        foreach ($my_orders as $order)
+//        {
+//            if ($order->status == 2)
+//            {
+//                $this->data["order_info"]["all_price"] +=  $order->order_price;
+//                $this->data["order_info"]["private_freight"] +=  $order->private_freight;
+//            }
+
+//        }
 
 
 
@@ -473,7 +477,9 @@ class SukiWebController extends Controller
         foreach ($this->data["orders"] as & $value)
         {
             $value->order_info = json_decode($value->order_info, true);
-
+            //订单的集合状态
+            if (!$this->data["order_info"]["status"] || $this->data["order_info"]["status"] == $value->status)
+                $this->data["order_info"]["status"] = $value->status ;
         }
 
         //        dd($this->data["orders"] );
@@ -517,17 +523,20 @@ class SukiWebController extends Controller
             return self::response([], 40001, "缺少参数" . $chk);
         }
 
-        $this->data["orders"] = GroupBuyingLogModel::where(["id" => $request->input("orderId")])->first();
+        $this->data["orders"] = GroupBuyingOrderModel::where(["id" => $request->input("orderId")])->first();
         if (empty($this->data["orders"]))
         {
             return self::response([], 40002, "缺少orders");
         }
-        if ($this->data["orders"]->status != 2)
+        if ($this->data["orders"]->status != 1)
         {
             return self::response([], 40003, "订单状态不对");
         }
-        $this->data["orders"]->status = 8;
-        $this->data["orders"]->alipay_order_sn = $request->input("alipay_order_sn");
+        $this->data["orders"]->status = 2;
+        $this->data["orders"]->name = $request->input("name");
+        $this->data["orders"]->telphone = $request->input("telphone");
+        $this->data["orders"]->qq = $request->input("qq");
+        $this->data["orders"]->address = $request->input("address");
         $this->data["orders"]->save();
 
         return self::response();

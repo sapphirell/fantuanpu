@@ -27,7 +27,7 @@
         text-align: right;
         width: 200px;
         color: #ddd;
-        font-size: 15px;
+        font-size: 14px;
     }
     .rmb {
         color: #000;
@@ -37,9 +37,26 @@
     .tb_msg {
         font-size: 14px;
     }
+    .switch_order_view {
+
+    }
+    .mb-3, .my-3 {
+        margin-bottom: 1.5rem!important;
+    }
 </style>
-<div class="wp" style="margin-top: 60px;">
-    <table class="table" style="background: #fff;padding: 10px;color: #795353;border: 1px solid #fad4d0;background-color: white;border-radius: 5px;">
+<div class="wp" style="margin-top: 60px;    padding: 5px;">
+
+    <div class="btn-group show" style="margin-bottom: 10px;" role="group">
+        <button style="border: 0px;color: #999999;box-shadow: 0 0 5px #f1f1f1;background-color: #fff;padding: 6px 15px;margin-left: 0px;" type="button" class="btn btn-secondary dropdown-toggle tb" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            切换表单
+        </button>
+        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" x-placement="bottom-start" style="position: absolute; transform: translate3d(10px, 25px, 0px); top: 0px; left: 0px; will-change: transform;">
+            <a href="/suki_group_buying_myorders" class="dropdown-item setting_clock_alert">全部</a>
+            <a href="/suki_group_buying_myorders?type=last" class="dropdown-item setting_clock_alert">本期</a>
+        </div>
+    </div>
+    <a href="suki_group_buying_myorders?type=" class="switch_order_view"></a>
+    <table class="table" style="background: #fff;    font-size: 12px;padding: 10px;color: #795353;border: 1px solid #fad4d0;background-color: white;border-radius: 5px;">
         <tr style="background-color: #ffb6c7;background-image: linear-gradient(90deg, #fbded9 0%, #ffa5b2 93%);border-radius: 5px;overflow: hidden;">
             <td>名字</td>
             <td>详情</td>
@@ -92,9 +109,10 @@
         <div style="background-color: #ffb6c7;
                     background-image: linear-gradient(90deg, #fbded9 0%, #ffa5b2 93%);
                     color: #FFFFFF;
-                    font-size: 15px;
+                    font-size: 13px;
                     padding: 3px 15px;
-                    border-radius: 5px 5px 0px 0px;">
+                    border-radius: 5px 5px 0px 0px;
+">
             --
             @if($data['order_commit_status'] != 1)
                 暂不可付款 -- (预计 {{$data['orders'][0]->end_date}}可以付款)
@@ -118,22 +136,12 @@
             </tr>
             <tr>
                 <td class="tb_title">以上合计</td>
-                <td class="tb_msg"><span class="rmb">￥</span>10</td>
+                <td class="tb_msg"><span class="rmb">￥</span>{{$data["order_info"]["all_price"] + $data["order_info"]["private_freight"] + 10}}</td>
             </tr>
-            <tr>
-                <td class="tb_title"></td>
-                <td class="tb_msg">
-                    @if($data["order_commit_status"])
-                        <a class="suki_group_buying_paying " orderId="{{$value->id}}"
-                           href="/suki_group_buying_paying">提交付款证明</a>
-                    @endif
 
-                </td>
-
-            </tr>
         </table>
         @if($data["order_commit_status"] == 1)
-            <div style="border: 1px solid #ccc;padding: 10px">
+            <div style="padding: 20px;background: #FFFFFF">
             <form>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
@@ -159,15 +167,13 @@
                     </div>
                     <input type="text" class="form-control qq" placeholder=""  value="{{$data["last"]->qq}}">
                 </div>
-
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1">您的费用</span>
+                        <span class="input-group-text" id="basic-addon1">付款单号</span>
                     </div>
-                    <input type="text" class="form-control your_pirce" placeholder=""  readonly="readonly" value="0">
+                    <input type="text" class="form-control qq" placeholder=""  value="{{$data["last"]->qq}}">
                 </div>
-
-
+                <input type="button" class="submit_to_order" value="提交" order_id="{{$data["order_info"]["id"]}}">
             </form>
         </div>
         @endif
@@ -192,7 +198,7 @@
                 return false;
             }
         })
-        $(".suki_group_buying_paying").click(function (e) {
+        $(".submit_to_order").click(function (e) {
             var orderId = $(this).attr("orderId")
             e.preventDefault();
             layer.open({
