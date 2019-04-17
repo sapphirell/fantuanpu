@@ -427,6 +427,7 @@ class SukiWebController extends Controller
     {
         $type = $request->input("type") ?: "all";
         $my_orders = GroupBuyingLogModel::leftJoin("pre_group_buying_item","pre_group_buying_item.id","=","pre_group_buying_log.item_id")
+            ->select(DB::raw("pre_group_buying_log.* ,pre_group_buying_item.*,pre_group_buying_log.id as log_id"))
             ->where(["pre_group_buying_log.uid" => $this->data['user_info']->uid]);
 
         if ($type == "all")

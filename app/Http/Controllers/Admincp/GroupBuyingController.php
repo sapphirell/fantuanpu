@@ -71,7 +71,7 @@ class GroupBuyingController extends Controller
             return self::response([],40001,"缺少参数id");
         }
         $this->data["list"] = GroupBuyingItemModel::getListInfo($groupId);
-//        dd( $this->data["list"] );
+
 
         foreach ($this->data["list"] as $items)
         {
@@ -123,5 +123,7 @@ class GroupBuyingController extends Controller
             }
 
         }
+
+        return self::response();
     }
 }

@@ -80,7 +80,7 @@
                 <td>
                     @if($value->status == 1)
                         提交跟团 <a class="suki_group_buying_cancel_orders" onclick=""
-                                href="/suki_group_buying_cancel_orders" orderId="{{$value->id}}">取消订单</a>
+                                href="/suki_group_buying_cancel_orders" orderId="{{$value->log_id}}">取消订单</a>
                     @elseif($value->status == 2)
                         等待确认付款
 
@@ -124,7 +124,7 @@
         <table class="table" style="background: #FFFFFF">
             <tr>
                 <td class="tb_title">商品原价总和</td>
-                <td class="tb_msg"><span class="rmb">￥</span>{{$data["order_info"]["all_price"]}}</td>
+                <td class="tb_msg"><span class="rmb">￥</span>{{$data["order_info"]["all_price"] ? : "暂未计算"}}</td>
             </tr>
             <tr>
                 <td class="tb_title">公摊运费总和</td>
@@ -136,7 +136,7 @@
             </tr>
             <tr>
                 <td class="tb_title">以上合计</td>
-                <td class="tb_msg"><span class="rmb">￥</span>{{$data["order_info"]["all_price"] + $data["order_info"]["private_freight"] + 10}}</td>
+                <td class="tb_msg"><span class="rmb">￥</span>{{$data["order_info"]["all_price"] ? $data["order_info"]["all_price"] + $data["order_info"]["private_freight"] + 10 : "暂未计算"}}</td>
             </tr>
 
         </table>
@@ -192,6 +192,7 @@
             if (r == true) {
                 $.get("/suki_group_buying_cancel_orders?orderId=" + orderId, function (e) {
                     alert(e.msg)
+                    window.location.reload()
                 })
             }
             else {

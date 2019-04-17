@@ -187,7 +187,7 @@ Route::group([
     Route::post('/admincp/add_group_buying_item', ['uses' => 'GroupBuyingController@add_action', 'as' => 'add_action']);#添加团购商品
     Route::get('/admincp/show_group_buying_list', ['uses' => 'GroupBuyingController@show_group_buying_list', 'as' => 'show_group_buying_list']);#团购列表
     Route::get('/admincp/review_orders', ['uses' => 'GroupBuyingController@review_orders', 'as' => 'review_orders']);#回顾订单
-    Route::get('/admincp/settle_orders', ['uses' => 'GroupBuyingController@settle_orders', 'as' => 'settle_orders']);#清算订单
+    Route::post('/admincp/settle_orders', ['uses' => 'GroupBuyingController@settle_orders', 'as' => 'settle_orders']);#清算订单
 
 
 });

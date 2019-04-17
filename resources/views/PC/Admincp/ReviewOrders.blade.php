@@ -1,7 +1,7 @@
 @include('PC.Admincp.AdminHeader')
 
 <div class="wp admin" style="min-height: 200px;">
-    <button class="btn  btn-default btn-danger">结算订单</button>
+    <button class="btn  btn-default btn-danger settle_orders" style="margin-bottom: 10px" gid="{{$data["group_buying"]->id}}">结算订单</button>
     <table class="table">
         <tr>
             <td>品名</td>
@@ -26,3 +26,16 @@
     </table>
 
 </div>
+
+<script>
+    $(document).ready(function (e) {
+        $(".settle_orders").click(function (e) {
+            e.preventDefault();
+            var id = $(this).attr("gid");
+            $.post("/admincp/settle_orders",{'id':id},function (e) {
+                alert(e.msg)
+            })
+        })
+
+    })
+</script>
