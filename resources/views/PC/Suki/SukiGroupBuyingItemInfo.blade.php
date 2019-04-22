@@ -85,6 +85,7 @@
                 </div>
                 <input type="submit" value="添加至待购清单" class="add_item">
             </div>
+
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1">订单详情</span>
@@ -197,6 +198,17 @@
                     window.location.href = "/suki_group_buying_myorders?type=last"
             })
         })
+
+
+        @if(!$data["user_info"]->qq)
+            var qq = prompt("请设置联系QQ"); /*在页面上弹出提示对话框，
+             将用户输入的结果赋给变量name*/
+            $.post("/set_qq",{qq:qq},function (e) {
+                alert(e.msg)
+            })
+        @endif
+
+
     })
 </script>
 @include('PC.Suki.SukiFooter')

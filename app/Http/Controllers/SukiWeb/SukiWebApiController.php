@@ -374,4 +374,19 @@ class SukiWebApiController extends Controller
         $update = ForumThreadModel::set_top_thread($request->input("tid"),$request->input("todo"));
         return self::response([],200,'设置成功,请等待一分钟后生效');
     }
+
+    public function set_qq(Request $request)
+    {
+        if (!$request->input("qq"))
+        {
+            return self::response([],40001,"缺少参数QQ");
+        }
+
+        $user = User_model::find($this->data["user_info"]->uid);
+        $user->qq = $request->input("qq");
+        $user->save();
+        User_model::flushUserCache($this->data["user_info"]->uid);
+
+        return self::response();
+    }
 }

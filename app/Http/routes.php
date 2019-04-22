@@ -187,7 +187,8 @@ Route::group([
     Route::post('/admincp/add_group_buying_item', ['uses' => 'GroupBuyingController@add_action', 'as' => 'add_action']);#添加团购商品
     Route::get('/admincp/show_group_buying_list', ['uses' => 'GroupBuyingController@show_group_buying_list', 'as' => 'show_group_buying_list']);#团购列表
     Route::get('/admincp/review_orders', ['uses' => 'GroupBuyingController@review_orders', 'as' => 'review_orders']);#回顾订单
-    Route::post('/admincp/settle_orders', ['uses' => 'GroupBuyingController@settle_orders', 'as' => 'settle_orders']);#清算订单
+    Route::get('/admincp/settle_orders', ['uses' => 'GroupBuyingController@settle_orders', 'as' => 'settle_orders_get']);#清算订单
+    Route::post('/admincp/settle_orders', ['uses' => 'GroupBuyingController@settle_orders', 'as' => 'settle_orders_post']);#清算订单
 
 
 });
@@ -228,11 +229,14 @@ Route::group([
     Route::get('/suki_group_buying_cancel_orders', ['uses' => 'SukiWebController@suki_group_buying_cancel_orders', 'as' => 'suki_group_buying_cancel_orders']);#suki取消我的订单
     Route::get('/suki_group_buying_paying', ['uses' => 'SukiWebController@suki_group_buying_paying', 'as' => 'suki_group_buying_paying']);#suki提交付款证明
     Route::post('/suki_group_buying_confirm_orders', ['uses' => 'SukiWebController@suki_group_buying_confirm_orders', 'as' => 'suki_group_buying_confirm_orders']);#suki确认订单号
+    Route::post('/suki_group_buying_create_order', ['uses' => 'SukiWebController@suki_group_buying_create_order', 'as' => 'suki_group_buying_create_order']);#创建suki团购订单
 
 
     Route::post('/suki-thread', ['uses' => 'SukiWebApiController@get_thread', 'as' => 'get_thread']);#获取suki的帖子
     Route::post('/suki-new-thread', ['uses' => 'SukiWebApiController@suki_new_thread', 'as' => 'suki-new-thread']);#suki发帖子
     Route::post('/suki_next_page', ['uses' => 'SukiWebApiController@suki_next_page', 'as' => 'suki_next_page']);#看下一页帖子 suki
+    Route::post('/set_qq', ['uses' => 'SukiWebApiController@set_qq', 'as' => 'set_qq']);#设置联系QQ
+
 
 
 

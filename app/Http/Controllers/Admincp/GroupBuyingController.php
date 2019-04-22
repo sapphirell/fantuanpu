@@ -92,6 +92,7 @@ class GroupBuyingController extends Controller
                         $insertOrder[$log->uid][$log->item_id]["private_freight"] = $items["item_freight"] / $items["follow"];
 
                     }
+                    $insertOrder[$log->uid]["log_id"][] = $log->id;
                     $insertOrder[$log->uid][$log->item_id]["order_price"] += $log->order_price;
                 }
 
@@ -113,6 +114,8 @@ class GroupBuyingController extends Controller
                     $order->status = 1;
                     $order->private_freight = $usrPrivateFreight;
                     $order->order_price = $usrOrderPrice;
+                    $order->log_id = json_encode($insert_item["log_id"]);
+                    $order->group_id = $groupId;
                     $order->save();
                 }
 

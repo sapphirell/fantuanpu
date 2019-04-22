@@ -429,36 +429,38 @@ class SukiWebController extends Controller
         $my_orders = GroupBuyingLogModel::leftJoin("pre_group_buying_item","pre_group_buying_item.id","=","pre_group_buying_log.item_id")
             ->select(DB::raw("pre_group_buying_log.* ,pre_group_buying_item.*,pre_group_buying_log.id as log_id"))
             ->where(["pre_group_buying_log.uid" => $this->data['user_info']->uid]);
-
+        $last_group = GroupBuyingModel::getLastGroup();
+        $orderInfo = GroupBuyingOrderModel::where("uid",$this->data["user_info"]->uid)->where("group_id",$last_group->id)->orderBy("id","desc")->first();
         if ($type == "all")
         {
             $my_orders = $my_orders->orderBy("pre_group_buying_log.id", "desc")->get();
         }
         else
         {
-            $last_group = GroupBuyingModel::getLastGroup();
+
             $gid        = empty($last_group) ? 0 : $last_group->id;
             $my_orders  = $my_orders->where("pre_group_buying_log.group_id" ,$gid)->where("pre_group_buying_log.status","!=", "4")->get();
             //当前是否可以提交付款证明
 
-            foreach ($my_orders as $value)
-            {
-                if ($value->status == 2 || $value->status ==  7)
-                {
-                    $this->data["order_commit_status"] = 1; //可以提交
-                }
-                else
-                {
-                    $this->data["order_commit_status"] = 0;//还不可以
-                    break;
-                }
-            }
+            $this->data["order_commit_status"] = $orderInfo->status == 1 ? 1 : 0;
+//            foreach ($my_orders as $value)
+//            {
+//                if ($value->status == 2 || $value->status ==  7)
+//                {
+//                    $this->data["order_commit_status"] = 1; //可以提交
+//                }
+//                else
+//                {
+//                    $this->data["order_commit_status"] = 0;//还不可以
+//                    break;
+//                }
+//            }
         }
 
         $this->data["orders"] = $my_orders;
 
         $this->data["order_info"]["status"] = 0;
-        $orderInfo = GroupBuyingOrderModel::where("uid",$this->data["user_info"]->uid)->orderBy("id","desc")->first();
+
         $this->data["order_info"]["private_freight"] = $orderInfo->private_freight;
         $this->data["order_info"]["all_price"] = $orderInfo->order_price;
         $this->data["order_info"]["id"] = $orderInfo->id;
@@ -518,7 +520,7 @@ class SukiWebController extends Controller
 
     public function suki_group_buying_confirm_orders(Request $request)
     {
-        $chk = $this->checkRequest($request,[ "qq","name", "address", "telphone","orderId"]);
+        $chk = $this->checkRequest($request,[ "qq","name", "address", "telphone","orderId","alipay_order"]);
         if ($chk !== true)
         {
             return self::response([], 40001, "缺少参数" . $chk);
@@ -539,7 +541,12 @@ class SukiWebController extends Controller
         $this->data["orders"]->qq = $request->input("qq");
         $this->data["orders"]->address = $request->input("address");
         $this->data["orders"]->save();
-
+        foreach (json_decode($this->data["orders"]->log_id,true) as $lid)
+        {
+            $log = GroupBuyingLogModel::find($lid);
+            $log->status = 8;
+            $log->save();
+        }
         return self::response();
     }
 }

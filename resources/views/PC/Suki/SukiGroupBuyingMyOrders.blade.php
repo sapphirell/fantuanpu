@@ -57,7 +57,7 @@
     </div>
     <a href="suki_group_buying_myorders?type=" class="switch_order_view"></a>
     <table class="table" style="background: #fff;    font-size: 12px;padding: 10px;color: #795353;border: 1px solid #fad4d0;background-color: white;border-radius: 5px;">
-        <tr style="background-color: #ffb6c7;background-image: linear-gradient(90deg, #fbded9 0%, #ffa5b2 93%);border-radius: 5px;overflow: hidden;">
+        <tr style="background-color: #f9bec2;border-radius: 5px;overflow: hidden;">
             <td>名字</td>
             <td>详情</td>
             <td>创建时间</td>
@@ -143,37 +143,38 @@
         @if($data["order_commit_status"] == 1)
             <div style="padding: 20px;background: #FFFFFF">
             <form>
+                <input class="orderId" type="hidden" value="{{$data["order_info"]["id"]}}">
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1">收件人</span>
+                        <span class="input-group-text" >收件人</span>
                     </div>
                     <input type="text" class="form-control name" placeholder=""  name=""  value="{{$data["last"]->name}}">
                 </div>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1">收货地址</span>
+                        <span class="input-group-text" >收货地址</span>
                     </div>
-                    <input type="text" class="form-control address" placeholder=""  name=""  value="{{$data["last"]->address}}">
+                    <input type="text" class="form-control address" placeholder=""  name=""  value="">
                 </div>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1">收货手机号</span>
+                        <span class="input-group-text" >收货手机号</span>
                     </div>
-                    <input type="text" class="form-control telphone" placeholder="" name="" value="{{$data["last"]->telphone}}">
+                    <input type="text" class="form-control telphone" placeholder="" name="" value="">
                 </div>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1">您的qq号</span>
+                        <span class="input-group-text">您的qq号</span>
                     </div>
-                    <input type="text" class="form-control qq" placeholder=""  value="{{$data["last"]->qq}}">
+                    <input type="text" class="form-control qq" placeholder=""  value="{{$data["user_info"]->qq}}">
                 </div>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1">付款单号</span>
+                        <span class="input-group-text" >付款单号</span>
                     </div>
-                    <input type="text" class="form-control qq" placeholder=""  value="{{$data["last"]->qq}}">
+                    <input type="text" class="form-control alipay_order" placeholder="请确认您已经通过支付宝转账"  value="">
                 </div>
-                <input type="button" class="submit_to_order" value="提交" order_id="{{$data["order_info"]["id"]}}">
+                <input type="button" class="submit_to_order"  value="提交" order_id="{{$data["order_info"]["id"]}}">
             </form>
         </div>
         @endif
@@ -200,19 +201,17 @@
             }
         })
         $(".submit_to_order").click(function (e) {
-            var orderId = $(this).attr("orderId")
-            e.preventDefault();
-            layer.open({
-                type: 2,
-                title: false,
-                closeBtn: 0,
-                shadeClose: true,
-                area: ['460px', '400px'],
-                offset: '100px',
-                class: 'asd',
-                // skin: 'layui-layer-rim', //加上边框
-                content: ['/suki_group_buying_paying?order_id=' + orderId, 'no']
-            });
+            $.post("/suki_group_buying_confirm_orders",{
+                "name":$(".name").val(),
+                "address" : $(".address").val(),
+                "telphone" : $(".telphone").val(),
+                "qq" : $(".qq").val(),
+                "orderId" : $(".orderId").val(),
+                "alipay_order" : $(".alipay_order").val(),
+            },function (e) {
+                alert(e.msg);
+//                window.location.reload()
+            })
         });
     })
 </script>
