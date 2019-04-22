@@ -15,9 +15,7 @@
                 <p>当前:{{$item["follow"]}}人购买了 {{$item["item_count"]}} 个</p>
                 <p>运费:{{$item["item_freight"]}}</p>
                 <p>辛苦费/次:{{$item["premium"]}}</p>
-                @foreach($item["item_image"] as $value)
-                    <img src="{{$value}}" style="width: 140px;height: 140px">
-                @endforeach
+                <img src="{{$item["item_image"][0]}}" style="width: 140px;height: 140px">
                 <p>可选尺码</p>
                 @foreach($item["item_size"] as $value)
                     <span>{{$value}}</span>
