@@ -114,10 +114,14 @@
                     border-radius: 5px 5px 0px 0px;
 ">
             --
-            @if($data['order_commit_status'] != 1)
-                暂不可付款 -- (预计 {{$data['orders'][0]->end_date}}可以付款)
-            @else
-                需要付款 --
+            @if($data['order_commit_status'] == -1)
+                暂不可付款 --(预计 {{$data['orders'][0]->end_date}}可以付款)
+            @elseif($data['order_commit_status'] == 1)
+                请尽快补完信息并付款
+            @elseif($data['order_commit_status'] == 2)
+                等待收款确认
+            @elseif($data['order_commit_status'] == 3)
+                订单完成
             @endif
 
         </div>

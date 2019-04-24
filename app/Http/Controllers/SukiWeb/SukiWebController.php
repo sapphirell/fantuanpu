@@ -442,19 +442,8 @@ class SukiWebController extends Controller
             $my_orders  = $my_orders->where("pre_group_buying_log.group_id" ,$gid)->where("pre_group_buying_log.status","!=", "4")->get();
             //当前是否可以提交付款证明
 
-            $this->data["order_commit_status"] = $orderInfo->status == 1 ? 1 : 0;
-//            foreach ($my_orders as $value)
-//            {
-//                if ($value->status == 2 || $value->status ==  7)
-//                {
-//                    $this->data["order_commit_status"] = 1; //可以提交
-//                }
-//                else
-//                {
-//                    $this->data["order_commit_status"] = 0;//还不可以
-//                    break;
-//                }
-//            }
+            $this->data["order_commit_status"] = empty($orderInfo->status) ? -1 : $orderInfo->status;
+
         }
 
         $this->data["orders"] = $my_orders;

@@ -48,6 +48,9 @@
     border-radius: 3px;
     overflow: hidden;    border-top: 3px solid #fbcccc;">
     <div style="background:#FFFFFF;flex-grow: 1;">
+        @if(empty($data["my_collection"]))
+            <div>暂无收藏</div>
+        @endif
         @foreach($data["my_collection"] as $value)
             <div style="display: flex;padding: 5px">
                 <div style="float:left; padding: 5px 20px;">{{avatar($value->thread["thread_subject"]->authorid,50,100)}}</div>

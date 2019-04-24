@@ -189,6 +189,9 @@ Route::group([
     Route::get('/admincp/review_orders', ['uses' => 'GroupBuyingController@review_orders', 'as' => 'review_orders']);#回顾订单
     Route::get('/admincp/settle_orders', ['uses' => 'GroupBuyingController@settle_orders', 'as' => 'settle_orders_get']);#清算订单
     Route::post('/admincp/settle_orders', ['uses' => 'GroupBuyingController@settle_orders', 'as' => 'settle_orders_post']);#清算订单
+    Route::get('/admincp/participant', ['uses' => 'GroupBuyingController@participant', 'as' => 'participant']);#查看当期参与者
+
+    Route::get('/admincp/items_participant', ['uses' => 'GroupBuyingController@items_participant', 'as' => 'items_participant']);#商品参购者
 
 
 });
