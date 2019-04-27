@@ -192,6 +192,8 @@ Route::group([
     Route::get('/admincp/participant', ['uses' => 'GroupBuyingController@participant', 'as' => 'participant']);#查看当期参与者
 
     Route::get('/admincp/items_participant', ['uses' => 'GroupBuyingController@items_participant', 'as' => 'items_participant']);#商品参购者
+    Route::get('/admincp/deliver', ['uses' => 'GroupBuyingController@deliver', 'as' => 'deliver']);#弹出发货菜单
+    Route::post('/admincp/do_deliver', ['uses' => 'GroupBuyingController@do_deliver', 'as' => 'do_deliver']);#发货
 
 
 });

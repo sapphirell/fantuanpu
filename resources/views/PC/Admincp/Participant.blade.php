@@ -14,8 +14,35 @@
 
         </tr>
         @foreach($data["list"] as $value)
+            <?php $user = get_user($value->uid); ?>
             <tr>
-
+                <td>时间</td>
+                <td>{{$user->username}}</td>
+                <td>
+                    {!! $value->order_info !!}
+                </td>
+                <td>{{$value->order_price + $value->private_freight + 10}}</td>
+                <td>
+                    <a href="http://sighttp.qq.com/msgrd?v=1&uin={{$value->qq ? : $user->qq}}">交谈</a>
+                </td>
+                <td>
+                    @if($value->status == 1)
+                        <span>等待付款</span>
+                    @elseif($value->status == 2)
+                        <span>等待收款确认</span>
+                    @elseif($value->status == 3)
+                        <span>已发货</span>
+                    @endif
+                </td>
+                <td>
+                    @if($value->status == 1)
+                        <span>无</span>
+                    @elseif($value->status == 2)
+                        <a href="#" class="deliver" orderId="{{$value->id}}">发货</a>
+                    @elseif($value->status == 3)
+                        <span>无</span>
+                    @endif
+                </td>
             </tr>
         @endforeach
     </table>
@@ -24,13 +51,19 @@
 
 <script>
     $(document).ready(function (e) {
-        $(".settle_orders").click(function (e) {
+        $(".deliver").click(function (e) {
             e.preventDefault();
-            var id = $(this).attr("gid");
-            $.post("/admincp/settle_orders",{'id':id},function (e) {
-                alert(e.msg)
-                window.location.reload()
-            })
+            var id = $(this).attr("orderId");
+            layer.open({
+                type: 2,
+                title: false,
+                closeBtn: 0, //不显示关闭按钮
+                shade: 0.8,
+                shadeClose: true,
+                area: ["900px", '405px'],
+                offset: '100px',
+                content: ['/admincp/deliver?id='+id,'no']
+            });
         })
 
     })

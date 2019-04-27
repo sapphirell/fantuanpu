@@ -6,7 +6,7 @@
     @elseif($data["group_buying"]->status == 2)
         <button class="btn  btn-default btn-danger settle_orders" style="margin-bottom: 10px" gid="{{$data["group_buying"]->id}}">结算订单</button>
     @elseif($data["group_buying"]->status == 3)
-        <a href="/admincp/participant" class="btn btn-info" style="color: #FFFFFF;margin-bottom: 10px">订单列表</a>
+        <a href="/admincp/participant?id={{$data["request"]["id"]}}" class="btn btn-info" style="color: #FFFFFF;margin-bottom: 10px">订单列表</a>
     @endif
     <table class="table">
         <tr>
@@ -40,10 +40,7 @@
         $(".settle_orders").click(function (e) {
             e.preventDefault();
             var id = $(this).attr("gid");
-            $.post("/admincp/settle_orders",{'id':id},function (e) {
-                alert(e.msg)
-                window.location.reload()
-            })
+            $
         })
 
     })

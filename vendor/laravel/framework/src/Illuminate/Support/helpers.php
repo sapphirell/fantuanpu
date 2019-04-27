@@ -1327,3 +1327,10 @@ if (! function_exists('common_unserialize'))
 }
 
 
+if (! function_exists('get_user'))
+{
+    function get_user($uid) {
+
+        return \App\Http\DbModel\User_model::find($uid);
+    }
+}

@@ -29,7 +29,7 @@
                     @elseif($value->status == 2)
                         <a href="/admincp/review_orders?id={{$value->id}}">进入结算页面</a>
                     @elseif($value->status == 3)
-                        <a href="">回顾</a>
+                        <a href="/admincp/review_orders?id={{$value->id}}">回顾</a>
                     @endif
                 </td>
             </tr>
