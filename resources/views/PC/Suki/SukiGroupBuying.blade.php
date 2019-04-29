@@ -24,7 +24,7 @@
                 </div>
 
                 <p>可选颜色</p>
-                <div  style="padding-left: 8px" class="aline">
+                <div  style="padding-left: 8px;width: 150px;" class="aline">
                     @foreach($item["item_color"] as $value)
                         <span>{{$value}}</span>
                     @endforeach

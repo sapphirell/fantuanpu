@@ -79,12 +79,13 @@
                 </td>
                 <td>
                     @if($value->status == 1)
-                        <p>{{$value->order_price}}元</p>
-                        提交跟团 <a class="suki_group_buying_cancel_orders" onclick=""
+                        <p>等待拼团</p><br>
+                        <p>{{$value->order_price}}元</p><br>
+                         <a class="suki_group_buying_cancel_orders" onclick=""
                                 href="/suki_group_buying_cancel_orders" orderId="{{$value->log_id}}">取消订单</a>
                     @elseif($value->status == 2)
+                        <p>{{$value->order_price}}元</p><br>
                         等待确认付款
-
                     @elseif($value->status == 3)
                         已经付款,等待他人付款
                     @elseif($value->status == 4)
