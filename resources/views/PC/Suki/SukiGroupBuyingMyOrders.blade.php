@@ -57,7 +57,7 @@
     </div>
     <a href="suki_group_buying_myorders?type=" class="switch_order_view"></a>
     <table class="table" style="background: #fff;    font-size: 12px;padding: 10px;color: #795353;border: 1px solid #fad4d0;background-color: white;border-radius: 5px;">
-        <tr style="background-color: #f9bec2;border-radius: 5px;overflow: hidden;">
+        <tr style="background-color: #fff5f5;;border-radius: 5px;overflow: hidden;">
             <td>名字</td>
             <td>详情</td>
             <td>创建时间</td>

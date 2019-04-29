@@ -1,4 +1,8 @@
-
+function support_canvas_text(){
+    var elem = document.createElement('canvas');
+    var context = elem.getContext('2d');
+    return typeof context.fillText === 'function';
+}
 /**
  *
  */
@@ -123,6 +127,12 @@ $(document).ready(function () {
     construct_setting();
     construct_edtior();
     resize_window()
+    if (!support_canvas_text())
+    {
+        $(".low_browser").show()
+        $(".header.pink_bg").css({"top":19})
+    }
+
     // console.log(setting);
     $(".user_info_btn").click(
         function () {

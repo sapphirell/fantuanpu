@@ -53,7 +53,7 @@
         @endif
         @foreach($data["my_collection"] as $value)
             <div style="display: flex;padding: 5px">
-                <div style="float:left; padding: 5px 20px;">{{avatar($value->thread["thread_subject"]->authorid,50,100)}}</div>
+                <div style="float:left; padding: 5px 20px;    margin-bottom: 10px;">{{avatar($value->thread["thread_subject"]->authorid,40,100)}}</div>
                 <div style="display: inline-block;float:left; flex: 1;">
                     <div style="margin-left: 5px;margin-bottom: 5px">
                         <h2 style="    margin: 0px;line-height: 15px;display: inline-block;"><a href="suki-thread-{{$value->thread["thread_subject"]->tid}}-1.html" style="font-size: 15px;color: #754242;margin-bottom: 3px;display: inline-block;font-weight: 700;"  target="_blank">{{$value->thread["thread_subject"]->subject}}</a></h2>

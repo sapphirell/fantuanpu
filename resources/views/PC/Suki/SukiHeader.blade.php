@@ -198,6 +198,15 @@
             position: absolute;
             box-shadow: 0 0 7px #ff5a5a;
         }
+        .low_browser {
+            display: none;
+            text-align: center;
+            background: #c1d7fc;
+            position: fixed;
+            color: #fff;
+            width:100%;
+            z-index: 99999;
+        }
         @media screen and (max-width: 960px) {
             .user_info_panel {
                 position: fixed;
@@ -220,8 +229,11 @@
     </div>
 @endif
 
-
+<div class="low_browser">
+    浏览器版本低,建议换一个。
+</div>
 <div class="header pink_bg">
+
     <div style="max-width: 960px;margin: 0 auto;">
         <p class="title none_960">
             <a href="{{\App\Http\Controllers\Controller::LOLITA_DOMAIN}}" style="font-weight: 900;text-shadow: 0 0 3px #af2e2e;"><img style="width: 60px;margin: 4px;" src="/Image/SUKI.png"></a>
@@ -331,7 +343,7 @@
                             <span class="alert_pointer" style="right: 23px;bottom: 15px;"></span>
                         @endif
                     </li>
-                    <li class="trans rough"><a href="/suki_collection" class="trans"><img style="" src="/Image/star-pink.png">我的收藏</a></li>
+                    <li class="trans"><a href="/suki_collection" class="trans"><img style="" src="/Image/star-pink.png">我的收藏</a></li>
                     <li class="trans rough"><a href="" class="trans"><img style="" src="/Image/history.png">浏览历史</a></li>
                     <li class="trans"><a href="/suki_relationship?type=friends" class="trans"><img style="" src="/Image/friends.png">通讯录</a></li>
                     <li class="trans rough"><a href="" class="trans"><img style="" src="/Image/nearby.png">附近同好</a></li>

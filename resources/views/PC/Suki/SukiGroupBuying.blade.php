@@ -17,11 +17,14 @@
                 <p class="aline" style="width: 150px;">辛苦费/次:{{$item["premium"]}}</p>
                 <img src="{{$item["item_image"][0]}}" style="width: 148px;height: 102px">
                 <p>可选尺码</p>
-                @foreach($item["item_size"] as $value)
-                    <span>{{$value}}</span>
-                @endforeach
+                <div style="padding-left: 8px;width: 150px;"  class="aline" >
+                    @foreach($item["item_size"] as $value)
+                        <span>{{$value}}</span>
+                    @endforeach
+                </div>
+
                 <p>可选颜色</p>
-                <div  class="aline">
+                <div  style="padding-left: 8px" class="aline">
                     @foreach($item["item_color"] as $value)
                         <span>{{$value}}</span>
                     @endforeach
