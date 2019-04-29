@@ -61,7 +61,7 @@
             <td>名字</td>
             <td>详情</td>
             <td>创建时间</td>
-            <td>状态</td>
+            <td style="width: 80px">状态</td>
 
         </tr>
         @foreach($data['orders'] as $value)
