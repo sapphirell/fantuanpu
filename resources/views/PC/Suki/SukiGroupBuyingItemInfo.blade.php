@@ -58,7 +58,7 @@
 
 
             </ul>
-            <div class="check_box" style="padding: 11px;    border: 1px dashed #ff8686;background: #fff;display: inline-block;float: left">
+            <div class="check_box" style="padding: 11px;background: #fff;display: inline-block;float: left">
                 <p>可选尺码</p>
                 <select style="width: 200px"  class="size" name="size" >
                     @foreach($data["item_info"]->item_size as $value)
@@ -184,12 +184,8 @@
                 return false;
             }
             var fd = {
-//                name : $(".name").val(),
-//                address : $(".address").val(),
-//                telphone : $(".telphone").val(),
                 order_info : $(".order_info").val(),
                 item_id: $("#item_id").val(),
-//                qq : $(".qq").val()
             }
             console.log(fd);
             $.post("/suki_group_buying_item",fd,function (e) {
@@ -200,7 +196,7 @@
         })
 
 
-        @if(!$data["user_info"]->qq)
+        @if(!$data["user_info"]->uid && !$data["user_info"]->qq)
             var qq = prompt("请设置联系QQ"); /*在页面上弹出提示对话框，
              将用户输入的结果赋给变量name*/
             $.post("/set_qq",{qq:qq},function (e) {

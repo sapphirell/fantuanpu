@@ -61,10 +61,8 @@
             <td>名字</td>
             <td>详情</td>
             <td>创建时间</td>
-            <td>截单日</td>
             <td>状态</td>
 
-            <td>价格</td>
         </tr>
         @foreach($data['orders'] as $value)
             <tr>
@@ -73,12 +71,15 @@
                     @foreach($value->order_info as $orderInfoKey =>  $orderInfoValue)
                         {{$type = explode("_",$orderInfoKey)}}
                         {{$type[0] ."码". $type[1]   . $orderInfoValue ."个"}} ,
+                        <br>
                     @endforeach
                 </td>
-                <td>{{$value->create_date}}</td>
-                <td>{{$value->end_date}}</td>
+                <td>
+                    {{date("m/d H:i",strtotime($value->create_date))}}
+                </td>
                 <td>
                     @if($value->status == 1)
+                        <p>{{$value->order_price}}元</p>
                         提交跟团 <a class="suki_group_buying_cancel_orders" onclick=""
                                 href="/suki_group_buying_cancel_orders" orderId="{{$value->log_id}}">取消订单</a>
                     @elseif($value->status == 2)
@@ -99,7 +100,7 @@
                     @endif
                 </td>
 
-                <td>{{$value->order_price}}</td>
+
             </tr>
 
         @endforeach
