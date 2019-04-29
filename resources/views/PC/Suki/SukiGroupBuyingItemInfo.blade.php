@@ -50,9 +50,9 @@
 
             <ul class="list-group col-lg-4 item_info_ul" style="">
                 <li class="list-group-item"><kbd class="">最低成团数:</kbd> {{$data["item_info"]->min_members}}个 (当前{{$data["item_member"] . "人购买了" . $data["item_follow"]}}个)</li>
-                <li class="list-group-item"><kbd class="">单价:</kbd> {{$data["item_info"]->item_price }}元</li>
+                <li class="list-group-item"><kbd class="">单价:</kbd> {{$data["item_info"]->item_price + $data["item_info"]->premium}}元</li>
                 <li class="list-group-item"><kbd class="">阿里运费(公摊):</kbd> {{$data["item_info"]->item_freight}}</li>
-                <li class="list-group-item"><kbd class="">辛苦费/次:</kbd> {{$data["item_info"]->premium}}元</li>
+                {{--<li class="list-group-item"><kbd class="">辛苦费/次:</kbd> {{$data["item_info"]->premium}}元</li>--}}
                 <li class="list-group-item"><kbd class="">截团日期:</kbd> {{   $data["group_info"]->enddate }}</li>
                 <li class="list-group-item"><kbd class="">预收邮费:</kbd>  10元</li>
 

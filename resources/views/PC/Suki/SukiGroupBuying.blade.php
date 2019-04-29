@@ -14,7 +14,7 @@
                 <p class="aline" style="width: 150px;">最低成团数: {{$item["min_members"]}}个</p>
                 <p class="aline" style="width: 150px;">当前:{{$item["follow"]}}人购买了 {{$item["item_count"]}} 个</p>
                 <p class="aline" style="width: 150px;">运费:{{$item["item_freight"]}}</p>
-                <p class="aline" style="width: 150px;">辛苦费/次:{{$item["premium"]}}</p>
+                {{--<p class="aline" style="width: 150px;">辛苦费/次:{{$item["premium"]}}</p>--}}
                 <img src="{{$item["item_image"][0]}}" style="width: 148px;height: 102px">
                 <p>可选尺码</p>
                 <div style="padding-left: 8px;width: 150px;"  class="aline" >
