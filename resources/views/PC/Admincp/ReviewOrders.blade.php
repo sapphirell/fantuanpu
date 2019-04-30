@@ -40,7 +40,10 @@
         $(".settle_orders").click(function (e) {
             e.preventDefault();
             var id = $(this).attr("gid");
-            $
+            $.post("/admincp/settle_orders",{'id':id},function (e) {
+                alert(e.msg)
+                window.location.reload()
+            })
         })
 
     })
