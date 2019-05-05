@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\System;
 
+use App\Http\Controllers\User\UserApiController;
 use App\Http\DbModel\Forum_forum_model;
+use App\Http\DbModel\UCenter_member_model;
+use App\Http\DbModel\User_model;
 use Illuminate\Container\Container;
 use Illuminate\Http\Request;
 
@@ -27,9 +30,19 @@ class TestController extends Controller
 
         Cache::forget($posts_cache_key['key'] ."80121_" . ceil(1/20));
     }
-    public function ping()
+    public function ping(Request $request)
     {
-        header('Access-Control-Allow-Origin:*');
-        return 'ok';
+//
+        $login_status = UserApiController::Api_DoLogin($request);
+//        dd($login_status);
+        $user = UCenter_member_model::find("49298");
+//        dd($user);
+
+        $user->password = md5(md5("123454321"). $user->salt);
+        $user->save();
+        User_model::flushUserCache($user->uid);
+        return self::response();
+//        header('Access-Control-Allow-Origin:*');
+//        return 'ok';
     }
 }

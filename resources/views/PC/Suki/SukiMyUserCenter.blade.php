@@ -84,6 +84,9 @@
             display: block;
         }
         .user_info_right> span {display: none}
+        .user_setting_right input {
+            width: 60%;
+        }
     }
 </style>
 <div class="wp" style="margin-top: 65px">
@@ -140,21 +143,20 @@
 
                 <div class="clear"></div>
             </div>
-            <div style="border: 1px solid #FFFFFF">
+            <div style="border: 1px solid #FFFFFF;">
+                <div style="width: 500px;margin: 0 auto;padding-top: 20px">
+                    <div class="user_info_left">
+                        <p style="margin-top: 5px;">团购联系QQ</p>
 
-                {{--<div class="cb-item_animated-marker" style="margin: 20px auto">--}}
-                    {{--<div class="cb-item_animated-marker">--}}
-                        {{--<input type="checkbox" id="cb-item_with-marker-2" class="cb-item_input" checked="">--}}
-                        {{--<label for="cb-item_with-marker-2" class="cb-item_label">--}}
-                            {{--<span class="cb-item_label-content">查看置顶帖</span>--}}
-                            {{--<span class="cb-item_marker">--}}
-                                {{--<span class="cb-item_marker_short-line"></span>--}}
-                                {{--<span class="cb-item_marker_long-line"></span>--}}
-                            {{--</span>--}}
-                        {{--</label>--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-                <div class="clear"></div>
+
+                    </div>
+                    <div class="user_info_right user_setting_right">
+                        <input type="text" class="form-control" name="qq" id="qq"  placeholder="QQ" style="">
+                    </div>
+                    <div class="clear"></div>
+                </div>
+
+
             </div>
         </div>
 

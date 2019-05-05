@@ -85,13 +85,23 @@
                 </div>
                 <input type="submit" value="添加至待购清单" class="add_item">
             </div>
-
+            <div class="clear"></div>
             <div class="input-group mb-3" style="margin-top: 20px;">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1">订单详情</span>
                 </div>
                 <input type="text" class="form-control buying order_info" placeholder=""  readonly="readonly" name="" >
             </div>
+            @if(!$data["user_info"]->qq)
+                <div class="input-group mb-3" style="margin-top: 20px;">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">您的qq</span>
+                    </div>
+                    <input type="text" class="form-control qq"  name="" >
+                </div>
+            @else
+                <input type="hidden" value="{{$data["user_info"]->qq}}" class="qq">
+            @endif
             <div class="clear"></div>
         </div>
 
@@ -102,6 +112,7 @@
         <input type="hidden" value="{{$data["item_info"]->premium}}" id="premium">
         <input type="hidden" value="{{$data["item_info"]->id}}" id="item_id">
         <input type="hidden" value="15" id="private_freight">
+
 
 
 
@@ -190,6 +201,7 @@
             var fd = {
                 order_info : $(".order_info").val(),
                 item_id: $("#item_id").val(),
+                qq:qq
             }
             console.log(fd);
             $.post("/suki_group_buying_item",fd,function (e) {
@@ -200,13 +212,7 @@
         })
 
 
-        @if($data["user_info"]->uid && !$data["user_info"]->qq)
-            var qq = prompt("请设置联系QQ"); /*在页面上弹出提示对话框，
-             将用户输入的结果赋给变量name*/
-            $.post("/set_qq",{qq:qq},function (e) {
-                alert(e.msg)
-            })
-        @endif
+
 
 
     })

@@ -2,7 +2,7 @@
 @include('PC.Common.HtmlHead')
 <link rel="stylesheet" type="text/css" href="/Static/Style/Web/reg_login.style.css">
 <style>
-    body {    background: #fff;    padding: 8px;}
+    body {    background: #fff;    padding: 8px;    overflow: scroll;}
 </style>
 <div class="wp">
     <div>
@@ -17,7 +17,7 @@
             <div>
                 <table class="table table-striped">
                     <tr>
-                        <td>#</td>
+                        {{--<td>#</td>--}}
                         <td>头像</td>
                         <td>名字</td>
                         <td>邮箱</td>
@@ -25,7 +25,7 @@
                     @if(!empty($data['user-list']))
                         @foreach($data['user-list'] as $key=>$value)
                             <tr>
-                                <td>{{$key+1}}</td>
+                                {{--<td>{{$key+1}}</td>--}}
                                 <td>{{avatar($value['uid'],20,100,'avatar','small')}}</td>
                                 <td>{{$value->username}}</td>
                                 <td><a href="/get-email?email={{$value->email}}">{{$value->email}}</a></td>

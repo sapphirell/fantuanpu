@@ -75,6 +75,7 @@ $(function() {
     })
     $("#old_user").click(function (e)
     {
+        var layer_smart_width = window.innerWidth > 650 ? "650px" : window.width + "px"
         e.preventDefault();
         parent.layer.open({
             type: 2,
@@ -83,7 +84,7 @@ $(function() {
             closeBtn: 0, //不显示关闭按钮
             shade: 0.8,
             shadeClose: true,
-            area: ['660px', '500px'],
+            area: [layer_smart_width, '500px'],
             offset: '100px',
             // skin: 'layui-layer-rim', //加上边框
             content: ['/old-user', 'yes']

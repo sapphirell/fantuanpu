@@ -307,7 +307,7 @@ class SukiWebApiController extends Controller
             $uc_data = UCenter_member_model::find($this->data['user_info']->uid);
             if ($uc_data->password != UCenter_member_model::GetSaltPass($old_password,$uc_data->salt))
                 return self::response([],40003,"原密码输入错误");
-            UCenter_member_model::UpdateUserPassword($this->data['user_info']->uid,$uc_data->password);
+            UCenter_member_model::UpdateUserPassword($this->data['user_info']->uid,$new_password);
 
         }
 
