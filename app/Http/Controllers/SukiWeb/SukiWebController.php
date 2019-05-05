@@ -67,12 +67,7 @@ class SukiWebController extends Controller
                 $value->user = User_model::find($value->like_id, ["username", "uid"]);
             }
         }
-        //            $this->data["follow"] = MyLikeModel::leftJoin("pre_common_member","pre_my_like.like_id",'=',"pre_common_member.uid")
-        //                ->where("pre_common_member.uid",$this->data['user_info']->uid)
-        //                ->where("pre_my_like.like_type",1)
-        //                ->get();
 
-        //        dd( $this->data["my_follow"]);
         return view("PC/Suki/SukiMyFollow")->with("data", $this->data);
     }
 
@@ -429,7 +424,7 @@ class SukiWebController extends Controller
         $my_orders = GroupBuyingLogModel::leftJoin("pre_group_buying_item","pre_group_buying_item.id","=","pre_group_buying_log.item_id")
             ->select(DB::raw("pre_group_buying_log.* ,pre_group_buying_item.*,pre_group_buying_log.id as log_id"))
             ->where(["pre_group_buying_log.uid" => $this->data['user_info']->uid]);
-        $last_group = GroupBuyingModel::getLastGroup();
+        $last_group = GroupBuyingModel::getLastGroup(false);
         $orderInfo = GroupBuyingOrderModel::where("uid",$this->data["user_info"]->uid)->where("group_id",$last_group->id)->orderBy("id","desc")->first();
         if ($type == "all")
         {
@@ -453,15 +448,6 @@ class SukiWebController extends Controller
         $this->data["order_info"]["private_freight"] = $orderInfo->private_freight;
         $this->data["order_info"]["all_price"] = $orderInfo->order_price;
         $this->data["order_info"]["id"] = $orderInfo->id;
-//        foreach ($my_orders as $order)
-//        {
-//            if ($order->status == 2)
-//            {
-//                $this->data["order_info"]["all_price"] +=  $order->order_price;
-//                $this->data["order_info"]["private_freight"] +=  $order->private_freight;
-//            }
-
-//        }
 
 
 

@@ -136,18 +136,18 @@ class GroupBuyingController extends Controller
                 $usrPrivateFreight += $item_order_detail["private_freight"];
                 $usrOrderPrice += $item_order_detail["order_price"];
             }
-
+            $order                  = new GroupBuyingOrderModel();
+            $order->uid             = $uid;
+            $order->order_info      = json_encode($insert_item);
+            $order->status          = 1;
+            $order->private_freight = $usrPrivateFreight;
+            $order->order_price     = $usrOrderPrice;
+            $order->log_id          = json_encode($insert_item["log_id"]);
+            $order->group_id        = $groupId;
+            $order->save();
         }
         //                    dd($usrOrderPrice);
-        $order                  = new GroupBuyingOrderModel();
-        $order->uid             = $uid;
-        $order->order_info      = json_encode($insert_item);
-        $order->status          = 1;
-        $order->private_freight = $usrPrivateFreight;
-        $order->order_price     = $usrOrderPrice;
-        $order->log_id          = json_encode($insert_item["log_id"]);
-        $order->group_id        = $groupId;
-        $order->save();
+
 
         $g         = GroupBuyingModel::find($groupId);
         $g->status = 3;

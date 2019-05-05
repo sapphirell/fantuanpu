@@ -9,8 +9,13 @@ class GroupBuyingModel extends Model
     public $table = "pre_group_buying";
     public $timestamps = false;
 
-    public static function getLastGroup()
+    public static function getLastGroup($active=true)
     {
-        return self::where(["status"=>2])->orderBy("id","DESC")->offset(0)->limit(1)->first();
+        $data = self::orderBy("id","DESC")->offset(0)->limit(1);
+        if ($active)
+        {
+            $data = $data->where(["status"=>2]);
+        }
+        return $data->first();
     }
 }

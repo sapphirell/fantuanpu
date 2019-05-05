@@ -354,7 +354,7 @@
                         <span style="    font-size: 10px;font-weight: 400;color: #bf0000;position: absolute;" title="...这个new似乎没有意义">new</span>
                     </li>
                     <li class="trans">
-                        <a href="/suki_group_buying_myorders" class="trans"><img style="" src="/Image/tixing2.png">团购列表</a>
+                        <a href="/suki_group_buying_myorders?type=last" class="trans"><img style="" src="/Image/tixing2.png">团购列表</a>
                     </li>
 
                 </ul>

@@ -86,7 +86,7 @@
                 <input type="submit" value="添加至待购清单" class="add_item">
             </div>
 
-            <div class="input-group mb-3">
+            <div class="input-group mb-3" style="margin-top: 20px;">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="basic-addon1">订单详情</span>
                 </div>
@@ -124,6 +124,10 @@
 <script>
     $(document).ready(function () {
         $(".add_item").click(function () {
+            @if(!$data["user_info"]->uid)
+                alert("请先登录");
+            return ;
+            @endif
             var size = $(".size").val()
             var color = $(".color").val()
             var num =  parseInt($(".num").val())
@@ -196,7 +200,7 @@
         })
 
 
-        @if(!$data["user_info"]->uid && !$data["user_info"]->qq)
+        @if($data["user_info"]->uid && !$data["user_info"]->qq)
             var qq = prompt("请设置联系QQ"); /*在页面上弹出提示对话框，
              将用户输入的结果赋给变量name*/
             $.post("/set_qq",{qq:qq},function (e) {
