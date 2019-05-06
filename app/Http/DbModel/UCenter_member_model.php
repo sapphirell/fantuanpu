@@ -17,6 +17,7 @@ class UCenter_member_model extends Model
     public static function UpdateUserPassword($uid,$newpass)
     {
         $user = self::find($uid);
+//        var_dump(self::GetSaltPass($newpass,$user->salt));die();
         $user->password = self::GetSaltPass($newpass,$user->salt);
         $user->save();
 

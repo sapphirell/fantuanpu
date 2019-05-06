@@ -81,7 +81,7 @@
                 <br>
                 <p>购买个数(填写负数为减少)</p>
                 <div>
-                    <input type="text" value="0" class="form-control num" placeholder="" style="width: 200px">
+                    <input type="text" value="1" class="form-control num" placeholder="" style="width: 200px">
                 </div>
                 <input type="submit" value="添加至待购清单" class="add_item">
             </div>

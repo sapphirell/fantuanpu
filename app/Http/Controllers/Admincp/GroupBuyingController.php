@@ -174,25 +174,33 @@ class GroupBuyingController extends Controller
 
     public function participant(Request $request)
     {
-        $this->data["list"] = GroupBuyingOrderModel::where(["group_id"=>$request->input("id")])->get();
-//        dd($this->data["list"]);
-        foreach ($this->data["list"] as &$value) {
-            $tmp = json_decode($value->order_info,true);
-            unset($tmp ["log_id"]);
-            $value->order_info  =  "";
-            foreach ($tmp as $item_id => $detail)
-            {
+        $groupBuying = GroupBuyingModel::find($request->input("id"));
+        $this->data["status"] = $groupBuying->status;
+        if ($groupBuying->status == 2)
+        {
+            $this->data["list"] = GroupBuyingLogModel::getNotCancelLog($request->input("id"));
+//            dd($this->data["list"]);
+        }
 
-                $value->order_info .= "<span style='color: #00A0FF'>".$detail["item_detail"]["item_name"]."</span>" .":";
-                foreach ($detail["detail"] as $fe => $num)
+        if ($groupBuying->status == 3)
+        {
+            $this->data["list"] = GroupBuyingOrderModel::where(["group_id"=>$request->input("id")])->get();
+            foreach ($this->data["list"] as &$value) {
+                $tmp = json_decode($value->order_info,true);
+                unset($tmp ["log_id"]);
+                $value->order_info  =  "";
+                foreach ($tmp as $item_id => $detail)
                 {
-                    $value->order_info .= $fe ." " . $num ." 个,";
+                    $value->order_info .= "<span style='color: #00A0FF'>".$detail["item_detail"]["item_name"]."</span>" .":";
+                    foreach ($detail["detail"] as $fe => $num)
+                    {
+                        $value->order_info .= $fe ." " . $num ." 个,";
+                    }
                 }
 
             }
-//            dd($tmp );
-//            dd(json_decode($value->order_info,true)[$value->uid]);
         }
+
 
         return view('PC/Admincp/Participant')->with('data', $this->data);
     }

@@ -33,12 +33,12 @@ class TestController extends Controller
     public function ping(Request $request)
     {
 //
-        $login_status = UserApiController::Api_DoLogin($request);
+//        $login_status = UserApiController::Api_DoLogin($request);
 //        dd($login_status);
-        $user = UCenter_member_model::find("49298");
+        $user = UCenter_member_model::find("1");
 //        dd($user);
 
-        $user->password = md5(md5("123454321"). $user->salt);
+        $user->password = md5(md5("asdasdasd"). $user->salt);
         $user->save();
         User_model::flushUserCache($user->uid);
         return self::response();

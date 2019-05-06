@@ -5,6 +5,7 @@
         <a href="">开始活动</a>
     @elseif($data["group_buying"]->status == 2)
         <button class="btn  btn-default btn-danger settle_orders" style="margin-bottom: 10px" gid="{{$data["group_buying"]->id}}">结算订单</button>
+        <a href="/admincp/participant?id={{$data["request"]["id"]}}" class="btn btn-info" style="color: #FFFFFF;margin-bottom: 10px">预览</a>
     @elseif($data["group_buying"]->status == 3)
         <a href="/admincp/participant?id={{$data["request"]["id"]}}" class="btn btn-info" style="color: #FFFFFF;margin-bottom: 10px">订单列表</a>
     @endif
@@ -26,7 +27,7 @@
                 <td>{{$value["follow"]}}</td>
                 <td>{{$value["item_count"]}}</td>
                 <td>{{$value["min_members"]}}</td>
-                <td>{{$value["follow"] ? $value["item_freight"]/$value["follow"] : "-"}}元/每人</td>
+                <td>{{$value["follow"] ? round($value["item_freight"]/$value["follow"],2): "-"}}元/每人</td>
                 <td>{{$value["min_members"] > $value["item_count"] ? "流团" : "成团"}}</td>
                 <td><a href="/admincp/items_participant?id={{$value["id"]}}">查看商品参团者</a></td>
             </tr>

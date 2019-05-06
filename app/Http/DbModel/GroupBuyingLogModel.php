@@ -30,4 +30,20 @@ class GroupBuyingLogModel extends Model
         $return["member_count"] = count($member);
         return $return;
     }
+
+    public static function getNotCancelLog($group_id)
+    {
+        $log = self::leftJoin("pre_group_buying_item",function ($join) {
+                $join->on("pre_group_buying_log.item_id","=","pre_group_buying_item.id");
+            })
+            ->where("pre_group_buying_log.group_id",$group_id)->where("status","!=",4)->get();
+        $data = [];
+        foreach ($log as $value)
+        {
+            $data[User_model::find($value->uid)->username]["item"] .= $value->item_name . $value->order_info . "<br />";
+            $data[User_model::find($value->uid)->username]["price"] += $value->order_price;
+            $data[User_model::find($value->uid)->username]["premium"] += $value->premium;
+        }
+        return $data;
+    }
 }

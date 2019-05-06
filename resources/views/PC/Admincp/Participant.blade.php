@@ -1,7 +1,31 @@
 @include('PC.Admincp.AdminHeader')
 
 <div class="wp admin" style="min-height: 200px;">
-
+    @if($data["status"] == 2)
+        <table class="table">
+            <tr>
+                <td>用户名</td>
+                <td>订单详情</td>
+                <td>总价</td>
+                <td>赚取</td>
+            </tr>
+            @foreach($data["list"] as $key => $value)
+                <tr>
+                    <td>{{$key}}</td>
+                    <td>{!! $value["item"] !!}</td>
+                    <td>{{$value["price"]}}</td>
+                    <td>{{$value["premium"]}}</td>
+                    <?php $premium += $value["premium"]; ?>
+                    <?php $count += 1;?>
+                </tr>
+            @endforeach
+        </table>
+        <div>
+            总赚取:{{$premium}}
+            总人数: {{$count}}
+        </div>
+    @endif
+    @if($data["status"] == 3)
     <table class="table">
         <tr>
             <td>时间</td>
@@ -46,6 +70,8 @@
             </tr>
         @endforeach
     </table>
+    @endif
+
 
 </div>
 
