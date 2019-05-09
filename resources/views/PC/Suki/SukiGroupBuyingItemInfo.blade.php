@@ -192,8 +192,11 @@
             var order_info = $(".order_info").val()
             var item_id = $("#item_id").val()
             var qq = $(".qq").val();
-
-            if (!order_info || !item_id )
+            if (!order_info)
+            {
+                alert("请先添加商品")
+            }
+            if (!item_id )
             {
                 alert("缺少参数")
                 return false;

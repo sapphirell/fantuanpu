@@ -3,6 +3,7 @@
 namespace App\Http\DbModel;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class GroupBuyingLogModel extends Model
 {
@@ -36,14 +37,18 @@ class GroupBuyingLogModel extends Model
         $log = self::leftJoin("pre_group_buying_item",function ($join) {
                 $join->on("pre_group_buying_log.item_id","=","pre_group_buying_item.id");
             })
+            ->select(DB::raw("pre_group_buying_item.*,pre_group_buying_log.*,pre_group_buying_log.premium as order_premium"))
             ->where("pre_group_buying_log.group_id",$group_id)->where("status","!=",4)->get();
         $data = [];
         foreach ($log as $value)
         {
             $data[User_model::find($value->uid)->username]["item"] .= $value->item_name . $value->order_info . "<br />";
             $data[User_model::find($value->uid)->username]["price"] += $value->order_price;
-            $data[User_model::find($value->uid)->username]["premium"] += $value->premium;
+            $data[User_model::find($value->uid)->username]["premium"] += $value->order_premium;
+            $data[User_model::find($value->uid)->username]["uid"] = $value->uid;
         }
+
+
         return $data;
     }
 }

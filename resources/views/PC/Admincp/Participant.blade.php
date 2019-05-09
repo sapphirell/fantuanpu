@@ -17,10 +17,12 @@
                     <td>{{$value["premium"]}}</td>
                     <?php $premium += $value["premium"]; ?>
                     <?php $count += 1;?>
+                    <?php $price += $value["price"];?>
                 </tr>
             @endforeach
         </table>
         <div>
+            总价格:{{$price}}
             总赚取:{{$premium}}
             总人数: {{$count}}
         </div>

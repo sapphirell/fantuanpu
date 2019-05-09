@@ -78,6 +78,7 @@
                     {{date("m/d H:i",strtotime($value->create_date))}}
                 </td>
                 <td>
+                    <?php $all_ori_price +=  $value->order_price ?>
                     @if($value->status == 1)
                         <p>等待拼团</p><br>
                         <p>{{$value->order_price}}元</p><br>
@@ -85,6 +86,7 @@
                                 href="/suki_group_buying_cancel_orders" orderId="{{$value->log_id}}">取消订单</a>
                     @elseif($value->status == 2)
                         <p>{{$value->order_price}}元</p><br>
+
                         等待确认付款
                     @elseif($value->status == 3)
                         已经付款,等待他人付款
@@ -130,7 +132,7 @@
         <table class="table" style="background: #FFFFFF">
             <tr>
                 <td class="tb_title">商品原价总和</td>
-                <td class="tb_msg"><span class="rmb">￥</span>{{$data["order_info"]["all_price"] ? : "暂未计算"}}</td>
+                <td class="tb_msg"><span class="rmb">￥</span>{{$data["order_info"]["all_price"] ? : "暂未计算,当前预估为:".$all_ori_price}}元</td>
             </tr>
             <tr>
                 <td class="tb_title">公摊运费总和</td>
@@ -138,7 +140,7 @@
             </tr>
             <tr>
                 <td class="tb_title">个人运费</td>
-                <td class="tb_msg"><span class="rmb">￥</span>10</td>
+                <td class="tb_msg"><span class="rmb">￥</span></td>
             </tr>
             <tr>
                 <td class="tb_title">以上合计</td>

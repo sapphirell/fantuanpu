@@ -35,10 +35,10 @@ class TestController extends Controller
 //
 //        $login_status = UserApiController::Api_DoLogin($request);
 //        dd($login_status);
-        $user = UCenter_member_model::find("1");
+        $user = UCenter_member_model::find("49356");
 //        dd($user);
 
-        $user->password = md5(md5("asdasdasd"). $user->salt);
+        $user->password = md5(md5("12345678765"). $user->salt);
         $user->save();
         User_model::flushUserCache($user->uid);
         return self::response();

@@ -1,10 +1,13 @@
 {{--@include('PC.Common.Header')--}}
 @include('PC.Common.HtmlHead')
 @include('PC.Common.error')
+<style>
+    body {background: #FFFFFF}
+</style>
 <link rel="stylesheet" type="text/css" href="/Static/Style/Web/reg_login.style.css">
 
 <div class="wp" ng-init="template=['PC','Common','User','Login']">
-    <div class="bm">
+    <div class="bm" style="border: 0px;">
         {{--<div class="bm_h">登录</div>--}}
         <div class="bm_c">
             <form class="form-horizontal" role="form" action="/do-repassword" method="post">
