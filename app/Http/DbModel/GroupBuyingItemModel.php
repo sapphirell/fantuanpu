@@ -11,7 +11,7 @@ class GroupBuyingItemModel extends Model
     public $timestamps = false;
     public $primaryKey = 'id';
 
-    public static function getListInfo(int $id) {
+    public static function getListInfo(int $id, bool $show_hidden = true) {
 
         $list = self
             ::leftJoin("pre_group_buying_log",function ($join) {
@@ -19,11 +19,14 @@ class GroupBuyingItemModel extends Model
                 $join->on("pre_group_buying_log.item_id","=","pre_group_buying_item.id")->where("pre_group_buying_log.status","!=",4);
             })
             ->select(DB::raw("pre_group_buying_item.*,count(distinct pre_group_buying_log.uid) as follow,pre_group_buying_log.order_info"))
-            ->where("pre_group_buying_item.group_id",$id)
-            ->groupBy("pre_group_buying_item.id")
-            ->get()->toArray();
-//        dd($list);
+            ->where("pre_group_buying_item.group_id",$id);
 
+//        dd($list);
+        if (!$show_hidden){
+            $list = $list->where(["display" => 1]);
+        }
+        $list = $list->groupBy("pre_group_buying_item.id")
+            ->get()->toArray();
         //获取未group buy 前的数据
         foreach ($list as & $value)
         {

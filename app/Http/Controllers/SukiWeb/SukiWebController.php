@@ -314,7 +314,7 @@ class SukiWebController extends Controller
         $this->data['lastGroupingInfo'] = GroupBuyingModel::getLastGroup();
         if ($this->data['lastGroupingInfo'])
         {
-            $this->data['items'] = GroupBuyingItemModel::getListInfo($this->data['lastGroupingInfo']->id);
+            $this->data['items'] = GroupBuyingItemModel::getListInfo($this->data['lastGroupingInfo']->id,false);
             foreach ($this->data['items'] as & $value)
             {
                 $value['item_image'] = explode("|", $value['item_image']);

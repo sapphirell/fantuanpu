@@ -19,6 +19,7 @@
             <td>公摊运费</td>
             <td>描述</td>
             <td>详情</td>
+            <td>操作</td>
         </tr>
         @foreach($data["list"] as $value)
             <tr>
@@ -30,6 +31,7 @@
                 <td>{{$value["follow"] ? round($value["item_freight"]/$value["follow"],2): "-"}}元/每人</td>
                 <td>{{$value["min_members"] > $value["item_count"] ? "流团" : "成团"}}</td>
                 <td><a href="/admincp/items_participant?id={{$value["id"]}}">查看商品参团者</a></td>
+                <td><a class="rm_item" href="/admincp/remove_group_buying_item?id={{$value["id"]}}">下架</a></td>
             </tr>
         @endforeach
     </table>
@@ -42,6 +44,14 @@
             e.preventDefault();
             var id = $(this).attr("gid");
             $.post("/admincp/settle_orders",{'id':id},function (e) {
+                alert(e.msg)
+                window.location.reload()
+            })
+        })
+        $(".rm_item").click(function (e) {
+            e.preventDefault();
+            var href = $(this).attr("href");
+            $.post(href,function (e) {
                 alert(e.msg)
                 window.location.reload()
             })

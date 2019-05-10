@@ -78,7 +78,13 @@
                     {{date("m/d H:i",strtotime($value->create_date))}}
                 </td>
                 <td>
-                    <?php $all_ori_price +=  $value->order_price ?>
+                    <?php
+                        if($value->status !== 4 && $value->status !== 9)
+                        {
+                            $all_ori_price +=  $value->order_price;
+                        }
+
+                    ?>
                     @if($value->status == 1)
                         <p>等待拼团</p><br>
                         <p>{{$value->order_price}}元</p><br>
@@ -100,6 +106,8 @@
                         流团
                     @elseif($value->status == 8)
                         等待确认到账
+                    @elseif($value->status == 9)
+                        商品下架
                     @endif
                 </td>
 

@@ -52,9 +52,10 @@
                 <li class="list-group-item"><kbd class="">最低成团数:</kbd> {{$data["item_info"]->min_members}}个 (当前{{$data["item_member"] . "人购买了" . $data["item_follow"]}}个)</li>
                 <li class="list-group-item"><kbd class="">单价:</kbd> {{$data["item_info"]->item_price + $data["item_info"]->premium}}元</li>
                 <li class="list-group-item"><kbd class="">阿里运费(公摊):</kbd> {{$data["item_info"]->item_freight}}</li>
+                <li class="list-group-item"><kbd class="">当前公摊:</kbd> {{$data["item_member"] > 0 ? round($data["item_info"]->item_freight / $data["item_member"],2) : $data["item_info"]->item_freight }}元/每人</li>
                 {{--<li class="list-group-item"><kbd class="">辛苦费/次:</kbd> {{$data["item_info"]->premium}}元</li>--}}
                 <li class="list-group-item"><kbd class="">截团日期:</kbd> {{   $data["group_info"]->enddate }}</li>
-                <li class="list-group-item"><kbd class="">预收邮费:</kbd>  10元</li>
+                {{--<li class="list-group-item"><kbd class="">预收邮费:</kbd>  10元</li>--}}
 
 
             </ul>
@@ -122,9 +123,7 @@
         <ul style="padding: 20px;padding-top: 0px;">
             <li>商品在截团日前未凑够最低成团数或当天付清货款的人不足最低成团数的,以流团处理</li>
             <li>商品最终价格为:商品原价*购买份数+公摊运费+私人运费</li>
-
             <li>钱需要在最终截团前付清,方式为支付宝转账</li>
-            <li>统一预收个人邮费10元,费用计算为预收金额,公摊邮费和私人邮费多退少补。</li>
             <li>最终价格为(商品单价*购买数量) + 个人邮费 + 阿里邮费/真实成团数</li>
             <li style="color: #ff7272;">截团前可以无责取消订单,但截团后不可取消订单,如果执意取消订单,这将导致其他人的运费需要重新运算,
                 并且有可能使其他人流团,这种行为一旦发生,我们会永久禁止您在我们这里参与团购!!!

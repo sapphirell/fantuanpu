@@ -91,7 +91,7 @@ class GroupBuyingController extends Controller
         {
             return self::response([], 40001, "缺少参数id");
         }
-        $this->data["list"] = GroupBuyingItemModel::getListInfo($groupId);
+        $this->data["list"] = GroupBuyingItemModel::getListInfo($groupId,false);
 
         $insertOrder = [];
         foreach ($this->data["list"] as $items)
@@ -220,6 +220,21 @@ class GroupBuyingController extends Controller
         $order->waybill_no = $request->input("waybill_no");
         $order->status = 3;
         $order->save();
+        return self::response();
+    }
+
+    public function remove_group_buying_item(Request $request)
+    {
+        $item = GroupBuyingItemModel::find($request->input('id'));
+        $item->display = 2;
+        $item->save();
+
+        $log = GroupBuyingLogModel::where(["item_id" => $request->input('id')])->get();
+        foreach ($log as $value)
+        {
+            $value->status = 9;
+            $value->save();
+        }
         return self::response();
     }
 }
