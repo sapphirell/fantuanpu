@@ -116,9 +116,11 @@
 
 
 
-
-
+        @if( $this->data["last"]->status == 2)
         <input type="submit" value="确认参与拼团" class="submit_to_gb">
+        @else
+            <p>本次团购已结束</p>
+        @endif
         <p style="font-size: 16px;margin-top: 10px">购前须知:</p>
         <ul style="padding: 20px;padding-top: 0px;">
             <li>商品在截团日前未凑够最低成团数或当天付清货款的人不足最低成团数的,以流团处理</li>

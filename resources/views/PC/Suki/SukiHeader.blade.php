@@ -312,7 +312,7 @@
                 {{avatar($data["user_info"]->uid,60,50,"","big")}}
             </div>
             {{--<div style="display: inline-block;float:left;      margin: 10px 20px 12px 20px;"></div>--}}
-            <div style="float:left;">
+            <div style="float:left;width: 105px;overflow: hidden">
                 <a style="text-decoration: none;max-width: 130px" href="/suki-userhome-{{$data["user_info"]->uid}}.html"><h2 style="     font-size: 17px;color: #6a6c7f;margin-top: 15px;">{{$data["user_info"]->username}}</h2></a>
                 <p class="head_sig">{{ $data['field_forum']->sightml ?: "暂未设置签名档" }}</p>
             </div>

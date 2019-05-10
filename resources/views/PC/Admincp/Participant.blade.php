@@ -28,34 +28,33 @@
         </div>
     @endif
     @if($data["status"] == 3)
-    <table class="table">
+    <table class="table" style="width: 1300px">
         <tr>
-            <td>时间</td>
+
             <td>用户名</td>
             <td>购买详情</td>
             <td>应付款</td>
-            <td>qq交谈</td>
-            <td>状态</td>
+            <td>qq</td>
+            <td style="width: 120px">状态</td>
             <td>操作</td>
 
         </tr>
         @foreach($data["list"] as $value)
             <?php $user = get_user($value->uid); ?>
             <tr>
-                <td>时间</td>
                 <td>{{$user->username}}</td>
                 <td>
                     {!! $value->order_info !!}
                 </td>
-                <td>{{$value->order_price + $value->private_freight + 10}}</td>
+                <td>{{$value->order_price}}</td>
                 <td>
-                    <a href="http://sighttp.qq.com/msgrd?v=1&uin={{$value->qq ? : $user->qq}}">交谈</a>
+                    {{$value->qq ? : $user->qq}}
                 </td>
                 <td>
                     @if($value->status == 1)
-                        <span>等待付款</span>
+                        <span style="color: #7d4a4a">等待付款</span>
                     @elseif($value->status == 2)
-                        <span>等待收款确认</span>
+                        <span style="color: #8798b4">等待收款确认</span>
                     @elseif($value->status == 3)
                         <span>已发货</span>
                     @endif
@@ -64,9 +63,11 @@
                     @if($value->status == 1)
                         <span>无</span>
                     @elseif($value->status == 2)
-                        <a href="#" class="deliver" orderId="{{$value->id}}">发货</a>
+                        <a href="#" class="confirm" orderId="{{$value->id}}" style="color: #00A0FF">确认</a>
                     @elseif($value->status == 3)
                         <span>无</span>
+                    @elseif($value->status == 4)
+                        <a href="#" class="deliver" orderId="{{$value->id}}"  style="color: #ff647c">发货</a>
                     @endif
                 </td>
             </tr>
@@ -93,6 +94,16 @@
                 content: ['/admincp/deliver?id='+id,'no']
             });
         })
-
+        $(".confirm").click(function (e) {
+            e.preventDefault();
+            var id = $(this).attr("orderId");
+            var cof = confirm("要确定吗")
+            if (cof) {
+                $.post("/admincp/confirm_group_buying_user_order",{id:id},function (e) {
+                    alert(e.msg);
+                    window.location.reload()
+                })
+            }
+        })
     })
 </script>

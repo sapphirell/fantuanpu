@@ -208,7 +208,7 @@ class GroupBuyingController extends Controller
     public function deliver(Request $request)
     {
         $this->data["id"] = $request->input("id");
-        return view('pc/Admincp/Deliver')->with('data',$this->data);
+        return view('PC/Admincp/Deliver')->with('data',$this->data);
     }
     public function do_deliver(Request $request)
     {
@@ -235,6 +235,14 @@ class GroupBuyingController extends Controller
             $value->status = 9;
             $value->save();
         }
+        return self::response();
+    }
+
+    public function confirm_group_buying_user_order(Request $request)
+    {
+        $order = GroupBuyingOrderModel::find($request->input("id"));
+        $order->status = 4;
+        $order->save();
         return self::response();
     }
 }

@@ -38,7 +38,7 @@ class GroupBuyingLogModel extends Model
                 $join->on("pre_group_buying_log.item_id","=","pre_group_buying_item.id");
             })
             ->select(DB::raw("pre_group_buying_item.*,pre_group_buying_log.*,pre_group_buying_log.premium as order_premium"))
-            ->where("pre_group_buying_log.group_id",$group_id)->where("status","!=",4)->get();
+            ->where("pre_group_buying_log.group_id",$group_id)->where("status","!=",4)->where("status","!=",9)->get();
         $data = [];
         foreach ($log as $value)
         {

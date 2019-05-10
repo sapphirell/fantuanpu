@@ -143,21 +143,22 @@
                 <td class="tb_msg"><span class="rmb">￥</span>{{$data["order_info"]["all_price"] ? : "暂未计算,当前预估为:".$all_ori_price}}元</td>
             </tr>
             <tr>
-                <td class="tb_title">公摊运费总和</td>
-                <td class="tb_msg"><span class="rmb">￥</span>{{$data["order_info"]["private_freight"] ? : "暂未计算"}}</td>
+                <td class="tb_title">预估公摊运费总和</td>
+                <td class="tb_msg"><span class="rmb">￥</span>{{$data["order_info"]["private_freight"] ? : "暂未计算"}} (本次暂不需要转这个)</td>
             </tr>
             <tr>
                 <td class="tb_title">个人运费</td>
                 <td class="tb_msg"><span class="rmb">￥</span></td>
             </tr>
             <tr>
-                <td class="tb_title">以上合计</td>
-                <td class="tb_msg"><span class="rmb">￥</span>{{$data["order_info"]["all_price"] ? $data["order_info"]["all_price"] + $data["order_info"]["private_freight"] + 10 : "暂未计算"}}</td>
+                <td class="tb_title">本次需支付:(运费到货后补)</td>
+                <td class="tb_msg"><span class="rmb">￥</span>{{$data["order_info"]["all_price"] ? $data["order_info"]["all_price"]  : "暂未计算"}}</td>
             </tr>
 
         </table>
         @if($data["order_commit_status"] == 1)
             <div style="padding: 20px;background: #FFFFFF">
+                <p style="font-size: 15px;margin-bottom: 10px;">请确认您已经通过支付宝转账!</p>
             <form>
                 <input class="orderId" type="hidden" value="{{$data["order_info"]["id"]}}">
                 <div class="input-group mb-3">
@@ -184,12 +185,13 @@
                     </div>
                     <input type="text" class="form-control qq" placeholder=""  value="{{$data["user_info"]->qq}}">
                 </div>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" >付款单号</span>
-                    </div>
-                    <input type="text" class="form-control alipay_order" placeholder="请确认您已经通过支付宝转账"  value="">
-                </div>
+
+                {{--<div class="input-group mb-3">--}}
+                    {{--<div class="input-group-prepend">--}}
+                        {{--<span class="input-group-text" >付款单号</span>--}}
+                    {{--</div>--}}
+                    {{--<input type="text" class="form-control alipay_order" placeholder="请确认您已经通过支付宝转账"  value="">--}}
+                {{--</div>--}}
                 <input type="button" class="submit_to_order"  value="提交" order_id="{{$data["order_info"]["id"]}}">
             </form>
         </div>
@@ -217,16 +219,25 @@
             }
         })
         $(".submit_to_order").click(function (e) {
+            var name = $(".name").val()
+            var telphone =  $(".telphone").val()
+            var qq = $(".qq").val()
+            var orderId = $(".orderId").val()
+
+            if (!name || !telphone || !qq || !orderId )
+            {
+                alert("须填写完整")
+                return ;
+            }
             $.post("/suki_group_buying_confirm_orders",{
                 "name":$(".name").val(),
                 "address" : $(".address").val(),
                 "telphone" : $(".telphone").val(),
                 "qq" : $(".qq").val(),
                 "orderId" : $(".orderId").val(),
-                "alipay_order" : $(".alipay_order").val(),
             },function (e) {
                 alert(e.msg);
-//                window.location.reload()
+                window.location.reload()
             })
         });
     })

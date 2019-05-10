@@ -503,7 +503,7 @@ class SukiWebController extends Controller
 
     public function suki_group_buying_confirm_orders(Request $request)
     {
-        $chk = $this->checkRequest($request,[ "qq","name", "address", "telphone","orderId","alipay_order"]);
+        $chk = $this->checkRequest($request,[ "qq","name", "address", "telphone","orderId"]);
         if ($chk !== true)
         {
             return self::response([], 40001, "缺少参数" . $chk);
