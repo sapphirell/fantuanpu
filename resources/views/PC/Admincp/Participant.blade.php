@@ -36,7 +36,7 @@
             <td>应付款</td>
             <td>qq</td>
             <td style="width: 120px">状态</td>
-            <td>操作</td>
+            <td style="width: 120px">操作</td>
 
         </tr>
         @foreach($data["list"] as $value)
@@ -62,8 +62,12 @@
                 <td>
                     @if($value->status == 1)
                         <span>无</span>
+                    <br>
+                        <a href="#" class="confirm" orderId="{{$value->id}}" msg="{{$user->username . "付款了" . $value->order_price}}" style="color: #00A0FF">[强制确认]</a>
+                    <br>
+                        <a href="/admincp/skip_orders" class="skip_orders" orderId="{{$value->id}}"style="color: #00A0FF">[跑]</a>
                     @elseif($value->status == 2)
-                        <a href="#" class="confirm" orderId="{{$value->id}}" style="color: #00A0FF">确认</a>
+                        <a href="#" class="confirm" orderId="{{$value->id}}" msg="{{$user->username . "付款了" . $value->order_price}}" style="color: #00A0FF">确认</a>
                     @elseif($value->status == 3)
                         <span>无</span>
                     @elseif($value->status == 4)
@@ -97,11 +101,24 @@
         $(".confirm").click(function (e) {
             e.preventDefault();
             var id = $(this).attr("orderId");
-            var cof = confirm("要确定吗")
+            var msg = $(this).attr("msg");
+            var cof = confirm("要确定" + msg + "吗")
             if (cof) {
                 $.post("/admincp/confirm_group_buying_user_order",{id:id},function (e) {
                     alert(e.msg);
                     window.location.reload()
+                })
+            }
+        });
+        $(".skip_orders").click(function (e) {
+            e.preventDefault();
+            var id = $(this).attr("orderId");
+            var msg = $(this).attr("msg");
+            var cof = confirm("要确定跑单吗")
+            if (cof) {
+                $.post("/admincp/skip_orders",{id:id},function (e) {
+//                    alert(e.msg);
+//                    window.location.reload()
                 })
             }
         })

@@ -196,6 +196,8 @@ Route::group([
     Route::post('/admincp/confirm_group_buying_user_order', ['uses' => 'GroupBuyingController@confirm_group_buying_user_order', 'as' => 'confirm_group_buying_user_order']);#
     Route::post('/admincp/do_deliver', ['uses' => 'GroupBuyingController@do_deliver', 'as' => 'do_deliver']);#发货
     Route::post('/admincp/remove_group_buying_item', ['uses' => 'GroupBuyingController@remove_group_buying_item', 'as' => 'remove_group_buying_item']);#下架
+    Route::post('/admincp/skip_orders', ['uses' => 'GroupBuyingController@skip_orders', 'as' => 'skip_orders']);#跑单处理
+    Route::get('/admincp/skip_orders', ['uses' => 'GroupBuyingController@skip_orders', 'as' => 'get_skip_orders']);#跑单处理
 
 
 });

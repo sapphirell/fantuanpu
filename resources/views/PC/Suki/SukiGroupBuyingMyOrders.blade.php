@@ -20,7 +20,7 @@
     }
     .table td, .table th
     {
-        border-top: 1px solid #fad4d1;
+        border-top: 1px solid #ffebe9;
     }
 
     .tb_title {
@@ -56,7 +56,7 @@
         </div>
     </div>
     <a href="suki_group_buying_myorders?type=" class="switch_order_view"></a>
-    <table class="table" style="background: #fff;    font-size: 12px;padding: 10px;color: #795353;border: 1px solid #fad4d0;background-color: white;border-radius: 5px;">
+    <table class="table" style="background: #fff;font-size: 12px;padding: 10px;color: #795353;border: 1px solid #fad4d0;background-color: white;border-radius: 5px;">
         <tr style="background-color: #fff5f5;;border-radius: 5px;overflow: hidden;">
             <td>名字</td>
             <td>详情</td>
@@ -119,11 +119,11 @@
 
     @if($data["request"]["type"] == "last")
         <div style="background-color: #ffb6c7;
-                    background-image: linear-gradient(90deg, #fbded9 0%, #ffa5b2 93%);
+                        background-image: linear-gradient(90deg, #fbd9d9 0%, #fff9f7 93%);
                     color: #FFFFFF;
                     font-size: 13px;
-                    padding: 3px 15px;
-                    border-radius: 5px 5px 0px 0px;
+                    padding: 6px 15px;
+
 ">
             --
             @if($data['order_commit_status'] == -1)
@@ -134,6 +134,8 @@
                 等待收款确认
             @elseif($data['order_commit_status'] == 3)
                 订单完成
+            @elseif($data['order_commit_status'] == 4)
+                已经收到您的货款,等待全部人的货款收到后或超最晚付款时间后下单
             @endif
 
         </div>
@@ -158,7 +160,7 @@
         </table>
         @if($data["order_commit_status"] == 1)
             <div style="padding: 20px;background: #FFFFFF">
-                <p style="font-size: 15px;margin-bottom: 10px;">请确认您已经通过支付宝转账!</p>
+                <p style="font-size: 15px;margin-bottom: 10px;">请确认您已经通过支付宝转账、填写收货信息、并点击下面的提交!</p>
             <form>
                 <input class="orderId" type="hidden" value="{{$data["order_info"]["id"]}}">
                 <div class="input-group mb-3">

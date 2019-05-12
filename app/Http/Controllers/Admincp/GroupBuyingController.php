@@ -245,4 +245,96 @@ class GroupBuyingController extends Controller
         $order->save();
         return self::response();
     }
+    public function skip_orders(Request $request)
+    {
+        if (!$request->input("id"))
+        {
+            return self::response([],40001,"缺少参数id");
+        }
+        //取跑单的订单详情
+        $order = GroupBuyingOrderModel::find($request->input("id"));
+        if ($order->status != 1 && $order->status != 2 )
+        {
+            return self::response([],40002,"状态不对".$order->status);
+        }
+        //所有人的订单取出
+        $all_order = GroupBuyingOrderModel::where(["group_id" => $order->group_id])->get();
+        $info = json_decode($order->order_info,true);
+
+
+        //遍历他买的商品
+        foreach ($info as $item_id => $order_detail)
+        {
+            foreach ($all_order as $user_order)
+            {
+                $user_buy_log_id = json_decode($user_order->log_id,true) ;
+                $other_user_order_info = json_decode($user_order->order_info,true);
+                unset($other_user_order_info["log_id"]);
+                $user_buy_items_id = [];
+                foreach ($other_user_order_info as $key => $value)
+                {
+                    $user_buy_items_id[] = $key;
+                }
+
+                if (in_array($item_id,$user_buy_items_id))
+                {
+                    //获得用户买了几个
+                    $user_buy = 0;
+                    foreach ($order_detail["detail"] as $v)
+                    {
+                        $user_buy += $v;
+                    }
+
+                    $true_private_freight = $order_detail["item_detail"]["follow"] == 1
+                        ? $order_detail["item_detail"]["item_freight"]  //如果就一个人买(他自己)那运费要避免被除数为0
+                        : $order_detail["item_detail"]["item_freight"] / ($order_detail["item_detail"]["follow"] - 1);
+
+                    //为避免出错,存储原始id
+                    if (!$user_order->ori_order_data)
+                    {
+                        $user_order->ori_order_data = $user_order->order_info;
+                    }
+                    if($order_detail[$item_id]["item_detail"]["min_members"] <= $order_detail[$item_id]["item_detail"]["item_count"] - $user_buy )
+                    {
+
+                        //如果还成团,其它人的运费重新生成
+                        $user_order->true_private_freight = $user_order->private_freight + ( $true_private_freight - $other_user_order_info[$item_id]["private_freight"]);
+                        dd($user_order->true_private_freight);
+                        $other_user_order_info[$item_id]["private_freight"] = $true_private_freight;
+                        //其它人的order_info需要修改:follow减少,item_count减少,private_freight增加
+                        $user_order->true_price - $other_user_order_info[$item_id]["order_price"];
+//                        $user_order->save();
+
+
+                    }
+                    else
+                    {
+                        //如果不成团,找到他们的log,标记流团
+                        GroupBuyingLogModel::where(["uid"=>$user_order->uid,"item_id"=>$item_id])->where("status","!=",4)
+                            ->update(["status" => 7,"update_time" => date("Y-m-d H:i:s",time())]);
+                        //价格减去,计算true_price,计算运费,order_info遍历后修改
+
+
+                        $other_user_order_info = json_decode($user_order->order_info,true);
+                        //价格减少
+                        $user_order->true_price = $user_order->true_price
+                            ? $user_order->true_price - $other_user_order_info[$item_id]["order_price"]
+                            : $user_order->order_price - $other_user_order_info[$item_id]["order_price"];
+                        unset($other_user_order_info[$item_id]);
+
+
+
+                        $user_order->true_private_freight = $user_order->private_freight + ( $true_private_freight - $other_user_order_info[$item_id]["private_freight"]);
+//                        $user_order->save();
+                    }
+
+                }
+            }
+        }
+
+
+
+        //跑单人标记为跑单
+
+    }
 }

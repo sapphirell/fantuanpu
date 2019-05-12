@@ -8,8 +8,11 @@
 </head>
 <style>
     header a{color: #fff;}
-    body {background: #ffffff}
-    .admin.wp {margin-top:90px;    margin-left: 230px;}
+    body {background: #ffffff;overflow: scroll}
+    .nav {float: left}
+    .admin.wp {margin-top:90px;    margin-left: 230px;
+        /*float: left*/
+    }
     .navbar-nav ul {
         display: block;
     }
