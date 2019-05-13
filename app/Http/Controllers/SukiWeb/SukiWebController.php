@@ -455,6 +455,8 @@ class SukiWebController extends Controller
 
         $this->data["order_info"]["private_freight"] = $orderInfo->private_freight;
         $this->data["order_info"]["all_price"] = $orderInfo->order_price;
+        $this->data["order_info"]["true_private_freight"] = $orderInfo->true_private_freight;
+        $this->data["order_info"]["true_price"] = $orderInfo->true_price;
         $this->data["order_info"]["id"] = $orderInfo->id;
 
 

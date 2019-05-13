@@ -234,15 +234,103 @@ class GroupBuyingController extends Controller
     public function remove_group_buying_item(Request $request)
     {
         $item = GroupBuyingItemModel::find($request->input('id'));
-        $item->display = 2;
-        $item->save();
-
-        $log = GroupBuyingLogModel::where(["item_id" => $request->input('id')])->get();
-        foreach ($log as $value)
+//        $item->display = 2;
+//        $item->save();
+        //根据item拿团购状态,如果团购正在进行中
+        $group_buying = GroupBuyingModel::find($item->group_id);
+        if ($group_buying->status == 2)
         {
-            $value->status = 9;
-            $value->save();
+            $log = GroupBuyingLogModel::where(["item_id" => $request->input('id')])->get();
+            foreach ($log as $value)
+            {
+                $value->status = 9;
+                $value->save();
+            }
+        } //如果已经结束
+        else if ($group_buying->status == 3)
+        {
+
+            $item_id = $request->input('id');
+            //所有人的订单取出
+            $all_order = GroupBuyingOrderModel::where(["group_id" => $group_buying->id])->get();
+            foreach ($all_order as $user_order)
+            {
+                $user_buy_log_id = json_decode($user_order->log_id,true) ;
+                $other_user_order_info = json_decode($user_order->order_info,true);
+                $tmp_log_id = $other_user_order_info["log_id"]; //这个东西还要再装回去
+                unset($other_user_order_info["log_id"]);
+                $user_buy_items_id = [];
+                foreach ($other_user_order_info as $key => $value)
+                {
+                    $user_buy_items_id[] = $key;
+                }
+//                echo json_encode($user_buy_items_id);
+//                continue;
+                if (in_array($item_id,$user_buy_items_id))
+                {
+//                    echo $user_order->uid."<br>";
+//                    continue;
+                    //为避免出错,存储原始id
+                    if (!$user_order->ori_order_data)
+                    {
+                        $user_order->ori_order_data = $user_order->order_info;
+                    }
+                    if (!$user_order->true_price)
+                    {
+                        $user_order->true_price = $user_order->order_price;
+                    }
+                    if (!$user_order->true_private_freight)
+                    {
+                        $user_order->true_private_freight = $user_order->private_freight;
+                    }
+                    if (!$user_order->ori_log_id)
+                    {
+                        $user_order->ori_log_id = $user_order->log_id;
+                    }
+
+                    //找到他们的log,标记流团
+                    $log = GroupBuyingLogModel::where(["uid"=>$user_order->uid,"item_id"=>$item_id])->where("status","!=",4)
+                        ->get();
+//                    dd($log);
+
+//                    GroupBuyingLogModel::where(["uid"=>$user_order->uid,"item_id"=>$item_id])->where("status","!=",4)
+//                        ->update(["status" => 10,"update_time" => date("Y-m-d H:i:s",time())]);
+              
+                    //价格减去,计算true_price,计算运费,order_info遍历后修改
+                    $user_order->true_price -= $other_user_order_info[$item_id]["order_price"];
+                    $user_order->true_private_freight -= $other_user_order_info[$item_id]["private_freight"];
+
+
+                    unset($other_user_order_info[$item_id]);
+                    //去除log_id
+                    foreach ($log as $value)
+                    {
+                        $value->status = 10;
+                        $value->update_time = date("Y-m-d H:i:s",time());
+                        $value->save();
+                        foreach ($tmp_log_id as $log_id_key => $id)
+                        {
+                            if ($value->id == $id)
+                            {
+                                unset($tmp_log_id[$log_id_key]);
+                            }
+
+                        }
+                    }
+                    $tmp_log_id = array_values($tmp_log_id);
+
+                    $other_user_order_info["log_id"] = $tmp_log_id;
+
+                    $user_order->order_info = json_encode($other_user_order_info);
+                    $user_order->log_id = json_encode($tmp_log_id);
+
+                    $user_order->save();
+
+
+                }
+            }
         }
+
         return self::response();
     }
 

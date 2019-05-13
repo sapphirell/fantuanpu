@@ -108,6 +108,10 @@
                         等待确认到账
                     @elseif($value->status == 9)
                         商品下架
+                    @elseif($value->status == 10)
+                        受影响流团
+                    @elseif($value->status == 11)
+                        跑单
                     @endif
                 </td>
 
@@ -142,11 +146,33 @@
         <table class="table" style="background: #FFFFFF">
             <tr>
                 <td class="tb_title">商品原价总和</td>
-                <td class="tb_msg"><span class="rmb">￥</span>{{$data["order_info"]["all_price"] ? : "暂未计算,当前预估为:".$all_ori_price}}元</td>
+                <td class="tb_msg"><span class="rmb">￥</span>
+                    @if($data["order_info"]["all_price"])
+                        {{$data["order_info"]["true_price"]}}
+                    @else
+                        {{$data["order_info"]["true_price"] ? : "暂未计算"}} (本次暂不需要转这个)
+                    @endif
+                    元</td>
             </tr>
             <tr>
                 <td class="tb_title">预估公摊运费总和</td>
-                <td class="tb_msg"><span class="rmb">￥</span>{{$data["order_info"]["private_freight"] ? : "暂未计算"}} (本次暂不需要转这个)</td>
+                <td class="tb_msg"><span class="rmb">￥</span>
+
+                    @if($data["order_info"]["true_private_freight"])
+                        {{$data["order_info"]["true_private_freight"]}}
+                    @else
+                        {{$data["order_info"]["private_freight"] ? : "暂未计算"}} (仅做预览)
+                    @endif
+
+                </td>
+            </tr>
+            <tr>
+                <td class="tb_title">真实运费</td>
+                <td class="tb_msg"><span class="rmb">￥</span>
+                        {{$data["order_info"]["true_private_freight"] ? : "暂未计算"}}
+
+
+                </td>
             </tr>
             <tr>
                 <td class="tb_title">个人运费</td>
