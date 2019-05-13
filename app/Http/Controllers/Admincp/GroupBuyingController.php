@@ -42,6 +42,7 @@ class GroupBuyingController extends Controller
 
         $this->data["list"] = GroupBuyingItemModel::getListInfo($request->input("id"));
         $this->data["request"]["id"] = $request->input("id");
+        $this->data["request"]["l"] = $request->input("l");
         return view('PC/Admincp/ReviewOrders')->with('data', $this->data);
     }
 
@@ -159,12 +160,19 @@ class GroupBuyingController extends Controller
     //查看一个商品的参团者
     public function items_participant(Request $request)
     {
-        $this->data["list"] = GroupBuyingLogModel::where(["item_id" => $request->input("id")])->where("status", "<>", 4)->get();
+        $this->data["list"] = GroupBuyingLogModel::where(["item_id" => $request->input("id")])->where("status", "<>", 4)->where("status", "<>", 10)->where("status", "<>", 11)->get();
+        $this->data["count_info"] = [];
         foreach ($this->data["list"] as &$value)
         {
             $user_info         = User_model::find($value->uid);
             $value["username"] = $user_info->username;
             $value["qq"] = $user_info->qq;
+
+
+            foreach (json_decode($value->order_info, true) as $k => $num)
+            {
+                $this->data["count_info"][$k] += $num;
+            }
 
         }
 
@@ -269,6 +277,7 @@ class GroupBuyingController extends Controller
             {
                 $user_buy_log_id = json_decode($user_order->log_id,true) ;
                 $other_user_order_info = json_decode($user_order->order_info,true);
+                $tmp_log_id = $other_user_order_info["log_id"]; //这个东西还要再装回去
                 unset($other_user_order_info["log_id"]);
                 $user_buy_items_id = [];
                 foreach ($other_user_order_info as $key => $value)
@@ -278,7 +287,7 @@ class GroupBuyingController extends Controller
 
                 if (in_array($item_id,$user_buy_items_id))
                 {
-                    //获得用户买了几个
+                    //获得跑单用户买了几个
                     $user_buy = 0;
                     foreach ($order_detail["detail"] as $v)
                     {
@@ -289,52 +298,100 @@ class GroupBuyingController extends Controller
                         ? $order_detail["item_detail"]["item_freight"]  //如果就一个人买(他自己)那运费要避免被除数为0
                         : $order_detail["item_detail"]["item_freight"] / ($order_detail["item_detail"]["follow"] - 1);
 
+
                     //为避免出错,存储原始id
                     if (!$user_order->ori_order_data)
                     {
                         $user_order->ori_order_data = $user_order->order_info;
                     }
-                    if($order_detail[$item_id]["item_detail"]["min_members"] <= $order_detail[$item_id]["item_detail"]["item_count"] - $user_buy )
+                    if (!$user_order->true_price)
+                    {
+                        $user_order->true_price = $user_order->order_price;
+                    }
+                    if (!$user_order->true_private_freight)
+                    {
+                        $user_order->true_private_freight = $user_order->private_freight;
+                    }
+                    if (!$user_order->ori_log_id)
+                    {
+                        $user_order->ori_log_id = $user_order->log_id;
+                    }
+                    if($order_detail[$item_id]["item_detail"]["min_members"] <= $order_detail[$item_id]["item_detail"]["item_count"] - $user_buy)
                     {
 
                         //如果还成团,其它人的运费重新生成
-                        $user_order->true_private_freight = $user_order->private_freight + ( $true_private_freight - $other_user_order_info[$item_id]["private_freight"]);
-                        dd($user_order->true_private_freight);
+                        $user_order->true_private_freight = $user_order->true_private_freight + ( $true_private_freight - $other_user_order_info[$item_id]["private_freight"]);
+//                        dd($other_user_order_info[$item_id]);
+                        //其它人的order_info需要修改:follow减少,item_count减少,private_freight增加,follow减少1
                         $other_user_order_info[$item_id]["private_freight"] = $true_private_freight;
-                        //其它人的order_info需要修改:follow减少,item_count减少,private_freight增加
-                        $user_order->true_price - $other_user_order_info[$item_id]["order_price"];
-//                        $user_order->save();
+
+                        $other_user_order_info[$item_id]["item_detail"]["item_count"] -= $user_buy;
+                        $other_user_order_info[$item_id]["item_detail"]["follow"] -= 1;
+                        $other_user_order_info["log_id"]  = $tmp_log_id;
+
+
+                        $user_order->order_info = json_encode($other_user_order_info);
+                        //订单金额不变
+                        $user_order->save();
 
 
                     }
                     else
                     {
+
                         //如果不成团,找到他们的log,标记流团
+                        $log = GroupBuyingLogModel::where(["uid"=>$user_order->uid,"item_id"=>$item_id])->where("status","!=",4)
+                            ->get();
                         GroupBuyingLogModel::where(["uid"=>$user_order->uid,"item_id"=>$item_id])->where("status","!=",4)
-                            ->update(["status" => 7,"update_time" => date("Y-m-d H:i:s",time())]);
+                            ->update(["status" => 10,"update_time" => date("Y-m-d H:i:s",time())]);
                         //价格减去,计算true_price,计算运费,order_info遍历后修改
+                        $user_order->true_price -= $other_user_order_info[$item_id]["order_price"];
+                        $user_order->true_private_freight -= $other_user_order_info[$item_id]["private_freight"];
 
 
-                        $other_user_order_info = json_decode($user_order->order_info,true);
-                        //价格减少
-                        $user_order->true_price = $user_order->true_price
-                            ? $user_order->true_price - $other_user_order_info[$item_id]["order_price"]
-                            : $user_order->order_price - $other_user_order_info[$item_id]["order_price"];
                         unset($other_user_order_info[$item_id]);
+                        //去除log_id
+                        foreach ($log as $value)
+                        {
+                            foreach ($tmp_log_id as $log_id_key => $id)
+                            {
+                                if ($value->id == $id)
+                                {
+                                    unset($tmp_log_id[$log_id_key]);
+                                }
 
+                            }
+                        }
+                        $tmp_log_id = array_values($tmp_log_id);
 
+                        $other_user_order_info["log_id"] = $tmp_log_id;
 
-                        $user_order->true_private_freight = $user_order->private_freight + ( $true_private_freight - $other_user_order_info[$item_id]["private_freight"]);
-//                        $user_order->save();
+                        $user_order->order_info = json_encode($other_user_order_info);
+                        $user_order->log_id = json_encode($tmp_log_id);
+
+                        $user_order->save();
                     }
 
                 }
             }
         }
 
-
-
+        $log_id_arr = json_decode($order->log_id,true)?:[];
+        $ori_log_id_arr = json_decode("",true)?:[];
+//        dd($ori_log_id_arr);
+        $log_id_arr = array_merge($log_id_arr,$ori_log_id_arr);
+//        dd($log_id_arr);
         //跑单人标记为跑单
+        foreach ($log_id_arr as $log_id)
+        {
 
+            $log = GroupBuyingLogModel::find($log_id);
+
+            $log->status = 11;
+            $log->save();
+        }
+        $order->status = 5;
+        $order->save();
+        return self::response();
     }
 }

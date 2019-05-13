@@ -16,14 +16,17 @@ class GroupBuyingItemModel extends Model
         $list = self
             ::leftJoin("pre_group_buying_log",function ($join) {
                 //"pre_group_buying_log.item_id","=","pre_group_buying_item.id",""
-                $join->on("pre_group_buying_log.item_id","=","pre_group_buying_item.id")->where("pre_group_buying_log.status","!=",4);
+                $join->on("pre_group_buying_log.item_id","=","pre_group_buying_item.id")
+                    ->where("pre_group_buying_log.status","!=",4)
+                    ->where("pre_group_buying_log.status","!=",10)
+                    ->where("pre_group_buying_log.status","!=",11);
             })
             ->select(DB::raw("pre_group_buying_item.*,count(distinct pre_group_buying_log.uid) as follow,pre_group_buying_log.order_info"))
             ->where("pre_group_buying_item.group_id",$id);
 
 //        dd($list);
         if (!$show_hidden){
-            $list = $list->where(["display" => 1]);
+            $list = $list->where(["pre_group_buying_item.display" => 1]);
         }
         $list = $list->groupBy("pre_group_buying_item.id")
             ->get()->toArray();

@@ -13,7 +13,11 @@ class GroupBuyingLogModel extends Model
     //获取没有取消的付款人数和品数
     public static function getNotCancelItemsLog(int $itemId)
     {
-        $log = self::where("item_id",'=',$itemId)->where("status","!=",4)->get();
+        $log = self::where("item_id",'=',$itemId)
+            ->where("status","!=",4)
+            ->where("status","!=",10)
+            ->where("status","!=",11)
+            ->get();
         $member = [];
         $return = [
             "member_count" => 0,

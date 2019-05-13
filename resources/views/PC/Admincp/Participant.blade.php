@@ -72,6 +72,8 @@
                         <span>无</span>
                     @elseif($value->status == 4)
                         <a href="#" class="deliver" orderId="{{$value->id}}"  style="color: #ff647c">发货</a>
+                    @elseif($value->status == 5)
+                        <p>已跑单</p>
                     @endif
                 </td>
             </tr>
