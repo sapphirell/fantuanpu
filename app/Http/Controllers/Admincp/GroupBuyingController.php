@@ -234,8 +234,8 @@ class GroupBuyingController extends Controller
     public function remove_group_buying_item(Request $request)
     {
         $item = GroupBuyingItemModel::find($request->input('id'));
-//        $item->display = 2;
-//        $item->save();
+        $item->display = 2;
+        $item->save();
         //根据item拿团购状态,如果团购正在进行中
         $group_buying = GroupBuyingModel::find($item->group_id);
         if ($group_buying->status == 2)

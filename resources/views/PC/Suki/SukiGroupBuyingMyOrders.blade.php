@@ -20,7 +20,7 @@
     }
     .table td, .table th
     {
-        border-top: 1px solid #ffebe9;
+        border-top: 1px solid #ffcdc8!important;
     }
 
     .tb_title {
@@ -38,7 +38,14 @@
         font-size: 14px;
     }
     .switch_order_view {
-
+        border: 0px;
+        color: #999999;
+        box-shadow: 0 0 5px #efefef;
+        background-color: #fff;
+        padding: 6px 15px;
+        margin-left: 0px;
+        float: right;
+        border-radius: 5px;
     }
     .mb-3, .my-3 {
         margin-bottom: 1.5rem!important;
@@ -55,7 +62,7 @@
             <a href="/suki_group_buying_myorders?type=last" class="dropdown-item setting_clock_alert">本期</a>
         </div>
     </div>
-    <a href="suki_group_buying_myorders?type=" class="switch_order_view"></a>
+    <a class="switch_order_view" href="/suki_group_buying_deliver">查看订单和发货</a>
     <table class="table" style="background: #fff;font-size: 12px;padding: 10px;color: #795353;border: 1px solid #fad4d0;background-color: white;border-radius: 5px;">
         <tr style="background-color: #fff5f5;;border-radius: 5px;overflow: hidden;">
             <td>名字</td>
@@ -145,14 +152,10 @@
         </div>
         <table class="table" style="background: #FFFFFF">
             <tr>
-                <td class="tb_title">商品原价总和</td>
+                <td class="tb_title">预估商品原价总和</td>
                 <td class="tb_msg"><span class="rmb">￥</span>
-                    @if($data["order_info"]["all_price"])
-                        {{$data["order_info"]["true_price"]}}
-                    @else
-                        {{$data["order_info"]["true_price"] ? : "暂未计算"}} (本次暂不需要转这个)
-                    @endif
-                    元</td>
+                    {{$data["order_info"]["all_price"]? : "暂未计算"}}元
+                </td>
             </tr>
             <tr>
                 <td class="tb_title">预估公摊运费总和</td>
@@ -167,6 +170,12 @@
                 </td>
             </tr>
             <tr>
+                <td class="tb_title">真实商品价格(剔除跑单)</td>
+                <td class="tb_msg"><span class="rmb">￥</span>
+                    {{$data["order_info"]["true_price"] ? : "暂未计算"}}元
+                </td>
+            </tr>
+            <tr>
                 <td class="tb_title">真实运费</td>
                 <td class="tb_msg"><span class="rmb">￥</span>
                         {{$data["order_info"]["true_private_freight"] ? : "暂未计算"}}
@@ -178,10 +187,19 @@
                 <td class="tb_title">个人运费</td>
                 <td class="tb_msg"><span class="rmb">￥</span></td>
             </tr>
+            @if($data['order_commit_status'] == 1)
             <tr>
-                <td class="tb_title">本次需支付:(运费到货后补)</td>
-                <td class="tb_msg"><span class="rmb">￥</span>{{$data["order_info"]["all_price"] ? $data["order_info"]["all_price"]  : "暂未计算"}}</td>
+                <td class="tb_title">本次需支付:</td>
+                <td class="tb_msg"><span class="rmb">￥</span>{{$data["order_info"]["all_price"]}}</td>
             </tr>
+            @elseif($data['order_commit_status'] == 6)
+                <tr>
+                    <td class="tb_title">本次需支付:</td>
+                    <td class="tb_msg"><span class="rmb">￥</span>
+                        {{$data["order_info"]["true_price"] - ($data["order_info"]["all_price"] - $data["order_info"]["true_price"])}}
+                    </td>
+                </tr>
+            @endif
 
         </table>
         @if($data["order_commit_status"] == 1)

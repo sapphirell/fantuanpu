@@ -7,6 +7,7 @@ use App\Http\DbModel\CommonMemberCount;
 use App\Http\DbModel\Forum_forum_model;
 use App\Http\DbModel\ForumPostModel;
 use App\Http\DbModel\ForumThreadModel;
+use App\Http\DbModel\GroupBuyingAddressModel;
 use App\Http\DbModel\GroupBuyingItemModel;
 use App\Http\DbModel\GroupBuyingLogModel;
 use App\Http\DbModel\GroupBuyingModel;
@@ -533,5 +534,27 @@ class SukiWebController extends Controller
             $log->save();
         }
         return self::response();
+    }
+
+    public function suki_group_buying_deliver(Request $request)
+    {
+        $this->data["my_order"] = GroupBuyingOrderModel::where(["uid" => $this->data["user_info"]->uid])->get();
+
+        dd( $this->data["user_info"]);
+        //查询用户的收货地址,如果没有取用户最后一次order的,并存储到用户的地址管理里
+        $address = GroupBuyingAddressModel::where(["uid" => $this->data["user_info"]->uid])->first();
+        if (empty($address) && !$this->data["my_order"][0]->address)
+        {
+
+            $address = GroupBuyingAddressModel::save_address(
+                $this->data["my_order"][0]->name,
+                $this->data["my_order"][0]->address,
+                $this->data["my_order"][0]->telphone,
+                $this->data["user_info"]->uid
+            );
+
+        }
+        dd($address);
+        return view('PC/Suki/SukiGroupBuyingDeliver')->with('data', $this->data);
     }
 }

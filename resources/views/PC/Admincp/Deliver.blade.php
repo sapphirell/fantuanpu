@@ -1,6 +1,7 @@
 @include('PC.Common.HtmlHead')
 <style>
     body {background: #FFFFFF}
+
 </style>
 <body style="padding: 20px">
     <div style="margin-bottom: 10px">订单号</div>
