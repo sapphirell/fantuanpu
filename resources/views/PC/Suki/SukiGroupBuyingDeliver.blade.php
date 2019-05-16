@@ -105,7 +105,12 @@
                     @if($value->status == 4)
                     <label>
                         勾选
-                        <input type="checkbox">
+                        <input type="checkbox" class="check" id="sdf" orderId="{{$value->id}}" price="{{
+                            ($value->true_private_freight
+                            ?:$value->private_freight)
+                            +
+                            (($value->true_price ? ($value->true_price - $value->order_price):0))
+                        }}">
                     </label>
                     @endif
                 </td>
@@ -113,13 +118,23 @@
             </tr>
 
         @endforeach
-        <td></td>
-        <td></td>
-        <td></td>
 
-        <td  colspan="2" style="width: 70px">
-            <a>
-                申请发货勾选的
+        <td>
+            <select class="select_province" style="width: 100px;padding: 0px;font-size: 12px;height: 25px;">
+                <option value="0|0">请选择!!</option>
+                <option  value="5.5|1">苏浙沪皖</option>
+                <option   value="7|2">京津冀晋辽吉黑闽赣鲁豫鄂湘粤桂琼川贵滇渝陕甘青宁</option>
+                <option value="18|3">藏疆</option>
+            </select>
+        </td>
+        <td  colspan="2" style="    padding-top: 12px;">
+            <span class="count_title">需支付</span>:
+            <span class="count_price">0</span>元
+        </td>
+
+        <td  colspan="2" style="width: 70px;    padding-top: 12px;">
+            <a class="submit_check" style="float: right;">
+                [申请发货勾选的]
             </a>
 
         </td>
@@ -138,7 +153,6 @@
 
 ">
         您的收货地址
-
     </div>
 
     <div style="padding: 20px;background: #FFFFFF">
@@ -150,26 +164,21 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text" >收件人</span>
                 </div>
-                <input type="text" class="form-control name" placeholder=""  name=""  value="{{$data["last"]->name}}">
+                <input type="text" class="form-control name" placeholder=""  name=""  value="{{$data["address"]->name}}">
             </div>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" >收货地址</span>
                 </div>
-                <input type="text" class="form-control address" placeholder=""  name=""  value="">
+                <input type="text" class="form-control address" placeholder=""  name=""  value="{{$data["address"]->address}}">
             </div>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" >收货手机号</span>
                 </div>
-                <input type="text" class="form-control telphone" placeholder="" name="" value="">
+                <input type="text" class="form-control telphone" placeholder="" name="" value="{{$data["address"]->telphone}}">
             </div>
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text">您的qq号</span>
-                </div>
-                <input type="text" class="form-control qq" placeholder=""  value="{{$data["user_info"]->qq}}">
-            </div>
+
 
             <input type="button" class="submit_to_order"  value="提交" order_id="{{$data["order_info"]["id"]}}">
         </form>
@@ -178,47 +187,93 @@
 
 </div>
 <script>
+    Array.prototype.indexOf = function(val) {
+        for (var i = 0; i < this.length; i++) {
+            if (this[i] == val) return i;
+        }
+        return -1;
+    };
+    Array.prototype.remove = function(val) {
+        var index = this.indexOf(val);
+        if (index > -1) {
+            this.splice(index, 1);
+        }
+    };
+    var pf = 0
+    var count_price = 0
+    var title = "需要支付"
+    var orders = []
+    var province_type
     function cancelOrder(e) {
         e.preventDefault()
 
     }
+    function change_count() {
+        if (count_price < 0 )
+        {
+            title = "将退还"
+        }
+        else
+        {
+            title = "需支付"
+        }
+        $(".count_price").text(Math.abs(count_price+pf));
+        $(".count_title").text(title);
+    }
     $(document).ready(function () {
-        $(".suki_group_buying_cancel_orders").click(function (e) {
-            e.preventDefault();
-            var orderId = $(this).attr("orderId")
-            var r = confirm("确定取消吗?")
-            if (r == true) {
-                $.get("/suki_group_buying_cancel_orders?orderId=" + orderId, function (e) {
-                    alert(e.msg)
-                    window.location.reload()
-                })
-            }
-            else {
-                return false;
-            }
-        })
-        $(".submit_to_order").click(function (e) {
-            var name = $(".name").val()
-            var telphone =  $(".telphone").val()
-            var qq = $(".qq").val()
-            var orderId = $(".orderId").val()
 
-            if (!name || !telphone || !qq || !orderId )
+
+        $(".check").change(function (e) {
+            var orderId = $(this).attr("orderId");
+            var price = parseFloat($(this).attr("price"))
+            var check = $(this).is(':checked')
+            if (check)
+            {
+//                console.log(price)
+                count_price += price
+                orders.push(orderId)
+            }
+            else
+            {
+                count_price -= price
+                orders.remove(orderId)
+            }
+
+            change_count()
+
+            console.log(orders)
+        })
+        $(".submit_check").click(function (e) {
+            var address = $(".address").val();
+            var telphone = $(".telphone").val();
+            var name = $(".name").val()
+
+            var fd = {
+                "name":name,
+                "address" : address,
+                "telphone" : telphone,
+                "orders" : orders,
+                "province_type" :province_type
+            }
+            console.log(fd)
+            if (!orders || !pf || !name || !address ||  !telphone || !province_type)
             {
                 alert("须填写完整")
                 return ;
             }
-            $.post("/suki_group_buying_confirm_orders",{
-                "name":$(".name").val(),
-                "address" : $(".address").val(),
-                "telphone" : $(".telphone").val(),
-                "qq" : $(".qq").val(),
-                "orderId" : $(".orderId").val(),
-            },function (e) {
+            $.post("/suki_group_buying_do_deliver",fd,function (e) {
                 alert(e.msg);
-                window.location.reload()
+//                window.location.reload()
             })
         });
+
+        $(".select_province").change(function () {
+            var s = $(this).val().split("|")
+
+            pf = parseFloat(s[0])
+            province_type = s[1]
+            change_count()
+        })
     })
 </script>
 @include('PC.Suki.SukiFooter')

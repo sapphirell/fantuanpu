@@ -8,6 +8,7 @@ use App\Http\DbModel\Forum_forum_model;
 use App\Http\DbModel\ForumPostModel;
 use App\Http\DbModel\ForumThreadModel;
 use App\Http\DbModel\GroupBuyingAddressModel;
+use App\Http\DbModel\GroupBuyingExpressModel;
 use App\Http\DbModel\GroupBuyingItemModel;
 use App\Http\DbModel\GroupBuyingLogModel;
 use App\Http\DbModel\GroupBuyingModel;
@@ -512,7 +513,7 @@ class SukiWebController extends Controller
             return self::response([], 40001, "缺少参数" . $chk);
         }
 
-        $this->data["orders"] = GroupBuyingOrderModel::where(["id" => $request->input("orderId")])->first();
+        $this->data["orders"] = GroupBuyingAddress::where(["id" => $request->input("orderId")])->first();
         if (empty($this->data["orders"]))
         {
             return self::response([], 40002, "缺少orders");
@@ -540,13 +541,15 @@ class SukiWebController extends Controller
     {
         $this->data["my_order"] = GroupBuyingOrderModel::where(["uid" => $this->data["user_info"]->uid])->get();
 
-        dd( $this->data["user_info"]);
+//        dd( $this->data["user_info"]);
         //查询用户的收货地址,如果没有取用户最后一次order的,并存储到用户的地址管理里
-        $address = GroupBuyingAddressModel::where(["uid" => $this->data["user_info"]->uid])->first();
-        if (empty($address) && !$this->data["my_order"][0]->address)
+
+        $this->data["address"] = GroupBuyingAddressModel::where(["uid" => $this->data["user_info"]->uid])->select()->first();
+
+        if (empty($address) && $this->data["my_order"][0]->address)
         {
 
-            $address = GroupBuyingAddressModel::save_address(
+            $this->data["address"] = GroupBuyingAddressModel::save_address(
                 $this->data["my_order"][0]->name,
                 $this->data["my_order"][0]->address,
                 $this->data["my_order"][0]->telphone,
@@ -554,7 +557,56 @@ class SukiWebController extends Controller
             );
 
         }
-        dd($address);
+
         return view('PC/Suki/SukiGroupBuyingDeliver')->with('data', $this->data);
+    }
+
+    public function suki_group_buying_do_deliver(Request $request)
+    {
+        $chk = $this->checkRequest($request,["name", "address", "telphone","orders","province_type"]);
+
+        if ($chk !== true)
+        {
+            return self::response([], 40001, "缺少参数" . $chk);
+        }
+
+        $freight = 0;
+        switch ($request->input("province_type"))
+        {
+            case 1 :
+                $freight = 5.5;
+                break;
+            case 2 :
+                $freight = 7;
+                break;
+            case 3 :
+                $freight = 18;
+                break;
+        }
+//        dd($request->input("orders"));
+        //遍历订单获得价格
+        $user_orders = GroupBuyingOrderModel::where("uid","=",$this->data["user_info"]->uid)->where("status","=",4)
+            ->whereIn('id',$request->input("orders"))->get();
+        $private_freight = 0;
+        $price_difference = 0;
+        foreach ($user_orders as $value)
+        {
+            $private_freight += ($value->true_private_freight?:$value->private_freight);
+            $price_difference += (($value->true_price ? ($value->true_price - $value->order_price):0));
+            $value->status = 6;
+            $value->save();
+        }
+        $express = new GroupBuyingExpressModel();
+        $express->freight = $freight;
+        $express->private_freight = $private_freight;
+        $express->price_difference = $price_difference;
+        $express->name = $request->input("name");
+        $express->telphone = $request->input("telphone");
+        $express->address = $request->input("address");
+        $express->freight = $freight;
+        $express->uid = $this->data["user_info"]->uid;
+        $express->orders = json_encode($request->input("orders"));
+        $express->save();
+        return self::response();
     }
 }

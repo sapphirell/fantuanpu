@@ -33,7 +33,10 @@
 
             <td>用户名</td>
             <td>购买详情</td>
+
             <td>应付款</td>
+            <td>阿里邮费</td>
+            <td>买家应补</td>
             <td>qq</td>
             <td style="width: 120px">状态</td>
             <td style="width: 120px">操作</td>
@@ -46,7 +49,23 @@
                 <td>
                     {!! $value->order_info !!}
                 </td>
+
                 <td>{{$value->order_price}}</td>
+                <td>
+                    {{
+                    $value->true_private_freight
+                        ?$value->true_private_freight
+                        :$value->private_freight
+                    }}
+                </td>
+                <td>
+                    {{
+                    ($value->true_private_freight
+                        ?:$value->private_freight)
+                        +
+                        (($value->true_price ? ($value->true_price - $value->order_price):0))
+                    }}
+                </td>
                 <td>
                     {{$value->qq ? : $user->qq}}
                 </td>
