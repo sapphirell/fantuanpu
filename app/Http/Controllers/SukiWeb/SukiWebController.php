@@ -539,24 +539,33 @@ class SukiWebController extends Controller
 
     public function suki_group_buying_deliver(Request $request)
     {
-        $this->data["my_order"] = GroupBuyingOrderModel::where(["uid" => $this->data["user_info"]->uid])->get();
+        $this->data["type"] = $request->input("type") ? : 1;
+        if ($this->data["type"] == 1){
+            $this->data["my_order"] = GroupBuyingOrderModel::where(["uid" => $this->data["user_info"]->uid])->get();
 
-//        dd( $this->data["user_info"]);
-        //查询用户的收货地址,如果没有取用户最后一次order的,并存储到用户的地址管理里
+            //        dd( $this->data["user_info"]);
+            //查询用户的收货地址,如果没有取用户最后一次order的,并存储到用户的地址管理里
 
-        $this->data["address"] = GroupBuyingAddressModel::where(["uid" => $this->data["user_info"]->uid])->select()->first();
+            $this->data["address"] = GroupBuyingAddressModel::where(["uid" => $this->data["user_info"]->uid])->select()->first();
 
-        if (empty($address) && $this->data["my_order"][0]->address)
-        {
+            if (empty($this->data["address"]) && $this->data["my_order"][0]->address)
+            {
 
-            $this->data["address"] = GroupBuyingAddressModel::save_address(
-                $this->data["my_order"][0]->name,
-                $this->data["my_order"][0]->address,
-                $this->data["my_order"][0]->telphone,
-                $this->data["user_info"]->uid
-            );
+                $this->data["address"] = GroupBuyingAddressModel::save_address(
+                    $this->data["my_order"][0]->name,
+                    $this->data["my_order"][0]->address,
+                    $this->data["my_order"][0]->telphone,
+                    $this->data["user_info"]->uid
+                );
+
+            }
 
         }
+        else
+        {
+            $this->data["my_express"] = GroupBuyingExpressModel::where(["uid" => $this->data["user_info"]->uid])->get();
+        }
+
 
         return view('PC/Suki/SukiGroupBuyingDeliver')->with('data', $this->data);
     }

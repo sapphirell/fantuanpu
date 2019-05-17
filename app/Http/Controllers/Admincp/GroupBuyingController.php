@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admincp;
 
+use App\Http\DbModel\GroupBuyingExpressModel;
 use App\Http\DbModel\GroupBuyingItemModel;
 use App\Http\DbModel\GroupBuyingLogModel;
 use App\Http\DbModel\GroupBuyingModel;
@@ -480,6 +481,22 @@ class GroupBuyingController extends Controller
         }
         $order->status = 5;
         $order->save();
+        return self::response();
+    }
+
+    public function order_delivers(Request $request)
+    {
+        $type = $request->input("type")?:1;
+        $this->data["list"] = GroupBuyingExpressModel::where("status","=",$type)->get();
+        return view('PC/Admincp/OrderDeliver')->with('data',$this->data);
+    }
+
+    public function delivers_status(Request $request)
+    {
+//        return [$request->input("id"),$request->input("to_status")];
+        $delivers = GroupBuyingExpressModel::find($request->input("id"));
+        $delivers->status = $request->input("to_status");
+        $delivers->save();
         return self::response();
     }
 }
