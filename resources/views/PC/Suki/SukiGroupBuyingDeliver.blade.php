@@ -115,7 +115,7 @@
                         @if($value->status == 4)
                             <label>
                                 勾选
-                                <input type="checkbox" class="check" id="sdf" orderId="{{$value->id}}" price="{{
+                                <input type="checkbox" class="check"  orderId="{{$value->id}}" price="{{
                             ($value->true_private_freight
                             ?:$value->private_freight)
                             +
@@ -143,7 +143,7 @@
             </td>
 
             <td  colspan="2" style="width: 70px;    padding-top: 12px;">
-                <a class="submit_check" style="float: right;">
+                <a class="submit_check btn btn-info" style="float: right;color: #FFFFFF">
                     [申请发货勾选的]
                 </a>
 
@@ -195,26 +195,24 @@
             <tr style="background-color: #fff5f5;;border-radius: 5px;overflow: hidden;">
 
                 <td>申请发货的订单id</td>
-                <td>收付款</td>
-
+                <td>订单号</td>
                 <td style="width: 80px">状态</td>
+                <td>金额</td>
                 <td style="width: 70px">操作</td>
 
             </tr>
             @foreach($data['my_express'] as $value)
                 <tr >
                     <td>{{$value->orders}}</td>
-                    <td>{{
-                    ($value['private_freight'] + $value['price_difference']  + $value['freight'] > 0)?
-                        "需支付:".$value['private_freight'] + $value['price_difference']  + $value['freight']
-                        :"将退款:".$value['private_freight'] + $value['price_difference']  + $value['freight']
-                     }}</td>
-
+                    <td>{{$value->waybill_no}}</td>
                     <td style="width: 80px">
                         @if($value["status"] == 1)
                             提交申请
                         @elseif($value["status"] == 2)
-                            需要补邮费
+                            {{
+                            ($value['private_freight'] + $value['price_difference']  + $value['freight'] > 0)?
+                                "需要补邮费" :"等待退差额"
+                             }}
                         @elseif($value["status"] == 3)
                             待发货
                         @elseif($value["status"] == 4)
@@ -222,6 +220,9 @@
                         @endif
 
                     </td>
+                    <td>{{
+                        abs($value['private_freight'] + $value['price_difference']  + $value['freight'])
+                     }}元</td>
                     <td style="width: 70px">操作</td>
                 </tr>
             @endforeach
@@ -297,7 +298,11 @@
             var address = $(".address").val();
             var telphone = $(".telphone").val();
             var name = $(".name").val()
-
+            if(!province_type)
+            {
+                alert("请先选择发货地域")
+                return ;
+            }
             var fd = {
                 "name":name,
                 "address" : address,
@@ -315,7 +320,7 @@
                 alert(e.msg);
                 if (e.ret == 200)
                 {
-                    window.location.reload()
+                    window.location.href = "/suki_group_buying_deliver?type=2"
                 }
 
             })
@@ -328,6 +333,7 @@
             province_type = s[1]
             change_count()
         })
+        $("input:checkbox").trigger("click");
     })
 </script>
 @include('PC.Suki.SukiFooter')

@@ -20,6 +20,7 @@ class GroupBuyingController extends Controller
         $this->data['left_nav'] = [
             'add_group_buying_item'  => '添加商品',
             'show_group_buying_list' => '团购管理',
+            'order_delivers' => '发货管理',
         ];
     }
 
@@ -488,6 +489,11 @@ class GroupBuyingController extends Controller
     {
         $type = $request->input("type")?:1;
         $this->data["list"] = GroupBuyingExpressModel::where("status","=",$type)->get();
+        foreach ($this->data["list"]  as $value)
+        {
+            //提取地址前面几个直到碰到"省"、"市"、"区"
+
+        }
         return view('PC/Admincp/OrderDeliver')->with('data',$this->data);
     }
 

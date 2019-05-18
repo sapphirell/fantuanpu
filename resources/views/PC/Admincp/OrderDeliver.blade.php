@@ -18,19 +18,21 @@
             <td>用户名</td>
             <td>收货人</td>
             <td>收货地址</td>
-            <td>费用</td>
+            {{--<td>费用</td>--}}
             <td>手机号</td>
+            {{--<td>qq</td>--}}
             <td style="width: 130px">操作</td>
         </tr>
 
         @foreach($data["list"] as $value)
-
+            <?php $user = get_user($value->uid) ?>
             <tr>
-                <td>{{get_user($value->uid)->username}}</td>
+                <td>{{$user->username}}</td>
                 <td>{{$value["name"]}}</td>
                 <td>{{$value["address"]}}</td>
-                <td>{{$value['private_freight'] + $value['price_difference']  + $value['freight'] }}</td>
+{{--                <td>{{$value['private_freight'] + $value['price_difference']  + $value['freight'] }}</td>--}}
                 <td>{{$value["telphone"]}}</td>
+                {{--<td>{{$user->qq}}</td>--}}
                 <td>
                     <a class="order_delivers" expressid="{{$value->id}}" to_status="2">确认价格</a>
                     <br>
