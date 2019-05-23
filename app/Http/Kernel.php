@@ -7,6 +7,7 @@ use App\Http\Middleware\App;
 use App\Http\Middleware\DomainFantuanpu;
 use App\Http\Middleware\DomainLolita;
 use App\Http\Middleware\NeedLogin;
+use App\Http\Middleware\NeedLoginWeb;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -58,6 +59,7 @@ class Kernel extends HttpKernel
         'need.login' => NeedLogin::class,
         'app' => App::class,
         'domain.fantuanpu' => DomainFantuanpu::class,
-        'domain.lolita' => DomainLolita::class
+        'domain.lolita' => DomainLolita::class ,
+        'need.login.web' => NeedLoginWeb::class
     ];
 }

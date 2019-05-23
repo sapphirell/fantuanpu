@@ -539,6 +539,10 @@ class SukiWebController extends Controller
 
     public function suki_group_buying_deliver(Request $request)
     {
+//        if ($request->input("debug") == "1")
+//        {
+//            $this->data["user_info"]->uid = 49294;
+//        }
         $this->data["type"] = $request->input("type") ? : 1;
         if ($this->data["type"] == 1){
             $this->data["my_order"] = GroupBuyingOrderModel::where(["uid" => $this->data["user_info"]->uid])->get();

@@ -45,6 +45,16 @@
         padding: 5px 0px;
         color: #5a5a5a;
     }
+    .detail {
+        position: absolute;
+        width: 125px;
+        left: -32px;
+        top: -40px;
+        background: #fff;
+        padding: 7px;
+        box-shadow: 0 0 4px #ddd;
+        display: none;
+    }
 </style>
 <div class="wp" style="margin-top: 60px;    padding: 5px;">
     {{--{{dd(json_decode($data['my_order'][0]->order_info),true)}}--}}
@@ -195,7 +205,7 @@
             <tr style="background-color: #fff5f5;;border-radius: 5px;overflow: hidden;">
 
                 <td>申请发货的订单id</td>
-                <td>订单号</td>
+                <td>物流单号</td>
                 <td style="width: 80px">状态</td>
                 <td>金额</td>
                 <td style="width: 70px">操作</td>
@@ -207,7 +217,10 @@
                     <td>{{$value->waybill_no}}</td>
                     <td style="width: 80px">
                         @if($value["status"] == 1)
-                            提交申请
+                            {{
+                            ($value['private_freight'] + $value['price_difference']  + $value['freight'] > 0)?
+                                "等待补邮费" :"等待退差额"
+                             }}
                         @elseif($value["status"] == 2)
                             {{
                             ($value['private_freight'] + $value['price_difference']  + $value['freight'] > 0)?
@@ -220,9 +233,16 @@
                         @endif
 
                     </td>
-                    <td>{{
+                    <td style="position: relative">{{
                         abs($value['private_freight'] + $value['price_difference']  + $value['freight'])
-                     }}元</td>
+                     }}元
+                        <i class="fa-question-circle fa show_detail" for="{{$value->id}}" title="明细" style="margin: 5px;"></i>
+                        <span id="{{$value->id}}" style="position: absolute;" class="detail">
+                            公摊:{{$value['private_freight']}},
+                            流团退款:{{$value['price_difference']}},
+                            个人运费:{{$value['freight']}}
+                        </span>
+                    </td>
                     <td style="width: 70px">操作</td>
                 </tr>
             @endforeach
@@ -334,6 +354,14 @@
             change_count()
         })
         $("input:checkbox").trigger("click");
+
+        $(".show_detail").click(function () {
+            var id = $(this).attr("for")
+            $("#"+id).show();
+        })
+        $("body").click(function () {
+            
+        })
     })
 </script>
 @include('PC.Suki.SukiFooter')

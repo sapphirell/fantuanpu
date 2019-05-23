@@ -44,6 +44,7 @@ $(function() {
         });
     })
     $("#alert_ajax_login_suki").click(function (e) {
+        var smart_width = document.body.clientWidth > 440 ? 440 : document.body.clientWidth  * 0.8
         e.preventDefault();
         layer.open({
             type: 2,
@@ -52,7 +53,7 @@ $(function() {
             shade: 0.8,
             shadeClose: true,
             // title:'登录',
-            area: ['280px', '360px'],
+            area: [smart_width + "px", '450px'],
             offset: '100px',
             // skin: 'layui-layer-rim', //加上边框
             content: ['/suki_login?form=layer', 'no']
@@ -66,7 +67,7 @@ $(function() {
             title:false,
             closeBtn: 0,
             shadeClose: true,
-            area: ['460px', '400px'],
+            area: ['460px', '428px'],
             offset: '100px',
             class : 'asd',
             // skin: 'layui-layer-rim', //加上边框

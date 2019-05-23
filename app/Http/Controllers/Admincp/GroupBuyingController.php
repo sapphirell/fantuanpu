@@ -182,7 +182,7 @@ class GroupBuyingController extends Controller
         return view('PC/Admincp/ItemsParticipant')->with('data', $this->data);
     }
 
-    public function participant(Request $request)
+    public function  participant(Request $request)
     {
         $groupBuying = GroupBuyingModel::find($request->input("id"));
         $this->data["status"] = $groupBuying->status;
@@ -201,7 +201,8 @@ class GroupBuyingController extends Controller
                 $value->order_info  =  "";
                 foreach ($tmp as $item_id => $detail)
                 {
-                    $value->order_info .= "<span style='color: #00A0FF'>".$detail["item_detail"]["item_name"]."</span>" .":";
+
+                    $value->order_info .= "<a href='/suki_group_buying_item_info?item_id=".$item_id ." target='_blank' style='color: #00A0FF'>".$detail["item_detail"]["item_name"]."</a>" .":";
                     foreach ($detail["detail"] as $fe => $num)
                     {
                         $value->order_info .= $fe ." " . $num ." 个,";

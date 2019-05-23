@@ -236,15 +236,7 @@ Route::group([
     Route::get('/suki_login', ['uses' => 'SukiWebController@suki_login', 'as' => 'suki_login']);#suki的登录页面
     Route::get('/suki_group_buying', ['uses' => 'SukiWebController@suki_group_buying', 'as' => 'suki_group_buying']);#suki团购
     Route::get('/suki_group_buying_item_info', ['uses' => 'SukiWebController@suki_group_buying_item_info', 'as' => 'suki_group_buying_item_info']);#suki团购商品详情
-    Route::post('/suki_group_buying_item', ['uses' => 'SukiWebController@suki_group_buying_item', 'as' => 'suki_group_buying_item']);#suki团购购买一个商品
-    Route::get('/suki_group_buying_myorders', ['uses' => 'SukiWebController@suki_group_buying_myorders', 'as' => 'suki_group_buying_myorders']);#suki团购我的商品
-    Route::get('/suki_group_buying_cancel_orders', ['uses' => 'SukiWebController@suki_group_buying_cancel_orders', 'as' => 'suki_group_buying_cancel_orders']);#suki取消我的订单
-    Route::get('/suki_group_buying_paying', ['uses' => 'SukiWebController@suki_group_buying_paying', 'as' => 'suki_group_buying_paying']);#suki提交付款证明
-    Route::get('/suki_group_buying_deliver', ['uses' => 'SukiWebController@suki_group_buying_deliver', 'as' => 'suki_group_buying_deliver']);#suki发货页面
-    Route::post('/suki_group_buying_do_deliver', ['uses' => 'SukiWebController@suki_group_buying_do_deliver', 'as' => 'suki_group_buying_do_deliver']);#申请发货
 
-    Route::post('/suki_group_buying_confirm_orders', ['uses' => 'SukiWebController@suki_group_buying_confirm_orders', 'as' => 'suki_group_buying_confirm_orders']);#suki确认订单号
-    Route::post('/suki_group_buying_create_order', ['uses' => 'SukiWebController@suki_group_buying_create_order', 'as' => 'suki_group_buying_create_order']);#创建suki团购订单
 
 
     Route::post('/suki-thread', ['uses' => 'SukiWebApiController@get_thread', 'as' => 'get_thread']);#获取suki的帖子
@@ -261,7 +253,7 @@ Route::group([
     'namespace' => 'SukiWeb',
     'middleware' => [
         'domain.lolita',
-        'need.login'
+        'need.login.web'
 
     ],
 ], function () {
@@ -293,5 +285,13 @@ Route::group([
     Route::post('/suki_post_report', ['uses' => 'SukiWebApiController@suki_post_report', 'as' => 'suki_post_report']);#suki发起举报
     Route::get('/suki_set_top_thread', ['uses' => 'SukiWebApiController@suki_set_top_thread', 'as' => 'suki_set_top_thread']);#suki把帖子设置为置顶
 
+    Route::post('/suki_group_buying_item', ['uses' => 'SukiWebController@suki_group_buying_item', 'as' => 'suki_group_buying_item']);#suki团购购买一个商品
+    Route::get('/suki_group_buying_myorders', ['uses' => 'SukiWebController@suki_group_buying_myorders', 'as' => 'suki_group_buying_myorders']);#suki团购我的商品
+    Route::get('/suki_group_buying_cancel_orders', ['uses' => 'SukiWebController@suki_group_buying_cancel_orders', 'as' => 'suki_group_buying_cancel_orders']);#suki取消我的订单
+    Route::get('/suki_group_buying_paying', ['uses' => 'SukiWebController@suki_group_buying_paying', 'as' => 'suki_group_buying_paying']);#suki提交付款证明
+    Route::get('/suki_group_buying_deliver', ['uses' => 'SukiWebController@suki_group_buying_deliver', 'as' => 'suki_group_buying_deliver']);#suki发货页面
+    Route::post('/suki_group_buying_do_deliver', ['uses' => 'SukiWebController@suki_group_buying_do_deliver', 'as' => 'suki_group_buying_do_deliver']);#申请发货
 
+    Route::post('/suki_group_buying_confirm_orders', ['uses' => 'SukiWebController@suki_group_buying_confirm_orders', 'as' => 'suki_group_buying_confirm_orders']);#suki确认订单号
+    Route::post('/suki_group_buying_create_order', ['uses' => 'SukiWebController@suki_group_buying_create_order', 'as' => 'suki_group_buying_create_order']);#创建suki团购订单
 });
