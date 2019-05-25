@@ -10,28 +10,15 @@
     <div style="justify-content: flex-start;">
         @foreach($data["items"] as $item)
             <div style="display: inline-block;width:165px;float: left;padding: 10px;background: #FFFFFF;margin: 10px;box-shadow: 0 0 10px #ececec;border-radius: 5px;">
-                <p class="aline" style="width: 150px;font-weight: 900;color: #ec8b71;">{{$item["item_name"]}}</p>
-                <p class="aline" style="width: 150px;">最低成团数: {{$item["min_members"]}}个</p>
-                <p class="aline" style="width: 150px;">当前:{{$item["follow"]}}人购买了 {{$item["item_count"]}} 个</p>
-                <p class="aline" style="width: 150px;">运费:{{$item["item_freight"]}}</p>
-                {{--<p class="aline" style="width: 150px;">辛苦费/次:{{$item["premium"]}}</p>--}}
+                <p class="aline" style="width: 150px;font-weight: 900;color: #7B6164">{{$item["item_name"]}}</p>
                 <img src="{{$item["item_image"][0]}}" style="width: 148px;height: 102px">
-                <p>可选尺码</p>
-                <div style="padding-left: 8px;width: 150px;"  class="aline" >
-                    @foreach($item["item_size"] as $value)
-                        <span>{{$value}}</span>
-                    @endforeach
-                </div>
+                <p>
+                    <span style="color: #F28A96;font-size: 16px">￥{{$item["item_price"]}}</span>
+                    <span style="color: #999999;font-size: 12px;float: right">{{$item["min_members"]}}个成团</span>
+                </p>
+                <p style="color: #999999;font-size: 12px;text-align: right">{{$item["follow"]}}人购买了 {{$item["item_count"]}} 个</p>
 
-                <p>可选颜色</p>
-                <div  style="padding-left: 8px;width: 150px;" class="aline">
-                    @foreach($item["item_color"] as $value)
-                        <span>{{$value}}</span>
-                    @endforeach
-                </div>
-
-                <br>
-                <a href="/suki_group_buying_item_info?item_id={{$item["id"]}}" style="    margin-top: 10px;background: #f9c8c9;width: 100%;display: block;color: #fff;text-align: center;background-color: #ffb6c7;background-image: linear-gradient(90deg, #fbded9 0%, #ffa5b2 93%);">查看详情</a>
+                <a href="/suki_group_buying_item_info?item_id={{$item["id"]}}" style="  border-radius: 5px;  margin-top: 10px;background: #f9c8c9;width: 100%;display: block;color: #fff;text-align: center;background-color: #ffb6c7;background-image: linear-gradient(90deg, #fbded9 0%, #ffa5b2 93%);">查看详情</a>
             </div>
 
         @endforeach

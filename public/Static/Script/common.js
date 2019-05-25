@@ -76,6 +76,7 @@ $(function() {
     })
     $("#old_user").click(function (e)
     {
+        console.log(window.parent.clientWidth)
         var layer_smart_width = window.innerWidth > 650 ? "650px" : window.width + "px"
         e.preventDefault();
         parent.layer.open({
