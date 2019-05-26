@@ -214,6 +214,10 @@
             }
 
         }
+        .form-control:focus,select:focus {
+            border-color: #ffadb6!important;
+            box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(255, 114, 114, 0.6);
+        }
     </style>
 </head>
 

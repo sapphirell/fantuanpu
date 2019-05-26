@@ -3,27 +3,69 @@
 <style>
     .input-group-text {width: 80px}
 
-    .item_info_ul { padding: 0px;
-
-        display: inline-block;    float: left;}
-
-    .items_banner {width: 360px;float: left;margin-right: 10px;position: relative}
+    .item_info_ul {
+        /*padding: 0px;*/
+        /*display: inline-block;    float: left;*/
+    }
+    /*360 * 250*/
+    .items_banner {width: 480px;height:333px;float: left;margin-right: 10px;position: relative;overflow: hidden;    border-radius: 5px;}
     .check_box{    margin-left: 15px;}
+    .num {text-align: center}
+    .spinner_div button{    -webkit-appearance: button;
+        padding: 5px 10px;
+        background: #f3f3f300;
+        border: 0px;
+        font-size: 20px;
+        font-weight: 900;
+        color: #847777;}
+    .add_item,.submit_to_gb {
+        background-color: #f9bfc4!important;
+        border: 0px!important;
+        color: #fff!important;
+        box-shadow: 0 0 5px #f9bfc4;
+        padding: 5px 10px!important;
+        margin-right: 5px!important;
+    }
+    .item_info_ul {
+        float: left;
+        width: 400px;
+        margin-left:20px;
+    }
+    .order_div {
+        padding: 5px 12px;
+        background: #eee;
+        margin: 15px 0px;
+        border-radius: 5px;
+        box-shadow: 0 0 5px #ddd;
+        color: #7B6164;
+    }
+    .item_info_num {
+        color: #7B6164 ;
+        font-weight: 600;
+    }
+    button:focus {
+        outline : none;
+    }
     @media screen and (max-width: 960px) {
-        .item_info_ul {margin-top: 20px;}
+        .item_info_ul {margin-top: 10px;}
         .items_banner {width: 100%;height:250px;float: left;margin-right: 10px}
 
         .check_box{    margin-left: 0px;    width: 100%; margin-bottom: 20px}
+        .item_info_ul {
+            float: left;
+            width: 100%;
+            margin-left: 0px;
+        }
     }
 </style>
 <div class="wp" style="margin-top: 60px;    background: #fff;padding: 20px;">
 
     <div>
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item active" aria-current="page">{{$data["item_info"]->item_name}}</li>
-            </ol>
-        </nav>
+        {{--<nav aria-label="breadcrumb">--}}
+            {{--<ol class="breadcrumb">--}}
+                {{--<li class="breadcrumb-item active" aria-current="page">{{$data["item_info"]->item_name}}</li>--}}
+            {{--</ol>--}}
+        {{--</nav>--}}
 
 
 
@@ -32,7 +74,7 @@
                 <div class="carousel-inner">
                     @foreach($data["item_info"]->item_image as $key => $value)
                         <div class="carousel-item @if($key == 0) {{active}} @endif">
-                            <img class="d-block w-100"  src="{{$value}}" class="" style="height: 250px;display: inline-block;float: left">
+                            <img class="d-block w-100"  src="{{$value}}" class="" style="display: inline-block;float: left">
                         </div>
                     @endforeach
 
@@ -47,52 +89,63 @@
                 </a>
             </div>
 
-
-            <ul class="list-group col-lg-4 item_info_ul" style="">
-                <li class="list-group-item"><kbd class="">最低成团数:</kbd> {{$data["item_info"]->min_members}}个 (当前{{$data["item_member"] . "人购买了" . $data["item_follow"]}}个)</li>
-                <li class="list-group-item"><kbd class="">单价:</kbd> {{$data["item_info"]->item_price + $data["item_info"]->premium}}元</li>
-                <li class="list-group-item"><kbd class="">阿里运费(公摊):</kbd> {{$data["item_info"]->item_freight}}</li>
-                <li class="list-group-item"><kbd class="">当前公摊:</kbd> {{$data["item_member"] > 0 ? round($data["item_info"]->item_freight / $data["item_member"],2) : $data["item_info"]->item_freight }}元/每人</li>
-                {{--<li class="list-group-item"><kbd class="">辛苦费/次:</kbd> {{$data["item_info"]->premium}}元</li>--}}
-                <li class="list-group-item"><kbd class="">截团日期:</kbd> {{   $data["group_info"]->enddate }}</li>
-                {{--<li class="list-group-item"><kbd class="">预收邮费:</kbd>  10元</li>--}}
-
-
-            </ul>
-            <div class="check_box" style="padding: 11px;background: #fff;display: inline-block;float: left">
-                <p>可选尺码</p>
-                <select style="width: 200px"  class="size" name="size" >
-                    @foreach($data["item_info"]->item_size as $value)
-                        <option>
-                            <span>{{$value}}</span>
-                            {{--<input type="radio" value="{{$value}}">--}}
-                        </option>
-
-                    @endforeach
-                </select>
-
-                <p  class="text-info">可选颜色</p>
-                <select style="width: 200px"  class="color" name="color" >
-                    @foreach($data["item_info"]->item_color as $value)
-                        <option>
-                            <span class="color" name="color">{{$value}}</span>
-                        </option>
-                    @endforeach
-                </select>
-                <br>
-                <p>购买个数(填写负数为减少)</p>
-                <div>
-                    <input type="text" value="1" class="form-control num" placeholder="" style="width: 200px">
+            <div class="item_info_ul" style="float: left;">
+                <h1 style="color: #7B6164;font-size: 18px;font-weight: 500;text-align: left">{{$data["item_info"]->item_name}}</h1>
+                <div style="background: #fafafa;padding: 8px;margin-bottom: 10px">
+                    <p>单价: <span class="item_info_num">{{$data["item_info"]->item_price + $data["item_info"]->premium}}</span>元</p>
+                    <p>最低成团: <span class="item_info_num">{{$data["item_info"]->min_members}}</span>个 (当前{{$data["item_member"] . "人购买了" . $data["item_follow"]}}个)</p>
+                    <p>阿里运费: <span class="item_info_num">{{$data["item_info"]->item_freight}}</span>元 当前{{$data["item_member"] > 0 ? round($data["item_info"]->item_freight / $data["item_member"],2) : $data["item_info"]->item_freight }}元/每人</p>
+                    <p >截团日: <span class="item_info_num">{{$data["group_info"]->enddate}}</span></p>
                 </div>
-                <input type="submit" value="添加至待购清单" class="add_item">
+                <div style="margin-bottom: 10px">
+                    <span for="size" style="color: #888a85;margin-right: 15px">可选尺码</span>
+                    <select style="width: 200px;display: inline-block" class="size" name="size">
+                        @foreach($data["item_info"]->item_size as $value)
+                            <option>
+                                <span>{{$value}}</span>
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div>
+                    <span for="size"  style="color: #888a85;margin-right: 15px">可选颜色</span>
+                    <select style="width: 200px;display: inline-block" class="color" name="color">
+                        @foreach($data["item_info"]->item_color as $value)
+                            <option>
+                                <span class="color" name="color">{{$value}}</span>
+                            </option>
+                        @endforeach
+                    </select>
+
+                </div>
+                {{--<p>购买个数(填写负数为减少)</p>--}}
+                {{--<div>--}}
+                    {{--<input type="text" value="1" class="form-control num" placeholder="" style="width: 200px">--}}
+                {{--</div>--}}
+
+
+
+                <!-- // spinner plugin DOM -->
+                <div style="margin-top: 20px">
+                    <div data-trigger="spinner" class="spinner_div" style="display: inline-block">
+                        <button type="button" data-spin="down">-</button>
+                        <input type="text" value="1" data-ruler="quantity" class="form-control num" style="width: 35px;display: inline-block;">
+                        <button type="button" data-spin="up">+</button>
+                    </div>
+
+                    <input type="submit" value="加入清单" class="add_item"  style="display: inline-block">
+                    @if( $this->data["last"]->status == 2)
+                        <input type="submit" value="提交拼团" class="submit_to_gb" style="display: none">
+                    @endif
+                </div>
+
             </div>
             <div class="clear"></div>
-            <div class="input-group mb-3" style="margin-top: 20px;">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="basic-addon1">订单详情</span>
-                </div>
-                <input type="text" class="form-control buying order_info" placeholder=""  readonly="readonly" name="" >
+            <div class="order_div">
+                <span style="">清单 :</span>
+                <div style="display: inline-block" style="color: #7B6164;" class="order_info buying"></div>
             </div>
+
             @if(!$data["user_info"]->qq)
                 <div class="input-group mb-3" style="margin-top: 20px;">
                     <div class="input-group-prepend">
@@ -114,10 +167,8 @@
         <input type="hidden" value="{{$data["item_info"]->id}}" id="item_id">
         <input type="hidden" value="15" id="private_freight">
 
-
-
         @if( $this->data["last"]->status == 2)
-        <input type="submit" value="确认参与拼团" class="submit_to_gb">
+            {{--<input type="submit" value="确认参与拼团" class="submit_to_gb">--}}
         @else
             <p>本次团购已结束</p>
         @endif
@@ -133,8 +184,16 @@
         </ul>
     </div>
 </div>
+<script src="/Static/Script/spinner/jquery.spinner.min.js"></script>
 <script>
     $(document).ready(function () {
+        $("#spinner").spinner('delay', 200) //delay in ms
+        .spinner('changed', function(e, newVal, oldVal) {
+            // trigger lazed, depend on delay option.
+        })
+        .spinner('changing', function(e, newVal, oldVal) {
+            // trigger immediately
+        });
         $(".add_item").click(function () {
             @if(!$data["user_info"]->uid)
                 alert("请先登录");
@@ -151,7 +210,9 @@
             }
 
             var items = size + "_" + color
-            var now_chat = $(".buying").val() ? JSON.parse($(".buying").val()) : {};
+            var now_chat = $(".buying").text() ? JSON.parse($(".buying").text()) : {};
+
+            $(".submit_to_gb").show()
 
             if (now_chat[items] === 0 &&  parseInt(num) < 0)
             {
@@ -169,7 +230,7 @@
             console.log(now_chat);
             console.log(JSON.stringify(now_chat));
 
-            $(".buying").val(JSON.stringify(now_chat))
+            $(".buying").text(JSON.stringify(now_chat))
             var item_price = parseFloat($("#items_price").val());
             var premium = parseFloat($("#premium").val());
             var item_freight = parseFloat($("#item_freight").val());
@@ -190,7 +251,7 @@
             var name = $(".name").val()
             var address = $(".address").val()
             var telphone = $(".telphone").val()
-            var order_info = $(".order_info").val()
+            var order_info = $(".order_info").text()
             var item_id = $("#item_id").val()
             var qq = $(".qq").val();
             if (!order_info)
@@ -203,7 +264,7 @@
                 return false;
             }
             var fd = {
-                order_info : $(".order_info").val(),
+                order_info : $(".order_info").text(),
                 item_id: $("#item_id").val(),
                 qq:qq
             }
