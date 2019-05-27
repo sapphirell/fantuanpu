@@ -77,7 +77,7 @@
             background: #fff;
             position: absolute;
             width: 250px;
-            height: 320px;
+            height: 333px;
             top: 48px;
             right: 10px;
             box-shadow: 0 0 15px #0000001c;
@@ -360,7 +360,9 @@
                     <li class="trans">
                         <a href="/suki_group_buying_myorders?type=last" class="trans"><img style="" src="/Image/tixing2.png">团购列表</a>
                     </li>
-
+                    <li class="trans">
+                        <a href="/suki_show_task_list" class="trans"><img style="" src="/Image/tixing2.png">任务大厅</a>
+                    </li>
                 </ul>
             </div>
 

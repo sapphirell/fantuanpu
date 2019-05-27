@@ -302,5 +302,10 @@ class SukiWebController extends Controller
         return view('PC/Suki/SukiCollection')->with('data', $this->data);
     }
 
+    //suki任务大厅
+    public function suki_show_task_list(Request $request)
+    {
+        return view('PC/Suki/SukiTaskList')->with('data', $this->data);
+    }
 
 }
