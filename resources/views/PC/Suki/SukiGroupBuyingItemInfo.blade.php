@@ -134,7 +134,8 @@
                     </div>
 
                     <input type="submit" value="加入清单" class="add_item"  style="display: inline-block">
-                    @if( $this->data["last"]->status == 2)
+
+                    @if( $data["group_info"]->status == 2)
                         <input type="submit" value="提交拼团" class="submit_to_gb" style="display: none">
                     @endif
                 </div>
