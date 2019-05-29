@@ -64,55 +64,60 @@ class GroupBuyingPageController extends Controller
 
         return view('PC/Suki/SukiGroupBuyingItemInfo')->with('data', $this->data);;
     }
-
     public function suki_group_buying_myorders(Request $request)
     {
-        $type = $request->input("type") ?: "all";
-        $my_orders = GroupBuyingLogModel::leftJoin("pre_group_buying_item","pre_group_buying_item.id","=","pre_group_buying_log.item_id")
-            ->select(DB::raw("pre_group_buying_log.* ,pre_group_buying_item.*,pre_group_buying_log.id as log_id"))
-            ->where(["pre_group_buying_log.uid" => $this->data['user_info']->uid]);
-        $last_group = GroupBuyingModel::getLastGroup(false);
-        $orderInfo = GroupBuyingOrderModel::where("uid",$this->data["user_info"]->uid)->where("group_id",$last_group->id)->orderBy("id","desc")->first();
-        if ($type == "all")
+        //取正在运营中的一期团购里,该用户买的所有商品
+        $group_info = GroupBuyingModel::getLastGroup();
+        if ($group_info)
         {
-            $my_orders = $my_orders->orderBy("pre_group_buying_log.id", "desc")->get();
+            $this->data["logs"] = GroupBuyingLogModel::getNotCancelLog($group_info->id,true,$this->data["user_info"]->uid);
         }
-        else
-        {
-
-            $gid        = empty($last_group) ? 0 : $last_group->id;
-            $my_orders  = $my_orders->where("pre_group_buying_log.group_id" ,$gid)->where("pre_group_buying_log.status","!=", "4")->get();
-            //当前是否可以提交付款证明
-
-            $this->data["order_commit_status"] = empty($orderInfo->status) ? -1 : $orderInfo->status;
-
-        }
-
-        $this->data["orders"] = $my_orders;
-
-        $this->data["order_info"]["status"] = 0;
-
-        $this->data["order_info"]["private_freight"] = $orderInfo->private_freight;
-        $this->data["order_info"]["all_price"] = $orderInfo->order_price;
-        $this->data["order_info"]["true_private_freight"] = $orderInfo->true_private_freight;
-        $this->data["order_info"]["true_price"] = $orderInfo->true_price;
-        $this->data["order_info"]["id"] = $orderInfo->id;
-
-
-
-
-        foreach ($this->data["orders"] as & $value)
-        {
-            $value->order_info = json_decode($value->order_info, true);
-            //订单的集合状态
-            if (!$this->data["order_info"]["status"] || $this->data["order_info"]["status"] == $value->status)
-                $this->data["order_info"]["status"] = $value->status ;
-        }
-
-        //        dd($this->data["orders"] );
-
+        dd(  $this->data["logs"]);
         return view('PC/Suki/SukiGroupBuyingMyOrders')->with('data', $this->data);
     }
+//    public function suki_group_buying_myorders(Request $request)
+//    {
+//        $type = $request->input("type") ?: "all";
+//        $my_orders = GroupBuyingLogModel::leftJoin("pre_group_buying_item","pre_group_buying_item.id","=","pre_group_buying_log.item_id")
+//            ->select(DB::raw("pre_group_buying_log.* ,pre_group_buying_item.*,pre_group_buying_log.id as log_id"))
+//            ->where(["pre_group_buying_log.uid" => $this->data['user_info']->uid]);
+//        $last_group = GroupBuyingModel::getLastGroup(false);
+//        $orderInfo = GroupBuyingOrderModel::where("uid",$this->data["user_info"]->uid)->where("group_id",$last_group->id)->orderBy("id","desc")->first();
+//        if ($type == "all")
+//        {
+//            $my_orders = $my_orders->orderBy("pre_group_buying_log.id", "desc")->get();
+//        }
+//        else
+//        {
+//
+//            $gid        = empty($last_group) ? 0 : $last_group->id;
+//            $my_orders  = $my_orders->where("pre_group_buying_log.group_id" ,$gid)->where("pre_group_buying_log.status","!=", "4")->get();
+//            //当前是否可以提交付款证明
+//
+//            $this->data["order_commit_status"] = empty($orderInfo->status) ? -1 : $orderInfo->status;
+//
+//        }
+//
+//        $this->data["orders"] = $my_orders;
+//        $this->data["order_info"]["status"] = 0;
+//        $this->data["order_info"]["private_freight"] = $orderInfo->private_freight;
+//        $this->data["order_info"]["all_price"] = $orderInfo->order_price;
+//        $this->data["order_info"]["true_private_freight"] = $orderInfo->true_private_freight;
+//        $this->data["order_info"]["true_price"] = $orderInfo->true_price;
+//        $this->data["order_info"]["id"] = $orderInfo->id;
+//
+//        foreach ($this->data["orders"] as & $value)
+//        {
+//            $value->order_info = json_decode($value->order_info, true);
+//            //订单的集合状态
+//            if (!$this->data["order_info"]["status"] || $this->data["order_info"]["status"] == $value->status)
+//                $this->data["order_info"]["status"] = $value->status ;
+//        }
+//
+//        //        dd($this->data["orders"] );
+//
+//        return view('PC/Suki/SukiGroupBuyingMyOrders')->with('data', $this->data);
+//    }
 
     public function suki_group_buying_paying(Request $request)
     {

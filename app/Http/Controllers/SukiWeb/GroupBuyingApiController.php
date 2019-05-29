@@ -123,12 +123,15 @@ class GroupBuyingApiController extends Controller
             ->whereIn('id',$request->input("orders"))->get();
         $private_freight = 0;
         $price_difference = 0;
+        $log_arr = [];
         foreach ($user_orders as $value)
         {
             $private_freight += ($value->true_private_freight?:$value->private_freight);
             $price_difference += (($value->true_price ? ($value->true_price - $value->order_price):0));
             $value->status = 6;
             $value->save();
+            //合并要标记为发货的log_id
+            $log_arr = array_merge($log_arr, json_decode($value->log_id,true));
         }
         $express = new GroupBuyingExpressModel();
         $express->freight = $freight;
@@ -141,6 +144,14 @@ class GroupBuyingApiController extends Controller
         $express->uid = $this->data["user_info"]->uid;
         $express->orders = json_encode($request->input("orders"));
         $express->save();
+        //把商品购买的信息都编辑为5
+
+        foreach ($log_arr as $log_id)
+        {
+            $log = GroupBuyingLogModel::find($log_id);
+            $log->status = 5;
+            $log->save();
+        }
         return self::response();
     }
     public function suki_group_buying_confirm_orders(Request $request)
