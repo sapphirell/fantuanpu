@@ -35,6 +35,29 @@ class GroupBuyingLogModel extends Model
         $return["member_count"] = count($member);
         return $return;
     }
+    //[4,6,7,9,10,11]
+    public static function getLogs($uid,$filter_options)
+    {
+        $log = self::leftJoin("pre_group_buying_item",function ($join) {
+            $join->on("pre_group_buying_log.item_id","=","pre_group_buying_item.id");
+        })
+            ->select(DB::raw("pre_group_buying_item.*,pre_group_buying_log.*,pre_group_buying_log.premium as order_premium"))
+            ->where("uid", $uid);
+
+        foreach ($filter_options as $status)
+        {
+            $log = $log
+                ->where("status","!=",$status);
+        }
+        return $log->get();
+//        $log = $log
+//            ->where("status","!=",4)//取消
+//            ->where("status","!=",7)//流团
+//            ->where("status","!=",9)//下架
+//            ->where("status","!=",10)//受影响流团
+//            ->where("status","!=",11)//跑单
+//            ->get();
+    }
 
     public static function getNotCancelLog($group_id, $counter = true, $uid = 0)
     {
@@ -56,18 +79,18 @@ class GroupBuyingLogModel extends Model
             ->where("status","!=",11)//跑单
             ->get();
         $data = [];
-        if ($counter)
+        if (!$counter)
         {
-            foreach ($log as $value)
-            {
-                $data[User_model::find($value->uid)->username]["item"] .= $value->item_name . $value->order_info . "<br />";
-                $data[User_model::find($value->uid)->username]["price"] += $value->order_price;
-                $data[User_model::find($value->uid)->username]["premium"] += $value->order_premium;
-                $data[User_model::find($value->uid)->username]["uid"] = $value->uid;
-            }
-
+            return $log;
         }
 
+        foreach ($log as $value)
+        {
+            $data[User_model::find($value->uid)->username]["item"] .= $value->item_name . $value->order_info . "<br />";
+            $data[User_model::find($value->uid)->username]["price"] += $value->order_price;
+            $data[User_model::find($value->uid)->username]["premium"] += $value->order_premium;
+            $data[User_model::find($value->uid)->username]["uid"] = $value->uid;
+        }
 
         return $data;
     }

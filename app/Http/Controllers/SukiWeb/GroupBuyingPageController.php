@@ -67,12 +67,13 @@ class GroupBuyingPageController extends Controller
     public function suki_group_buying_myorders(Request $request)
     {
         //取正在运营中的一期团购里,该用户买的所有商品
-        $group_info = GroupBuyingModel::getLastGroup();
-        if ($group_info)
-        {
-            $this->data["logs"] = GroupBuyingLogModel::getNotCancelLog($group_info->id,true,$this->data["user_info"]->uid);
-        }
-        dd(  $this->data["logs"]);
+//        $group_info = GroupBuyingModel::getLastGroup();
+        //正在关注的
+        $this->data["active_logs"] = GroupBuyingLogModel::getLogs($this->data["user_info"]->uid,[4,6,7,9,10,11]);
+        //所有的
+        $this->data["history_logs"] = GroupBuyingLogModel::getLogs($this->data["user_info"]->uid,[]);
+
+//        dd($this->data["active_logs"]);
         return view('PC/Suki/SukiGroupBuyingMyOrders')->with('data', $this->data);
     }
 //    public function suki_group_buying_myorders(Request $request)
