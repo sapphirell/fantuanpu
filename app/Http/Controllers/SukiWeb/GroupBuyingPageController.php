@@ -44,12 +44,6 @@ class GroupBuyingPageController extends Controller
 
     public function suki_group_buying_item_info(Request $request)
     {
-        //        //上一次购买记录
-        //        $this->data["last"] = GroupBuyingLogModel::where(["uid" => $this->data["user_info"]->uid])->orderBy(
-        //            "create_date",
-        //            "desc"
-        //        )->first();
-
 
         $this->data["item_info"] = GroupBuyingItemModel::find($request->input("item_id"));
         $this->data["group_info"] = GroupBuyingModel::find($this->data["item_info"]->group_id);
