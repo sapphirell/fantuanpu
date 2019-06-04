@@ -48,23 +48,31 @@
         padding-left: 5px;
     }
     .my_log_info {
-        padding:0 10px;
+        padding: 0 10px 0 20px;
     }
     .tab_h {
         z-index: 4;
         position: relative;
         cursor: pointer;
+        border: 1px solid #fac6c8;
+        border-width: 1px 1px 0px 1px;
+        display: inline-block;
+        float: left;
+        border-radius: 5px 5px 0px 0px;
+        overflow: hidden;
     }
     .tab_h span {
         background: #ffc6c5;
         float: left;
         color: #fdfdfd;
-        padding: 5px 10px;
+        padding: 8px 10px;
         background-image: linear-gradient(180deg, #fbded9 0%, #ffa5b2 93%);
+
     }
     .tab_h span.onchange {
         background: #f1d0b2;
-        background-image: linear-gradient(180deg, #cec6ab 0%, #ffd3b4 93%);
+        background-image: linear-gradient(180deg, #fff2f4 0%, #ffffff 93%);
+        color: #bd6c6c;
     }
     .tab_m {
         border: 1px solid #fac6c8;
@@ -72,7 +80,28 @@
         top: -1px;
         border-radius: 0px 5px 5px 5px;
         padding: 10px;
+        float: left;
+        width: 100%;
     }
+    .compute_item {
+        color: #7B6164;
+        padding: 5px;
+    }
+    .compute .title {
+        color: #F28A96;
+        font-size: 14px;
+    }
+
+    .go_to_pay {    border-radius: 5px;
+        margin-top: 10px;
+        background: #f9c8c9;
+        width: 100%;
+        display: block;
+
+        text-align: center;
+        background-color: #ffb6c7;
+        color: #FFFFFF!important;
+        background-image: linear-gradient(90deg, #fbded9 0%, #ffa5b2 93%);}
     @media screen and (max-width: 960px) {
         .price_status {
             margin-top: 10px;
@@ -90,6 +119,9 @@
     }
 </style>
 <div class="wp" style="margin-top: 60px;    padding: 5px;background-color: #fff;">
+    @if(empty($data["active_logs"]))
+        <p>暂无</p>
+    @endif
     @foreach($data["active_logs"] as $value)
         <?php $order_info = json_decode($value["order_info"],true); ?>
         <div class="my_items_log">
@@ -143,18 +175,32 @@
         </div>
     @endforeach
 
-    <div>
+    <div style="margin: 40px 30px 40px 10px;">
         <div class="tab_h">
             <span class="onchange trans">价格计算</span>
             <span class="trans">发货管理</span>
             <span class="trans">发货管理</span>
         </div>
-        <div class="tab_m">
-            <div>1</div>
+        <div class="tab_m compute">
+            <div>
+                <div class="compute_item">
+                    <span class="title">总价估算</span>
+                    ￥
+                    <span class="font-weight: 900;">0</span>
+                </div>
+                <div class="compute_item">
+                    <span class="title">其中运费</span>
+                    ￥
+                    <span class="font-weight: 900;">0</span>
+                </div>
+
+                <a class="go_to_pay">去付款</a>
+            </div>
             <div>2</div>
             <div>3</div>
         </div>
     </div>
+    <div class="clear"></div>
 </div>
 
 
