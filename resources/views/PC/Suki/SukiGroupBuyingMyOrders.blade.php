@@ -48,7 +48,7 @@
         padding-left: 5px;
     }
     .my_log_info {
-        padding: 0 10px 0 20px;
+        padding: 0 0 0 20px;
     }
     .tab_h {
         z-index: 4;
@@ -84,14 +84,17 @@
         width: 100%;
     }
     .compute_item {
-        color: #7B6164;
+        color: #F28A96;
+        font-size: 16px;
         padding: 5px;
     }
     .compute .title {
-        color: #F28A96;
-        font-size: 14px;
+        color: #777;
+        font-size: 12px;
     }
-
+    .compute p {
+        color: #bbb;
+    }
     .go_to_pay {    border-radius: 5px;
         margin-top: 10px;
         background: #f9c8c9;
@@ -102,9 +105,13 @@
         background-color: #ffb6c7;
         color: #FFFFFF!important;
         background-image: linear-gradient(90deg, #fbded9 0%, #ffa5b2 93%);}
+    .my_order_detail {
+        color: #777777;
+    }
     @media screen and (max-width: 960px) {
         .price_status {
             margin-top: 10px;
+             padding-left: 0px;
         }
         .logs_image {
             width: 80px;
@@ -122,10 +129,12 @@
     @if(empty($data["active_logs"]))
         <p>暂无</p>
     @endif
+    <?php $sum_price = 0; $private_freight = 0; ?>
     @foreach($data["active_logs"] as $value)
+        {{--{{dd($value)}}--}}
         <?php $order_info = json_decode($value["order_info"],true); ?>
         <div class="my_items_log">
-            <a href="/suki_group_buying_item_info?item_id={{$value->id}}" class="logs_image">
+            <a href="/suki_group_buying_item_info?item_id={{$value->item_id}}" class="logs_image">
                 <img src="{{$value["item_image"]}}" class="logs_image" style="">
             </a>
             <div class="my_log_info">
@@ -137,10 +146,14 @@
                     @endforeach
 
                 </div>
+                <?php $sum_price += in_array($value->status,[1,2,3,5,8])? $value["order_price"] : 0; ?>
+
+                <?php $private_freight += in_array($value->status,[1,2,3,5,8])? $value["sum_private_freight"] : 0; ?>
                 <div class="price_status" style="">
-                    <span style="margin-top: 5px;margin-bottom: 5px;">价格</span>
-                    <span class="price">￥{{$value["order_price"]}}</span>
                     <p>
+                        <span style="margin-top: 5px;margin-bottom: 5px;">价格</span>
+                        <span class="price">￥{{$value["order_price"]}}</span>
+                        <span> / </span>
                         @if($value->status == 1)
                             <span style="display: inline">等待拼团</span>
                             <a class="suki_group_buying_cancel_orders" onclick=""
@@ -179,29 +192,187 @@
         <div class="tab_h">
             <span class="onchange trans">价格计算</span>
             <span class="trans">发货管理</span>
-            <span class="trans">发货管理</span>
+            <span class="trans">运单管理</span>
         </div>
         <div class="tab_m compute">
             <div>
                 <div class="compute_item">
                     <span class="title">总价估算</span>
                     ￥
-                    <span class="font-weight: 900;">0</span>
+                    <span class="font-weight: 900;">{{$sum_price + $private_freight}}</span>
                 </div>
                 <div class="compute_item">
-                    <span class="title">其中运费</span>
-                    ￥
-                    <span class="font-weight: 900;">0</span>
+                    <span class="title">明细</span>
+                </div>
+                <div style="padding-left: 30px">
+                    <p>
+                        <span>本体 ￥</span><span class="font-weight: 900;">{{$sum_price}}</span>
+                    </p>
+                    <p>
+                        <span>公摊 ￥</span><span class="font-weight: 900;">{{$private_freight}}</span>
+                    </p>
                 </div>
 
                 <a class="go_to_pay">去付款</a>
             </div>
-            <div>2</div>
+            <div>
+                @if($data["address"])
+                    <table >
+                        @foreach($data["my_order"] as $order)
+                            {{--{{dd($order)}}--}}
+                            <?php $order_info = json_decode($order->order_info,true); unset($order_info["log_id"]); ?>
+
+                            <tr style="    font-size: 12px;">
+                                <td style="width: 70px">
+                                    @if($order->group_id > 0)
+                                        <p>{{$order->group_id}}期团购</p>
+                                    @else
+                                        <p>现货商品</p>
+                                    @endif
+                                </td>
+                                <td>
+                                    {{--{{dd($order_info)}}--}}
+                                    <div>
+                                        {{($order->true_private_freight?:$order->private_freight) - $order->order_price + ($order->true_price?:$order->order_price)}}
+                                        <a>详情</a>
+                                    </div>
+                                    <div>
+                                        <p>
+                                            @foreach($order_info as $oi)
+                                                <span>{{$oi["item_detail"]["item_name"]}}</span>
+                                                <br>
+                                                @foreach($oi["detail"] as $type => $num)
+                                                    <span class="my_order_detail">{{$type}} {{$num}}个</span>
+                                                    <br>
+                                                @endforeach
+                                            @endforeach
+                                        </p>
+                                    </div>
+
+
+                                </td>
+                                <td style="width: 30px;">
+                                    @if($value->status == 4 || 1)
+                                        <label>
+                                            勾选
+                                            <input type="checkbox" class="check" orderId="{{$value->id}}"
+                                                   price="{{(
+                                               $order->true_private_freight?:$order->private_freight)
+                                               - $order->order_price
+                                               + ($order->true_price?:$order->order_price)
+                                           }}">
+                                        </label>
+                                    @endif
+                                </td>
+                            </tr>
+                        @endforeach
+                    </table>
+                    <div>
+                        <select class="select_province" style="width: 100px;padding: 0px;font-size: 12px;height: 25px;padding-left: 15px">
+                            <option value="0|0">请选择!!</option>
+                            <option value="5.5|1">苏浙沪皖</option>
+                            <option value="7|2">京津冀晋辽吉黑闽赣鲁豫鄂湘粤桂琼川贵滇渝陕甘青宁</option>
+                            <option value="18|3">藏疆</option>
+                        </select>
+
+                        <span class="count_title">需支付</span>:
+                        <span class="count_price">0</span>元
+
+                        <a class="submit_check btn btn-info" style="float: right;color: #FFFFFF">
+                            [申请发货勾选的]
+                        </a>
+                    </div>
+                @else
+
+                @endif
+
+
+
+
+            </div>
             <div>3</div>
         </div>
     </div>
     <div class="clear"></div>
 </div>
 
+<script>
+    var pf = 0;//邮费
+    var count_price = 0;
+    var title = "需要支付";
+    var orders = [];
+    var province_type;
+    function change_count() {
+        if (count_price < 0 )
+        {
+            title = "将退还"
+        }
+        else
+        {
+            title = "需支付"
+        }
+        $(".count_price").text(Math.abs(count_price+pf));
+        $(".count_title").text(title);
+    }
+    $(".check").change(function (e) {
+        var orderId = $(this).attr("orderId");
+        var price = parseFloat($(this).attr("price"))
+        var check = $(this).is(':checked')
+        if (check)
+        {
+//                console.log(price)
+            count_price += price
+            orders.push(orderId)
+        }
+        else
+        {
+            count_price -= price
+            orders.remove(orderId)
+        }
 
+        change_count()
+
+        console.log(orders)
+    });
+    $(".submit_check").click(function (e) {
+        var address = $(".address").val();
+        var telphone = $(".telphone").val();
+        var name = $(".name").val();
+        if(!province_type)
+        {
+            alert("请先选择发货地域")
+            return ;
+        }
+        var fd = {
+            "name":name,
+            "address" : address,
+            "telphone" : telphone,
+            "orders" : orders,
+            "province_type" :province_type
+        }
+        console.log(fd)
+        if (!orders || !pf || !name || !address ||  !telphone || !province_type)
+        {
+            alert("须填写完整")
+            return ;
+        }
+        $.post("/suki_group_buying_do_deliver",fd,function (e) {
+            alert(e.msg);
+            if (e.ret == 200)
+            {
+                window.location.href = "/suki_group_buying_deliver?type=2"
+            }
+
+        })
+    });
+
+    $(".select_province").change(function () {
+        var s = $(this).val().split("|");
+
+        pf = parseFloat(s[0]);
+        province_type = s[1];
+        change_count()
+    });
+    $("input:checkbox").trigger("click");
+</script>
 @include('PC.Suki.SukiFooter')

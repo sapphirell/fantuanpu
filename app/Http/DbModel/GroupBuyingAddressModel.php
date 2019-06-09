@@ -21,4 +21,8 @@ class GroupBuyingAddressModel extends Model
         $ad->save();
         return $ad;
     }
+    public static function get_my_address(int $uid)
+    {
+        return self::where(["uid" => $uid])->select()->get();
+    }
 }

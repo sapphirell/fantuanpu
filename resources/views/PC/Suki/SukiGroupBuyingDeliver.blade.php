@@ -258,18 +258,18 @@
 
 </div>
 <script>
-    Array.prototype.indexOf = function(val) {
-        for (var i = 0; i < this.length; i++) {
-            if (this[i] == val) return i;
-        }
-        return -1;
-    };
-    Array.prototype.remove = function(val) {
-        var index = this.indexOf(val);
-        if (index > -1) {
-            this.splice(index, 1);
-        }
-    };
+//    Array.prototype.indexOf = function(val) {
+//        for (var i = 0; i < this.length; i++) {
+//            if (this[i] == val) return i;
+//        }
+//        return -1;
+//    };
+//    Array.prototype.remove = function(val) {
+//        var index = this.indexOf(val);
+//        if (index > -1) {
+//            this.splice(index, 1);
+//        }
+//    };
     var pf = 0
     var count_price = 0
     var title = "需要支付"

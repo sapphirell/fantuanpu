@@ -56,19 +56,30 @@ class GroupBuyingPageController extends Controller
         $this->data["item_member"] = $item_follow["member_count"];
 
 
-        return view('PC/Suki/SukiGroupBuyingItemInfo')->with('data', $this->data);;
+        return view('PC/Suki/SukiGroupBuyingItemInfo')->with('data', $this->data);
     }
     public function suki_group_buying_myorders(Request $request)
     {
-        //取正在运营中的一期团购里,该用户买的所有商品
-//        $group_info = GroupBuyingModel::getLastGroup();
-        //正在关注的
+        //正在进行的
         $this->data["active_logs"] = GroupBuyingLogModel::getLogs($this->data["user_info"]->uid,[4,6,7,9,10,11]);
+        foreach ($this->data["active_logs"] as $value)
+        {
+//            dd($value["item_id"]);
+            $value->sum_private_freight = round($value->item_freight / GroupBuyingLogModel::getNotCancelItemsLog($value["item_id"])['member_count'],2);
+//            dd($mem);
+        }
         //所有的
         $this->data["history_logs"] = GroupBuyingLogModel::getLogs($this->data["user_info"]->uid,[]);
-
-//        dd($this->data["active_logs"]);
+        //订单列表
+        $this->data["my_order"] = GroupBuyingOrderModel::where(["uid" => $this->data["user_info"]->uid])->get();
+//        dd($this->data["my_order"] );
         return view('PC/Suki/SukiGroupBuyingMyOrders')->with('data', $this->data);
+    }
+    public function suki_group_address_manager(Request $request)
+    {
+        $this->data["my_address"] = GroupBuyingAddressModel::get_my_address($this->data["user_info"]->uid);
+//        dd($this->data["my_address"] );
+        return view('PC/Suki/SukiGroupBuyingAddressManager')->with('data', $this->data);
     }
 //    public function suki_group_buying_myorders(Request $request)
 //    {
