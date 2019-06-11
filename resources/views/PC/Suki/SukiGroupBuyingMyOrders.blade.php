@@ -217,7 +217,7 @@
             </div>
             <div>
                 @if($data["address"])
-                    <table >
+                    <table style="width: 100%">
                         @foreach($data["my_order"] as $order)
                             {{--{{dd($order)}}--}}
                             <?php $order_info = json_decode($order->order_info,true); unset($order_info["log_id"]); ?>
@@ -283,7 +283,7 @@
                         </a>
                     </div>
                 @else
-
+                    <a href="">还没有设置收货地址,现在去设置?</a>
                 @endif
 
 

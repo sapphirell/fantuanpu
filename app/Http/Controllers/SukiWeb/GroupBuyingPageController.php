@@ -72,10 +72,12 @@ class GroupBuyingPageController extends Controller
         $this->data["history_logs"] = GroupBuyingLogModel::getLogs($this->data["user_info"]->uid,[]);
         //订单列表
         $this->data["my_order"] = GroupBuyingOrderModel::where(["uid" => $this->data["user_info"]->uid])->get();
+        //地址
+        $this->data["address"] = GroupBuyingAddressModel::get_my_address($this->data["user_info"]->uid);
 //        dd($this->data["my_order"] );
         return view('PC/Suki/SukiGroupBuyingMyOrders')->with('data', $this->data);
     }
-    public function suki_group_address_manager(Request $request)
+    public function suki_group_buying_address_manager(Request $request)
     {
         $this->data["my_address"] = GroupBuyingAddressModel::get_my_address($this->data["user_info"]->uid);
 //        dd($this->data["my_address"] );
@@ -133,10 +135,6 @@ class GroupBuyingPageController extends Controller
 
     public function suki_group_buying_deliver(Request $request)
     {
-        //        if ($request->input("debug") == "1")
-        //        {
-        //            $this->data["user_info"]->uid = 49294;
-        //        }
         $this->data["type"] = $request->input("type") ? : 1;
         if ($this->data["type"] == 1){
             $this->data["my_order"] = GroupBuyingOrderModel::where(["uid" => $this->data["user_info"]->uid])->get();
@@ -167,6 +165,7 @@ class GroupBuyingPageController extends Controller
 
         return view('PC/Suki/SukiGroupBuyingDeliver')->with('data', $this->data);
     }
+
 
 
 }

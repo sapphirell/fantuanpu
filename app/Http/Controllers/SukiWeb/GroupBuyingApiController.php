@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\SukiWeb;
 
+use App\Http\DbModel\GroupBuyingAddressModel;
 use Illuminate\Http\Request;
 
 use App\Http\Controllers\Controller;
@@ -204,6 +205,30 @@ class GroupBuyingApiController extends Controller
         $this->data["orders"]->status = 4;
         $this->data["orders"]->save();
 
+        return self::response();
+    }
+
+    public function save_address(Request $request)
+    {
+        if (!$request->input("name"))
+        {
+            return self::response([],40001,"缺少参数name");
+        }
+        if (!$request->input("address"))
+        {
+            return self::response([],40001,"缺少参数address");
+        }
+        if (!$request->input("telphone"))
+        {
+            return self::response([],40001,"缺少参数telphone");
+        }
+
+        GroupBuyingAddressModel::save_address(
+            $request->input("name"),
+            $request->input("address"),
+            $request->input("telphone"),
+            $this->data["user_info"]->uid
+        );
         return self::response();
     }
 }

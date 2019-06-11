@@ -455,7 +455,7 @@ class UserBaseController extends Controller
         $user = User_model::find($user_session->uid);
         $user->sellmedal = 2;
         $user->save();
-        User_model::flushUserCache();
+        User_model::flushUserCache(session('user_info')->uid);
 //        dd($user_score);
         CommonMemberCount::BatchAddUserCount($user_session->uid,$user_score);
         //标记用户为已经兑换
