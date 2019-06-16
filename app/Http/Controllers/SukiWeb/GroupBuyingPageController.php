@@ -27,7 +27,8 @@ class GroupBuyingPageController extends Controller
     public function suki_group_buying(Request $request)
     {
         $this->data['lastGroupingInfo'] = GroupBuyingModel::getLastGroup();
-        if ($this->data['lastGroupingInfo'])
+//        $group_id = $type == "stock" ? 0 : $this->data['lastGroupingInfo']->id;
+        if (  $this->data['lastGroupingInfo'])
         {
             $this->data['items'] = GroupBuyingItemModel::getListInfo($this->data['lastGroupingInfo']->id,false);
             foreach ($this->data['items'] as & $value)
@@ -41,10 +42,32 @@ class GroupBuyingPageController extends Controller
 
         return view('PC/Suki/SukiGroupBuying')->with('data', $this->data);
     }
+    public function suki_group_buying_stock(Request $request)
+    {
+        $this->data["type"] = "stock";
+        $this->data['items'] = GroupBuyingItemModel::getListInfo(0,false);
+        foreach ($this->data['items'] as & $value)
+        {
+            $value['item_image'] = explode("|", $value['item_image']);
+            $value['item_color'] = explode("|", $value['item_color']);
+            $value['item_size'] = explode("|", $value['item_size']);
+        }
+        return view('PC/Suki/SukiGroupBuyingStock')->with('data', $this->data);
+    }
 
+    public function suki_group_buying_stock_item(Request $request)
+    {
+        $this->data["item_info"] = GroupBuyingItemModel::find($request->input("item_id"));
+        $this->data["group_info"] = GroupBuyingModel::find($this->data["item_info"]->group_id);
+
+        $this->data["item_info"]->item_image = explode("|", $this->data["item_info"]->item_image);
+        $this->data["item_info"]->item_color = explode("|", $this->data["item_info"]->item_color);
+        $this->data["item_info"]->item_size = explode("|", $this->data["item_info"]->item_size);
+
+        return view('PC/Suki/SukiGroupBuyingStockItem')->with('data', $this->data);
+    }
     public function suki_group_buying_item_info(Request $request)
     {
-
         $this->data["item_info"] = GroupBuyingItemModel::find($request->input("item_id"));
         $this->data["group_info"] = GroupBuyingModel::find($this->data["item_info"]->group_id);
 

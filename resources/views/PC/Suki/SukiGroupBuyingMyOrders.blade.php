@@ -217,6 +217,14 @@
             </div>
             <div>
                 @if($data["address"])
+                    <div>
+                        <p>
+                            当前收货地址:{{$data["address"]->address}}
+                            <a href="/suki_group_buying_address_manager">修改</a>
+                        </p>
+
+                    </div>
+
                     <table style="width: 100%">
                         @foreach($data["my_order"] as $order)
                             {{--{{dd($order)}}--}}
@@ -232,10 +240,10 @@
                                 </td>
                                 <td>
                                     {{--{{dd($order_info)}}--}}
-                                    <div>
-                                        {{($order->true_private_freight?:$order->private_freight) - $order->order_price + ($order->true_price?:$order->order_price)}}
-                                        <a>详情</a>
-                                    </div>
+                                    {{--<div>--}}
+                                        {{--{{($order->true_private_freight?:$order->private_freight) - $order->order_price + ($order->true_price?:$order->order_price)}}--}}
+                                      {{----}}
+                                    {{--</div>--}}
                                     <div>
                                         <p>
                                             @foreach($order_info as $oi)
@@ -283,7 +291,7 @@
                         </a>
                     </div>
                 @else
-                    <a href="">还没有设置收货地址,现在去设置?</a>
+                    <a href="/suki_group_buying_address_manager">还没有设置收货地址,现在去设置?</a>
                 @endif
 
 

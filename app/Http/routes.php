@@ -247,6 +247,8 @@ Route::group([
      * 未登录下的团购页面
      */
     Route::get('/suki_group_buying', ['uses' => 'GroupBuyingPageController@suki_group_buying', 'as' => 'suki_group_buying']);#suki团购
+    Route::get('/suki_group_buying_stock', ['uses' => 'GroupBuyingPageController@suki_group_buying_stock', 'as' => 'suki_group_buying_stock']);#suki团购现货购买
+    Route::get('/suki_group_buying_stock_item', ['uses' => 'GroupBuyingPageController@suki_group_buying_stock_item', 'as' => 'suki_group_buying_stock_item']);#suki团购现货购买详情
     Route::get('/suki_group_buying_item_info', ['uses' => 'GroupBuyingPageController@suki_group_buying_item_info', 'as' => 'suki_group_buying_item_info']);#suki团购商品详情
 });
 //Suki web 必须登录的
@@ -304,4 +306,5 @@ Route::group([
     Route::post('/suki_group_buying_do_deliver', ['uses' => 'GroupBuyingApiController@suki_group_buying_do_deliver', 'as' => 'suki_group_buying_do_deliver']);#申请发货
     Route::post('/suki_group_buying_confirm_orders', ['uses' => 'GroupBuyingApiController@suki_group_buying_confirm_orders', 'as' => 'suki_group_buying_confirm_orders']);#suki确认订单号
     Route::post('/save_address', ['uses' => 'GroupBuyingApiController@save_address', 'as' => 'save_address']);#suki存储地址
+    Route::post('/suki_buy_stock_items', ['uses' => 'GroupBuyingApiController@suki_buy_stock_items', 'as' => 'suki_buy_stock_items']);#suki购买现货
 });
