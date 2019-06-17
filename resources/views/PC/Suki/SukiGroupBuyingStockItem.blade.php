@@ -91,11 +91,11 @@
 
             <div class="item_info_ul" style="float: left;">
                 <h1 style="color: #7B6164;font-size: 18px;font-weight: 500;text-align: left">{{$data["item_info"]->item_name}}</h1>
-                <div style="background: #fafafa;padding: 8px;margin-bottom: 10px">
+                <div style="background: #efefef;padding: 8px;margin-bottom: 10px">
                     <p>单价: <span class="item_info_num">{{$data["item_info"]->item_price + $data["item_info"]->premium}}</span>元</p>
 
                 </div>
-                <div style="margin-bottom: 10px">
+                <div style="margin-bottom: 10px;padding-left: 13px;">
                     <span for="size" style="color: #888a85;margin-right: 15px">可选尺码</span>
                     <select style="width: 200px;display: inline-block" class="size" name="size">
                         @foreach($data["item_info"]->item_size as $value)
@@ -105,7 +105,7 @@
                         @endforeach
                     </select>
                 </div>
-                <div>
+                <div style="padding-left: 13px;">
                     <span for="size"  style="color: #888a85;margin-right: 15px">可选颜色</span>
                     <select style="width: 200px;display: inline-block" class="color" name="color">
                         @foreach($data["item_info"]->item_color as $value)

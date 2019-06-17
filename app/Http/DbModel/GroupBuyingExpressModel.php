@@ -11,5 +11,9 @@ class GroupBuyingExpressModel extends Model
     public $timestamps = false;
     public $primaryKey = 'id';
 
+    public static function get_my_express(int $uid)
+    {
+        return self::where("uid",'=',$uid)->get();
+    }
 
 }

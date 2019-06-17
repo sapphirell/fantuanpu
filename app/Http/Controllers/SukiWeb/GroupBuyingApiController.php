@@ -98,7 +98,7 @@ class GroupBuyingApiController extends Controller
     }
     public function suki_group_buying_do_deliver(Request $request)
     {
-        $chk = $this->checkRequest($request,["name", "address", "telphone","orders","province_type"]);
+        $chk = $this->checkRequest($request,["orders","province_type"]);
 
         if ($chk !== true)
         {
@@ -119,6 +119,7 @@ class GroupBuyingApiController extends Controller
                 break;
         }
         //        dd($request->input("orders"));
+        $address = GroupBuyingAddressModel::get_my_address($this->data["user_info"]->uid);
         //遍历订单获得价格
         $user_orders = GroupBuyingOrderModel::where("uid","=",$this->data["user_info"]->uid)->where("status","=",4)
             ->whereIn('id',$request->input("orders"))->get();
@@ -138,9 +139,9 @@ class GroupBuyingApiController extends Controller
         $express->freight = $freight;
         $express->private_freight = $private_freight;
         $express->price_difference = $price_difference;
-        $express->name = $request->input("name");
-        $express->telphone = $request->input("telphone");
-        $express->address = $request->input("address");
+        $express->name = $address->name;
+        $express->telphone = $address->telphone;
+        $express->address = $address->address;
         $express->freight = $freight;
         $express->uid = $this->data["user_info"]->uid;
         $express->orders = json_encode($request->input("orders"));
@@ -256,7 +257,7 @@ class GroupBuyingApiController extends Controller
             return self::response([], 40002, "订单详情为空");
         }
 
-     
+
         $order_price = 0;
         $premium = 0;
         foreach ($order_info as $key => $value)

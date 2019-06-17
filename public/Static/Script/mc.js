@@ -15,6 +15,7 @@ $(document).ready(function(){
         var $titles = $(this).attr("title");
         var $contents = $(this).attr("message")? $(this).attr("message") :$titles;
         var xy = $(this).offset();
+        console.log(xy)
         var hei = $(this).height();
         var tops = $(this).attr("top") ? $(this).attr("top") : (xy.top + hei + 3);
         var left = $(this).attr("left") ? $(this).attr("left") : xy.left;
@@ -30,9 +31,9 @@ $(document).ready(function(){
     },function(){
         clearTimeout(t);
 
-        $("#"+randthis).stop(true).animate({filter:'alpha(opacity=0)',opacity:'0'},function(){
-            $(this).remove();
-        });
+        // $("#"+randthis).stop(true).animate({filter:'alpha(opacity=0)',opacity:'0'},function(){
+        //     $(this).remove();
+        // });
 
     });
     //表单必填项控件

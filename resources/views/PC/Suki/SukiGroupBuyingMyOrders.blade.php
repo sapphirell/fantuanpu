@@ -108,6 +108,14 @@
     .my_order_detail {
         color: #777777;
     }
+    .stock_tag {
+        display: inline-block;
+        position: absolute;
+        background: #463f3fe0;
+        color: #ffffff;
+        padding: 3px;
+        border-radius: 5px;
+    }
     @media screen and (max-width: 960px) {
         .price_status {
             margin-top: 10px;
@@ -134,7 +142,13 @@
         {{--{{dd($value)}}--}}
         <?php $order_info = json_decode($value["order_info"],true); ?>
         <div class="my_items_log">
-            <a href="/suki_group_buying_item_info?item_id={{$value->item_id}}" class="logs_image">
+
+            <a href="/suki_group_buying_item_info?item_id={{$value->item_id}}" class="logs_image" style="overflow: hidden">
+                @if($value->group_id == 0)
+                <span class="stock_tag">
+                    现货
+                </span>
+                @endif
                 <img src="{{$value["item_image"]}}" class="logs_image" style="">
             </a>
             <div class="my_log_info">
@@ -276,7 +290,7 @@
                         @endforeach
                     </table>
                     <div>
-                        <select class="select_province" style="width: 100px;padding: 0px;font-size: 12px;height: 25px;padding-left: 15px">
+                        <select class="select_province" style="width: 80px;padding: 0px;font-size: 12px;height: 25px;padding-left: 15px;display: inline-block">
                             <option value="0|0">请选择!!</option>
                             <option value="5.5|1">苏浙沪皖</option>
                             <option value="7|2">京津冀晋辽吉黑闽赣鲁豫鄂湘粤桂琼川贵滇渝陕甘青宁</option>
@@ -287,7 +301,7 @@
                         <span class="count_price">0</span>元
 
                         <a class="submit_check btn btn-info" style="float: right;color: #FFFFFF">
-                            [申请发货勾选的]
+                            [发货勾选]
                         </a>
                     </div>
                 @else
@@ -298,7 +312,40 @@
 
 
             </div>
-            <div>3</div>
+            <div>
+                <table style="width: 100%">
+                    <tr>
+                        <td>收货地址</td>
+                        <td>
+                           状态
+                        </td>
+                        <td>
+                            <div class="detail" style="position: relative" message="">明细</div>
+                        </td>
+                    </tr>
+                    @foreach($data["express"] as $value)
+                    <tr>
+                        <td>{{$value->address}}</td>
+                        <td>
+                            @if($value->status == 1)
+                                提交申请
+                            @elseif ($value->status == 2)
+                                需要补邮费
+                            @elseif ($value->status == 3)
+                                邮费已补
+                            @elseif ($value->status == 4)
+                                已发货
+                            @endif
+                        </td>
+                        <td>
+                            公摊:{{$value['private_freight']}},
+                            流团退款:{{$value['price_difference']}},
+                            个人运费:{{$value['freight']}}
+                        </td>
+                    </tr>
+                    @endforeach
+                </table>
+            </div>
         </div>
     </div>
     <div class="clear"></div>
@@ -359,7 +406,7 @@
             "province_type" :province_type
         }
         console.log(fd)
-        if (!orders || !pf || !name || !address ||  !telphone || !province_type)
+        if (!orders || !pf || !province_type)
         {
             alert("须填写完整")
             return ;

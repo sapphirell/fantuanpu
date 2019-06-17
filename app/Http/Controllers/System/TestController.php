@@ -4,6 +4,8 @@ namespace App\Http\Controllers\System;
 
 use App\Http\Controllers\User\UserApiController;
 use App\Http\DbModel\Forum_forum_model;
+use App\Http\DbModel\GroupBuyingExpressModel;
+use App\Http\DbModel\GroupBuyingOrderModel;
 use App\Http\DbModel\UCenter_member_model;
 use App\Http\DbModel\User_model;
 use Illuminate\Container\Container;
@@ -32,6 +34,28 @@ class TestController extends Controller
     }
     public function ping(Request $request)
     {
+        $exps = GroupBuyingExpressModel::where("status","=",4)->get();
+
+        $order = [];
+        foreach ($exps as $exp)
+        {
+            $order[] = GroupBuyingOrderModel::where("id","=",json_decode($exp->orders,true)[0])
+            ->first();
+
+        }
+        $logids = [] ;
+        foreach ($order as $value)
+        {
+            $logs = json_decode($value["log_id"],true);
+            $logids = array_merge($logids,$logs);
+        }
+        $ids = "" ;
+        foreach ($logids as $id)
+        {
+            $ids .= $id . ",";
+        }
+        dd($ids);
+
 //
 //        $login_status = UserApiController::Api_DoLogin($request);
 //        dd($login_status);

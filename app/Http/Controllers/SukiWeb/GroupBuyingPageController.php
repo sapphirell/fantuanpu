@@ -93,11 +93,13 @@ class GroupBuyingPageController extends Controller
         }
         //所有的
         $this->data["history_logs"] = GroupBuyingLogModel::getLogs($this->data["user_info"]->uid,[]);
-        //订单列表
-        $this->data["my_order"] = GroupBuyingOrderModel::where(["uid" => $this->data["user_info"]->uid])->get();
+        //待申请发货的列表
+        $this->data["my_order"] = GroupBuyingOrderModel::where(["uid" => $this->data["user_info"]->uid,"status"=>4])->get();
         //地址
         $this->data["address"] = GroupBuyingAddressModel::get_my_address($this->data["user_info"]->uid);
-//        dd($this->data["my_order"] );
+        //发货列表
+        $this->data["express"] = GroupBuyingExpressModel::get_my_express($this->data["user_info"]->uid);
+//        dd( $this->data["express"]);
         return view('PC/Suki/SukiGroupBuyingMyOrders')->with('data', $this->data);
     }
     public function suki_group_buying_address_manager(Request $request)
