@@ -17,8 +17,20 @@
         /*margin: 10px;*/
         box-shadow: 0 0 10px #ececec;
         border-radius: 5px;
-        overflow: hidden;;
-        margin-bottom: 10px;
+        overflow: hidden;
+
+        margin: 11.5px;
+    }
+    .items_list:after {
+        content: "";
+        flex: auto;
+    }
+    @media screen and (max-width: 385px) {
+        .goods_item {
+            margin:0 0 10px 0;
+
+        }
+
     }
 </style>
 <div class="wp" style="margin-top: 60px;">
@@ -49,7 +61,7 @@
                 <p class="aline" style="width: 150px;font-weight: 900;color: #7B6164">{{$item["item_name"]}}</p>
                 <img src="{{$item["item_image"][0]}}" class="goods_item_image" style="width: 148px;height: 102px">
                 <p style="margin-top: 5px;">
-                    <span style="color: #F28A96;font-size: 16px;">￥{{$item["item_price"]}}/个</span>
+                    <span style="color: #F28A96;font-size: 16px;">￥{{$item["item_price"] + $item["premium"]}}/个</span>
                     {{--<span style="color: #999999;font-size: 12px;float: right">{{$item["min_members"]}}个成团</span>--}}
                 </p>
 

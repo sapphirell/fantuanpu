@@ -233,13 +233,13 @@
                 @if($data["address"])
                     <div>
                         <p>
-                            当前收货地址:{{$data["address"]->address}}
+                            收货地址:{{$data["address"]->address}}
                             <a href="/suki_group_buying_address_manager">修改</a>
                         </p>
 
                     </div>
 
-                    <table style="width: 100%">
+                    <table style="width: 100%;    min-height: 50px;">
                         @foreach($data["my_order"] as $order)
                             {{--{{dd($order)}}--}}
                             <?php $order_info = json_decode($order->order_info,true); unset($order_info["log_id"]); ?>
@@ -300,7 +300,7 @@
                         <span class="count_title">需支付</span>:
                         <span class="count_price">0</span>元
 
-                        <a class="submit_check btn btn-info" style="float: right;color: #FFFFFF">
+                        <a class="submit_check btn btn-info" style="float: right;color: #FFFFFF;background-color: #fdc2c5;border-color: #ffb2bb;">
                             [发货勾选]
                         </a>
                     </div>

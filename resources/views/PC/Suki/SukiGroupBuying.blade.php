@@ -18,7 +18,18 @@
         box-shadow: 0 0 10px #ececec;
         border-radius: 5px;
         overflow: hidden;;
-        margin-bottom: 10px;
+        margin: 11.5px;
+    }
+    .items_list:after {
+        content: "";
+        flex: auto;
+    }
+    @media screen and (max-width: 385px) {
+        .goods_item {
+            margin:0 0 10px 0;
+
+        }
+
     }
 </style>
 <div class="wp" style="margin-top: 60px;">
@@ -49,7 +60,7 @@
                 <p class="aline" style="width: 150px;font-weight: 900;color: #7B6164">{{$item["item_name"]}}</p>
                 <img src="{{$item["item_image"][0]}}" class="goods_item_image" style="width: 148px;height: 102px">
                 <p>
-                    <span style="color: #F28A96;font-size: 16px">￥{{$item["item_price"]}}</span>
+                    <span style="color: #F28A96;font-size: 16px">￥{{$item["item_price"] + $item["premium"]}}</span>
                     <span style="color: #999999;font-size: 12px;float: right">{{$item["min_members"]}}个成团</span>
                 </p>
                 <p style="color: #999999;font-size: 12px;text-align: right">{{$item["follow"]}}人购买了 {{$item["item_count"]}} 个</p>
