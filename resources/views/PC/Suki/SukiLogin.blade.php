@@ -41,7 +41,7 @@
                 </div>
                 <div style="margin: 12px;">
                     <a id="old_user" href="/old-user" style="color: #fcadb9;">忘记密码</a>
-                    <a style="color: #fcadb9;float: right">没有账号?点击注册</a>
+                    <a  href="/register"  style="color: #fcadb9;float: right">没有账号?点击注册</a>
                 </div>
                 <button type="submit" class="btn  btn-info" style="    background-color: #ffb6c7;
     background-image: linear-gradient(180deg, #fbded9 0%, #ffa5b2 93%);border: 0px;width: 65px;height: 65px;

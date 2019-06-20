@@ -58,7 +58,7 @@
     <div style="" class="items_list">
         @foreach($data["items"] as $item)
             <div class="goods_item">
-                <p class="aline" style="width: 150px;font-weight: 900;color: #7B6164">{{$item["item_name"]}}</p>
+                <p class="aline" style="width: 150px;font-weight: 900;color: #7B6164;margin-left: 0;">{{$item["item_name"]}}</p>
                 <img src="{{$item["item_image"][0]}}" class="goods_item_image" style="width: 148px;height: 102px">
                 <p style="margin-top: 5px;">
                     <span style="color: #F28A96;font-size: 16px;">￥{{$item["item_price"] + $item["premium"]}}/个</span>

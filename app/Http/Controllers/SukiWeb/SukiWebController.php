@@ -308,4 +308,8 @@ class SukiWebController extends Controller
         return view('PC/Suki/SukiTaskList')->with('data', $this->data);
     }
 
+    public function suki_register()
+    {
+        return view('PC/Suki/SukiRegister')->with('data', $this->data);
+    }
 }

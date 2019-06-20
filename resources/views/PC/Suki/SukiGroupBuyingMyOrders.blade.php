@@ -139,7 +139,8 @@
     @endif
     <?php $sum_price = 0; $private_freight = 0; ?>
     @foreach($data["active_logs"] as $value)
-        {{--{{dd($value)}}--}}
+
+        {{--{{dd($value->id)}}--}}
         <?php $order_info = json_decode($value["order_info"],true); ?>
         <div class="my_items_log">
 
@@ -170,7 +171,7 @@
                         <span> / </span>
                         @if($value->status == 1)
                             <span style="display: inline">等待拼团</span>
-                            <a class="suki_group_buying_cancel_orders" onclick=""
+                            <a class="suki_group_buying_cancel_orders"
                                href="/suki_group_buying_cancel_orders" orderId="{{$value->id}}">取消订单</a>
                         @elseif($value->status == 2)
                             等待确认付款
@@ -213,7 +214,7 @@
                 <div class="compute_item">
                     <span class="title">总价估算</span>
                     ￥
-                    <span class="font-weight: 900;">{{$sum_price + $private_freight}}</span>
+                    <span class="font-weight: 900;">{{$sum_price}}</span>
                 </div>
                 <div class="compute_item">
                     <span class="title">明细</span>
@@ -222,9 +223,9 @@
                     <p>
                         <span>本体 ￥</span><span class="font-weight: 900;">{{$sum_price}}</span>
                     </p>
-                    <p>
-                        <span>公摊 ￥</span><span class="font-weight: 900;">{{$private_freight}}</span>
-                    </p>
+                    {{--<p>--}}
+                        {{--<span>公摊 ￥</span><span class="font-weight: 900;">{{$private_freight}}</span>--}}
+                    {{--</p>--}}
                 </div>
 
                 <a class="go_to_pay">去付款</a>
@@ -389,6 +390,20 @@
 
         console.log(orders)
     });
+    $(".suki_group_buying_cancel_orders").click(function (e) {
+        e.preventDefault();
+        var orderId = $(this).attr("orderId")
+        var r = confirm("确定取消吗?")
+        if (r == true) {
+            $.get("/suki_group_buying_cancel_orders?orderId=" + orderId, function (e) {
+                alert(e.msg)
+                window.location.reload()
+            })
+        }
+        else {
+            return false;
+        }
+    })
     $(".submit_check").click(function (e) {
         var address = $(".address").val();
         var telphone = $(".telphone").val();

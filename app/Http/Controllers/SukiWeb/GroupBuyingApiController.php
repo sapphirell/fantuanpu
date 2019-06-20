@@ -32,6 +32,7 @@ class GroupBuyingApiController extends Controller
 
         $item = GroupBuyingItemModel::find($request->input("item_id"));
         $item->item_color = explode("|", $item->item_color);
+//        var_dump( $item->item_size);
         $item->item_size = explode("|", $item->item_size);
 
         if (empty($item))
@@ -60,7 +61,7 @@ class GroupBuyingApiController extends Controller
             }
             if (!in_array($info[1], $item->item_color))
             {
-                return self::response([], 40003, "商品不存在该颜色" . var_export($item->item_color, true));
+                return self::response([], 40003, "商品不存在该颜色" . var_export($info[1],true) . "只有" . var_export($item->item_color, true));
             }
             $premium += $value * $item->premium;
             $order_price += $value * $item->premium + $value * $item->item_price; // 辛苦费+商品原价
