@@ -23,6 +23,7 @@
     .items_list:after {
         content: "";
         flex: auto;
+        min-width: 165px;
     }
     @media screen and (max-width: 385px) {
         .goods_item {
@@ -69,7 +70,7 @@
             </div>
 
         @endforeach
-        <div class="clear"></div>
+        {{--<div class="clear"></div>--}}
     </div>
 </div>
 <script>
@@ -78,7 +79,7 @@
         var scaling_for_image =  (148-5)/(165); //item和内部图片的宽度比例
         var image_scaling = 360/260; //内部图片的宽高比例
 
-        var goods_item_width = (body_width - 20) / 2 > 165 ? 165 : (body_width - 20) / 2 ;
+        var goods_item_width = (body_width - 0) / 2 > 165 ? 165 : (body_width - 0) / 2 ;
         var goods_item_image_width = scaling_for_image * goods_item_width ;
         $(".goods_item").css({"width" : goods_item_width});
         $(".goods_item_image").css({"width" : goods_item_image_width});

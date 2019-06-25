@@ -370,6 +370,10 @@
         $(".count_price").text(Math.abs(count_price+pf));
         $(".count_title").text(title);
     }
+    $(".go_to_pay").click(function (e) {
+        e.preventDefault()
+        alert("暂未截团")
+    })
     $(".check").change(function (e) {
         var orderId = $(this).attr("orderId");
         var price = parseFloat($(this).attr("price"))

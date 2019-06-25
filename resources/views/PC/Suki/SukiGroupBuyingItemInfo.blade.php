@@ -8,12 +8,14 @@
         /*display: inline-block;    float: left;*/
     }
     /*360 * 250*/
-    .items_banner {width: 480px;height:333px;float: left;margin-right: 10px;position: relative;overflow: hidden;    border-radius: 5px;}
+    .items_banner {width: 480px;
+        /*height:333px;*/
+        float: left;margin-right: 10px;position: relative;overflow: hidden;    border-radius: 5px;}
     .check_box{    margin-left: 15px;}
     .num {text-align: center}
     .spinner_div button{    -webkit-appearance: button;
         padding: 5px 10px;
-        background: #f3f3f300;
+        background: #FFF;
         border: 0px;
         font-size: 20px;
         font-weight: 900;
@@ -48,7 +50,7 @@
     }
     @media screen and (max-width: 960px) {
         .item_info_ul {margin-top: 10px;}
-        .items_banner {width: 100%;height:250px;float: left;margin-right: 10px}
+        .items_banner {width: 100%;float: left;margin-right: 10px}
 
         .check_box{    margin-left: 0px;    width: 100%; margin-bottom: 20px}
         .item_info_ul {
@@ -168,11 +170,11 @@
         <input type="hidden" value="{{$data["item_info"]->id}}" id="item_id">
         <input type="hidden" value="15" id="private_freight">
 
-        @if( $this->data["last"]->status == 2)
+        {{--@if( $this->data["last"]->status == 2)--}}
             {{--<input type="submit" value="确认参与拼团" class="submit_to_gb">--}}
-        @else
-            <p>本次团购已结束</p>
-        @endif
+        {{--@else--}}
+            {{--<p>本次团购已结束</p>--}}
+        {{--@endif--}}
         <p style="font-size: 16px;margin-top: 10px">购前须知:</p>
         <ul style="padding: 20px;padding-top: 0px;">
             <li>商品在截团日前未凑够最低成团数或当天付清货款的人不足最低成团数的,以流团处理</li>
