@@ -60,8 +60,8 @@
             <div class="goods_item">
                 <p class="aline" style="width: 150px;font-weight: 900;color: #7B6164;margin-left: 0;">{{$item["item_name"]}}</p>
                 <img src="{{$item["item_image"][0]}}" class="goods_item_image" style="width: 148px;height: 102px">
-                <p style="margin-top: 5px;">
-                    <span style="color: #F28A96;font-size: 16px;">￥{{$item["item_price"] + $item["premium"]}}/个</span>
+                <p style="margin-top: 12px;margin-right: 0px;text-align: right">
+                    <span style="color: #F28A96;font-size: 14px;">￥{{$item["min_price"] . "~" . $item["max_price"]}}/个</span>
                     {{--<span style="color: #999999;font-size: 12px;float: right">{{$item["min_members"]}}个成团</span>--}}
                 </p>
 

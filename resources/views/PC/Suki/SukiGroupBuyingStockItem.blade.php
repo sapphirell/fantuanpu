@@ -1,36 +1,59 @@
 @include('PC.Suki.SukiHeader')
 <link rel="stylesheet" type="text/css" href="/Static/Style/Web/forum.css">
 <style>
-    .input-group-text {width: 80px}
+    .input-group-text {
+        width: 80px
+    }
 
     .item_info_ul {
         /*padding: 0px;*/
         /*display: inline-block;    float: left;*/
     }
+
     /*360 * 250*/
-    .items_banner {width: 480px;height:333px;float: left;margin-right: 10px;position: relative;overflow: hidden;    border-radius: 5px;}
-    .check_box{    margin-left: 15px;}
-    .num {text-align: center}
-    .spinner_div button{    -webkit-appearance: button;
+    .items_banner {
+        width: 480px;
+        height: 333px;
+        float: left;
+        margin-right: 10px;
+        position: relative;
+        overflow: hidden;
+        border-radius: 5px;
+    }
+
+    .check_box {
+        margin-left: 15px;
+    }
+
+    .num {
+        text-align: center
+    }
+
+    .spinner_div button {
+        -webkit-appearance: button;
         padding: 5px 10px;
         background: #f3f3f300;
         border: 0px;
         font-size: 20px;
         font-weight: 900;
-        color: #847777;}
-    .add_item,.submit_to_gb {
-        background-color: #f9bfc4!important;
-        border: 0px!important;
-        color: #fff!important;
-        box-shadow: 0 0 5px #f9bfc4;
-        padding: 5px 10px!important;
-        margin-right: 5px!important;
+        color: #847777;
     }
+
+    .add_item, .submit_to_gb {
+        background-color: #f9bfc4 !important;
+        border: 0px !important;
+        color: #fff !important;
+        box-shadow: 0 0 5px #f9bfc4;
+        padding: 5px 10px !important;
+        margin-right: 5px !important;
+    }
+
     .item_info_ul {
         float: left;
         width: 400px;
-        margin-left:20px;
+        margin-left: 20px;
     }
+
     .order_div {
         padding: 5px 12px;
         background: #eee;
@@ -39,18 +62,34 @@
         box-shadow: 0 0 5px #ddd;
         color: #7B6164;
     }
+
     .item_info_num {
-        color: #7B6164 ;
+        color: #7B6164;
         font-weight: 600;
     }
-    button:focus {
-        outline : none;
-    }
-    @media screen and (max-width: 960px) {
-        .item_info_ul {margin-top: 10px;}
-        .items_banner {width: 100%;height:250px;float: left;margin-right: 10px}
 
-        .check_box{    margin-left: 0px;    width: 100%; margin-bottom: 20px}
+    button:focus {
+        outline: none;
+    }
+
+    @media screen and (max-width: 960px) {
+        .item_info_ul {
+            margin-top: 10px;
+        }
+
+        .items_banner {
+            width: 100%;
+            height: 250px;
+            float: left;
+            margin-right: 10px
+        }
+
+        .check_box {
+            margin-left: 0px;
+            width: 100%;
+            margin-bottom: 20px
+        }
+
         .item_info_ul {
             float: left;
             width: 100%;
@@ -62,11 +101,10 @@
 
     <div>
         {{--<nav aria-label="breadcrumb">--}}
-            {{--<ol class="breadcrumb">--}}
-                {{--<li class="breadcrumb-item active" aria-current="page">{{$data["item_info"]->item_name}}</li>--}}
-            {{--</ol>--}}
+        {{--<ol class="breadcrumb">--}}
+        {{--<li class="breadcrumb-item active" aria-current="page">{{$data["item_info"]->item_name}}</li>--}}
+        {{--</ol>--}}
         {{--</nav>--}}
-
 
 
         <div>
@@ -74,7 +112,8 @@
                 <div class="carousel-inner">
                     @foreach($data["item_info"]->item_image as $key => $value)
                         <div class="carousel-item @if($key == 0) {{active}} @endif">
-                            <img class="d-block w-100"  src="{{$value}}" class="" style="display: inline-block;float: left">
+                            <img class="d-block w-100" src="{{$value}}" class=""
+                                 style="display: inline-block;float: left">
                         </div>
                     @endforeach
 
@@ -92,26 +131,28 @@
             <div class="item_info_ul" style="float: left;">
                 <h1 style="color: #7B6164;font-size: 18px;font-weight: 500;text-align: left">{{$data["item_info"]->item_name}}</h1>
                 <div style="background: #efefef;padding: 8px;margin-bottom: 10px">
-                    <p>单价: <span class="item_info_num">{{$data["item_info"]->item_price + $data["item_info"]->premium}}</span>元</p>
+                    <p>单价: <span
+                                class="item_info_num">{{$data["item_info"]->item_price + $data["item_info"]->premium}}</span>元
+                    </p>
 
                 </div>
                 <div style="margin-bottom: 10px;padding-left: 13px;">
                     <span for="size" style="color: #888a85;margin-right: 15px">可选尺码</span>
                     <select style="width: 200px;display: inline-block" class="size" name="size">
-                        @foreach($data["item_info"]->item_size as $value)
+                        @foreach($data["item_info"]->items as $value)
                             <option>
-                                <span>{{$value}}</span>
+                                <span>{{$value->size}}</span>
                             </option>
                         @endforeach
                     </select>
                 </div>
 
                 <div style="padding-left: 13px;    margin-bottom: 10px;">
-                    <span for="size"  style="color: #888a85;margin-right: 15px">可选颜色</span>
+                    <span for="size" style="color: #888a85;margin-right: 15px">可选颜色</span>
                     <select style="width: 200px;display: inline-block" class="color" name="color">
-                        @foreach($data["item_info"]->item_color as $value)
+                        @foreach($data["item_info"]->items as $value)
                             <option>
-                                <span class="color" name="color">{{$value}}</span>
+                                <span class="color" name="color">{{$value->color}}</span>
                             </option>
                         @endforeach
                     </select>
@@ -119,25 +160,29 @@
                 </div>
                 <div style="margin-bottom: 10px;padding-left: 13px;">
                     <span for="size" style="color: #888a85;margin-right: 15px">库存</span>
-                    {{$data["item_info"]}}
-                    <span style="padding-left: 27px;font-size: 18px;">{{$data["item_info"]->stock}}</span>
-                </div>
-                {{--<p>购买个数(填写负数为减少)</p>--}}
-                {{--<div>--}}
-                    {{--<input type="text" value="1" class="form-control num" placeholder="" style="width: 200px">--}}
-                {{--</div>--}}
 
+                    @foreach($data["item_info"]->items as $items_num => $value)
+                        <span style="padding-left: 27px;font-size: 18px;
+                                @if($items_num != 0)
+                                display:none;
+                                @endif
+                                "
+                              id="{{$value->color."_".$value->size}}">{{$value->stock}}</span>
+
+                    @endforeach
+                </div>
 
 
                 <!-- // spinner plugin DOM -->
                 <div style="margin-top: 20px">
                     <div data-trigger="spinner" class="spinner_div" style="display: inline-block">
                         <button type="button" data-spin="down">-</button>
-                        <input type="text" value="1" data-ruler="quantity" class="form-control num" style="width: 35px;display: inline-block;">
+                        <input type="text" value="1" data-ruler="quantity" class="form-control num"
+                               style="width: 35px;display: inline-block;">
                         <button type="button" data-spin="up">+</button>
                     </div>
 
-                    <input type="submit" value="加入清单" class="add_item"  style="display: inline-block">
+                    <input type="submit" value="加入清单" class="add_item" style="display: inline-block">
 
 
                     <input type="submit" value="提交拼团" class="submit_to_gb" style="display: none">
@@ -156,7 +201,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="basic-addon1">您的qq</span>
                     </div>
-                    <input type="text" class="form-control qq"  name="" >
+                    <input type="text" class="form-control qq" name="">
                 </div>
             @else
                 <input type="hidden" value="{{$data["user_info"]->qq}}" class="qq">
@@ -185,23 +230,22 @@
 <script>
     $(document).ready(function () {
         $("#spinner").spinner('delay', 200) //delay in ms
-        .spinner('changed', function(e, newVal, oldVal) {
-            // trigger lazed, depend on delay option.
-        })
-        .spinner('changing', function(e, newVal, oldVal) {
-            // trigger immediately
-        });
+                .spinner('changed', function (e, newVal, oldVal) {
+                    // trigger lazed, depend on delay option.
+                })
+                .spinner('changing', function (e, newVal, oldVal) {
+                    // trigger immediately
+                });
         $(".add_item").click(function () {
             @if(!$data["user_info"]->uid)
                 alert("请先登录");
-            return ;
-            @endif
+            return;
+                    @endif
             var size = $(".size").val();
             var color = $(".color").val();
-            var num =  parseInt($(".num").val());
+            var num = parseInt($(".num").val());
 
-            if (!size || !color || !num)
-            {
+            if (!size || !color || !num) {
                 alert("参数不完整");
                 return false;
             }
@@ -211,17 +255,14 @@
 
             $(".submit_to_gb").show()
 
-            if (now_chat[items] === 0 &&  parseInt(num) < 0)
-            {
+            if (now_chat[items] === 0 && parseInt(num) < 0) {
                 alert("该种类商品购买数量已经是0了")
                 return false;
             }
-            if (now_chat[items])
-            {
+            if (now_chat[items]) {
                 now_chat[items] += parseInt(num)
             }
-            else
-            {
+            else {
                 now_chat[items] = parseInt(num)
             }
             console.log(now_chat);
@@ -235,8 +276,8 @@
             var private_freight = parseFloat($("#private_freight").val());
             var price = 0
 
-            for (var index in now_chat){
-                price += now_chat[index] * item_price + now_chat[index]* premium
+            for (var index in now_chat) {
+                price += now_chat[index] * item_price + now_chat[index] * premium
             }
 //            price += item_freight /min_members + private_freight
             $(".your_pirce").val(price)
@@ -251,30 +292,25 @@
             var order_info = $(".order_info").text()
             var item_id = $("#item_id").val()
             var qq = $(".qq").val();
-            if (!order_info)
-            {
+            if (!order_info) {
                 alert("请先添加商品")
             }
-            if (!item_id )
-            {
+            if (!item_id) {
                 alert("缺少参数")
                 return false;
             }
             var fd = {
-                order_info : $(".order_info").text(),
+                order_info: $(".order_info").text(),
                 item_id: $("#item_id").val(),
-                qq:qq
+                qq: qq
             }
             console.log(fd);
-            $.post("/suki_buy_stock_items",fd,function (e) {
+            $.post("/suki_buy_stock_items", fd, function (e) {
                 alert(e.msg)
                 if (e.ret == 200)
                     window.location.href = "/suki_group_buying_myorders?type=last"
             })
         })
-
-
-
 
 
     })

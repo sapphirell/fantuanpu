@@ -5,6 +5,7 @@ namespace App\Http\Controllers\System;
 use App\Http\Controllers\User\UserApiController;
 use App\Http\DbModel\Forum_forum_model;
 use App\Http\DbModel\GroupBuyingExpressModel;
+use App\Http\DbModel\GroupBuyingLogModel;
 use App\Http\DbModel\GroupBuyingOrderModel;
 use App\Http\DbModel\UCenter_member_model;
 use App\Http\DbModel\User_model;
@@ -28,9 +29,20 @@ class TestController extends Controller
     }
 
     public function index(){
-        $posts_cache_key    = CoreController::POSTS_VIEW;
+        $logs = GroupBuyingLogModel::getNotCancelLog(1,false);
+        dd($logs[0]);
+        $num = 0;
+        foreach ($logs as $log)
+        {
+            $order_info = json_decode($log->order_info,true);
+            foreach ($order_info as $type=>$num)
+            {
 
-        Cache::forget($posts_cache_key['key'] ."80121_" . ceil(1/20));
+                $num += $num;
+            }
+        }
+        echo $num;
+
     }
     public function ping(Request $request)
     {
@@ -69,4 +81,5 @@ class TestController extends Controller
 //        header('Access-Control-Allow-Origin:*');
 //        return 'ok';
     }
+
 }

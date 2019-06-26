@@ -64,7 +64,12 @@
                     <span style="color: #F28A96;font-size: 16px">￥{{$item["item_price"] + $item["premium"]}}</span>
                     <span style="color: #999999;font-size: 12px;float: right">{{$item["min_members"]}}个成团</span>
                 </p>
-                <p style="color: #999999;font-size: 12px;text-align: right">{{$item["follow"]}}人购买了 {{$item["item_count"]}} 个</p>
+                <p style="color: #999999;font-size: 12px;text-align: right;margin: 0px;">
+                    <span  style="color: #72d2d3">{{$item["follow"]}}</span>
+                    人购买了
+                    <span style="color: #72d2d3">{{$item["item_count"]}}</span>
+                    个
+                </p>
 
                 <a href="/suki_group_buying_item_info?item_id={{$item["id"]}}" style="  border-radius: 5px;  margin-top: 10px;background: #f9c8c9;width: 100%;display: block;color: #fff;text-align: center;background-color: #ffb6c7;background-image: linear-gradient(90deg, #fbded9 0%, #ffa5b2 93%);">查看详情</a>
             </div>

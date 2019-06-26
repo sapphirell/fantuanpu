@@ -152,6 +152,10 @@
                 @endif
                 <img src="{{$value["item_image"]}}" class="logs_image" style="">
             </a>
+            <?php $sum_price += in_array($value->status,[1,2,3,5,8])? $value["order_price"] : 0; ?>
+
+            <?php $private_freight += in_array($value->status,[1,2,3,5,8])? $value["sum_private_freight"] : 0; ?>
+
             <div class="my_log_info">
                 <div class="my_log_detail" style="">
                     <p class="item_name">{{$value["item_name"]}}</p>
@@ -159,15 +163,13 @@
                         <p>{{$type}} </p>
                         <p>购买数量：{{$num}}个</p>
                     @endforeach
-
+                    <span style="color: #777;padding-left:5px">当前公摊:{{$value["sum_private_freight"]}}元</span>
                 </div>
-                <?php $sum_price += in_array($value->status,[1,2,3,5,8])? $value["order_price"] : 0; ?>
-
-                <?php $private_freight += in_array($value->status,[1,2,3,5,8])? $value["sum_private_freight"] : 0; ?>
-                <div class="price_status" style="">
+               <div class="price_status" style="">
                     <p>
                         <span style="margin-top: 5px;margin-bottom: 5px;">价格</span>
                         <span class="price">￥{{$value["order_price"]}}</span>
+
                         <span> / </span>
                         @if($value->status == 1)
                             <span style="display: inline">等待拼团</span>
