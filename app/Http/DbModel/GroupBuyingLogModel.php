@@ -90,6 +90,11 @@ class GroupBuyingLogModel extends Model
             $data[User_model::find($value->uid)->username]["price"] += $value->order_price;
             $data[User_model::find($value->uid)->username]["premium"] += $value->order_premium;
             $data[User_model::find($value->uid)->username]["uid"] = $value->uid;
+            !in_array($value->item_name,$data[User_model::find($value->uid)->username]["item_type"]) && $data[User_model::find($value->uid)->username]["item_type"][] = $value->item_name;
+            foreach (json_decode($value->order_info,true) as $type => $num)
+            {
+                $data[User_model::find($value->uid)->username]["shopping_num"] += $num;
+            }
         }
 
         return $data;

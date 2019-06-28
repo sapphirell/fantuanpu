@@ -3,11 +3,13 @@
     body {background: #FFFFFF}
 </style>
 <div style="padding: 10px">
-    <h5>支付宝转账的流水号</h5>
+    <h5>请转账至支付宝{{$data["order"]->order_price}}元</h5>
+    <p>15658610102</p>
+    <p>麻酥幽卷儿</p>
+    <p>转账请备注QQ号和网站ID</p>
 
-    <input type="hidden" value="{{$data["request"]["order_id"]}}" class="orderId" >
-    <input type="text" class="form-control alipay_order_sn" />
-    <input type="submit" class="submit">
+    <input type="hidden" class="orderId" value="{{$data["order"]->id}}">
+    <input type="submit" value="我已转账" class="submit">
 </div>
 
 <script>

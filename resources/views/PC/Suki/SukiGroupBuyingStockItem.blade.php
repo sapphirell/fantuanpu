@@ -132,7 +132,7 @@
                 <h1 style="color: #7B6164;font-size: 18px;font-weight: 500;text-align: left">{{$data["item_info"]->item_name}}</h1>
                 <div style="background: #efefef;padding: 8px;margin-bottom: 10px">
                     <p>单价: <span
-                                class="item_info_num">{{$data["item_info"]->item_price + $data["item_info"]->premium}}</span>元
+                                class="item_info_num">0</span>元
                     </p>
 
                 </div>
@@ -162,14 +162,21 @@
                     <span for="size" style="color: #888a85;margin-right: 15px">库存</span>
 
                     @foreach($data["item_info"]->items as $items_num => $value)
-                        <span style="padding-left: 27px;font-size: 18px;
+                        <span
+                                class="stock"
+                                style="padding-left: 27px;font-size: 18px;
                                 @if($items_num != 0)
-                                display:none;
+                                        display:none;
                                 @endif
-                                "
-                              id="{{$value->color."_".$value->size}}">{{$value->stock}}</span>
+                                        "
+                                price="{{$value->price}}"
+                                id="{{$value->color."_".$value->size}}">{{$value->stock}}</span>
 
                     @endforeach
+                    <span
+                            class="stock"
+                            style="padding-left: 27px;font-size: 18px; display:none;"
+                            id="">{{$value->stock}}</span>
                 </div>
 
 
@@ -185,7 +192,7 @@
                     <input type="submit" value="加入清单" class="add_item" style="display: inline-block">
 
 
-                    <input type="submit" value="提交拼团" class="submit_to_gb" style="display: none">
+                    <input type="submit" value="购买" class="submit_to_gb" style="display: none">
 
                 </div>
 
@@ -210,10 +217,6 @@
         </div>
 
 
-        <input type="hidden" value="{{$data["item_info"]->item_price}}" id="items_price">
-        <input type="hidden" value="{{$data["item_info"]->item_freight}}" id="item_freight">
-        <input type="hidden" value="{{$data["item_info"]->min_members}}" id="min_members">
-        <input type="hidden" value="{{$data["item_info"]->premium}}" id="premium">
         <input type="hidden" value="{{$data["item_info"]->id}}" id="item_id">
         <input type="hidden" value="15" id="private_freight">
 
@@ -228,7 +231,17 @@
 </div>
 <script src="/Static/Script/spinner/jquery.spinner.min.js"></script>
 <script>
+    function resetStock(key) {
+        $(".stock").hide();
+        $("#" + key).show();
+        var price = $("#" + key).attr("price") ? $("#" + key).attr("price") : 0;
+        console.log(price)
+        $(".item_info_num").text(price)
+    }
     $(document).ready(function () {
+        var key = $(".color").val() + "_" + $(".size").val();
+        var item_id = $("#item_id").val();
+        resetStock(key);
         $("#spinner").spinner('delay', 200) //delay in ms
                 .spinner('changed', function (e, newVal, oldVal) {
                     // trigger lazed, depend on delay option.
@@ -286,12 +299,9 @@
 
         $(".submit_to_gb").click(function (e) {
             e.preventDefault();
-            var name = $(".name").val()
-            var address = $(".address").val()
-            var telphone = $(".telphone").val()
-            var order_info = $(".order_info").text()
-            var item_id = $("#item_id").val()
-            var qq = $(".qq").val();
+
+            var order_info = $(".order_info").text();
+
             if (!order_info) {
                 alert("请先添加商品")
             }
@@ -301,9 +311,8 @@
             }
             var fd = {
                 order_info: $(".order_info").text(),
-                item_id: $("#item_id").val(),
-                qq: qq
-            }
+                item_id: item_id,
+            };
             console.log(fd);
             $.post("/suki_buy_stock_items", fd, function (e) {
                 alert(e.msg)
@@ -312,7 +321,14 @@
             })
         })
 
-
+        $(".color").change(function () {
+            var key = $(".color").val() + "_" + $(".size").val();
+            resetStock(key)
+        })
+        $(".size").change(function () {
+            var key = $(".color").val() + "_" + $(".size").val();
+            resetStock(key)
+        })
     })
 </script>
 @include('PC.Suki.SukiFooter')

@@ -2,22 +2,31 @@
 
 <div class="wp admin" style="min-height: 200px;">
     @if($data["status"] == 2)
+
         <table class="table">
             <tr>
                 <td>用户名</td>
                 <td>订单详情</td>
                 <td>总价</td>
                 <td>赚取</td>
+                <td>qq</td>
+                <td>购买种类/数目</td>
             </tr>
             @foreach($data["list"] as $key => $value)
+                <?php $user = get_user($value['uid']); ?>
                 <tr>
                     <td>{{$key}}</td>
                     <td>{!! $value["item"] !!}</td>
                     <td>{{$value["price"]}}</td>
                     <td>{{$value["premium"]}}</td>
+                    <td>
+                        {{$user->qq}}
+                    </td>
+                    <td>{{count($value['item_type'])}}/{{$value['shopping_num']}}</td>
                     <?php $premium += $value["premium"]; ?>
                     <?php $count += 1;?>
                     <?php $price += $value["price"];?>
+                    <?php $shopping_num_all += $value['shopping_num'];?>
                 </tr>
             @endforeach
         </table>
@@ -25,6 +34,7 @@
             总价格:{{$price}}
             总赚取:{{$premium}}
             总人数: {{$count}}
+            需发货商品数目:{{$shopping_num_all}}
         </div>
     @endif
     @if($data["status"] == 3)

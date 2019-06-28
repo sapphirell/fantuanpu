@@ -374,7 +374,8 @@
     }
     $(".go_to_pay").click(function (e) {
         e.preventDefault()
-        alert("暂未截团")
+        window.location.href = "/suki_group_buying_paying?gid=2";
+//        alert("支付宝:15658610102")
     })
     $(".check").change(function (e) {
         var orderId = $(this).attr("orderId");
@@ -399,7 +400,7 @@
     $(".suki_group_buying_cancel_orders").click(function (e) {
         e.preventDefault();
         var orderId = $(this).attr("orderId")
-        var r = confirm("确定取消吗?")
+        var r = window.confirm("确定取消吗?");
         if (r == true) {
             $.get("/suki_group_buying_cancel_orders?orderId=" + orderId, function (e) {
                 alert(e.msg)

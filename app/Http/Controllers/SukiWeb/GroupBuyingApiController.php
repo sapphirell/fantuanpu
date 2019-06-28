@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\SukiWeb;
 
 use App\Http\DbModel\GroupBuyingAddressModel;
+use App\Http\DbModel\GroupBuyingStockItemModel;
+use App\Http\DbModel\GroupBuyingStockItemTypeModel;
 use Illuminate\Http\Request;
 
 use App\Http\Controllers\Controller;
@@ -159,7 +161,7 @@ class GroupBuyingApiController extends Controller
     }
     public function suki_group_buying_confirm_orders(Request $request)
     {
-        $chk = $this->checkRequest($request,[ "qq","name", "address", "telphone","orderId"]);
+        $chk = $this->checkRequest($request,["orderId"]);
         if ($chk !== true)
         {
             return self::response([], 40001, "缺少参数" . $chk);
@@ -236,14 +238,13 @@ class GroupBuyingApiController extends Controller
 
     public function suki_buy_stock_items(Request $request)
     {
-        $this->data['lastGroupingInfo'] = GroupBuyingModel::getLastGroup();
-        $chk = $this->checkRequest($request, ["order_info", "item_id", "qq"]);
+        $chk = $this->checkRequest($request, ["order_info", "item_id"]);
         if ($chk !== true)
         {
             return self::response([], 40001, "缺少参数" . $chk);
         }
 
-        $item = GroupBuyingItemModel::find($request->input("item_id"));
+        $item = GroupBuyingStockItemTypeModel::find($request->input("item_id"));
         $item->item_color = explode("|", $item->item_color);
         $item->item_size = explode("|", $item->item_size);
 

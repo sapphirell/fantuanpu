@@ -89,6 +89,10 @@ class GroupBuyingPageController extends Controller
         $this->data["history_logs"] = GroupBuyingLogModel::getLogs($this->data["user_info"]->uid,[]);
         //待申请发货的列表
         $this->data["my_order"] = GroupBuyingOrderModel::where(["uid" => $this->data["user_info"]->uid,"status"=>4])->get();
+        foreach ($this->data["active_logs"] as &$value)
+        {
+            $value->item_image = explode("|",$value->item_image)[0];
+        }
         //地址
         $this->data["address"] = GroupBuyingAddressModel::get_my_address($this->data["user_info"]->uid);
         //发货列表
@@ -150,7 +154,11 @@ class GroupBuyingPageController extends Controller
 
     public function suki_group_buying_paying(Request $request)
     {
-
+        if (!$request->input("gid"))
+        {
+            return self::response([],40001,"缺少参数gid");
+        }
+        $this->data["order"] = GroupBuyingOrderModel::where(["uid"=>$this->data["user_info"]->uid,"group_id"=>$request->input("gid")])->first();
         return view('PC/Suki/SukiGroupBuyingPaying')->with('data', $this->data);
     }
 
