@@ -36,7 +36,7 @@ class GroupBuyingLogModel extends Model
         return $return;
     }
     //[4,6,7,9,10,11]
-    public static function getLogs($uid,$filter_options)
+    public static function getLogs($uid,$filter_option,$group=false)
     {
         $log = self::leftJoin("pre_group_buying_item",function ($join) {
             $join->on("pre_group_buying_log.item_id","=","pre_group_buying_item.id");
@@ -44,10 +44,14 @@ class GroupBuyingLogModel extends Model
             ->select(DB::raw("pre_group_buying_item.*,pre_group_buying_log.*,pre_group_buying_log.premium as order_premium"))
             ->where("uid", $uid);
 
-        foreach ($filter_options as $status)
+        foreach ($filter_option as $status)
         {
             $log = $log
                 ->where("status","!=",$status);
+        }
+        if ($group)
+        {
+            $log = $log->where("pre_group_buying_log.group_id","=",$group);
         }
         return $log->get();
 //        $log = $log

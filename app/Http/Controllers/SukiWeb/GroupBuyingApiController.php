@@ -167,7 +167,7 @@ class GroupBuyingApiController extends Controller
             return self::response([], 40001, "缺少参数" . $chk);
         }
 
-        $this->data["orders"] = GroupBuyingAddress::where(["id" => $request->input("orderId")])->first();
+        $this->data["orders"] = GroupBuyingOrderModel::where(["id" => $request->input("orderId")])->first();
         if (empty($this->data["orders"]))
         {
             return self::response([], 40002, "缺少orders");

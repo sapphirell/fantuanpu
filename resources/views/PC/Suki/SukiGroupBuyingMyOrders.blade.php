@@ -152,9 +152,10 @@
                 @endif
                 <img src="{{$value["item_image"]}}" class="logs_image" style="">
             </a>
+            <?php $need_pay += in_array($value->status,[1,2])? $value["order_price"] : 0; ?>
             <?php $sum_price += in_array($value->status,[1,2,3,5,8])? $value["order_price"] : 0; ?>
-
-            <?php $private_freight += in_array($value->status,[1,2,3,5,8])? $value["sum_private_freight"] : 0; ?>
+            <?php $refund += in_array($value->status,[10])? $value["order_price"] : 0; ?>
+            <?php $private_freight += in_array($value->status,[2,3,5,8])? $value["sum_private_freight"] : 0; ?>
 
             <div class="my_log_info">
                 <div class="my_log_detail" style="">
@@ -178,7 +179,7 @@
                         @elseif($value->status == 2)
                             等待确认付款
                         @elseif($value->status == 3)
-                            已经付款,等待他人付款
+                            已经付款
                         @elseif($value->status == 4)
                             取消
                         @elseif($value->status == 5)
@@ -214,20 +215,24 @@
         <div class="tab_m compute">
             <div>
                 <div class="compute_item">
-                    <span class="title">总价估算</span>
+                    <span class="title">待付款</span>
                     ￥
-                    <span class="font-weight: 900;">{{$sum_price}}</span>
+                    <span class="font-weight: 900;">{{$need_pay}}</span>
                 </div>
                 <div class="compute_item">
                     <span class="title">明细</span>
                 </div>
+
                 <div style="padding-left: 30px">
                     <p>
                         <span>本体 ￥</span><span class="font-weight: 900;">{{$sum_price}}</span>
                     </p>
-                    {{--<p>--}}
-                        {{--<span>公摊 ￥</span><span class="font-weight: 900;">{{$private_freight}}</span>--}}
-                    {{--</p>--}}
+                    <p>
+                        <span>公摊 ￥</span><span class="font-weight: 900;">{{$private_freight}}</span>
+                    </p>
+                    <p>
+                        <span>退款 ￥</span><span class="font-weight: 900;">{{$refund}}</span>
+                    </p>
                 </div>
 
                 <a class="go_to_pay">去付款</a>
@@ -281,10 +286,10 @@
                                         <label>
                                             勾选
                                             <input type="checkbox" class="check" orderId="{{$value->id}}"
-                                                   price="{{(
+                                                   price="{{round((
                                                $order->true_private_freight?:$order->private_freight)
                                                - $order->order_price
-                                               + ($order->true_price?:$order->order_price)
+                                               + ($order->true_price?:$order->order_price),2)
                                            }}">
                                         </label>
                                     @endif
@@ -412,6 +417,8 @@
         }
     })
     $(".submit_check").click(function (e) {
+        alert("暂时不可发货");
+        return ;
         var address = $(".address").val();
         var telphone = $(".telphone").val();
         var name = $(".name").val();

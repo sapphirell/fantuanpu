@@ -21,7 +21,7 @@ class GroupBuyingItemModel extends Model
                     ->where("pre_group_buying_log.status","!=",10)
                     ->where("pre_group_buying_log.status","!=",11);
             })
-            ->select(DB::raw("pre_group_buying_item.*,count(distinct pre_group_buying_log.uid) as follow,pre_group_buying_log.order_info"))
+            ->select(DB::raw("pre_group_buying_item.*,count(distinct pre_group_buying_log.uid) as follow"))
             ->where("pre_group_buying_item.group_id",$id);
 
 //        dd($list);

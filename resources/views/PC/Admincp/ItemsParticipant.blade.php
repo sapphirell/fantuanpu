@@ -25,6 +25,7 @@
                 <td>{{$value->create_date}}</td>
                 <td>{{$value->username}}</td>
                 <td>{{$value->order_info}}</td>
+                <td><a class="change_log_items" id="{{$value->id}}" href="/admincp/change_log_items?log_id={{$value->id}}">换</a></td>
                 <td>{{$value->qq}}</td>
             </tr>
         @endforeach
@@ -41,7 +42,21 @@
                 alert(e.msg)
                 window.location.reload()
             })
+        });
+        //
+        $(".change_log_items").click(function (e) {
+            e.preventDefault();
+            var id = $(this).attr("id");
+            layer.open({
+                type: 2,
+                title: false,
+                closeBtn: 0, //不显示关闭按钮
+                shade: 0.8,
+                shadeClose: true,
+                area: ["900px", '405px'],
+                offset: '100px',
+                content: ['/admincp/change_log_items?id='+id,'no']
+            });
         })
-
     })
 </script>

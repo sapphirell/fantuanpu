@@ -202,6 +202,8 @@ Route::group([
     Route::get('/admincp/remove_group_buying_item', ['uses' => 'GroupBuyingController@remove_group_buying_item', 'as' => 'get_remove_group_buying_item']);#下架
     Route::post('/admincp/skip_orders', ['uses' => 'GroupBuyingController@skip_orders', 'as' => 'skip_orders']);#跑单处理
     Route::get('/admincp/skip_orders', ['uses' => 'GroupBuyingController@skip_orders', 'as' => 'get_skip_orders']);#跑单处理
+    Route::get('/admincp/change_log_items', ['uses' => 'GroupBuyingController@change_log_items', 'as' => 'change_log_items']);#打开编辑log详情页
+
 
 
 });

@@ -162,7 +162,11 @@ class GroupBuyingController extends Controller
     //查看一个商品的参团者
     public function items_participant(Request $request)
     {
-        $this->data["list"] = GroupBuyingLogModel::where(["item_id" => $request->input("id")])->where("status", "<>", 4)->where("status", "<>", 10)->where("status", "<>", 11)->get();
+        $this->data["list"] = GroupBuyingLogModel::where(["item_id" => $request->input("id")])
+            ->where("status", "<>", 4)
+            ->where("status", "<>", 10)
+            ->where("status", "<>", 11)
+            ->get();
         $this->data["count_info"] = [];
         foreach ($this->data["list"] as &$value)
         {
@@ -342,6 +346,12 @@ class GroupBuyingController extends Controller
         $order = GroupBuyingOrderModel::find($request->input("id"));
         $order->status = 4;
         $order->save();
+        foreach (json_decode($order->log_id,true) as $id)
+        {
+            $log = GroupBuyingLogModel::find($id);
+            $log->status = 3;
+            $log->save();
+        }
         return self::response();
     }
     public function skip_orders(Request $request)
@@ -407,7 +417,8 @@ class GroupBuyingController extends Controller
                     {
                         $user_order->ori_log_id = $user_order->log_id;
                     }
-                    if($order_detail[$item_id]["item_detail"]["min_members"] <= $order_detail[$item_id]["item_detail"]["item_count"] - $user_buy)
+
+                    if($order_detail["item_detail"]["min_members"] <= $order_detail["item_detail"]["item_count"] - $user_buy)
                     {
 
                         //如果还成团,其它人的运费重新生成
@@ -505,5 +516,34 @@ class GroupBuyingController extends Controller
         $delivers->status = $request->input("to_status");
         $delivers->save();
         return self::response();
+    }
+
+    public function change_log_items(Request $request)
+    {
+        $this->data["log"] = GroupBuyingLogModel::find($request->input("id"));
+//        $this->data["log"]->order_info = json_decode($this->data["log"]->order_info,true);
+
+
+        $this->data["item"] = GroupBuyingItemModel::find($this->data["log"]->item_id);
+//        dd($this->data["item"] );
+
+        return view('PC/Admincp/ChangeLogItems')->with('data',$this->data);
+    }
+
+    public function do_change_item(Request $request)
+    {
+        //校验
+        $log_order_info = $request->input("log_order_info");
+        $id = $request->input("id");
+        if (!$log_order_info || !$id)
+        {
+            return self::response([],40001,"缺少参数");
+        }
+        $log = GroupBuyingLogModel::find($id);
+        if (empty($log))
+        {
+            return self::response([],40001,"log不存在");
+        }
+        
     }
 }
