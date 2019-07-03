@@ -13,14 +13,15 @@
         </div>
     </div>
 
-    <table class="table">
+    <table class="table" style="width: 1000px">
         <tr>
             <td>用户名</td>
             <td>收货人</td>
             <td>收货地址</td>
-            {{--<td>费用</td>--}}
+            <td>应收款</td>
             <td>手机号</td>
-            {{--<td>qq</td>--}}
+            <td  style="width:80px ">勾选地域</td>
+            <td>qq</td>
             <td style="width: 130px">操作</td>
         </tr>
 
@@ -30,9 +31,18 @@
                 <td>{{$user->username}}</td>
                 <td>{{$value["name"]}}</td>
                 <td>{{$value["address"]}}</td>
-{{--                <td>{{$value['private_freight'] + $value['price_difference']  + $value['freight'] }}</td>--}}
+                <td>{{$value['private_freight'] + $value['price_difference']  + $value['freight'] }}</td>
                 <td>{{$value["telphone"]}}</td>
-                {{--<td>{{$user->qq}}</td>--}}
+                <td>
+                    @if($value->freight == 5.5)
+                        江浙沪
+                    @elseif($value->freight == 7)
+                        其它
+                    @else
+                        藏疆
+                    @endif
+                </td>
+                <td>{{$user->qq}}</td>
                 <td>
                     <a class="order_delivers" expressid="{{$value->id}}" to_status="2">确认价格</a>
                     <br>

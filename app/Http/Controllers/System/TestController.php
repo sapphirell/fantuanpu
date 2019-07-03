@@ -60,6 +60,13 @@ class TestController extends Controller
         {
             $logs = json_decode($value["log_id"],true);
             $logids = array_merge($logids,$logs);
+            if ($value->status == 4)
+            {
+                $value->status = 3;
+                $value->save();
+            }
+
+
         }
         $ids = "" ;
         foreach ($logids as $id)

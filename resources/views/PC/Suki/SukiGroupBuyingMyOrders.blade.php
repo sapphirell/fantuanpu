@@ -248,6 +248,7 @@
                     </div>
 
                     <table style="width: 100%;    min-height: 50px;">
+
                         @foreach($data["my_order"] as $order)
                             {{--{{dd($order)}}--}}
                             <?php $order_info = json_decode($order->order_info,true); unset($order_info["log_id"]); ?>
@@ -285,7 +286,7 @@
                                     @if($value->status == 4 || 1)
                                         <label>
                                             勾选
-                                            <input type="checkbox" class="check" orderId="{{$value->id}}"
+                                            <input type="checkbox" class="check" orderId="{{$order->id}}"
                                                    price="{{round((
                                                $order->true_private_freight?:$order->private_freight)
                                                - $order->order_price
@@ -309,7 +310,7 @@
                         <span class="count_price">0</span>元
 
                         <a class="submit_check btn btn-info" style="float: right;color: #FFFFFF;background-color: #fdc2c5;border-color: #ffb2bb;">
-                            [发货勾选]
+                            [申请发货]
                         </a>
                     </div>
                 @else
@@ -332,7 +333,7 @@
                         </td>
                     </tr>
                     @foreach($data["express"] as $value)
-                    <tr>
+                    <tr  style="border-bottom: 1px solid #DDDDDD;">
                         <td>{{$value->address}}</td>
                         <td>
                             @if($value->status == 1)
@@ -342,13 +343,21 @@
                             @elseif ($value->status == 3)
                                 邮费已补
                             @elseif ($value->status == 4)
-                                已发货
+                                <span style="color: #888888">已发货</span>
                             @endif
                         </td>
                         <td>
-                            公摊:{{$value['private_freight']}},
-                            流团退款:{{$value['price_difference']}},
-                            个人运费:{{$value['freight']}}
+                            公摊:{{$value['private_freight']}},<br />
+                            流团退款:{{$value['price_difference']}},<br />
+                            个人运费:{{$value['freight']}}<br />
+                            包含:
+                            @foreach($value['groups'] as $n => $id)
+                                {{$id}} 团
+                                @if($n >0)
+                                    、
+                                @endif
+                            @endforeach
+                            的货物<br />
                         </td>
                     </tr>
                     @endforeach
@@ -374,7 +383,7 @@
         {
             title = "需支付"
         }
-        $(".count_price").text(Math.abs(count_price+pf));
+        $(".count_price").text(Math.round(Math.abs(count_price+pf)*100)/100);
         $(".count_title").text(title);
     }
     $(".go_to_pay").click(function (e) {
@@ -417,8 +426,8 @@
         }
     })
     $(".submit_check").click(function (e) {
-        alert("暂时不可发货");
-        return ;
+//        alert("暂时不可发货");
+//        return ;
         var address = $(".address").val();
         var telphone = $(".telphone").val();
         var name = $(".name").val();

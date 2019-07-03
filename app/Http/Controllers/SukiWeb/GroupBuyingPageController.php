@@ -77,6 +77,10 @@ class GroupBuyingPageController extends Controller
     }
     public function suki_group_buying_myorders(Request $request)
     {
+//        if ($this->data["user_info"]->uid == 2  )
+//        {
+//            $this->data["user_info"]->uid = 49257;
+//        }
         if ($request->input("type") == 'last')
         {
             $filter = [4,6,7,9];
@@ -109,6 +113,7 @@ class GroupBuyingPageController extends Controller
         //我的优惠券
 //        $this->data[""]
 //        dd( $this->data["express"]);
+
         return view('PC/Suki/SukiGroupBuyingMyOrders')->with('data', $this->data);
     }
     public function suki_group_buying_address_manager(Request $request)

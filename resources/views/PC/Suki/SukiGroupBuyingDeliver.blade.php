@@ -122,84 +122,84 @@
                         @endif
                     </td>
                     <td>
-                        @if($value->status == 4)
-                            <label>
-                                勾选
-                                <input type="checkbox" class="check"  orderId="{{$value->id}}" price="{{
-                            ($value->true_private_freight
-                            ?:$value->private_freight)
-                            +
-                            (($value->true_price ? ($value->true_price - $value->order_price):0))
-                        }}">
-                            </label>
-                        @endif
+                        {{--@if($value->status == 4)--}}
+                            {{--<label>--}}
+                                {{--勾选--}}
+                                {{--<input type="checkbox" class="check"  orderId="{{$value->id}}" price="{{--}}
+                            {{--($value->true_private_freight--}}
+                            {{--?:$value->private_freight)--}}
+                            {{--+--}}
+                            {{--(($value->true_price ? ($value->true_price - $value->order_price):0))--}}
+                        {{--}}">--}}
+                            {{--</label>--}}
+                        {{--@endif--}}
                     </td>
 
                 </tr>
 
             @endforeach
 
-            <td>
-                <select class="select_province" style="width: 100px;padding: 0px;font-size: 12px;height: 25px;">
-                    <option value="0|0">请选择!!</option>
-                    <option  value="5.5|1">苏浙沪皖</option>
-                    <option   value="7|2">京津冀晋辽吉黑闽赣鲁豫鄂湘粤桂琼川贵滇渝陕甘青宁</option>
-                    <option value="18|3">藏疆</option>
-                </select>
-            </td>
-            <td  colspan="2" style="    padding-top: 12px;">
-                <span class="count_title">需支付</span>:
-                <span class="count_price">0</span>元
-            </td>
+            {{--<td>--}}
+                {{--<select class="select_province" style="width: 100px;padding: 0px;font-size: 12px;height: 25px;">--}}
+                    {{--<option value="0|0">请选择!!</option>--}}
+                    {{--<option  value="5.5|1">苏浙沪皖</option>--}}
+                    {{--<option   value="7|2">京津冀晋辽吉黑闽赣鲁豫鄂湘粤桂琼川贵滇渝陕甘青宁</option>--}}
+                    {{--<option value="18|3">藏疆</option>--}}
+                {{--</select>--}}
+            {{--</td>--}}
+            {{--<td  colspan="2" style="    padding-top: 12px;">--}}
+                {{--<span class="count_title">需支付</span>:--}}
+                {{--<span class="count_price">0</span>元--}}
+            {{--</td>--}}
 
-            <td  colspan="2" style="width: 70px;    padding-top: 12px;">
-                <a class="submit_check btn btn-info" style="float: right;color: #FFFFFF">
-                    [申请发货勾选的]
-                </a>
+            {{--<td  colspan="2" style="width: 70px;    padding-top: 12px;">--}}
+                {{--<a class="submit_check btn btn-info" style="float: right;color: #FFFFFF">--}}
+                    {{--[申请发货勾选的]--}}
+                {{--</a>--}}
 
-            </td>
+            {{--</td>--}}
         </table>
-        <ol class="rule">
-            <li>您可以勾选您想要发货的快递,我们会以下面的地址计算邮费和发货(每个地区邮费不同)</li>
-            <li>您可稍候一段时间,或通知QQ群内的群主查看您的发货申请,我们核对好邮费后,您需要根据此页面的邮费进行补款,我们收到付款后会通知快递来取件。</li>
-            <li>如果您在一期团购中购买的数量较少,可以暂时囤货不发,但不宜囤过多,商品超过一公斤的快递超重还需付超重费用。</li>
-        </ol>
-        <div style="background-color: #ffb6c7;
-                    background-image: linear-gradient(90deg, #fbd9d9 0%, #fff9f7 93%);
-                color: #FFFFFF;
-                font-size: 13px;
-                padding: 6px 15px;
+        {{--<ol class="rule">--}}
+            {{--<li>您可以勾选您想要发货的快递,我们会以下面的地址计算邮费和发货(每个地区邮费不同)</li>--}}
+            {{--<li>您可稍候一段时间,或通知QQ群内的群主查看您的发货申请,我们核对好邮费后,您需要根据此页面的邮费进行补款,我们收到付款后会通知快递来取件。</li>--}}
+            {{--<li>如果您在一期团购中购买的数量较少,可以暂时囤货不发,但不宜囤过多,商品超过一公斤的快递超重还需付超重费用。</li>--}}
+        {{--</ol>--}}
+        {{--<div style="background-color: #ffb6c7;--}}
+                    {{--background-image: linear-gradient(90deg, #fbd9d9 0%, #fff9f7 93%);--}}
+                {{--color: #FFFFFF;--}}
+                {{--font-size: 13px;--}}
+                {{--padding: 6px 15px;--}}
 
-">
-            您的收货地址
-        </div>
+{{--">--}}
+            {{--您的收货地址--}}
+        {{--</div>--}}
 
-        <div style="padding: 20px;background: #FFFFFF">
-            <p style="font-size: 15px;margin-bottom: 10px;">操作说明:</p>
+        {{--<div style="padding: 20px;background: #FFFFFF">--}}
+            {{--<p style="font-size: 15px;margin-bottom: 10px;">操作说明:</p>--}}
 
-            <form>
-                <input class="orderId" type="hidden" value="{{$data["order_info"]["id"]}}">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" >收件人</span>
-                    </div>
-                    <input type="text" class="form-control name" placeholder=""  name=""  value="{{$data["address"]->name}}">
-                </div>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" >收货地址</span>
-                    </div>
-                    <input type="text" class="form-control address" placeholder=""  name=""  value="{{$data["address"]->address}}">
-                </div>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" >收货手机号</span>
-                    </div>
-                    <input type="text" class="form-control telphone" placeholder="" name="" value="{{$data["address"]->telphone}}">
-                </div>
+            {{--<form>--}}
+                {{--<input class="orderId" type="hidden" value="{{$data["order_info"]["id"]}}">--}}
+                {{--<div class="input-group mb-3">--}}
+                    {{--<div class="input-group-prepend">--}}
+                        {{--<span class="input-group-text" >收件人</span>--}}
+                    {{--</div>--}}
+                    {{--<input type="text" class="form-control name" placeholder=""  name=""  value="{{$data["address"]->name}}">--}}
+                {{--</div>--}}
+                {{--<div class="input-group mb-3">--}}
+                    {{--<div class="input-group-prepend">--}}
+                        {{--<span class="input-group-text" >收货地址</span>--}}
+                    {{--</div>--}}
+                    {{--<input type="text" class="form-control address" placeholder=""  name=""  value="{{$data["address"]->address}}">--}}
+                {{--</div>--}}
+                {{--<div class="input-group mb-3">--}}
+                    {{--<div class="input-group-prepend">--}}
+                        {{--<span class="input-group-text" >收货手机号</span>--}}
+                    {{--</div>--}}
+                    {{--<input type="text" class="form-control telphone" placeholder="" name="" value="{{$data["address"]->telphone}}">--}}
+                {{--</div>--}}
 
-            </form>
-        </div>
+            {{--</form>--}}
+        {{--</div>--}}
     @else
         <table class="table" style="background: #fff;font-size: 12px;padding: 10px;color: #795353;border: 1px solid #fad4d0;background-color: white;border-radius: 5px;">
             <tr style="background-color: #fff5f5;;border-radius: 5px;overflow: hidden;">
@@ -243,7 +243,7 @@
                             个人运费:{{$value['freight']}}
                         </span>
                     </td>
-                    <td style="width: 70px">操作</td>
+                    <td style="width: 70px">无</td>
                 </tr>
             @endforeach
 

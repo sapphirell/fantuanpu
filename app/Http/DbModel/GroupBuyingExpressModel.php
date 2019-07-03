@@ -13,7 +13,19 @@ class GroupBuyingExpressModel extends Model
 
     public static function get_my_express(int $uid)
     {
-        return self::where("uid",'=',$uid)->get();
+        $data = self::where("uid",'=',$uid)->get();
+        foreach ($data as &$value)
+        {
+            $orders = json_decode($value->orders,true);
+            $groups = [];
+            foreach ($orders as $orderId)
+            {
+                $orderTableData = GroupBuyingOrderModel::find($orderId);
+                $groups[] = $orderTableData->group_id;
+            }
+            $value->groups = $groups;
+        }
+        return $data;
     }
 
 }

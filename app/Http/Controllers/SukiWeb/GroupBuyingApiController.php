@@ -126,6 +126,10 @@ class GroupBuyingApiController extends Controller
         //遍历订单获得价格
         $user_orders = GroupBuyingOrderModel::where("uid","=",$this->data["user_info"]->uid)->where("status","=",4)
             ->whereIn('id',$request->input("orders"))->get();
+        if (empty($user_orders))
+        {
+            return self::response([],40002,"订单已经提交了");
+        }
         $private_freight = 0;
         $price_difference = 0;
         $log_arr = [];

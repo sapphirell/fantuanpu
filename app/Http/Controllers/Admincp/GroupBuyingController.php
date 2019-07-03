@@ -504,7 +504,6 @@ class GroupBuyingController extends Controller
         foreach ($this->data["list"]  as $value)
         {
             //提取地址前面几个直到碰到"省"、"市"、"区"
-
         }
         return view('PC/Admincp/OrderDeliver')->with('data',$this->data);
     }
@@ -534,16 +533,70 @@ class GroupBuyingController extends Controller
     {
         //校验
         $log_order_info = $request->input("log_order_info");
-        $id = $request->input("id");
+        $id             = $request->input("id");
         if (!$log_order_info || !$id)
         {
-            return self::response([],40001,"缺少参数");
+            return self::response([], 40001, "缺少参数");
         }
         $log = GroupBuyingLogModel::find($id);
         if (empty($log))
         {
-            return self::response([],40001,"log不存在");
+            return self::response([], 40001, "log不存在");
         }
-        
+
+        $log->order_info = json_decode($log->order_info, true);
+        $log_order_info  = json_decode($log_order_info, true);
+        $ori_num         = 0;
+        $new_num         = 0;
+
+        foreach ($log->order_info as $num)
+        {
+            $ori_num += $num;
+        }
+        foreach ($log_order_info as $num)
+        {
+            $new_num += $num;
+        }
+        if ($new_num != $ori_num)
+        {
+            return self::response([], 40002, "数目不相等");
+        }
+
+        if ($new_num == 0 || $ori_num == 0)
+        {
+            return self::response([], 40003, "数据异常");
+        }
+        $order = GroupBuyingOrderModel::where("group_id","=",$log->group_id)->where("uid","=",$log->uid)
+            ->first();
+        if (empty($order->id))
+        {
+            return self::response([],40004,"order 不见了");
+        }
+        if (!$order->ori_log_id)
+        {
+            $order->ori_log_id = $order->log_id;
+        }
+        if (!$order->ori_order_data)
+        {
+            $order->ori_order_data = $order->order_info;
+        }
+        $order->order_info = json_decode($order->order_info,true);
+
+        foreach ($order->order_info[$order->item_id]["detail"] as $features => $num)
+        {
+//            $feature = explode("|",$features);
+            foreach ($log->order_info as $type => $log_num)
+            {
+//                if ()
+            }
+
+        }
+
+
+
+        $log->order_info = json_encode($log_order_info);
+        $log->save();
+
+
     }
 }
