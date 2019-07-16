@@ -160,7 +160,7 @@
                 </div>
                 <div style="margin-bottom: 10px;padding-left: 13px;">
                     <span for="size" style="color: #888a85;margin-right: 15px">库存</span>
-
+                    <span class="stock stock_zero" style="padding-left: 27px;font-size: 18px;">0</span>
                     @foreach($data["item_info"]->items as $items_num => $value)
                         <span
                                 class="stock"
@@ -233,7 +233,15 @@
 <script>
     function resetStock(key) {
         $(".stock").hide();
-        $("#" + key).show();
+        if ($("#" + key).text() != "")
+        {
+            $("#" + key).show();
+        }
+        else
+        {
+            $(".stock_zero").show();
+        }
+
         var price = $("#" + key).attr("price") ? $("#" + key).attr("price") : 0;
         console.log(price)
         $(".item_info_num").text(price)
@@ -243,17 +251,17 @@
         var item_id = $("#item_id").val();
         resetStock(key);
         $("#spinner").spinner('delay', 200) //delay in ms
-                .spinner('changed', function (e, newVal, oldVal) {
-                    // trigger lazed, depend on delay option.
-                })
-                .spinner('changing', function (e, newVal, oldVal) {
-                    // trigger immediately
-                });
+            .spinner('changed', function (e, newVal, oldVal) {
+                // trigger lazed, depend on delay option.
+            })
+            .spinner('changing', function (e, newVal, oldVal) {
+                // trigger immediately
+            });
         $(".add_item").click(function () {
             @if(!$data["user_info"]->uid)
                 alert("请先登录");
-            return;
-                    @endif
+                return;
+            @endif
             var size = $(".size").val();
             var color = $(".color").val();
             var num = parseInt($(".num").val());
@@ -263,7 +271,8 @@
                 return false;
             }
 
-            var items = size + "_" + color
+            var items = size + "_" + color;
+
             var now_chat = $(".buying").text() ? JSON.parse($(".buying").text()) : {};
 
             $(".submit_to_gb").show()

@@ -42,13 +42,19 @@
                     id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 @if($data['type']=='stock')
                     现货
-                @else
+                @elseif($data["request"]["gid"] == "")
                     本期团购
+                @elseif($data["request"]["gid"] == 1)
+                    一期团购
+                @elseif($data["request"]["gid"] == 2)
+                    二期团购
                 @endif
             </button>
             <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                 <a href="/suki_group_buying" class="dropdown-item" href="#">本期团购</a>
                 <a href="/suki_group_buying_stock" class="dropdown-item" href="#">现货</a>
+                <a href="/suki_group_buying?gid=1" class="dropdown-item" href="#">一期团购</a>
+                <a href="/suki_group_buying?gid=2" class="dropdown-item" href="#">二期团购</a>
             </div>
         </div>
         {{--<ol class="breadcrumb">--}}

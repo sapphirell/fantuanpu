@@ -134,6 +134,16 @@
     }
 </style>
 <div class="wp" style="margin-top: 60px;    padding: 5px;background-color: #fff;">
+    <div class="btn-group show" style="margin-bottom: 10px;" role="group">
+        <button style="border: 0px;color: #999999;box-shadow: 0 0 5px #f1f1f1;background-color: #fff;padding: 6px 15px;margin-left: 0px;" type="button" class="btn btn-secondary dropdown-toggle tb" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            切换表单
+        </button>
+        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" x-placement="bottom-start" style="position: absolute; transform: translate3d(10px, 25px, 0px); top: 0px; left: 0px; will-change: transform;">
+            <a href="/suki_group_buying_myorders?type=last" class="dropdown-item setting_clock_alert">正在团购</a>
+            <a href="/suki_group_buying_myorders" class="dropdown-item setting_clock_alert">历史订单</a>
+
+        </div>
+    </div>
     @if(empty($data["active_logs"]))
         <p>暂无</p>
     @endif
@@ -324,7 +334,7 @@
             <div>
                 <table style="width: 100%">
                     <tr>
-                        <td>收货地址</td>
+                        <td>收货地址/单号</td>
                         <td>
                            状态
                         </td>
@@ -334,7 +344,11 @@
                     </tr>
                     @foreach($data["express"] as $value)
                     <tr  style="border-bottom: 1px solid #DDDDDD;">
-                        <td>{{$value->address}}</td>
+                        <td>
+                            {{$value->address}}<br />
+                            {{--{{dd($value)}}--}}
+                            {{$value->waybill_no}}
+                        </td>
                         <td>
                             @if($value->status == 1)
                                 提交申请

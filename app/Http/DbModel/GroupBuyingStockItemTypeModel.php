@@ -30,4 +30,11 @@ class GroupBuyingStockItemTypeModel extends Model
         }
         return $data;
     }
+
+    public static function getOne($item_id)
+    {
+        $data["info"] = self::find($item_id);
+        $data["detail"] = GroupBuyingStockItemModel::getList($item_id);
+        return $data;
+    }
 }

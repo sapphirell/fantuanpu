@@ -28,7 +28,15 @@ class GroupBuyingPageController extends Controller
     //suki的团购
     public function suki_group_buying(Request $request)
     {
-        $this->data['lastGroupingInfo'] = GroupBuyingModel::getLastGroup();
+        if ($request->input("gid"))
+        {
+            $this->data['lastGroupingInfo'] = GroupBuyingModel::find($request->input("gid"));
+        }
+        else
+        {
+            $this->data['lastGroupingInfo'] = GroupBuyingModel::getLastGroup();
+        }
+
 //        $group_id = $type == "stock" ? 0 : $this->data['lastGroupingInfo']->id;
         if (  $this->data['lastGroupingInfo'])
         {
@@ -77,10 +85,6 @@ class GroupBuyingPageController extends Controller
     }
     public function suki_group_buying_myorders(Request $request)
     {
-//        if ($this->data["user_info"]->uid == 2  )
-//        {
-//            $this->data["user_info"]->uid = 49257;
-//        }
         if ($request->input("type") == 'last')
         {
             $filter = [4,6,7,9];
@@ -90,16 +94,16 @@ class GroupBuyingPageController extends Controller
             $filter = [];
         }
         //正在进行的
-        $this->data["active_logs"] = GroupBuyingLogModel::getLogs($this->data["user_info"]->uid,$filter,2);
+        $this->data["active_logs"] = GroupBuyingLogModel::getLogs($this->data["user_info"]->uid,$filter,[0,2]);
 //        dd(    $this->data["active_logs"] );
         foreach ($this->data["active_logs"] as $value)
         {
-//            dd($value["item_id"]);
-            $value->sum_private_freight = round($value->item_freight / GroupBuyingLogModel::getNotCancelItemsLog($value["item_id"])['member_count'],2);
-//            dd($mem);
+
+            $value->sum_private_freight =
+                round($value->item_freight / GroupBuyingLogModel::getNotCancelItemsLog($value["item_id"])['member_count'],2);
+
+
         }
-        //所有的
-        $this->data["history_logs"] = GroupBuyingLogModel::getLogs($this->data["user_info"]->uid,[]);
         //待申请发货的列表
         $this->data["my_order"] = GroupBuyingOrderModel::where(["uid" => $this->data["user_info"]->uid,"status"=>4])->get();
         foreach ($this->data["active_logs"] as &$value)

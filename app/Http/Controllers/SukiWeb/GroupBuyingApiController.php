@@ -248,9 +248,7 @@ class GroupBuyingApiController extends Controller
             return self::response([], 40001, "缺少参数" . $chk);
         }
 
-        $item = GroupBuyingStockItemTypeModel::find($request->input("item_id"));
-        $item->item_color = explode("|", $item->item_color);
-        $item->item_size = explode("|", $item->item_size);
+        $item = GroupBuyingStockItemTypeModel::getOne($request->input("item_id"));
 
         if (empty($item))
         {
@@ -266,32 +264,40 @@ class GroupBuyingApiController extends Controller
 
         $order_price = 0;
         $premium = 0;
-        foreach ($order_info as $key => $value)
+        foreach ($order_info as $key => $buy_num)
         {
-            if ($value <= 0)
+            if ($buy_num <= 0)
             {
                 return self::response([], 40003, "欲购商品数量必须大于0");
             }
-            $info = explode("_", $key);
-            if (!in_array($info[0], $item->item_size))
-            {
-                return self::response([], 40003, "商品不存在该尺寸");
-            }
-            if (!in_array($info[1], $item->item_color))
-            {
-                return self::response([], 40003, "商品不存在该颜色" . var_export($item->item_color, true));
-            }
-            $premium += $value * $item->premium;
-            $order_price += $value * $item->premium + $value * $item->item_price; // 辛苦费+商品原价
-        }
 
-        //        $order_price += $item->item_freight / $item->min_members  + 15; //公摊运费+私人运费
+//            dd($info);
+            $colorSizeNotExistsFlag = true;
+            foreach ($item["detail"] as $item_stock_detail)
+            {
+                if ($item_stock_detail->size."_".$item_stock_detail->color == $key)
+                {
+                    $colorSizeNotExistsFlag = false;
+                    $order_price += $buy_num * $item_stock_detail->price;
+                    $item_stock_detail->stock -= $buy_num;
+                    $item_stock_detail->save();
+                    break;
+                }
+            }
+
+            if ($colorSizeNotExistsFlag)
+            {
+                return self::response([], 40003, "商品不存在该尺寸或颜色");
+            }
+
+
+        }
 
         $orderLog = new GroupBuyingLogModel();
         $orderLog->uid = $this->data['user_info']->uid;
-        $orderLog->item_id = $item->id;
+        $orderLog->item_id =  $request->input("item_id");
         $orderLog->status = 1;
-        $orderLog->group_id = $item->group_id;
+        $orderLog->group_id = 0;
         //        $orderLog->address = $request->input("address");
         $orderLog->private_freight = 0;
         //        $orderLog->name = $request->input("name");

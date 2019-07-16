@@ -36,7 +36,7 @@ class GroupBuyingLogModel extends Model
         return $return;
     }
     //[4,6,7,9,10,11]
-    public static function getLogs($uid,$filter_option,$group=false)
+    public static function getLogs($uid,$filter_option,$group=[])
     {
         $log = self::leftJoin("pre_group_buying_item",function ($join) {
             $join->on("pre_group_buying_log.item_id","=","pre_group_buying_item.id");
@@ -49,11 +49,31 @@ class GroupBuyingLogModel extends Model
             $log = $log
                 ->where("status","!=",$status);
         }
-        if ($group)
+        if (!empty($group))
         {
-            $log = $log->where("pre_group_buying_log.group_id","=",$group);
+            $log = $log->whereIn("pre_group_buying_log.group_id",$group);
+
         }
-        return $log->get();
+        $data = $log->get();
+        foreach ($data as &$value)
+        {
+            //对现货商品进行处理
+            if ($value->group_id == 0)
+            {
+                $stock_item_info = GroupBuyingStockItemTypeModel::getOne($value->item_id);
+                $value->item_name = $stock_item_info["info"]->item_name;
+                $value->item_image = $stock_item_info["info"]->item_image;
+                $value->item_freight = 0;
+                $value->item_size = "";
+                $value->item_color = "";
+                foreach ($stock_item_info["detail"] as $d)
+                {
+//                    dd($d);
+//                    $value->item_size .= $d->
+                }
+            }
+        }
+        return $data;
 //        $log = $log
 //            ->where("status","!=",4)//取消
 //            ->where("status","!=",7)//流团
