@@ -134,8 +134,8 @@
     }
 </style>
 <div class="wp" style="margin-top: 60px;    padding: 5px;background-color: #fff;">
-    <div class="btn-group show" style="margin-bottom: 10px;" role="group">
-        <button style="border: 0px;color: #999999;box-shadow: 0 0 5px #f1f1f1;background-color: #fff;padding: 6px 15px;margin-left: 0px;" type="button" class="btn btn-secondary dropdown-toggle tb" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    <div class="btn-group show" style="margin-bottom: 10px;box-shadow: none" role="group">
+        <button style="border: 0px;color: #999999;background-color: #fff;padding: 6px 15px;margin-left: 0px;" type="button" class="btn btn-secondary dropdown-toggle tb" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
             切换表单
         </button>
         <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" x-placement="bottom-start" style="position: absolute; transform: translate3d(10px, 25px, 0px); top: 0px; left: 0px; will-change: transform;">
@@ -228,6 +228,10 @@
                     <span class="title">待付款</span>
                     ￥
                     <span class="font-weight: 900;">{{$need_pay}}</span>
+                </div>
+                <div class="compute_item">
+                    <span class="title">优惠券</span>
+                    <a href="/suki_group_buying_my_ticket">[不使用优惠券]</a>
                 </div>
                 <div class="compute_item">
                     <span class="title">明细</span>

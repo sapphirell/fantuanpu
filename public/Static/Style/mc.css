@@ -57,7 +57,7 @@ blockquote {
 input,textarea{outline:none;}
 input[type="button"],input[type="submit"]{
     padding: 5px 30px;
-    margin: 5px 0px;
+    margin: 5px 0;
     display: inline-block;
     cursor: pointer;
     font-weight: 100;
@@ -65,8 +65,8 @@ input[type="button"],input[type="submit"]{
     border: 1px solid #D4D4D4;
     border-radius: 3px;
     background-color: #ffffff;
-    border-color: #b1c9d0;
-    color: #4e7d8a;
+    border-color: #ced4da;
+    color: #9da2a7;
     font-weight: 800;
 }
 /*input[type="button"]:active, input[type="submit"]:active{position: relative;top: 1px}*/

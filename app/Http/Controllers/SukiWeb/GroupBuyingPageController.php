@@ -4,6 +4,7 @@ namespace App\Http\Controllers\SukiWeb;
 
 use App\Http\DbModel\GroupBuyingStockItemModel;
 use App\Http\DbModel\GroupBuyingStockItemTypeModel;
+use App\Http\DbModel\UserTicketModel;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -213,6 +214,13 @@ class GroupBuyingPageController extends Controller
         return view('PC/Suki/SukiGroupBuyingDeliver')->with('data', $this->data);
     }
 
+    public function suki_group_buying_my_ticket(Request $request)
+    {
+
+        $this->data["my_ticket"] = UserTicketModel::getActiveTicket($this->data["user_info"]->uid);
+//        dd($this->data["my_ticket"]);
+        return view('PC/Suki/SukiUserTicket')->with('data', $this->data);
+    }
 
 
 }

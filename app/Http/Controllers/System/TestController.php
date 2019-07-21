@@ -29,19 +29,21 @@ class TestController extends Controller
     }
 
     public function index(){
-        $logs = GroupBuyingLogModel::getNotCancelLog(1,false);
-        dd($logs[0]);
-        $num = 0;
-        foreach ($logs as $log)
-        {
-            $order_info = json_decode($log->order_info,true);
-            foreach ($order_info as $type=>$num)
-            {
-
-                $num += $num;
-            }
-        }
-        echo $num;
+        header('Access-Control-Allow-Origin: http://www.baidu.com');
+        echo 1;
+//        $logs = GroupBuyingLogModel::getNotCancelLog(1,false);
+//        dd($logs[0]);
+//        $num = 0;
+//        foreach ($logs as $log)
+//        {
+//            $order_info = json_decode($log->order_info,true);
+//            foreach ($order_info as $type=>$num)
+//            {
+//
+//                $num += $num;
+//            }
+//        }
+//        echo $num;
 
     }
     public function ping(Request $request)

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\SukiWeb;
 use App\Http\DbModel\GroupBuyingAddressModel;
 use App\Http\DbModel\GroupBuyingStockItemModel;
 use App\Http\DbModel\GroupBuyingStockItemTypeModel;
+use App\Http\DbModel\UserTicketModel;
 use Illuminate\Http\Request;
 
 use App\Http\Controllers\Controller;
@@ -319,5 +320,28 @@ class GroupBuyingApiController extends Controller
             User_model::flushUserCache($this->data['user_info']->uid);
         }
         return self::response();
+    }
+
+    public function suki_group_buying_select_ticket(Request $request)
+    {
+        $chk = $this->checkRequest($request, ["user_ticket_id"]);
+        if ($chk !== true)
+        {
+            return self::response([], 40001, "缺少参数" . $chk);
+        }
+        $userTickets = UserTicketModel::getActiveTicket($this->data["user_info"]->uid);
+        foreach ($userTickets as $ticket)
+        {
+            if ($ticket->user_ticket_id == $request->input("user_ticket_id"))
+            {
+                $ticket->status = 4;
+            }
+            else
+            {
+                $ticket->status = 1;
+            }
+            $ticket->save();
+        }
+        return redirect()->back();
     }
 }
