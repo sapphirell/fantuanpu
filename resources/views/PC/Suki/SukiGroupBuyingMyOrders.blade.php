@@ -231,7 +231,13 @@
                 </div>
                 <div class="compute_item">
                     <span class="title">优惠券</span>
-                    <a href="/suki_group_buying_my_ticket">[不使用优惠券]</a>
+                    <a href="/suki_group_buying_my_ticket">
+                        @if(empty($data["tickets"]))
+                        [不使用优惠券]
+                            @else
+                            {{$data["tickets"]->name}}
+                        @endif
+                    </a>
                 </div>
                 <div class="compute_item">
                     <span class="title">明细</span>
@@ -246,6 +252,15 @@
                     </p>
                     <p>
                         <span>退款 ￥</span><span class="font-weight: 900;">{{$refund}}</span>
+                    </p>
+                    <p>
+                        <span>优惠券 ￥</span><span class="font-weight: 900;">
+                            @if(($sum_price > $data["tickets"]->need_value))
+                            {{$data["tickets"]->off_value}}
+                            @else
+                            优惠券不可用
+                            @endif
+                        </span>
                     </p>
                 </div>
 

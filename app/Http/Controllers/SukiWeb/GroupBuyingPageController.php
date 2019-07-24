@@ -115,8 +115,8 @@ class GroupBuyingPageController extends Controller
         $this->data["address"] = GroupBuyingAddressModel::get_my_address($this->data["user_info"]->uid);
         //发货列表
         $this->data["express"] = GroupBuyingExpressModel::get_my_express($this->data["user_info"]->uid);
-        //我的优惠券
-//        $this->data[""]
+        //我在使用的优惠券
+        $this->data["tickets"] = UserTicketModel::getWantToUseTicket($this->data["user_info"]->uid);
 //        dd( $this->data["express"]);
 
         return view('PC/Suki/SukiGroupBuyingMyOrders')->with('data', $this->data);
