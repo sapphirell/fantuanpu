@@ -342,6 +342,6 @@ class GroupBuyingApiController extends Controller
             }
             $ticket->save();
         }
-        return redirect()->back();
+        return redirect()->route("suki_group_buying_myorders");
     }
 }

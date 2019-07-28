@@ -8,6 +8,7 @@ use App\Http\DbModel\GroupBuyingLogModel;
 use App\Http\DbModel\GroupBuyingModel;
 use App\Http\DbModel\GroupBuyingOrderModel;
 use App\Http\DbModel\User_model;
+use App\Http\DbModel\UserTicketModel;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -42,7 +43,7 @@ class GroupBuyingController extends Controller
     {
         $this->data["group_buying"] = GroupBuyingModel::find($request->input("id"));
 
-        $this->data["list"] = GroupBuyingItemModel::getListInfo($request->input("id"));
+        $this->data["list"] = GroupBuyingItemModel::getListInfo([$request->input("id")]);
         $this->data["request"]["id"] = $request->input("id");
         $this->data["request"]["l"] = $request->input("l");
         return view('PC/Admincp/ReviewOrders')->with('data', $this->data);
@@ -128,9 +129,12 @@ class GroupBuyingController extends Controller
 
         }
 //        dd($insertOrder);
+        //查询用户所选择的对应的优惠券
+        $userSelectedTicket = UserTicketModel::getWantToUseTicketList();
         //对订单进行分批入库,生成订单
         foreach ($insertOrder as $uid => $insert_item)
         {
+
             $usrPrivateFreight = 0;
             $usrOrderPrice     = 0;
             //                    dd($insert_item);
@@ -145,6 +149,23 @@ class GroupBuyingController extends Controller
             $order->status          = 1;
             $order->private_freight = $usrPrivateFreight;
             $order->order_price     = $usrOrderPrice;
+            foreach ($userSelectedTicket as $userTicket)
+            {
+                if ($userTicket->uid == $uid)
+                {
+                    if ($userTicket->off_value <= $usrOrderPrice && ($userTicket->gid == $groupId || $userTicket->gid == 0))
+                    {
+                        //优惠券生效
+                        $order->use_ticket = $userTicket->user_ticket_id;
+                        $order->ticket_id = $userTicket->ticket_id;
+                        $order->off_value = $userTicket->off_value;
+                        //优惠券标为已使用
+                        $userTicket->status = 2;
+                        $userTicket->save();
+                    }
+                    break;
+                }
+            }
             $order->log_id          = json_encode($insert_item["log_id"]);
             $order->group_id        = $groupId;
             $order->save();

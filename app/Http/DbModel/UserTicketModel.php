@@ -49,4 +49,21 @@ class UserTicketModel extends Model
 
         return $data;
     }
+    public static function getWantToUseTicketList()
+    {
+        $data = self::leftJoin(
+            "pre_group_buying_ticket",
+            function ($join)
+            {
+                $join->on("pre_group_buying_ticket.id", "=", "pre_group_buying_user_ticket.ticket_id");
+            }
+        )->select(
+            DB::raw(
+                "pre_group_buying_ticket.*,pre_group_buying_user_ticket.*,pre_group_buying_user_ticket.id as user_ticket_id,pre_group_buying_ticket.id as ticket_id"
+            )
+        )
+            ->where("pre_group_buying_user_ticket.status", "=", 4)
+            ->get();
+        return $data;
+    }
 }

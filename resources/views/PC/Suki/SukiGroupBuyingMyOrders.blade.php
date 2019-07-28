@@ -147,7 +147,7 @@
     @if(empty($data["active_logs"]))
         <p>暂无</p>
     @endif
-    <?php $sum_price = 0; $private_freight = 0; ?>
+    <?php $sum_price = 0; $private_freight = 0; $stock_item_price = 0;?>
     @foreach($data["active_logs"] as $value)
 
         {{--{{dd($value->id)}}--}}
@@ -159,6 +159,7 @@
                 <span class="stock_tag">
                     现货
                 </span>
+                    <?php $stock_item_price += $value["order_price"] ?: 0; ?>
                 @endif
                 <img src="{{$value["item_image"]}}" class="logs_image" style="">
             </a>
@@ -231,13 +232,14 @@
                 </div>
                 <div class="compute_item">
                     <span class="title">优惠券</span>
-                    <a href="/suki_group_buying_my_ticket">
+                    <a style="    font-size: 13px;" href="/suki_group_buying_my_ticket">
                         @if(empty($data["tickets"]))
                         [不使用优惠券]
                             @else
                             {{$data["tickets"]->name}}
                         @endif
                     </a>
+                    <span style="font-size: 13px;color: #BBBBBB;">(截团前选择,满足条件自动抵扣)</span>
                 </div>
                 <div class="compute_item">
                     <span class="title">明细</span>
@@ -245,13 +247,16 @@
 
                 <div style="padding-left: 30px">
                     <p>
-                        <span>本体 ￥</span><span class="font-weight: 900;">{{$sum_price}}</span>
+                        <span>现货 ￥</span><span class="font-weight: 900;">{{$stock_item_price}}</span>
                     </p>
                     <p>
-                        <span>公摊 ￥</span><span class="font-weight: 900;">{{$private_freight}}</span>
+                        <span>团购本体 ￥</span><span class="font-weight: 900;">{{$sum_price}}</span>
                     </p>
                     <p>
-                        <span>退款 ￥</span><span class="font-weight: 900;">{{$refund}}</span>
+                        <span>团购公摊 ￥</span><span class="font-weight: 900;">{{$private_freight}}</span>
+                    </p>
+                    <p>
+                        <span>团购退款 ￥</span><span class="font-weight: 900;">{{$refund}}</span>
                     </p>
                     <p>
                         <span>优惠券 ￥</span><span class="font-weight: 900;">

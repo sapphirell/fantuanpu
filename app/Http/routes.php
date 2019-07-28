@@ -311,4 +311,5 @@ Route::group([
     Route::post('/suki_group_buying_confirm_orders', ['uses' => 'GroupBuyingApiController@suki_group_buying_confirm_orders', 'as' => 'suki_group_buying_confirm_orders']);#suki确认订单号
     Route::post('/save_address', ['uses' => 'GroupBuyingApiController@save_address', 'as' => 'save_address']);#suki存储地址
     Route::post('/suki_group_buying_select_ticket', ['uses' => 'GroupBuyingApiController@suki_group_buying_select_ticket', 'as' => 'suki_group_buying_select_ticket']);#suki选择优惠券
+    Route::post('/suki_buy_stock_items', ['uses' => 'GroupBuyingApiController@suki_buy_stock_items', 'as' => 'suki_buy_stock_items']);#购买现货
 });
