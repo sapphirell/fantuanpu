@@ -71,9 +71,9 @@
                     <span style="color: #999999;font-size: 12px;float: right">{{$item["min_members"]}}个成团</span>
                 </p>
                 <p style="color: #999999;font-size: 12px;text-align: right;margin: 0px;">
-                    <span  style="color: #72d2d3">{{$item["follow"]}}</span>
+                    <span  style="">{{$item["follow"]}}</span>
                     人购买了
-                    <span style="color: #72d2d3">{{$item["item_count"]}}</span>
+                    <span style="color: #f9b9c0">{{$item["item_count"]}}</span>
                     个
                 </p>
 
