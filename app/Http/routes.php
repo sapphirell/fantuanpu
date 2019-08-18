@@ -193,6 +193,7 @@ Route::group([
     Route::get('/admincp/participant', ['uses' => 'GroupBuyingController@participant', 'as' => 'participant']);#查看当期参与者
     Route::get('/admincp/order_delivers', ['uses' => 'GroupBuyingController@order_delivers', 'as' => 'order_delivers']);#查看申请发货的名单
     Route::post('/admincp/delivers_status', ['uses' => 'GroupBuyingController@delivers_status', 'as' => 'delivers_status']);#查看发货状态
+    Route::get('/admincp/copy_item', ['uses' => 'GroupBuyingController@copy_item', 'as' => 'copy_item']);#复制商品到本期团购
 
     Route::get('/admincp/items_participant', ['uses' => 'GroupBuyingController@items_participant', 'as' => 'items_participant']);#商品参购者
     Route::get('/admincp/deliver', ['uses' => 'GroupBuyingController@deliver', 'as' => 'deliver']);#弹出发货菜单

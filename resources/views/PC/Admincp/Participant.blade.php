@@ -60,7 +60,11 @@
                     {!! $value->order_info !!}
                 </td>
 
-                <td>{{$value->order_price}}</td>
+                <td>{{$value->order_price  - $value->off_value}}
+                    @if($value->off_value)
+                        ({{$value->order_price}} - {{$value->off_value}})
+                    @endif
+                </td>
                 <td>
                     {{
                     $value->true_private_freight
@@ -106,6 +110,8 @@
                     @endif
                 </td>
             </tr>
+
+
         @endforeach
     </table>
     @endif

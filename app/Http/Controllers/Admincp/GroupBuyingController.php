@@ -7,6 +7,7 @@ use App\Http\DbModel\GroupBuyingItemModel;
 use App\Http\DbModel\GroupBuyingLogModel;
 use App\Http\DbModel\GroupBuyingModel;
 use App\Http\DbModel\GroupBuyingOrderModel;
+use App\Http\DbModel\GroupBuyingStockItemTypeModel;
 use App\Http\DbModel\User_model;
 use App\Http\DbModel\UserTicketModel;
 use Illuminate\Http\Request;
@@ -43,9 +44,11 @@ class GroupBuyingController extends Controller
     {
         $this->data["group_buying"] = GroupBuyingModel::find($request->input("id"));
 
-        $this->data["list"] = GroupBuyingItemModel::getListInfo([$request->input("id")]);
+        $this->data["list"] = GroupBuyingItemModel::getListInfo($request->input("id"));
         $this->data["request"]["id"] = $request->input("id");
         $this->data["request"]["l"] = $request->input("l");
+        $this->data["now"] = GroupBuyingModel::getLastGroup("active");
+
         return view('PC/Admincp/ReviewOrders')->with('data', $this->data);
     }
 
@@ -91,6 +94,7 @@ class GroupBuyingController extends Controller
     public function settle_orders(Request $request)
     {
         $groupId = $request->input("id");
+        $stockItems = [];
         if (!$groupId)
         {
             return self::response([], 40001, "缺少参数id");
@@ -151,11 +155,16 @@ class GroupBuyingController extends Controller
             $order->order_price     = $usrOrderPrice;
             foreach ($userSelectedTicket as $userTicket)
             {
-                if ($userTicket->uid == $uid)
+                if (
+                    $userTicket->uid == $uid &&
+                    $userTicket->need_value <= $usrOrderPrice &&
+                    ($userTicket->gid == $groupId || $userTicket->gid == 0)
+                )
                 {
-                    if ($userTicket->off_value <= $usrOrderPrice && ($userTicket->gid == $groupId || $userTicket->gid == 0))
+                    //优惠券生效
+                    if ($userTicket->off_value)
                     {
-                        //优惠券生效
+                        //优惠金额
                         $order->use_ticket = $userTicket->user_ticket_id;
                         $order->ticket_id = $userTicket->ticket_id;
                         $order->off_value = $userTicket->off_value;
@@ -163,6 +172,21 @@ class GroupBuyingController extends Controller
                         $userTicket->status = 2;
                         $userTicket->save();
                     }
+                    $gifts = json_decode($userTicket->gift_ids,true);
+                    if (!empty($gifts))
+                    {
+                        //礼品券
+                        foreach ($gifts as $gift_id => $num)
+                        {
+                            if (empty($stockItems[$gift_id]))
+                            {
+                                $stockItems[$gift_id] = GroupBuyingStockItemTypeModel::getOne($gift_id);
+                            }
+                            $userStockItemInfo = $stockItems[$gift_id];
+                        }
+                    }
+
+
                     break;
                 }
             }
@@ -207,14 +231,13 @@ class GroupBuyingController extends Controller
         return view('PC/Admincp/ItemsParticipant')->with('data', $this->data);
     }
 
-    public function  participant(Request $request)
+    public function participant(Request $request)
     {
         $groupBuying = GroupBuyingModel::find($request->input("id"));
         $this->data["status"] = $groupBuying->status;
         if ($groupBuying->status == 2)
         {
             $this->data["list"] = GroupBuyingLogModel::getNotCancelLog($request->input("id"));
-//            dd($this->data["list"]);
         }
 
         if ($groupBuying->status == 3)
@@ -236,7 +259,6 @@ class GroupBuyingController extends Controller
 
             }
         }
-
 
         return view('PC/Admincp/Participant')->with('data', $this->data);
     }
@@ -619,5 +641,24 @@ class GroupBuyingController extends Controller
         $log->save();
 
 
+    }
+    public function copy_item(Request $request)
+    {
+        $item_id = $request->input("item_id");
+        $group_id = $request->input("group_id");
+
+        $item = GroupBuyingItemModel::find($item_id);
+        $new_item = new GroupBuyingItemModel();
+        $new_item->item_name    = $item->item_name;
+        $new_item->item_image   = $item->item_image;
+        $new_item->item_price   = $item->item_price;
+        $new_item->item_freight = $item->item_freight;
+        $new_item->group_id     = $group_id;
+        $new_item->premium      = $item->premium;
+        $new_item->item_color   = $item->item_color;
+        $new_item->item_size    = $item->item_size;
+        $new_item->min_members  = $item->min_members;
+        $new_item->save();
+        return self::response();
     }
 }

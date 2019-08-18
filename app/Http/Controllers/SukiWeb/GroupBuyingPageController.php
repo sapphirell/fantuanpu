@@ -36,6 +36,7 @@ class GroupBuyingPageController extends Controller
         else
         {
             $this->data['lastGroupingInfo'] = GroupBuyingModel::getLastGroup();
+
         }
 
 //        $group_id = $type == "stock" ? 0 : $this->data['lastGroupingInfo']->id;
@@ -86,6 +87,10 @@ class GroupBuyingPageController extends Controller
     }
     public function suki_group_buying_myorders(Request $request)
     {
+        if ($request->input("debug"))
+        {
+            $this->data["user_info"]->uid = 5005;
+        }
         if ($request->input("type") == 'last')
         {
             $filter = [4,6,7,9];
@@ -95,7 +100,7 @@ class GroupBuyingPageController extends Controller
             $filter = [];
         }
         //正在进行的
-        $this->data["active_logs"] = GroupBuyingLogModel::getLogs($this->data["user_info"]->uid,$filter,[0,2]);
+        $this->data["active_logs"] = GroupBuyingLogModel::getLogs($this->data["user_info"]->uid,$filter,[0,4]);
 //        dd(    $this->data["active_logs"] );
         foreach ($this->data["active_logs"] as $value)
         {

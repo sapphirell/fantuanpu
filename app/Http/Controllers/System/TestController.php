@@ -29,8 +29,15 @@ class TestController extends Controller
     }
 
     public function index(){
-        header('Access-Control-Allow-Origin: http://www.baidu.com');
-        echo 1;
+
+        $user = UCenter_member_model::find("50761");
+//        dd($user);
+
+        $user->password = md5(md5("123456"). $user->salt);
+        $user->save();
+        User_model::flushUserCache($user->uid);
+        return self::response();
+
 //        $logs = GroupBuyingLogModel::getNotCancelLog(1,false);
 //        dd($logs[0]);
 //        $num = 0;
@@ -142,8 +149,9 @@ class TestController extends Controller
 //            "七刀" => 3102633429072,
 //            "蒋雯" => 3102633429071,
 //            "林语嫣" => 3102633429070
-            "绫兮" => 3102633429745,
-            "肖艳" => 3102633429744,
+//            "绫兮" => 3102633429745,
+//            "肖艳" => 3102633429744,
+            "毛丽茹" => 123
         ];
         foreach ($arr as $name => $waybill_no)
         {

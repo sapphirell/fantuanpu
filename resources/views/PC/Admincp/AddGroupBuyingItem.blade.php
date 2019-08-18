@@ -44,13 +44,13 @@
                         <div class="form-group">
                             <label for="inputPassword" class="col-sm-2 control-label">价格</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control medal_name" name="item_price"  placeholder="100.23">
+                                <input type="text" class="form-control item_price" name="item_price"  placeholder="">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="inputPassword" class="col-sm-2 control-label">辛苦费/次</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control medal_name" name="premium"  placeholder="1.53">
+                                <input type="text" class="form-control premium" name="premium"  placeholder="">
                             </div>
                         </div>
                         <div class="form-group">
@@ -62,7 +62,7 @@
                         <div class="form-group">
                             <label for="inputPassword" class="col-sm-2 control-label">最低成团个数</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control medal_name" name="min_members"  placeholder="100">
+                                <input type="text" class="form-control medal_name" name="min_members"  value="10">
                             </div>
                         </div>
                         <div class="col-sm-2 control-label">
@@ -84,6 +84,13 @@
 
 <script>
     $(document).ready(function () {
+
+        $(".premium").on("click",function(){
+            var item_price = $(".item_price").val();
+            console.log(item_price)
+
+            $(".premium").val(parseInt(item_price)*0.12+0.3);
+        })
 
     });
 </script>

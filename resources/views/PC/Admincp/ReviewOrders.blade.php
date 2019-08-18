@@ -30,6 +30,7 @@
             <td>描述</td>
             <td>详情</td>
             <td>操作</td>
+            <td>复制</td>
         </tr>
 
         @foreach($data["list"] as $value)
@@ -52,6 +53,7 @@
                             <p>已下架</p>
                             @endif
                         </td>
+
                     </tr>
                 @endif
             @else
@@ -72,6 +74,7 @@
                         <p>已下架</p>
                     @endif
                 </td>
+                <td><a href="/admincp/copy_item?group_id={{$data["now"]->id}}&item_id={{$value["id"]}}">复制</a></td>
             </tr>
             @endif
         @endforeach

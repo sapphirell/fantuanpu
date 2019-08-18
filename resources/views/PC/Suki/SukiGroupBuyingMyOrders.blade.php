@@ -17,6 +17,8 @@
         margin: 10px;
         display: flex;
         flex-flow:row;
+        padding-bottom: 15px;
+        border-bottom: 1px dashed #ddd;
     }
     .my_items_log > * {
         float: left;
@@ -226,16 +228,17 @@
         <div class="tab_m compute">
             <div>
                 <div class="compute_item">
+
                     <span class="title">待付款</span>
                     ￥
-                    <span class="font-weight: 900;">{{$need_pay}}</span>
+                    <span class="font-weight: 900;">{{$need_pay-($data["tickets"]->off_value?:0)}}</span>
                 </div>
                 <div class="compute_item">
                     <span class="title">优惠券</span>
                     <a style="    font-size: 13px;" href="/suki_group_buying_my_ticket">
                         @if(empty($data["tickets"]))
                         [不使用优惠券]
-                            @else
+                        @else
                             {{$data["tickets"]->name}}
                         @endif
                     </a>
@@ -261,7 +264,7 @@
                     <p>
                         <span>优惠券 ￥</span><span class="font-weight: 900;">
                             @if(($sum_price > $data["tickets"]->need_value))
-                            {{$data["tickets"]->off_value}}
+                            {{$data["tickets"]->off_value?:0}}
                             @else
                             优惠券不可用
                             @endif
@@ -424,86 +427,92 @@
         $(".count_price").text(Math.round(Math.abs(count_price+pf)*100)/100);
         $(".count_title").text(title);
     }
-    $(".go_to_pay").click(function (e) {
-        e.preventDefault()
-        window.location.href = "/suki_group_buying_paying?gid=2";
-//        alert("支付宝:15658610102")
-    })
-    $(".check").change(function (e) {
-        var orderId = $(this).attr("orderId");
-        var price = parseFloat($(this).attr("price"))
-        var check = $(this).is(':checked')
-        if (check)
-        {
-//                console.log(price)
-            count_price += price
-            orders.push(orderId)
-        }
-        else
-        {
-            count_price -= price
-            orders.remove(orderId)
-        }
+    $(document).ready(function () {
+        $(".go_to_pay").click(function (e) {
 
-        change_count()
-
-        console.log(orders)
-    });
-    $(".suki_group_buying_cancel_orders").click(function (e) {
-        e.preventDefault();
-        var orderId = $(this).attr("orderId")
-        var r = window.confirm("确定取消吗?");
-        if (r == true) {
-            $.get("/suki_group_buying_cancel_orders?orderId=" + orderId, function (e) {
-                alert(e.msg)
-                window.location.reload()
-            })
-        }
-        else {
-            return false;
-        }
-    })
-    $(".submit_check").click(function (e) {
-//        alert("暂时不可发货");
+            e.preventDefault();
+//        alert("暂未截团");
 //        return ;
-        var address = $(".address").val();
-        var telphone = $(".telphone").val();
-        var name = $(".name").val();
-        if(!province_type)
-        {
-            alert("请先选择发货地域")
-            return ;
-        }
-        var fd = {
-            "name":name,
-            "address" : address,
-            "telphone" : telphone,
-            "orders" : orders,
-            "province_type" :province_type
-        }
-        console.log(fd)
-        if (!orders || !pf || !province_type)
-        {
-            alert("须填写完整")
-            return ;
-        }
-        $.post("/suki_group_buying_do_deliver",fd,function (e) {
-            alert(e.msg);
-            if (e.ret == 200)
+            window.location.href = "/suki_group_buying_paying?gid=4";
+//        alert("支付宝:15658610102")
+        })
+        $(".check").change(function (e) {
+            var orderId = $(this).attr("orderId");
+            var price = parseFloat($(this).attr("price"))
+            var check = $(this).is(':checked')
+            if (check)
             {
-                window.location.href = "/suki_group_buying_deliver?type=2"
+//                console.log(price)
+                count_price += price
+                orders.push(orderId)
+            }
+            else
+            {
+                count_price -= price
+                orders.remove(orderId)
             }
 
+            change_count()
+
+            console.log(orders)
+        });
+        $(".suki_group_buying_cancel_orders").click(function (e) {
+            e.preventDefault();
+            var orderId = $(this).attr("orderId")
+            var r = window.confirm("确定取消吗?");
+            if (r == true) {
+                $.get("/suki_group_buying_cancel_orders?orderId=" + orderId, function (e) {
+                    alert(e.msg)
+                    window.location.reload()
+                })
+            }
+            else {
+                return false;
+            }
         })
-    });
+        $(".submit_check").click(function (e) {
+//        alert("暂时不可发货");
+//        return ;
+            var address = $(".address").val();
+            var telphone = $(".telphone").val();
+            var name = $(".name").val();
+            if(!province_type)
+            {
+                alert("请先选择发货地域")
+                return ;
+            }
+            var fd = {
+                "name":name,
+                "address" : address,
+                "telphone" : telphone,
+                "orders" : orders,
+                "province_type" :province_type
+            }
+            console.log(fd)
+            if (!orders || !pf || !province_type)
+            {
+                alert("须填写完整")
+                return ;
+            }
+            $.post("/suki_group_buying_do_deliver",fd,function (e) {
+                alert(e.msg);
+                if (e.ret == 200)
+                {
+                    window.location.href = "/suki_group_buying_deliver?type=2"
+                }
 
-    $(".select_province").change(function () {
-        var s = $(this).val().split("|");
+            })
+        });
 
-        pf = parseFloat(s[0]);
-        province_type = s[1];
-        change_count()
-    });
-    $("input:checkbox").trigger("click");
+        $(".select_province").change(function () {
+            var s = $(this).val().split("|");
+
+            pf = parseFloat(s[0]);
+            province_type = s[1];
+            change_count()
+        });
+        $("input:checkbox").trigger("click");
+    })
+
 </script>
 @include('PC.Suki.SukiFooter')
