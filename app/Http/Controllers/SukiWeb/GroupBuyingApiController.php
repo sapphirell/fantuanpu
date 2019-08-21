@@ -102,11 +102,13 @@ class GroupBuyingApiController extends Controller
     }
     public function suki_group_buying_do_deliver(Request $request)
     {
-        $chk = $this->checkRequest($request,["orders","province_type"]);
-
-        if ($chk !== true)
+        if (!$request->input("orders"))
         {
-            return self::response([], 40001, "缺少参数" . $chk);
+            return self::response([], 40001, "请选择要发货的订单");
+        }
+        if (!$request->input("province_type"))
+        {
+            return self::response([], 40001, "请选择省份");
         }
 
         $freight = 0;
@@ -179,7 +181,7 @@ class GroupBuyingApiController extends Controller
         }
         if ($this->data["orders"]->status != 1)
         {
-            return self::response([], 40003, "订单状态不对");
+            return self::response([], 40003, "已经提交过了");
         }
         $this->data["orders"]->status = 2;
         $this->data["orders"]->name = $request->input("name");
@@ -249,11 +251,17 @@ class GroupBuyingApiController extends Controller
             return self::response([], 40001, "缺少参数" . $chk);
         }
 
-
+        GroupBuyingCoreController::buy_stock($this->data["user_info"]->uid,$request->input("item_id"),$request->input("order_info"));
+        return self::response();
     }
 
     public function suki_group_buying_select_ticket(Request $request)
     {
+        $route_to = $request->input("route_to");
+        if (!$route_to)
+        {
+            $route_to = "suki_group_buying_myorders";
+        }
         $chk = $this->checkRequest($request, ["user_ticket_id"]);
         if ($chk !== true)
         {
@@ -272,6 +280,6 @@ class GroupBuyingApiController extends Controller
             }
             $ticket->save();
         }
-        return redirect()->route("suki_group_buying_myorders");
+        return redirect()->route("{$route_to}");
     }
 }

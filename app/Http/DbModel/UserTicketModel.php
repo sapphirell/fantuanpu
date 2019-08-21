@@ -26,6 +26,7 @@ class UserTicketModel extends Model
                 )
             )
             ->where("uid", $uid)->where("pre_group_buying_user_ticket.status", "!=", 3)
+            ->where("pre_group_buying_user_ticket.status", "!=", 2)
             ->get();
 
         return $data;

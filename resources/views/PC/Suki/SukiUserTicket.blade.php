@@ -107,7 +107,7 @@
         <p style="color: #dddddd">选择希望使用的优惠券,付款时满足条件自动抵扣</p>
         <br />
         <form action="/suki_group_buying_select_ticket" method="post">
-
+            <input type="hidden" name="route_to" value="{{$data["ori_route"]}}">
             @foreach($data['my_ticket'] as $value)
                 {{--{{dd($value)}}--}}
                 <div>

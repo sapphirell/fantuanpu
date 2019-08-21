@@ -44,9 +44,13 @@
                 </td>
                 <td>{{$user->qq}}</td>
                 <td>
+                    @if($data["type"] == "1" || $data["type"] == "2")
                     <a class="order_delivers" expressid="{{$value->id}}" to_status="2">确认价格</a>
                     <br>
                     <a class="order_delivers" expressid="{{$value->id}}" to_status="3">确认收款</a>
+                    <br>
+                    <a class="chargeback"  expressid="{{$value->id}}">拒绝发货</a>
+                    @endif
                 </td>
             </tr>
         @endforeach
@@ -66,6 +70,14 @@
             })
         })
 
+        $(".chargeback").click(function (e) {
+            e.preventDefault();
 
+            var id = $(this).attr("expressid");
+            $.post("/admincp/chargeback",{id:id},function (e) {
+                alert(e.msg)
+                window.location.reload()
+            })
+        })
     })
 </script>

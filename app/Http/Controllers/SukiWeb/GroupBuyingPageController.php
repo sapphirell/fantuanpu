@@ -94,13 +94,15 @@ class GroupBuyingPageController extends Controller
         if ($request->input("type") == 'last')
         {
             $filter = [4,6,7,9];
+            $group = [4];
         }
         else
         {
             $filter = [];
+            $group = [];
         }
         //正在进行的
-        $this->data["active_logs"] = GroupBuyingLogModel::getLogs($this->data["user_info"]->uid,$filter,[0,4]);
+        $this->data["active_logs"] = GroupBuyingLogModel::getLogs($this->data["user_info"]->uid,$filter,$group);
 //        dd(    $this->data["active_logs"] );
         foreach ($this->data["active_logs"] as $value)
         {
@@ -125,6 +127,25 @@ class GroupBuyingPageController extends Controller
 //        dd( $this->data["express"]);
 
         return view('PC/Suki/SukiGroupBuyingMyOrders')->with('data', $this->data);
+    }
+
+    public function suki_group_buying_my_stock(Request $request)
+    {
+        if ($request->input("type") == 'last')
+        {
+            $filter = [4,6,7,9];
+            $group = [0];
+        }
+        else
+        {
+            $filter = [];
+            $group = [0];
+        }
+        //正在进行的
+        $this->data["active_logs"] = GroupBuyingLogModel::getLogs($this->data["user_info"]->uid,$filter,$group);
+        //我在使用的优惠券
+        $this->data["tickets"] = UserTicketModel::getWantToUseTicket($this->data["user_info"]->uid);
+        return view('PC/Suki/SukiGroupBuyingMyStockOrders')->with('data', $this->data);
     }
     public function suki_group_buying_address_manager(Request $request)
     {
@@ -223,6 +244,7 @@ class GroupBuyingPageController extends Controller
     {
 
         $this->data["my_ticket"] = UserTicketModel::getActiveTicket($this->data["user_info"]->uid);
+        $this->data["ori_route"] = $request->input("ori_route");
 //        dd($this->data["my_ticket"]);
         return view('PC/Suki/SukiUserTicket')->with('data', $this->data);
     }

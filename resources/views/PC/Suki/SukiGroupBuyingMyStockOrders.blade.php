@@ -121,7 +121,7 @@
     @media screen and (max-width: 960px) {
         .price_status {
             margin-top: 10px;
-             padding-left: 0px;
+            padding-left: 0px;
         }
         .logs_image {
             width: 80px;
@@ -142,7 +142,7 @@
         </button>
         <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" x-placement="bottom-start" style="position: absolute; transform: translate3d(10px, 25px, 0px); top: 0px; left: 0px; will-change: transform;">
             <a href="/suki_group_buying_myorders?type=last" class="dropdown-item setting_clock_alert">正在团购</a>
-            <a href="/suki_group_buying_my_stock?type=last" class="dropdown-item setting_clock_alert">现货</a>
+            <a href="/suki_group_buying_my_stock" class="dropdown-item setting_clock_alert">现货</a>
             <a href="/suki_group_buying_myorders" class="dropdown-item setting_clock_alert">历史订单</a>
 
         </div>
@@ -156,6 +156,7 @@
     ?>
     @foreach($data["active_logs"] as $value)
 
+        {{--{{dd($value->id)}}--}}
         <?php
         if(!in_array($value->group_id,$group_id))
         {
@@ -167,12 +168,12 @@
         <div class="my_items_log">
 
             <a href="/suki_group_buying_item_info?item_id={{$value->item_id}}" class="logs_image" style="overflow: hidden">
-                @if($value->group_id == 0)
-                <span class="stock_tag">
+
+                    <span class="stock_tag">
                     现货
                 </span>
-                    <?php $stock_item_price += $value["order_price"] ?: 0; ?>
-                @endif
+                <?php $stock_item_price += $value["order_price"] ?: 0; ?>
+
                 <img src="{{$value["item_image"]}}" class="logs_image" style="">
             </a>
             <?php $need_pay += in_array($value->status,[1,2])? $value["order_price"] : 0; ?>
@@ -187,9 +188,10 @@
                         <p>{{$type}} </p>
                         <p>购买数量：{{$num}}个</p>
                     @endforeach
-                    <span style="color: #777;padding-left:5px">当前公摊:{{$value["sum_private_freight"]}}元</span>
+
+                    <span style="color: #777;padding-left:5px">请在{{date("Y-m-d H:i:s",strtotime($value->create_date)+3600)}}前打包付款</span>
                 </div>
-               <div class="price_status" style="">
+                <div class="price_status" style="">
                     <p>
                         <span style="margin-top: 5px;margin-bottom: 5px;">价格</span>
                         <span class="price">￥{{$value["order_price"]}}</span>
@@ -229,11 +231,11 @@
         </div>
     @endforeach
     <?php
-        $ticket_status = !empty($data["tickets"]);
-        if ((float)$sum_price < (float)$data["tickets"]->need_value)
-            $ticket_status = false;
-        if (count($group_id) !== 1 || $data["tickets"]->gid != $group_id[0])
-            $ticket_status = false;
+    $ticket_status = !empty($data["tickets"]);
+    if ((float)$sum_price < (float)$data["tickets"]->need_value)
+        $ticket_status = false;
+    if (count($group_id) !== 1 || $data["tickets"]->gid != $group_id[0])
+        $ticket_status = false;
 
 
     ?>
@@ -251,25 +253,25 @@
                     ￥
                     <span class="font-weight: 900;">
                        @if($ticket_status)
-                           <del>{{$need_pay}}</del>
+                            <del>{{$need_pay}}</del>
                             {{$need_pay-($data["tickets"]->off_value?:0)}}
-                       @else
-                           {{$need_pay}}
-                       @endif
+                        @else
+                            {{$need_pay}}
+                        @endif
                     </span>
                 </div>
                 <div class="compute_item">
                     <span class="title">优惠券</span>
                     <a style="    font-size: 13px;" href="/suki_group_buying_my_ticket?ori_route=suki_group_buying_myorders">
                         @if(empty($data["tickets"]))
-                        [不使用优惠券]
+                            [不使用优惠券]
                         @elseif(!$ticket_status)
                             {{$data["tickets"]->name}}--不可用
                         @else
                             {{$data["tickets"]->name}}
                         @endif
                     </a>
-                    <span style="font-size: 13px;color: #BBBBBB;">(截团前选择,满足条件自动抵扣)</span>
+                    <span style="font-size: 13px;color: #BBBBBB;">(打包时自动结算价格)</span>
                 </div>
                 <div class="compute_item">
                     <span class="title">明细</span>
@@ -291,15 +293,15 @@
                     <p>
                         <span>优惠券 ￥</span><span class="font-weight: 900;">
                             @if($ticket_status)
-                            {{$data["tickets"]->off_value?:0}}
+                                {{$data["tickets"]->off_value?:0}}
                             @else
-                            优惠券不可用
+                                优惠券不可用
                             @endif
                         </span>
                     </p>
                 </div>
 
-                <a class="go_to_pay">去付款</a>
+                <a class="go_to_pay">去付款打包</a>
             </div>
             <div>
                 @if($data["address"])
@@ -328,8 +330,8 @@
                                 <td>
                                     {{--{{dd($order_info)}}--}}
                                     {{--<div>--}}
-                                        {{--{{($order->true_private_freight?:$order->private_freight) - $order->order_price + ($order->true_price?:$order->order_price)}}--}}
-                                      {{----}}
+                                    {{--{{($order->true_private_freight?:$order->private_freight) - $order->order_price + ($order->true_price?:$order->order_price)}}--}}
+                                    {{----}}
                                     {{--</div>--}}
                                     <div>
                                         <p>
@@ -390,46 +392,46 @@
                     <tr>
                         <td>收货地址/单号</td>
                         <td>
-                           状态
+                            状态
                         </td>
                         <td>
                             <div class="detail" style="position: relative" message="">明细</div>
                         </td>
                     </tr>
                     @foreach($data["express"] as $value)
-                    <tr  style="border-bottom: 1px solid #DDDDDD;">
-                        <td>
-                            {{$value->address}}<br />
-                            {{--{{dd($value)}}--}}
-                            {{$value->waybill_no}}
-                        </td>
-                        <td>
-                            @if($value->status == 1)
-                                提交申请
-                            @elseif ($value->status == 2)
-                                需要补邮费
-                            @elseif ($value->status == 3)
-                                邮费已补
-                            @elseif ($value->status == 4)
-                                <span style="color: #888888">已发货</span>
-                            @elseif ($value->status == 5)
-                                <span style="">拒绝发货,请重新申请</span>
-                            @endif
-                        </td>
-                        <td>
-                            公摊:{{$value['private_freight']}},<br />
-                            流团退款:{{$value['price_difference']}},<br />
-                            个人运费:{{$value['freight']}}<br />
-                            包含:
-                            @foreach($value['groups'] as $n => $id)
-                                {{$id}} 团
-                                @if($n >0)
-                                    、
+                        <tr  style="border-bottom: 1px solid #DDDDDD;">
+                            <td>
+                                {{$value->address}}<br />
+                                {{--{{dd($value)}}--}}
+                                {{$value->waybill_no}}
+                            </td>
+                            <td>
+                                @if($value->status == 1)
+                                    提交申请
+                                @elseif ($value->status == 2)
+                                    需要补邮费
+                                @elseif ($value->status == 3)
+                                    邮费已补
+                                @elseif ($value->status == 4)
+                                    <span style="color: #888888">已发货</span>
+                                @elseif ($value->status == 5)
+                                    <span style="">拒绝发货,请重新申请</span>
                                 @endif
-                            @endforeach
-                            的货物<br />
-                        </td>
-                    </tr>
+                            </td>
+                            <td>
+                                公摊:{{$value['private_freight']}},<br />
+                                流团退款:{{$value['price_difference']}},<br />
+                                个人运费:{{$value['freight']}}<br />
+                                包含:
+                                @foreach($value['groups'] as $n => $id)
+                                    {{$id}} 团
+                                    @if($n >0)
+                                        、
+                                    @endif
+                                @endforeach
+                                的货物<br />
+                            </td>
+                        </tr>
                     @endforeach
                 </table>
             </div>

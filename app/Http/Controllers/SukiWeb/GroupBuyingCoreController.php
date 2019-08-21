@@ -72,19 +72,13 @@ class GroupBuyingCoreController extends Controller
         //        $orderLog->telphone = $request->input("telphone");
         $orderLog->premium = $premium;
         $orderLog->create_date = date("Y-m-d H:i:s");
-        $orderLog->end_date = $this->data['lastGroupingInfo']->enddate;
-        $orderLog->order_info = $request->input("order_info");
+        $orderLog->end_date = 0;
+        $orderLog->order_info = json_encode($order_info);
         $orderLog->order_price = $order_price;
         //        $orderLog->qq = $request->input("qq");
         $orderLog->save();
 
-        if (!$this->data['user_info']->qq)
-        {
-            $user = User_model::find($this->data['user_info']->uid);
-            $user->qq = $request->input("qq");
-            $user->save();
-            User_model::flushUserCache($this->data['user_info']->uid);
-        }
+
         return self::response();
     }
 }

@@ -209,9 +209,10 @@ class GroupBuyingController extends Controller
     {
         $this->data["list"] = GroupBuyingLogModel::where(["item_id" => $request->input("id")])
             ->where("status", "<>", 4)
-            ->where("status", "<>", 10)
+//            ->where("status", "<>", 10)
             ->where("status", "<>", 11)
             ->get();
+
         $this->data["count_info"] = [];
         foreach ($this->data["list"] as &$value)
         {
@@ -542,8 +543,8 @@ class GroupBuyingController extends Controller
 
     public function order_delivers(Request $request)
     {
-        $type = $request->input("type")?:1;
-        $this->data["list"] = GroupBuyingExpressModel::where("status","=",$type)->get();
+        $this->data['type'] = $request->input("type")?:1;
+        $this->data["list"] = GroupBuyingExpressModel::where("status","=",$this->data['type'])->get();
         foreach ($this->data["list"]  as $value)
         {
             //提取地址前面几个直到碰到"省"、"市"、"区"
@@ -659,6 +660,41 @@ class GroupBuyingController extends Controller
         $new_item->item_size    = $item->item_size;
         $new_item->min_members  = $item->min_members;
         $new_item->save();
+        return self::response();
+    }
+    //拒绝发货
+    public function chargeback(Request $request)
+    {
+        $delivers = GroupBuyingExpressModel::find($request->input("id"));
+        $delivers->status = 5;
+        $delivers->save();
+        $orders = json_decode($delivers->orders,true);
+        foreach ($orders as $order_id)
+        {
+            $order = GroupBuyingOrderModel::find($order_id);
+            if ($order->status != 6)
+            {
+                return self::response([],40002,"订单状态不对,当前为:" . $order->status);
+            }
+
+
+        }
+        foreach ($orders as $order_id)
+        {
+            $order = GroupBuyingOrderModel::find($order_id);
+            $order->status = 4;
+            $order->save();
+            $log_id = json_decode($order->log_id,true);
+            foreach ($log_id as $lid)
+            {
+                $log = GroupBuyingLogModel::find($lid);
+                if ($log->status = 5)
+                {
+                    $log->status = 3;
+                    $log->save();
+                }
+            }
+        }
         return self::response();
     }
 }

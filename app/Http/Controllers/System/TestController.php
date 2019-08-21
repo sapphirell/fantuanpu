@@ -29,28 +29,16 @@ class TestController extends Controller
     }
 
     public function index(){
-
-        $user = UCenter_member_model::find("50761");
-//        dd($user);
-
-        $user->password = md5(md5("123456"). $user->salt);
-        $user->save();
-        User_model::flushUserCache($user->uid);
-        return self::response();
-
-//        $logs = GroupBuyingLogModel::getNotCancelLog(1,false);
-//        dd($logs[0]);
-//        $num = 0;
-//        foreach ($logs as $log)
-//        {
-//            $order_info = json_decode($log->order_info,true);
-//            foreach ($order_info as $type=>$num)
-//            {
 //
-//                $num += $num;
-//            }
-//        }
-//        echo $num;
+//        $user = UCenter_member_model::find("50761");
+////        dd($user);
+//
+//        $user->password = md5(md5("123456"). $user->salt);
+//        $user->save();
+//        User_model::flushUserCache($user->uid);
+//        return self::response();
+
+        $this->alert();
 
     }
     public function ping(Request $request)
@@ -199,4 +187,45 @@ class TestController extends Controller
 //        return 'ok';
     }
 
+    public function alert()
+    {
+        $alert = [
+//            "岛田龙猫"     => 1620256406,
+//            "怡个怡怡"     => 2247338302,
+//            "Kirara"   => 956101428,
+//            "朴橞理奈"     => 3166335148,
+//            "芝麻糊了吧"    => 2779214381,
+//            "千年"       => 1351143438,
+//            "乔婉"       => 1159707150,
+//            "帅"        => 3084318263,
+//            "筱七七"      => 2419560255,
+//            "半罐次元酱"    => 2219103323,
+//            "热心市民暴躁笙笙" => 408793478,
+//            "夏尔凡多姆"    => 593017061,
+//            "咘叮"       => 2856490425,
+//            "Peel"     => 2732389151,
+//            "越水唯"      => 1718351495,
+//            "紫萱SAMA"   => 2036340454,
+//            "boxob"    => 2904755864,
+//            "失足月亮"     => 1945115097,
+//            "狼狼"       => 363387628,
+            "沙雕eu" => 252118428
+        ];
+        $res = [];
+        foreach ($alert as $name => $qq)
+        {
+
+            $mail = $qq."@qq.com";
+
+            $input = [
+                'email'     => $mail,
+                'toUser'    => $mail,
+                'subject'   => "尊敬的".$name ."您好,Suki团购提醒,即将截止。",
+                'msg'       => "即将截止",
+                'view'      => "GroupBuyingAlert"
+            ];
+            $res[] = MailController::sendMail($input);
+        }
+        var_dump($res);
+    }
 }

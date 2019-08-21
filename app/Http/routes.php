@@ -202,7 +202,9 @@ Route::group([
     Route::post('/admincp/remove_group_buying_item', ['uses' => 'GroupBuyingController@remove_group_buying_item', 'as' => 'remove_group_buying_item']);#下架
     Route::get('/admincp/remove_group_buying_item', ['uses' => 'GroupBuyingController@remove_group_buying_item', 'as' => 'get_remove_group_buying_item']);#下架
     Route::post('/admincp/skip_orders', ['uses' => 'GroupBuyingController@skip_orders', 'as' => 'skip_orders']);#跑单处理
+    Route::post('/admincp/chargeback', ['uses' => 'GroupBuyingController@chargeback', 'as' => 'skip_orders']);#拒绝发货
     Route::get('/admincp/skip_orders', ['uses' => 'GroupBuyingController@skip_orders', 'as' => 'get_skip_orders']);#跑单处理
+    Route::get('/admincp/change_log_items', ['uses' => 'GroupBuyingController@change_log_items', 'as' => 'change_log_items']);#打开编辑log详情页
     Route::get('/admincp/change_log_items', ['uses' => 'GroupBuyingController@change_log_items', 'as' => 'change_log_items']);#打开编辑log详情页
 
 
@@ -300,6 +302,7 @@ Route::group([
      * 团购页面
      */
     Route::get('/suki_group_buying_myorders', ['uses' => 'GroupBuyingPageController@suki_group_buying_myorders', 'as' => 'suki_group_buying_myorders']);#suki团购我的商品
+    Route::get('/suki_group_buying_my_stock', ['uses' => 'GroupBuyingPageController@suki_group_buying_my_stock', 'as' => 'suki_group_buying_my_stock']);#suki团购我的商品
     Route::get('/suki_group_buying_paying', ['uses' => 'GroupBuyingPageController@suki_group_buying_paying', 'as' => 'suki_group_buying_paying']);#suki提交付款证明
     Route::get('/suki_group_buying_deliver', ['uses' => 'GroupBuyingPageController@suki_group_buying_deliver', 'as' => 'suki_group_buying_deliver']);#suki发货页面
     Route::get('/suki_group_buying_address_manager', ['uses' => 'GroupBuyingPageController@suki_group_buying_address_manager', 'as' => 'suki_group_buying_address_manager']);#suki地址管理
