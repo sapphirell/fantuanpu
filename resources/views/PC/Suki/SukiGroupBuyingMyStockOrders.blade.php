@@ -198,7 +198,7 @@
 
                         <span> / </span>
                         @if($value->status == 1)
-                            <span style="display: inline">等待拼团</span>
+                            <span style="display: inline">等待付款</span>
                             <a class="suki_group_buying_cancel_orders"
                                href="/suki_group_buying_cancel_orders" orderId="{{$value->id}}">取消订单</a>
                         @elseif($value->status == 2)
@@ -239,6 +239,37 @@
 
 
     ?>
+    <?php unset($data["not_pay_order"]->order_info); ?>
+    <div>
+
+        @foreach($data["not_pay_order"] as $value)
+            <div class="alert">您有未付款订单</div>
+            <div style="padding: 5px">
+                @foreach(json_decode($value->order_info,true) as $stock_type_id => $stock_item_list)
+                    @if($stock_type_id != "log_id")
+                        @foreach($stock_item_list as $stock_item_id => $buy_detail)
+                            <p>
+                                {{$buy_detail["detail"]["item_name"]}}
+                                <span>{{$buy_detail["detail"]["size"]}}</span>
+                                -
+                                <span>{{$buy_detail["detail"]["color"]}}</span>
+                                -
+                                <span>{{$buy_detail["num"]}}个</span>
+                            </p>
+
+
+                        @endforeach
+                    @endif
+                @endforeach
+                    <p>
+                        共计 {{$value->order_price}} 元。请尽快付款,否则订单将被取消。
+                        <a class="submit_pay" style="color: #0084B4;" orderId="{{$value->id}}">我已付款</a>
+                    </p>
+            </div>
+        @endforeach
+
+    </div>
+
     <div style="margin: 40px 30px 40px 10px;">
         <div class="tab_h">
             <span class="onchange trans">价格计算</span>
@@ -464,7 +495,7 @@
             e.preventDefault();
 //        alert("暂未截团");
 //        return ;
-            window.location.href = "/suki_group_buying_paying?gid=4";
+            window.location.href = "/suki_group_buying_paying?gid=0";
 //        alert("支付宝:15658610102")
         })
         $(".check").change(function (e) {
@@ -543,6 +574,21 @@
             change_count()
         });
         $("input:checkbox").trigger("click");
+        //我已付款
+        $(".submit_pay").click(function (e) {
+            e.preventDefault()
+            var postData = {
+                "orderId" : $(this).attr("orderId")
+            };
+
+            $.post("/suki_group_buying_confirm_orders",postData,function (event) {
+                alert(event.msg)
+                if (event.ret == 200)
+                {
+                    window.parent.location.reload()
+                }
+            })
+        })
     })
 
 </script>

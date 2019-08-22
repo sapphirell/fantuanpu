@@ -141,10 +141,16 @@ class GroupBuyingPageController extends Controller
             $filter = [];
             $group = [0];
         }
+        //地址
+        $this->data["address"] = GroupBuyingAddressModel::get_my_address($this->data["user_info"]->uid);
         //正在进行的
         $this->data["active_logs"] = GroupBuyingLogModel::getLogs($this->data["user_info"]->uid,$filter,$group);
         //我在使用的优惠券
         $this->data["tickets"] = UserTicketModel::getWantToUseTicket($this->data["user_info"]->uid);
+        //未付款地订单
+        $this->data["not_pay_order"] = GroupBuyingOrderModel::where(["uid" => $this->data["user_info"]->uid,"status"=>1,"group_id"=>0])->get();
+        //待申请发货的列表
+        $this->data["my_order"] = GroupBuyingOrderModel::where(["uid" => $this->data["user_info"]->uid,"status"=>4])->get();
         return view('PC/Suki/SukiGroupBuyingMyStockOrders')->with('data', $this->data);
     }
     public function suki_group_buying_address_manager(Request $request)
@@ -199,11 +205,55 @@ class GroupBuyingPageController extends Controller
 
     public function suki_group_buying_paying(Request $request)
     {
-        if (!$request->input("gid"))
+        if (!$request->input("gid") && $request->input("gid")!== "0")
         {
             return self::response([],40001,"缺少参数gid");
         }
-        $this->data["order"] = GroupBuyingOrderModel::where(["uid"=>$this->data["user_info"]->uid,"group_id"=>$request->input("gid")])->first();
+        if ($request->input("gid") === "0")
+        {
+            //先查询是否还未付款的订单
+            $notPayOrder = GroupBuyingOrderModel::where("uid","=",$this->data["user_info"]->uid)->where("status","=","1")->get();
+
+            if (!$notPayOrder->isEmpty())
+            {
+                die("还有尚未付款的订单");
+            }
+            //stock items
+            $submit_logs = GroupBuyingLogModel::getLogs($this->data["user_info"]->uid,[2,3,4,5,6,7,8,9,10,11],[0]);
+//            dd($submit_logs);
+            //打包为order
+            $order_info = [
+                "log_id" =>[]
+            ];
+            $order_price = 0;
+
+            if ($submit_logs->isEmpty())
+            {
+                die("暂无需要打包的订单");
+            }
+            foreach ($submit_logs as $submit_log)
+            {
+                $order_info[$submit_log->item_id][$submit_log->stock_id]["num"] += 1;
+                $order_info[$submit_log->item_id][$submit_log->stock_id]["detail"]["size"] = $submit_log->item_size;
+                $order_info[$submit_log->item_id][$submit_log->stock_id]["detail"]["color"] = $submit_log->item_color;
+                $order_info[$submit_log->item_id][$submit_log->stock_id]["detail"]["item_name"] = $submit_log->item_name;
+                $order_info["log_id"][] = $submit_log->id;
+                $order_price += $submit_log->order_price;
+
+
+                $log = GroupBuyingLogModel::find($submit_log->id);
+                $log->status = 2;
+                $log->save();
+            }
+            $userSelectedTicket = UserTicketModel::getWantToUseTicketList();
+            $this->data["order"]  = GroupBuyingOrderModel::createOrder($this->data["user_info"]->uid,$order_info,0,$order_price,$userSelectedTicket,0);
+
+        }
+        else
+        {
+            $this->data["order"] = GroupBuyingOrderModel::where(["uid"=>$this->data["user_info"]->uid,"group_id"=>$request->input("gid")])->first();
+        }
+
         return view('PC/Suki/SukiGroupBuyingPaying')->with('data', $this->data);
     }
 

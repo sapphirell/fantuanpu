@@ -147,52 +147,7 @@ class GroupBuyingController extends Controller
                 $usrPrivateFreight += $item_order_detail["private_freight"];
                 $usrOrderPrice += $item_order_detail["order_price"];
             }
-            $order                  = new GroupBuyingOrderModel();
-            $order->uid             = $uid;
-            $order->order_info      = json_encode($insert_item);
-            $order->status          = 1;
-            $order->private_freight = $usrPrivateFreight;
-            $order->order_price     = $usrOrderPrice;
-            foreach ($userSelectedTicket as $userTicket)
-            {
-                if (
-                    $userTicket->uid == $uid &&
-                    $userTicket->need_value <= $usrOrderPrice &&
-                    ($userTicket->gid == $groupId || $userTicket->gid == 0)
-                )
-                {
-                    //优惠券生效
-                    if ($userTicket->off_value)
-                    {
-                        //优惠金额
-                        $order->use_ticket = $userTicket->user_ticket_id;
-                        $order->ticket_id = $userTicket->ticket_id;
-                        $order->off_value = $userTicket->off_value;
-                        //优惠券标为已使用
-                        $userTicket->status = 2;
-                        $userTicket->save();
-                    }
-                    $gifts = json_decode($userTicket->gift_ids,true);
-                    if (!empty($gifts))
-                    {
-                        //礼品券
-                        foreach ($gifts as $gift_id => $num)
-                        {
-                            if (empty($stockItems[$gift_id]))
-                            {
-                                $stockItems[$gift_id] = GroupBuyingStockItemTypeModel::getOne($gift_id);
-                            }
-                            $userStockItemInfo = $stockItems[$gift_id];
-                        }
-                    }
-
-
-                    break;
-                }
-            }
-            $order->log_id          = json_encode($insert_item["log_id"]);
-            $order->group_id        = $groupId;
-            $order->save();
+            GroupBuyingOrderModel::createOrder($uid,$insert_item,$usrPrivateFreight,$usrOrderPrice,$userSelectedTicket,$groupId);
         }
         //                    dd($usrOrderPrice);
 

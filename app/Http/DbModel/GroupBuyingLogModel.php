@@ -61,15 +61,25 @@ class GroupBuyingLogModel extends Model
             if ($value->group_id == 0)
             {
                 $stock_item_info = GroupBuyingStockItemTypeModel::getOne($value->item_id);
+
                 $value->item_name = $stock_item_info["info"]->item_name;
                 $value->item_image = $stock_item_info["info"]->item_image;
                 $value->item_freight = 0;
-                $value->item_size = "";
-                $value->item_color = "";
+
                 foreach ($stock_item_info["detail"] as $d)
                 {
-//                    dd($d);
-//                    $value->item_size .= $d->
+                    foreach (json_decode($value->order_info,true) as $tp => $num)
+                    {
+                        if ($d->size."_".$d->color == $tp)
+                        {
+                            $tp_arr = explode("_",$tp);
+                            $value->stock_id = $d->id;
+                            $value->item_size = $tp_arr[0];
+                            $value->item_color = $tp_arr[1];
+                            break;
+                        }
+                    }
+
                 }
             }
         }
