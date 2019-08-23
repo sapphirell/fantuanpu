@@ -65,22 +65,25 @@ class GroupBuyingLogModel extends Model
                 $value->item_name = $stock_item_info["info"]->item_name;
                 $value->item_image = $stock_item_info["info"]->item_image;
                 $value->item_freight = 0;
+                $detail_arr = [];
 
                 foreach ($stock_item_info["detail"] as $d)
                 {
+
                     foreach (json_decode($value->order_info,true) as $tp => $num)
                     {
                         if ($d->size."_".$d->color == $tp)
                         {
                             $tp_arr = explode("_",$tp);
-                            $value->stock_id = $d->id;
-                            $value->item_size = $tp_arr[0];
-                            $value->item_color = $tp_arr[1];
+                            $detail_arr[$d->id]["stock_id"] = $d->id;
+                            $detail_arr[$d->id]["item_size"] =  $tp_arr[0];
+                            $detail_arr[$d->id]["item_color"] =  $tp_arr[1];
+                            $detail_arr[$d->id]["buy_num"] =  $num;
                             break;
                         }
                     }
-
                 }
+                $value->order_detail = $detail_arr;
             }
         }
         return $data;

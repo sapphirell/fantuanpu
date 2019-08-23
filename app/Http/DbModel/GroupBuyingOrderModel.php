@@ -14,7 +14,7 @@ class GroupBuyingOrderModel extends Model
     {
         $order                  = new GroupBuyingOrderModel();
         $order->uid             = $uid;
-        $order->order_info      = json_encode($order_info);
+        $order->order_info      = json_encode($order_info,JSON_UNESCAPED_UNICODE);
         $order->status          = 1;
         $order->private_freight = $usrPrivateFreight;
         $order->order_price     = $usrOrderPrice;

@@ -270,7 +270,11 @@
                 alert("参数不完整");
                 return false;
             }
-
+            if ($("#"+color+"_"+size).text() == 0)
+            {
+                alert("该类型库存紧缺")
+                return false;
+            }
             var items = size + "_" + color;
 
             var now_chat = $(".buying").text() ? JSON.parse($(".buying").text()) : {};
@@ -326,7 +330,7 @@
             $.post("/suki_buy_stock_items", fd, function (e) {
                 alert(e.msg)
                 if (e.ret == 200)
-                    window.location.href = "/suki_group_buying_myorders?type=last"
+                    window.location.href = "/suki_group_buying_my_stock"
             })
         })
 

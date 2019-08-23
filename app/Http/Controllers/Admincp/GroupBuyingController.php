@@ -23,6 +23,7 @@ class GroupBuyingController extends Controller
             'add_group_buying_item'  => '添加商品',
             'show_group_buying_list' => '团购管理',
             'order_delivers' => '发货管理',
+            'stock_item' => '现货收款',
         ];
     }
 
@@ -651,5 +652,27 @@ class GroupBuyingController extends Controller
             }
         }
         return self::response();
+    }
+
+    public function stock_item(Request $request)
+    {
+        $this->data["not_pay_order"] = GroupBuyingOrderModel::where("group_id","=","0")->where("status","=",1)->orWhere("status","=","2")->get();
+        foreach ($this->data["not_pay_order"]  as &$value)
+        {
+            $order_info = json_decode($value->order_info,true);
+            unset($order_info["log_id"]);
+            $value->order_info = "";
+            foreach ($order_info as $stock_item_type_id => $stock_detail)
+            {
+                foreach ($stock_detail as $detail)
+                {
+                    $value->order_info .= "<a href=''>{$detail["detail"]["item_name"]}</a>:<span>{$detail["detail"]["size"]}_{$detail["detail"]["color"]} {$detail["num"]}个</span>";
+                }
+
+            }
+//            dd($order_info);
+        }
+//       dd( $this->data["not_pay_order"]);
+        return view('PC/Admincp/StockItemOrder')->with('data', $this->data);
     }
 }

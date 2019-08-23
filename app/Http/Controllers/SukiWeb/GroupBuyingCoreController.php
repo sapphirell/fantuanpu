@@ -47,6 +47,10 @@ class GroupBuyingCoreController extends Controller
                 {
                     $colorSizeNotExistsFlag = false;
                     $order_price += $buy_num * $item_stock_detail->price;
+                    if ($item_stock_detail->stock<$buy_num)
+                    {
+                        return self::response([], 40004, "库存不足,当前剩余".$item_stock_detail->stock."个");
+                    }
                     $item_stock_detail->stock -= $buy_num;
                     $item_stock_detail->save();
                     break;
@@ -73,7 +77,7 @@ class GroupBuyingCoreController extends Controller
         $orderLog->premium = $premium;
         $orderLog->create_date = date("Y-m-d H:i:s");
         $orderLog->end_date = 0;
-        $orderLog->order_info = json_encode($order_info);
+        $orderLog->order_info = json_encode($order_info,JSON_UNESCAPED_UNICODE);
         $orderLog->order_price = $order_price;
         //        $orderLog->qq = $request->input("qq");
         $orderLog->save();

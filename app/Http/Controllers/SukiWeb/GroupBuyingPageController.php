@@ -231,19 +231,24 @@ class GroupBuyingPageController extends Controller
             {
                 die("暂无需要打包的订单");
             }
+//            dd($submit_logs);
             foreach ($submit_logs as $submit_log)
             {
-                $order_info[$submit_log->item_id][$submit_log->stock_id]["num"] += 1;
-                $order_info[$submit_log->item_id][$submit_log->stock_id]["detail"]["size"] = $submit_log->item_size;
-                $order_info[$submit_log->item_id][$submit_log->stock_id]["detail"]["color"] = $submit_log->item_color;
-                $order_info[$submit_log->item_id][$submit_log->stock_id]["detail"]["item_name"] = $submit_log->item_name;
-                $order_info["log_id"][] = $submit_log->id;
-                $order_price += $submit_log->order_price;
+                foreach ($submit_log->order_detail as $stock_item_id => $buy_detail)
+                {
+                    $order_info[$submit_log->item_id][$submit_log->stock_id]["num"] += $buy_detail["buy_num"];
+                    $order_info[$submit_log->item_id][$submit_log->stock_id]["detail"]["size"] = $buy_detail['item_size'];
+                    $order_info[$submit_log->item_id][$submit_log->stock_id]["detail"]["color"] = $buy_detail['item_color'];
+                    $order_info[$submit_log->item_id][$submit_log->stock_id]["detail"]["item_name"] = $submit_log->item_name;
+                    $order_info["log_id"][] = $submit_log->id;
+                    $order_price += $submit_log->order_price;
 
 
-                $log = GroupBuyingLogModel::find($submit_log->id);
-                $log->status = 2;
-                $log->save();
+                    $log = GroupBuyingLogModel::find($submit_log->id);
+                    $log->status = 2;
+                    $log->save();
+                }
+
             }
             $userSelectedTicket = UserTicketModel::getWantToUseTicketList();
             $this->data["order"]  = GroupBuyingOrderModel::createOrder($this->data["user_info"]->uid,$order_info,0,$order_price,$userSelectedTicket,0);

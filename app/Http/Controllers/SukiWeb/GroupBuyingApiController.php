@@ -251,8 +251,8 @@ class GroupBuyingApiController extends Controller
             return self::response([], 40001, "缺少参数" . $chk);
         }
 
-        GroupBuyingCoreController::buy_stock($this->data["user_info"]->uid,$request->input("item_id"),$request->input("order_info"));
-        return self::response();
+        return GroupBuyingCoreController::buy_stock($this->data["user_info"]->uid,$request->input("item_id"),$request->input("order_info"));
+//        return self::response();
     }
 
     public function suki_group_buying_select_ticket(Request $request)

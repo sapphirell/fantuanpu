@@ -206,6 +206,7 @@ Route::group([
     Route::get('/admincp/skip_orders', ['uses' => 'GroupBuyingController@skip_orders', 'as' => 'get_skip_orders']);#跑单处理
     Route::get('/admincp/change_log_items', ['uses' => 'GroupBuyingController@change_log_items', 'as' => 'change_log_items']);#打开编辑log详情页
     Route::get('/admincp/change_log_items', ['uses' => 'GroupBuyingController@change_log_items', 'as' => 'change_log_items']);#打开编辑log详情页
+    Route::get('/admincp/stock_item', ['uses' => 'GroupBuyingController@stock_item', 'as' => 'stock_item']);#现货订单列表
 
 
 
