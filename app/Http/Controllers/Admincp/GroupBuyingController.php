@@ -227,14 +227,32 @@ class GroupBuyingController extends Controller
     }
     public function do_deliver(Request $request)
     {
-        $order = GroupBuyingOrderModel::find($request->input("id"));
-        if (empty($order))
+        $exps = GroupBuyingExpressModel::where("id","=",$request->input("id"))->where("status","=","3")->first();
+
+
+        if (empty($exps))
         {
-            return self::response([],40002,"订单(".$request->input('id').")不存在");
+            return self::response([],40002,"订单不存在");
         }
-        $order->waybill_no = $request->input("waybill_no");
-        $order->status = 3;
-        $order->save();
+
+        $exps->waybill_no = $request->input("waybill_no");
+        $exps->status = 4;
+        $exps->save();
+        $orders = json_decode($exps->orders,true);
+        foreach ($orders as $orderId)
+        {
+            $order = GroupBuyingOrderModel::find($orderId);
+            $order->status = 3;
+            $order->save();
+            $logids = json_decode($order->log_id,true);
+            foreach ($logids as $logid)
+            {
+                $lg = GroupBuyingLogModel::find($logid);
+                $lg->status = 6;
+                $lg->save();
+            }
+
+        }
         return self::response();
     }
 

@@ -51,6 +51,10 @@
                     <br>
                     <a class="chargeback"  expressid="{{$value->id}}">拒绝发货</a>
                     @endif
+                    @if($data["type"] == "3")
+
+                            <a href="#" class="deliver" orderId="{{$value->id}}"  style="color: #ff647c">发货</a>
+                    @endif
                 </td>
             </tr>
         @endforeach
@@ -69,7 +73,21 @@
                 window.location.reload()
             })
         })
-
+        //发货
+        $(".deliver").click(function (e) {
+            e.preventDefault();
+            var id = $(this).attr("orderId");
+            layer.open({
+                type: 2,
+                title: false,
+                closeBtn: 0, //不显示关闭按钮
+                shade: 0.8,
+                shadeClose: true,
+                area: ["900px", '405px'],
+                offset: '100px',
+                content: ['/admincp/deliver?id='+id,'no']
+            });
+        })
         $(".chargeback").click(function (e) {
             e.preventDefault();
 

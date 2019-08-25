@@ -220,7 +220,6 @@ class GroupBuyingPageController extends Controller
             }
             //stock items
             $submit_logs = GroupBuyingLogModel::getLogs($this->data["user_info"]->uid,[2,3,4,5,6,7,8,9,10,11],[0]);
-//            dd($submit_logs);
             //打包为order
             $order_info = [
                 "log_id" =>[]
@@ -231,7 +230,6 @@ class GroupBuyingPageController extends Controller
             {
                 die("暂无需要打包的订单");
             }
-//            dd($submit_logs);
             foreach ($submit_logs as $submit_log)
             {
                 foreach ($submit_log->order_detail as $stock_item_id => $buy_detail)
