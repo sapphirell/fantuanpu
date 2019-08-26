@@ -95,11 +95,13 @@ class GroupBuyingPageController extends Controller
         {
             $filter = [4,6,7,9];
             $group = [4];
+            $this->data["type"] = "active";
         }
         else
         {
             $filter = [];
             $group = [];
+            $this->data["type"] = "history";
         }
         //正在进行的
         $this->data["active_logs"] = GroupBuyingLogModel::getLogs($this->data["user_info"]->uid,$filter,$group);
@@ -135,11 +137,13 @@ class GroupBuyingPageController extends Controller
         {
             $filter = [4,6,7,9];
             $group = [0];
+            $this->data["type"] = "active";
         }
         else
         {
             $filter = [];
             $group = [0];
+            $this->data["type"] = "history";
         }
         //地址
         $this->data["address"] = GroupBuyingAddressModel::get_my_address($this->data["user_info"]->uid);

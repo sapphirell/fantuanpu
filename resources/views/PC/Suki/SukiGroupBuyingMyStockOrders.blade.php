@@ -138,7 +138,11 @@
 <div class="wp" style="margin-top: 60px;    padding: 5px;background-color: #fff;">
     <div class="btn-group show" style="margin-bottom: 10px;box-shadow: none" role="group">
         <button style="border: 0px;color: #999999;background-color: #fff;padding: 6px 15px;margin-left: 0px;" type="button" class="btn btn-secondary dropdown-toggle tb" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-            切换表单
+            @if($data["type"] == "history")
+                现货购买历史
+            @elseif($data["type"] == "active")
+                现货
+            @endif
         </button>
         <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" x-placement="bottom-start" style="position: absolute; transform: translate3d(10px, 25px, 0px); top: 0px; left: 0px; will-change: transform;">
             <a href="/suki_group_buying_myorders?type=last" class="dropdown-item setting_clock_alert">正在团购</a>
@@ -167,7 +171,7 @@
         <?php $order_info = json_decode($value["order_info"],true); ?>
         <div class="my_items_log">
 
-            <a href="/suki_group_buying_item_info?item_id={{$value->item_id}}" class="logs_image" style="overflow: hidden">
+            <a href="/suki_group_buying_stock_item?item_id={{$value->item_id}}" class="logs_image" style="overflow: hidden">
 
                     <span class="stock_tag">
                     现货

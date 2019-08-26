@@ -211,10 +211,33 @@ class GroupBuyingApiController extends Controller
 
         if ($this->data["orders"]->status != 1 && $this->data["orders"]->status != 2)
         {
-            return self::response([], 40003, "订单状态不对");
+            return self::response([], 40003, "订单状态不对,不可以取消");
         }
         $this->data["orders"]->status = 4;
         $this->data["orders"]->save();
+        //如果是现货,要把库存加回去
+        if ($this->data["orders"]->group_id == 0)
+        {
+            $details = json_decode($this->data["orders"]->order_info,true);
+            foreach ($details as $detail => $num)
+            {
+                $cs = explode("_",$detail);
+
+                $stock_item = GroupBuyingStockItemModel::where("size","=",$cs[0])
+                    ->where("color","=",$cs[1])
+                    ->select()->first();
+                $stock_item->stock += $num;
+                $stock_item->save();
+            }
+            //并且把未付款的现货订单取消(因为只可能存在一个)
+            $not_pay_order = GroupBuyingOrderModel::where(["uid" => $this->data["user_info"]->uid,"status"=>1,"group_id"=>0])->get();
+            if (!$not_pay_order->isEmpty())
+            {
+                $not_pay_order->status = 7;
+                $not_pay_order->save();
+            }
+
+        }
 
         return self::response();
     }

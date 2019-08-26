@@ -22,6 +22,7 @@
             <td>手机号</td>
             <td  style="width:80px ">勾选地域</td>
             <td>qq</td>
+            <td>备注</td>
             <td style="width: 130px">操作</td>
         </tr>
 
@@ -43,6 +44,7 @@
                     @endif
                 </td>
                 <td>{{$user->qq}}</td>
+                <td>{{$user->remark}}</td>
                 <td>
                     @if($data["type"] == "1" || $data["type"] == "2")
                     <a class="order_delivers" expressid="{{$value->id}}" to_status="2">确认价格</a>

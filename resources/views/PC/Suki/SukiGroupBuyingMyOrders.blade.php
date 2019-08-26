@@ -118,6 +118,15 @@
         padding: 3px;
         border-radius: 5px;
     }
+    .alert_pointer {
+        border-radius: 100%;
+        width: 8px;
+        height: 8px;
+        background: #ff5a5a;
+        display: inline-block;
+        position: absolute;
+        box-shadow: 0 0 7px #ff5a5a;
+    }
     @media screen and (max-width: 960px) {
         .price_status {
             margin-top: 10px;
@@ -138,7 +147,11 @@
 <div class="wp" style="margin-top: 60px;    padding: 5px;background-color: #fff;">
     <div class="btn-group show" style="margin-bottom: 10px;box-shadow: none" role="group">
         <button style="border: 0px;color: #999999;background-color: #fff;padding: 6px 15px;margin-left: 0px;" type="button" class="btn btn-secondary dropdown-toggle tb" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-            切换表单
+            @if($data["type"] == "history")
+                团购历史订单
+            @elseif($data["type"] == "active")
+                正在团购
+            @endif
         </button>
         <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" x-placement="bottom-start" style="position: absolute; transform: translate3d(10px, 25px, 0px); top: 0px; left: 0px; will-change: transform;">
             <a href="/suki_group_buying_myorders?type=last" class="dropdown-item setting_clock_alert">正在团购</a>
