@@ -917,7 +917,7 @@ if (! function_exists('avatar')) {
         {
             $src .= "?rand=".rand(10000,99999);
         }
-        $img = "<img src = $src width='".$size."px' height='{$size}' style='border-radius:".$radius."%;overflow:hidden;".$style."' class='".$class."'>";
+        $img = "<img src = $src width='{$size}' height='{$size}' style='border-radius:".$radius."%;overflow:hidden;".$style."' class='".$class."'>";
         echo $img;
 
     }

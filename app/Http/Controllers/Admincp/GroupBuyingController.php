@@ -7,6 +7,7 @@ use App\Http\DbModel\GroupBuyingItemModel;
 use App\Http\DbModel\GroupBuyingLogModel;
 use App\Http\DbModel\GroupBuyingModel;
 use App\Http\DbModel\GroupBuyingOrderModel;
+use App\Http\DbModel\GroupBuyingStockItemModel;
 use App\Http\DbModel\GroupBuyingStockItemTypeModel;
 use App\Http\DbModel\User_model;
 use App\Http\DbModel\UserTicketModel;
@@ -24,6 +25,8 @@ class GroupBuyingController extends Controller
             'show_group_buying_list' => '团购管理',
             'order_delivers' => '发货管理',
             'stock_item' => '现货收款',
+            'add_stock' => '新增现货种类',
+            'stock_list' => '现货列表',
         ];
     }
 
@@ -692,5 +695,45 @@ class GroupBuyingController extends Controller
         }
 //       dd( $this->data["not_pay_order"]);
         return view('PC/Admincp/StockItemOrder')->with('data', $this->data);
+    }
+
+    public function add_stock(Request $request)
+    {
+
+        return view('PC/Admincp/AddStockType')->with('data', $this->data);
+    }
+    public function add_stock_type(Request $request)
+    {
+        $st = new GroupBuyingStockItemTypeModel();
+        $st->item_name = $request->input("item_name");
+        $st->item_image = $request->input("item_image");
+        $st->save();
+        return self::response();
+    }
+    public function push_stock_page(Request $request)
+    {
+        $tid = $request->input("tid");
+        $this->data["type"] = GroupBuyingStockItemTypeModel::getOne($tid);
+
+        return view('PC/Admincp/PushStockTypePage')->with('data', $this->data);
+    }
+    public function stock_list()
+    {
+        $this->data["list"] = GroupBuyingStockItemTypeModel::get();
+        return view('PC/Admincp/StockListPage')->with('data', $this->data);
+    }
+    public function push_stock(Request $request)
+    {
+        $item_id = $request->input("item_id");
+        $size = $request->input("size");
+        $color = $request->input("color");
+
+        $stock = GroupBuyingStockItemModel::where(["item_id"=>$item_id,"size"=>$size,"color"=>$color])->first();
+        if ($stock->)
+        $stock = new GroupBuyingStockItemModel();
+        $stock->item_id =
+        $stock->item_name = $request->input("item_name");
+        $stock->size = $request->input("size");
+        $stock->color = $request->input("color");
     }
 }

@@ -185,6 +185,10 @@
                     现货
                 </span>
                     <?php $stock_item_price += $value["order_price"] ?: 0; ?>
+                @else
+                <span class="stock_tag">
+                    {{$value->group_id}}团
+                </span>
                 @endif
                 <img src="{{$value["item_image"]}}" class="logs_image" style="">
             </a>

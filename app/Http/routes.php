@@ -207,6 +207,11 @@ Route::group([
     Route::get('/admincp/change_log_items', ['uses' => 'GroupBuyingController@change_log_items', 'as' => 'change_log_items']);#打开编辑log详情页
     Route::get('/admincp/change_log_items', ['uses' => 'GroupBuyingController@change_log_items', 'as' => 'change_log_items']);#打开编辑log详情页
     Route::get('/admincp/stock_item', ['uses' => 'GroupBuyingController@stock_item', 'as' => 'stock_item']);#现货订单列表
+    Route::get('/admincp/add_stock', ['uses' => 'GroupBuyingController@add_stock', 'as' => 'add_stock']);#上架现货类别
+    Route::get('/admincp/push_stock_page', ['uses' => 'GroupBuyingController@push_stock_page', 'as' => 'push_stock_page']);#上货页面
+    Route::post('/admincp/add_stock_type', ['uses' => 'GroupBuyingController@add_stock_type', 'as' => 'add_stock_type']);#post上架现货类别
+    Route::post('/admincp/push_stock', ['uses' => 'GroupBuyingController@push_stock', 'as' => 'push_stock']);#post上架现货数目和种类
+    Route::get('/admincp/stock_list', ['uses' => 'GroupBuyingController@stock_list', 'as' => 'stock_list']);#现货列表
 
 
 

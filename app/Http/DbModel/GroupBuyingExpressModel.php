@@ -13,7 +13,7 @@ class GroupBuyingExpressModel extends Model
 
     public static function get_my_express(int $uid)
     {
-        $data = self::where("uid",'=',$uid)->get();
+        $data = self::where("uid",'=',$uid)->orderBy("id","desc")->get();
         foreach ($data as &$value)
         {
             $orders = json_decode($value->orders,true);

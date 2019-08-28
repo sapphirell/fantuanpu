@@ -293,4 +293,11 @@ class TestController extends Controller
             var_dump($log->status);
         }
     }
+    public function pushStock()
+    {
+        [
+            "交叉领结" => ["均_黑"=>"1_4.5","均_红"=>"1_4.5"],
+            "交叉发夹"
+        ];
+    }
 }
