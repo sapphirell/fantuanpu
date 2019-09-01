@@ -136,13 +136,17 @@
                     </p>
 
                 </div>
+                <?php $sizeArr=[];$colorArr=[]; ?>
                 <div style="margin-bottom: 10px;padding-left: 13px;">
                     <span for="size" style="color: #888a85;margin-right: 15px">可选尺码</span>
                     <select style="width: 200px;display: inline-block" class="size" name="size">
                         @foreach($data["item_info"]->items as $value)
-                            <option>
-                                <span>{{$value->size}}</span>
-                            </option>
+                            @if(!in_array($value->size,$sizeArr))
+                                <?php $sizeArr[] = $value->size; ?>
+                                <option>
+                                    <span>{{$value->size}}</span>
+                                </option>
+                            @endif
                         @endforeach
                     </select>
                 </div>
@@ -151,9 +155,12 @@
                     <span for="size" style="color: #888a85;margin-right: 15px">可选颜色</span>
                     <select style="width: 200px;display: inline-block" class="color" name="color">
                         @foreach($data["item_info"]->items as $value)
+                            @if(!in_array($value->color,$colorArr))
+                            <?php $sizeArr[] = $value->color; ?>
                             <option>
                                 <span class="color" name="color">{{$value->color}}</span>
                             </option>
+                            @endif
                         @endforeach
                     </select>
 

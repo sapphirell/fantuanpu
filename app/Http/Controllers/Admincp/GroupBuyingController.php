@@ -729,7 +729,7 @@ class GroupBuyingController extends Controller
         $color = $request->input("color");
 
         $stock = GroupBuyingStockItemModel::where(["item_id"=>$item_id,"size"=>$size,"color"=>$color])->first();
-        if ($stock->isEmpty())
+        if (empty($stock))
         {
             $stock = new GroupBuyingStockItemModel();
             $stock->item_id = $item_id;
@@ -739,6 +739,7 @@ class GroupBuyingController extends Controller
             $stock->price = $request->input("price");
         }
         $stock->stock += $request->input("stock");
+        $stock->save();
         return self::response();
     }
 }
