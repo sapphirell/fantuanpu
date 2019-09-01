@@ -212,6 +212,8 @@ Route::group([
     Route::post('/admincp/add_stock_type', ['uses' => 'GroupBuyingController@add_stock_type', 'as' => 'add_stock_type']);#post上架现货类别
     Route::post('/admincp/push_stock', ['uses' => 'GroupBuyingController@push_stock', 'as' => 'push_stock']);#post上架现货数目和种类
     Route::get('/admincp/stock_list', ['uses' => 'GroupBuyingController@stock_list', 'as' => 'stock_list']);#现货列表
+    Route::get('/admincp/add_stock_page', ['uses' => 'GroupBuyingController@add_stock_page', 'as' => 'add_stock_page']);#加库存
+    Route::post('/admincp/add_stock_item', ['uses' => 'GroupBuyingController@add_stock_item', 'as' => 'add_stock_item']);#加库存post
 
 
 

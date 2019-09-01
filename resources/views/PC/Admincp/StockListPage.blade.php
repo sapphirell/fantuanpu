@@ -25,6 +25,7 @@
                                 <td><img width="27px" src="{{explode("|",$value->item_image)[0]}}" ></td>
                                 <td>
                                     <a href="/admincp/push_stock_page?tid={{$value->id}}">上架</a>
+                                    <a href="/admincp/add_stock_page?item_id={{$value->id}}">补货</a>
                                 </td>
                             </tr>
                         @endforeach

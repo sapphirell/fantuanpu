@@ -742,4 +742,16 @@ class GroupBuyingController extends Controller
         $stock->save();
         return self::response();
     }
+    public function add_stock_page(Request $request)
+    {
+        $this->data["stock"] = GroupBuyingStockItemTypeModel::getOne($request->input("item_id"));
+        return view('PC/Admincp/AddStockPage')->with('data', $this->data);
+    }
+    public function add_stock_item(Request $request)
+    {
+        $item = GroupBuyingStockItemModel::find($request->input("id"));
+        $item->stock += $request->input("num");
+        $item->save();
+        return self::response();
+    }
 }
