@@ -524,7 +524,49 @@ class GroupBuyingController extends Controller
         $this->data["list"] = GroupBuyingExpressModel::where("status","=",$this->data['type'])->get();
         foreach ($this->data["list"]  as $value)
         {
-            //提取地址前面几个直到碰到"省"、"市"、"区"
+
+            $value->order_info = "";
+            foreach (json_decode($value->orders,true) as $order_id)
+            {
+                $order = GroupBuyingOrderModel::find($order_id);
+
+
+
+
+                if ($order->group_id == 0)
+                {
+                    $order_info = json_decode($order->order_info,true);
+                    unset($order_info["log_id"]);
+                    foreach ($order_info as $stock_item_type_id => $stock_detail)
+                    {
+
+//                        dd($order_info);
+                        foreach ($stock_detail as $detail)
+                        {
+                            $value->order_info .= "<a href=''>{$detail["detail"]["item_name"]}</a>:<span>{$detail["detail"]["size"]}_{$detail["detail"]["color"]} {$detail["num"]}个</span>";
+                        }
+
+                    }
+                }
+                else
+                {
+                    $tmp = json_decode($order->order_info,true);
+                    unset($tmp ["log_id"]);
+                    foreach ($tmp as $item_id => $detail)
+                    {
+
+                        $value->order_info .= "<a href='/suki_group_buying_item_info?item_id=".$item_id ." target='_blank' style='color: #00A0FF'>".$detail["item_detail"]["item_name"]."</a>" .":";
+                        foreach ($detail["detail"] as $fe => $num)
+                        {
+                            $value->order_info .= $fe ." " . $num ." 个,";
+                        }
+                    }
+                }
+
+
+            }
+//            dd($value);
+//            $value->orders_info =
         }
         return view('PC/Admincp/OrderDeliver')->with('data',$this->data);
     }
