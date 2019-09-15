@@ -23,13 +23,14 @@
             <td  style="width:80px ">勾选地域</td>
             <td>qq</td>
             <td>备注</td>
+            <td>订单</td>
             <td style="width: 130px">操作</td>
         </tr>
 
         @foreach($data["list"] as $value)
             <?php $user = get_user($value->uid) ?>
             <tr>
-                <td>{{$user->username}}</td>
+                <td>{{$user->username}}[{{$value->uid}}]</td>
                 <td>{{$value["name"]}}</td>
                 <td>{{$value["address"]}}</td>
                 <td>{{$value['private_freight'] + $value['price_difference']  + $value['freight'] }}</td>
@@ -45,6 +46,7 @@
                 </td>
                 <td>{{$user->qq}}</td>
                 <td>{{$user->remark}}</td>
+                <td>{!! $value->order_info !!}</td>
                 <td>
                     @if($data["type"] == "1" || $data["type"] == "2")
                     <a class="order_delivers" expressid="{{$value->id}}" to_status="2">确认价格</a>

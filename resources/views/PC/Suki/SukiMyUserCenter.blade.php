@@ -203,6 +203,7 @@
                 old_password : $(".old_password").val(),
                 new_password : $(".new_password").val(),
                 repeat_password : $(".repeat_password").val(),
+                qq : $("#qq").val(),
             }
             $.post("/update_suki_user_info",fd,function (e) {
                 alert(e.msg)

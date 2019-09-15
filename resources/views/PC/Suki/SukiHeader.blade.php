@@ -288,7 +288,7 @@
                 </a>
             </li>
             <li class="trans">
-                <a href="/suki_group_buying"  class="header_items">
+                <a href="/suki_group_buying_stock"  class="header_items">
                     {{--<i class="fa  fa-gavel fa-fw fa-lg"  style="color: #ffffff;line-height: 23px"></i>--}}
                     <img src="/Image/tuangou2.png" style="width: 20px;">
                     <p class="none_960" style="color: #fff;display: inline-block">团购</p>
@@ -366,7 +366,7 @@
                 </ul>
             </div>
 
-            <a style="    position: absolute;bottom: 0px;width: 100%;text-align: center;    background: #f3f2f2;padding: 5px;text-decoration: none" href="/logout">
+            <a style="    position: absolute;bottom: 0px;left: 0px;width: 100%;text-align: center;    background: #f3f2f2;padding: 5px;text-decoration: none" href="/logout">
                 <span style="font-size: 14px;color: #a99595;font-weight: 900;border-radius: 0 0 13px 13px;font-size: 12px;">退出登录</span>
                 <img src="/Image/tuichu1.png" style="width: 14px;padding-bottom: 4px;" >
             </a>

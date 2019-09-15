@@ -233,6 +233,9 @@
             <li>
                 现货类商品不收取阿里邮费,无成团人数要求,可以和团购商品一并发货,或单独申请发货。
             </li>
+            <li>
+                未填写qq
+            </li>
         </ul>
     </div>
 </div>
@@ -256,6 +259,8 @@
     $(document).ready(function () {
         var key = $(".color").val() + "_" + $(".size").val();
         var item_id = $("#item_id").val();
+
+        console.log(key)
         resetStock(key);
         $("#spinner").spinner('delay', 200) //delay in ms
             .spinner('changed', function (e, newVal, oldVal) {
@@ -321,7 +326,7 @@
             e.preventDefault();
 
             var order_info = $(".order_info").text();
-
+            var qq = $(".qq").val();
             if (!order_info) {
                 alert("请先添加商品")
             }
@@ -332,6 +337,7 @@
             var fd = {
                 order_info: $(".order_info").text(),
                 item_id: item_id,
+                qq:qq
             };
             console.log(fd);
             $.post("/suki_buy_stock_items", fd, function (e) {

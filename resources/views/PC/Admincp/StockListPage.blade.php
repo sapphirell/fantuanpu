@@ -26,6 +26,7 @@
                                 <td>
                                     <a href="/admincp/push_stock_page?tid={{$value->id}}">上架</a>
                                     <a href="/admincp/add_stock_page?item_id={{$value->id}}">补货</a>
+                                    <a href="/admincp/disable_stock?item_id={{$value->id}}">下架</a>
                                 </td>
                             </tr>
                         @endforeach

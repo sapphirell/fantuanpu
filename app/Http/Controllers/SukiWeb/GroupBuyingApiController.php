@@ -273,7 +273,13 @@ class GroupBuyingApiController extends Controller
         {
             return self::response([], 40001, "缺少参数" . $chk);
         }
-
+        if (!$this->data['user_info']->qq)
+        {
+            $user = User_model::find($this->data['user_info']->uid);
+            $user->qq = $request->input("qq");
+            $user->save();
+            User_model::flushUserCache($this->data['user_info']->uid);
+        }
         return GroupBuyingCoreController::buy_stock($this->data["user_info"]->uid,$request->input("item_id"),$request->input("order_info"));
 //        return self::response();
     }

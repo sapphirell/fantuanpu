@@ -17,9 +17,12 @@
                 <tr>
                     <td>{{$user->username}}[{{$value->uid}}]</td>
                     <td>{!! $value->order_info !!}</td>
-                    <td>{{$value->order_price}}</td>
+                    <td>{{$value->order_price}}/@if($value->status == 1){{"等待付款"}}@else{{"已付款"}}@endif</td>
                     <td>{{$user->qq}}</td>
-                    <td>确认收款</td>
+                    <td>
+                        <a href="">确认收款</a>
+                        <a>取消</a>
+                    </td>
 
                 </tr>
             @endforeach
