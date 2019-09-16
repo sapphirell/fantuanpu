@@ -229,7 +229,7 @@ class GroupBuyingPageController extends Controller
                 "log_id" =>[]
             ];
             $order_price = 0;
-
+//            dd($submit_logs);
             if ($submit_logs->isEmpty())
             {
                 die("暂无需要打包的订单");
@@ -238,13 +238,12 @@ class GroupBuyingPageController extends Controller
             {
                 foreach ($submit_log->order_detail as $stock_item_id => $buy_detail)
                 {
-                    $order_info[$submit_log->item_id][$submit_log->stock_id]["num"] += $buy_detail["buy_num"];
-                    $order_info[$submit_log->item_id][$submit_log->stock_id]["detail"]["size"] = $buy_detail['item_size'];
-                    $order_info[$submit_log->item_id][$submit_log->stock_id]["detail"]["color"] = $buy_detail['item_color'];
-                    $order_info[$submit_log->item_id][$submit_log->stock_id]["detail"]["item_name"] = $submit_log->item_name;
+                    $order_info[$submit_log->item_id][$stock_item_id]["num"] += $buy_detail["buy_num"];
+                    $order_info[$submit_log->item_id][$stock_item_id]["detail"]["size"] = $buy_detail['item_size'];
+                    $order_info[$submit_log->item_id][$stock_item_id]["detail"]["color"] = $buy_detail['item_color'];
+                    $order_info[$submit_log->item_id][$stock_item_id]["detail"]["item_name"] = $submit_log->item_name;
                     $order_info["log_id"][] = $submit_log->id;
                     $order_price += $submit_log->order_price;
-
 
                     $log = GroupBuyingLogModel::find($submit_log->id);
                     $log->status = 2;

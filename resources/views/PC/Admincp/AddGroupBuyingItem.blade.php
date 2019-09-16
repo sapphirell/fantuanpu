@@ -66,7 +66,7 @@
                             </div>
                         </div>
                         <div class="col-sm-2 control-label">
-                            <input type="submit">
+                            <input type="submit" class="submit">
                         </div>
                         {{csrf_field('csrf')}}
                     </form>
@@ -91,6 +91,10 @@
 
             $(".premium").val(parseInt(item_price)*0.12+0.3);
         })
-
+        $('.submit').keypress(function(e) {
+            if (e.keyCode == 13) {
+                e.preventDefault();
+            }
+        });
     });
 </script>
