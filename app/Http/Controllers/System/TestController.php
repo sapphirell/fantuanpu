@@ -7,6 +7,8 @@ use App\Http\DbModel\Forum_forum_model;
 use App\Http\DbModel\GroupBuyingExpressModel;
 use App\Http\DbModel\GroupBuyingLogModel;
 use App\Http\DbModel\GroupBuyingOrderModel;
+use App\Http\DbModel\GroupBuyingStockItemModel;
+use App\Http\DbModel\GroupBuyingStockItemTypeModel;
 use App\Http\DbModel\UCenter_member_model;
 use App\Http\DbModel\User_model;
 use Illuminate\Container\Container;
@@ -301,38 +303,9 @@ class TestController extends Controller
         ];
         foreach ($orders as $order)
         {
-            $submit_logs = json_decode($order->log_id,true);
+            $logs           = json_decode($order->log_id, true);
             $order->ori_order_data = $order->order_info;
-            foreach (json_decode($value->order_info,true) as $tp => $num)
-            {
-                if ($d->size."_".$d->color == $tp)
-                {
-                    $tp_arr = explode("_",$tp);
-                    $detail_arr[$d->id]["stock_id"] = $d->id;
-                    $detail_arr[$d->id]["item_size"] =  $tp_arr[0];
-                    $detail_arr[$d->id]["item_color"] =  $tp_arr[1];
-                    $detail_arr[$d->id]["buy_num"] =  $num;
-                    break;
-                }
-            }
-
-            $value->order_detail = $detail_arr;
-            foreach ($submit_logs as $submit_log)
-            {
-
-                foreach ($submit_log->order_detail as $stock_item_id => $buy_detail)
-                {
-                    $order_info[$submit_log->item_id][$stock_item_id]["num"] += $buy_detail["buy_num"];
-                    $order_info[$submit_log->item_id][$stock_item_id]["detail"]["size"] = $buy_detail['item_size'];
-                    $order_info[$submit_log->item_id][$stock_item_id]["detail"]["color"] = $buy_detail['item_color'];
-                    $order_info[$submit_log->item_id][$stock_item_id]["detail"]["item_name"] = $submit_log->item_name;
-                    $order_info["log_id"][] = $submit_log->id;
-
-                }
-
-            }
-        }
-        {
+            GroupBuyingLogModel::getLogsByIds($logs);
 
         }
 

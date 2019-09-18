@@ -89,12 +89,12 @@ class GroupBuyingPageController extends Controller
     {
         if ($request->input("debug"))
         {
-            $this->data["user_info"]->uid = 5005;
+            $this->data["user_info"]->uid = 51170;
         }
         if ($request->input("type") == 'last')
         {
             $filter = [4,6,7,9];
-            $group = [4];
+            $group = [5];
             $this->data["type"] = "active";
         }
         else
@@ -133,6 +133,10 @@ class GroupBuyingPageController extends Controller
 
     public function suki_group_buying_my_stock(Request $request)
     {
+        if ($request->input("debug"))
+        {
+            $this->data["user_info"]->uid = 51170;
+        }
         if ($request->input("type") == 'last')
         {
             $filter = [4,6,7,9];
@@ -236,6 +240,7 @@ class GroupBuyingPageController extends Controller
             }
             foreach ($submit_logs as $submit_log)
             {
+                $order_price += $submit_log->order_price;
                 foreach ($submit_log->order_detail as $stock_item_id => $buy_detail)
                 {
                     $order_info[$submit_log->item_id][$stock_item_id]["num"] += $buy_detail["buy_num"];
@@ -243,7 +248,6 @@ class GroupBuyingPageController extends Controller
                     $order_info[$submit_log->item_id][$stock_item_id]["detail"]["color"] = $buy_detail['item_color'];
                     $order_info[$submit_log->item_id][$stock_item_id]["detail"]["item_name"] = $submit_log->item_name;
                     $order_info["log_id"][] = $submit_log->id;
-                    $order_price += $submit_log->order_price;
 
                     $log = GroupBuyingLogModel::find($submit_log->id);
                     $log->status = 2;

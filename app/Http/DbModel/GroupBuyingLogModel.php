@@ -55,6 +55,30 @@ class GroupBuyingLogModel extends Model
 
         }
         $data = $log->get();
+        $data = self::formatLogsData($data);
+        return $data;
+//        $log = $log
+//            ->where("status","!=",4)//取消
+//            ->where("status","!=",7)//流团
+//            ->where("status","!=",9)//下架
+//            ->where("status","!=",10)//受影响流团
+//            ->where("status","!=",11)//跑单
+//            ->get();
+    }
+    public static function getLogsByIds($ids)
+    {
+        $log = self::leftJoin("pre_group_buying_item",function ($join) {
+            $join->on("pre_group_buying_log.item_id","=","pre_group_buying_item.id");
+        })
+            ->select(DB::raw("pre_group_buying_item.*,pre_group_buying_log.*,pre_group_buying_log.premium as order_premium"))
+            ->whereIn("id", $ids)
+            ->get();
+
+        return self::formatLogsData($log);
+    }
+    //传入logs,格式化数据
+    public static function formatLogsData($data)
+    {
         foreach ($data as &$value)
         {
             //对现货商品进行处理
@@ -87,15 +111,7 @@ class GroupBuyingLogModel extends Model
             }
         }
         return $data;
-//        $log = $log
-//            ->where("status","!=",4)//取消
-//            ->where("status","!=",7)//流团
-//            ->where("status","!=",9)//下架
-//            ->where("status","!=",10)//受影响流团
-//            ->where("status","!=",11)//跑单
-//            ->get();
     }
-
     public static function getNotCancelLog($group_id, $counter = true, $uid = 0)
     {
         $log = self::leftJoin("pre_group_buying_item",function ($join) {
