@@ -216,7 +216,7 @@ Route::group([
     Route::get('/admincp/orders_list', ['uses' => 'GroupBuyingController@orders_list', 'as' => 'orders_list']);#order列表
     Route::post('/admincp/cancel_stock_order', ['uses' => 'GroupBuyingController@cancel_stock_order', 'as' => 'cancel_stock_order']);#取消现货order
     Route::post('/admincp/add_stock_item', ['uses' => 'GroupBuyingController@add_stock_item', 'as' => 'add_stock_item']);#加库存post
-
+    Route::get('/admincp/disable_stock', ['uses' => 'GroupBuyingController@disable_stock', 'as' => 'disable_stock']);#切换现货上下架
 
 
 });
@@ -326,4 +326,5 @@ Route::group([
     Route::post('/save_address', ['uses' => 'GroupBuyingApiController@save_address', 'as' => 'save_address']);#suki存储地址
     Route::post('/suki_group_buying_select_ticket', ['uses' => 'GroupBuyingApiController@suki_group_buying_select_ticket', 'as' => 'suki_group_buying_select_ticket']);#suki选择优惠券
     Route::post('/suki_buy_stock_items', ['uses' => 'GroupBuyingApiController@suki_buy_stock_items', 'as' => 'suki_buy_stock_items']);#购买现货
+
 });

@@ -904,4 +904,15 @@ class GroupBuyingController extends Controller
 
         return self::response();
     }
+    public function disable_stock(Request $request)
+    {
+        $id          = $request->input("item_id");
+        $display     = $request->input("display");
+        $st          = GroupBuyingStockItemTypeModel::find($id);
+        $st->display = $display;
+        $st->save();
+
+        return self::response();
+
+    }
 }

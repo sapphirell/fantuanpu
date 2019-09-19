@@ -10,7 +10,7 @@ class GroupBuyingStockItemTypeModel extends Model
     public $timestamps = false;
     public static function getList()
     {
-        $data = self::select()->get();
+        $data = self::select()->where("display",'=','1')->get();
         foreach ($data as $value)
         {
             $value->item_image = explode("|", $value->item_image );
