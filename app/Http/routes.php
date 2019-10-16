@@ -205,7 +205,7 @@ Route::group([
     Route::post('/admincp/chargeback', ['uses' => 'GroupBuyingController@chargeback', 'as' => 'skip_orders']);#拒绝发货
     Route::get('/admincp/skip_orders', ['uses' => 'GroupBuyingController@skip_orders', 'as' => 'get_skip_orders']);#跑单处理
     Route::get('/admincp/change_log_items', ['uses' => 'GroupBuyingController@change_log_items', 'as' => 'change_log_items']);#打开编辑log详情页
-    Route::get('/admincp/change_log_items', ['uses' => 'GroupBuyingController@change_log_items', 'as' => 'change_log_items']);#打开编辑log详情页
+    Route::post('/admincp/change_log', ['uses' => 'GroupBuyingController@change_log', 'as' => 'change_log']);#修改log
     Route::get('/admincp/stock_item', ['uses' => 'GroupBuyingController@stock_item', 'as' => 'stock_item']);#现货订单列表
     Route::get('/admincp/add_stock', ['uses' => 'GroupBuyingController@add_stock', 'as' => 'add_stock']);#上架现货类别
     Route::get('/admincp/push_stock_page', ['uses' => 'GroupBuyingController@push_stock_page', 'as' => 'push_stock_page']);#上货页面

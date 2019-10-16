@@ -13,6 +13,7 @@ use App\Http\DbModel\SukiFriendModel;
 use App\Http\DbModel\SukiFriendRequestModel;
 use App\Http\DbModel\SukiMessageBoardModel;
 use App\Http\DbModel\SukiNoticeModel;
+use App\Http\DbModel\TaskModel;
 use App\Http\DbModel\Thread_model;
 use App\Http\DbModel\User_model;
 use Illuminate\Http\Request;
@@ -305,6 +306,8 @@ class SukiWebController extends Controller
     //suki任务大厅
     public function suki_show_task_list(Request $request)
     {
+        $this->data["task_list"] = TaskModel::select()->get();
+        dd( $this->data["task_list"]);
         return view('PC/Suki/SukiTaskList')->with('data', $this->data);
     }
 

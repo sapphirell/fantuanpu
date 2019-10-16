@@ -20,7 +20,7 @@
                 <td>{!! $value->info !!}</td>
                 <td>{{$value->order_price}}/@if($value->status == 1){{"等待付款"}}@else{{"已付款"}}@endif</td>
                 <td>{{$user->qq}}</td>
-                <td>{{$value->group_id}}</td>
+                <td>{{$value->group_id}}团</td>
 
 
             </tr>

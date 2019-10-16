@@ -21,6 +21,7 @@ class CommonMemberCount extends Model
         'extcredits6' => '文点',
         'extcredits7' => '分享积分',
         'extcredits8' => '图点',
+        'extcredits9' => '积分',
     ];
     public static function find($primaryKey)
     {

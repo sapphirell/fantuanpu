@@ -13,17 +13,17 @@
         </div>
     </div>
 
-    <table class="table" style="width: 1000px">
+    <table class="table" style="width: 1300px">
         <tr>
             <td>用户名</td>
             <td>收货人</td>
-            <td>收货地址</td>
-            <td>应收款</td>
+            <td style="width: 100px">收货地址</td>
+            <td style="width: 100px">应收款</td>
             <td>手机号</td>
             <td  style="width:80px ">勾选地域</td>
             <td>qq</td>
             <td>备注</td>
-            <td>订单</td>
+            <td style="    min-width: 400px;">订单</td>
             <td style="width: 130px">操作</td>
         </tr>
 
@@ -33,7 +33,7 @@
                 <td>{{$user->username}}[{{$value->uid}}]</td>
                 <td>{{$value["name"]}}</td>
                 <td>{{$value["address"]}}</td>
-                <td>{{$value['private_freight'] + $value['price_difference']  + $value['freight'] }}</td>
+                <td>{{round($value['private_freight'] + $value['price_difference']  + $value['freight'],2) }}</td>
                 <td>{{$value["telphone"]}}</td>
                 <td>
                     @if($value->freight == 5.5)

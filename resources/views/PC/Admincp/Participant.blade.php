@@ -104,9 +104,11 @@
                     @elseif($value->status == 3)
                         <span>无</span>
                     @elseif($value->status == 4)
-
+                        <span>无</span>.
                     @elseif($value->status == 5)
                         <p>已跑单</p>
+                    @else
+                        <span>无</span>
                     @endif
                 </td>
             </tr>

@@ -548,7 +548,7 @@ class GroupBuyingController extends Controller
     public function order_delivers(Request $request)
     {
         $this->data['type'] = $request->input("type") ?: 1;
-        $this->data["list"] = GroupBuyingExpressModel::where("status", "=", $this->data['type'])->get();
+        $this->data["list"] = GroupBuyingExpressModel::where("status", "=", $this->data['type'])->orderBy("id","DESC")->get();
         foreach ($this->data["list"] as $value)
         {
 
@@ -556,8 +556,8 @@ class GroupBuyingController extends Controller
             foreach (json_decode($value->orders, true) as $order_id)
             {
                 $order = GroupBuyingOrderModel::find($order_id);
-
-
+//                $value->order_id[] = $order_id;
+                $value->order_info .= "{$order->group_id}团货物<br>";
                 if ($order->group_id == 0)
                 {
                     $order_info = json_decode($order->order_info, true);
@@ -568,7 +568,7 @@ class GroupBuyingController extends Controller
                         //                        dd($order_info);
                         foreach ($stock_detail as $detail)
                         {
-                            $value->order_info .= "<a href=''>{$detail["detail"]["item_name"]}</a>:<span>{$detail["detail"]["size"]}_{$detail["detail"]["color"]} {$detail["num"]}个</span>";
+                            $value->order_info .= "<a style='color: #f75950;' href='/suki_group_buying_stock_item?item_id=".$stock_item_type_id."' >{$detail["detail"]["item_name"]}</a>:<span>{$detail["detail"]["size"]}_{$detail["detail"]["color"]} {$detail["num"]}个</span><br>";
                         }
 
                     }
@@ -585,7 +585,9 @@ class GroupBuyingController extends Controller
                         {
                             $value->order_info .= $fe . " " . $num . " 个,";
                         }
+                        $value->order_info .= "<br>";
                     }
+                    $value->order_info .= "<br>";
                 }
 
 
@@ -618,6 +620,11 @@ class GroupBuyingController extends Controller
         //        dd($this->data["item"] );
 
         return view('PC/Admincp/ChangeLogItems')->with('data', $this->data);
+    }
+
+    public function change_log(Request $request)
+    {
+
     }
 
     public function do_change_item(Request $request)
@@ -751,9 +758,10 @@ class GroupBuyingController extends Controller
     public function stock_item(Request $request)
     {
         $this->data["not_pay_order"] = GroupBuyingOrderModel::where("group_id", "=", "0")
-            ->where("status", "=", 1)
-            ->orWhere("status", "=", "2")
+            ->whereIn("status",[1,2])
+
             ->get();
+
         foreach ($this->data["not_pay_order"] as &$value)
         {
             $order_info = json_decode($value->order_info, true);
@@ -871,6 +879,7 @@ class GroupBuyingController extends Controller
                     {
                         $value->info .= $fe . " " . $num . " 个,";
                     }
+                    $value->info .= "<br>";
                 }
             }
 

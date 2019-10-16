@@ -26,8 +26,12 @@
                                 <td>
                                     <a href="/admincp/push_stock_page?tid={{$value->id}}">上架</a>
                                     <a href="/admincp/add_stock_page?item_id={{$value->id}}">补货</a>
-                                    <a class="dis" href="/admincp/disable_stock?item_id={{$value->id}}&display=2">下架</a>
-                                    <a class="dis" href="/admincp/disable_stock?item_id={{$value->id}}&display=1">上架</a>
+
+                                    @if($value->display == 1)
+                                        <a class="dis" href="/admincp/disable_stock?item_id={{$value->id}}&display=2">下架</a>
+                                    @else
+                                        <a class="dis" style="color: #843534" href="/admincp/disable_stock?item_id={{$value->id}}&display=1">上架</a>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach
