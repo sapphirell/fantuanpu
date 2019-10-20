@@ -136,6 +136,7 @@ Route::group([
     ],
 ], function () {
     Route::get('/set_top_thread', ['uses' => 'ThreadController@set_top_thread', 'as' => 'set_top_thread']);#设置帖子为置顶
+
 });
 //用户
 Route::group([
@@ -296,6 +297,7 @@ Route::group([
     Route::post('/add_suki_friend', ['uses' => 'SukiWebApiController@add_suki_friend', 'as' => 'add_suki_friend']);#suki加好友
     Route::post('/add_suki_like', ['uses' => 'SukiWebApiController@add_suki_like', 'as' => 'add_suki_like']);#suki收藏帖子
     Route::post('/apply_suki_friends', ['uses' => 'SukiWebApiController@apply_suki_friends', 'as' => 'apply_suki_friends']);#批准suki好友申请
+    Route::post('/take_task', ['uses' => 'SukiWebApiController@take_task', 'as' => 'take_task']);#获取task
 
     Route::post('/setting_clock', ['uses' => 'SukiWebApiController@setting_clock', 'as' => 'setting_clock']);#闹钟增删改查
     Route::get('/setting_clock_alert', ['uses' => 'SukiWebApiController@setting_clock_alert', 'as' => 'setting_clock_alert']);#闹钟提醒方式修改

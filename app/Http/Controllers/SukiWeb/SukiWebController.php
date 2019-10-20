@@ -13,6 +13,7 @@ use App\Http\DbModel\SukiFriendModel;
 use App\Http\DbModel\SukiFriendRequestModel;
 use App\Http\DbModel\SukiMessageBoardModel;
 use App\Http\DbModel\SukiNoticeModel;
+use App\Http\DbModel\TaskLogModel;
 use App\Http\DbModel\TaskModel;
 use App\Http\DbModel\Thread_model;
 use App\Http\DbModel\User_model;
@@ -33,7 +34,7 @@ class SukiWebController extends Controller
     public function index(Request $request)
     {
 
-        $this->data['nodes'] = (new Forum_forum_model())->get_suki_nodes();
+        $this->data['nodes']  = (new Forum_forum_model())->get_suki_nodes();
         $this->data['thread'] = ForumThreadModel::get_new_thread(
             json_decode(session("setting")->lolita_viewing_forum),
             $request->input("page") ?: 1
@@ -72,9 +73,9 @@ class SukiWebController extends Controller
      */
     public function suki_userhome($uid)
     {
-        $this->data['user'] = User_model::find($uid);
-        $this->data['thread'] = ForumThreadModel::get_user_thread($uid, 1, 2, self::$suki_forum);
-        $this->data['has_follow'] = MyLikeModel::has_like($this->data["user_info"]->uid, $uid, 4);
+        $this->data['user']          = User_model::find($uid);
+        $this->data['thread']        = ForumThreadModel::get_user_thread($uid, 1, 2, self::$suki_forum);
+        $this->data['has_follow']    = MyLikeModel::has_like($this->data["user_info"]->uid, $uid, 4);
         $this->data['message_board'] = SukiMessageBoardModel::get_user_message($uid, 1);
         //查找该用户关注的和粉丝
 
@@ -116,8 +117,8 @@ class SukiWebController extends Controller
     public function view_thread(Request $request, $tid, $page)
     {
         //        dd($this->data);
-        $this->data = (new ThreadController(new Thread_model()))->_viewThread($tid, $page);
-        $this->data["count"] = CommonMemberCount::find($this->data['user_info']->uid);
+        $this->data                   = (new ThreadController(new Thread_model()))->_viewThread($tid, $page);
+        $this->data["count"]          = CommonMemberCount::find($this->data['user_info']->uid);
         $this->data['has_collection'] = MyLikeModel::has_like(
             $this->data['user_info']->uid ?: 0,
             $this->data['thread']['thread_subject']->tid,
@@ -150,10 +151,10 @@ class SukiWebController extends Controller
             case "reply_me" :
                 $this->data["reply_me"] = SukiNoticeModel::find_user_notice($this->data['user_info']->uid, 1);
                 //清理掉用户的小红点
-                $user = User_model::find($this->data['user_info']->uid);
-                $alert = json_decode($user->useralert, true);
+                $user                   = User_model::find($this->data['user_info']->uid);
+                $alert                  = json_decode($user->useralert, true);
                 $alert["suki"]["reply"] = 0;
-                $user->useralert = json_encode($alert, true);
+                $user->useralert        = json_encode($alert, true);
                 $user->save();
                 User_model::flushUserCache($this->data['user_info']->uid);
                 break;
@@ -184,7 +185,7 @@ class SukiWebController extends Controller
         switch ($request->input("type"))
         {
             case "my_follow" :
-                $this->data['title'] = "我关注的";
+                $this->data['title']     = "我关注的";
                 $this->data["my_follow"] = MyLikeModel::get_user_like($this->data['user_info']->uid, 4);
                 foreach ($this->data["my_follow"] as &$value)
                 {
@@ -193,12 +194,12 @@ class SukiWebController extends Controller
 
                 break;
             case "follow_me":
-                $this->data['title'] = "关注我的";
+                $this->data['title']     = "关注我的";
                 $this->data["follow_me"] = MyLikeModel::get_follow_that($this->data['user_info']->uid, 4);
                 foreach ($this->data["follow_me"] as &$value)
                 {
 
-                    $value->user = User_model::find($value->like_id, ["username", "uid"]);
+                    $value->user       = User_model::find($value->like_id, ["username", "uid"]);
                     $value->has_follow = MyLikeModel::has_like($this->data['user_info']->uid, $value->like_id, 4);
                 }
 
@@ -206,7 +207,7 @@ class SukiWebController extends Controller
                 break;
 
             case "friends":
-                $this->data['title'] = "我的好友";
+                $this->data['title']      = "我的好友";
                 $this->data['my_friends'] = SukiFriendModel::get_my_friends(
                     $this->data['user_info']->uid,
                     $request->input("page")
@@ -224,8 +225,8 @@ class SukiWebController extends Controller
     //suki补款闹钟
     public function suki_alarm_clock(Request $request)
     {
-        $group = $request->input("group") ?: false;
-        $this->data['title'] = "补款闹钟";
+        $group                  = $request->input("group") ?: false;
+        $this->data['title']    = "补款闹钟";
         $this->data["my_clock"] = SukiClockModel::get_user_clock($this->data['user_info']->uid, $group);
 
         //        dd($this->data["my_clock"]);
@@ -269,7 +270,7 @@ class SukiWebController extends Controller
     {
         $this->data['posts'] = ForumPostModel::where(
             [
-                "tid" => $request->input("tid"),
+                "tid"      => $request->input("tid"),
                 "position" => $request->input("position"),
             ]
         )->first();
@@ -280,7 +281,7 @@ class SukiWebController extends Controller
     //举报
     public function suki_report(Request $request)
     {
-        $posts = ForumPostModel::where("pid", $request->input("pid"))->first();
+        $posts                = ForumPostModel::where("pid", $request->input("pid"))->first();
         $this->data['origin'] = json_encode($posts);
 
         return view('PC/Suki/SukiReport')->with('data', $this->data);
@@ -306,8 +307,19 @@ class SukiWebController extends Controller
     //suki任务大厅
     public function suki_show_task_list(Request $request)
     {
-        $this->data["task_list"] = TaskModel::select()->get();
-        dd( $this->data["task_list"]);
+        $this->data["task_list"] = TaskModel::getTaskList();
+        $userActiveTask          = TaskLogModel::getActiveTask($this->data["user_info"]->uid);
+
+        foreach ($userActiveTask as $value)
+        {
+            foreach ($this->data["task_list"] as &$task)
+            {
+                if ($task->id == $value->task_id)
+                {
+                    $task->is_receive = 1;
+                }
+            }
+        }
         return view('PC/Suki/SukiTaskList')->with('data', $this->data);
     }
 

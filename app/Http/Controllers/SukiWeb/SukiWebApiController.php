@@ -13,6 +13,8 @@ use App\Http\DbModel\MyLikeModel;
 use App\Http\DbModel\SukiClockModel;
 use App\Http\DbModel\SukiFriendRequestModel;
 use App\Http\DbModel\SukiMessageBoardModel;
+use App\Http\DbModel\TaskLogModel;
+use App\Http\DbModel\TaskModel;
 use App\Http\DbModel\Thread_model;
 use App\Http\DbModel\UCenter_member_model;
 use App\Http\DbModel\User_model;
@@ -389,5 +391,15 @@ class SukiWebApiController extends Controller
         User_model::flushUserCache($this->data["user_info"]->uid);
 
         return self::response();
+    }
+
+    public function take_task(Request $request)
+    {
+        $log = TaskLogModel::take_task($request->input("task_id"), $this->data["user_info"]->uid);
+        if ($log < 0)
+        {
+            return self::response([], 40001, "领取失败:" . $log);
+        }
+        return self::response($log);
     }
 }

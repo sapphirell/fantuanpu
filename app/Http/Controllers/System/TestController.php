@@ -31,6 +31,7 @@ class TestController extends Controller
     }
 
     public function index(){
+        echo 1;
 //
 //        $user = UCenter_member_model::find("50761");
 ////        dd($user);
@@ -40,7 +41,9 @@ class TestController extends Controller
 //        User_model::flushUserCache($user->uid);
 //        return self::response();
 
-        $this->recreateOrders();
+//        $this->recreateOrders();
+//        $this->flush();
+//        $this->reOrder();
 
     }
     public function ping(Request $request)
@@ -297,18 +300,48 @@ class TestController extends Controller
     }
     public function reOrder()
     {
-        $orders = GroupBuyingOrderModel::where("group_id","=",0)->where("status","=","2")->get();
-        $order_info = [
-            "log_id" =>[]
-        ];
-        foreach ($orders as $order)
+        $orders = GroupBuyingOrderModel::where("status","=",4)->get();
+        $exps = GroupBuyingExpressModel::where("status","=",3)->get();
+        $oids = [];
+        foreach ($exps as $exp)
         {
-            $logs           = json_decode($order->log_id, true);
-            $order->ori_order_data = $order->order_info;
-            GroupBuyingLogModel::getLogsByIds($logs);
+            foreach (json_decode($exp->orders,true) as $oid)
+            {
+                $oids[] = $oid;
+            }
 
         }
+//        dd($oids);
+        $updIds = [];
+        foreach ($orders as $order)
+        {
+            if (in_array($order->id,$oids))
+            {
+                $updIds[] = $order->id;
+                $order->status = 6;
+                $order->save();
+            }
+        }
+        dd($updIds);
 
-
+    }
+//array:14 [▼
+//0 => 306
+//1 => 316
+//2 => 395
+//3 => 475
+//4 => 489
+//5 => 496
+//6 => 502
+//7 => 510
+//8 => 511
+//9 => 519
+//10 => 531
+//11 => 556
+//12 => 564
+//13 => 569
+//]
+    public function flush(){
+        User_model::flushUserCache(51179);
     }
 }
