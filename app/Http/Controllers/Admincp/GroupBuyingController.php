@@ -548,7 +548,9 @@ class GroupBuyingController extends Controller
     public function order_delivers(Request $request)
     {
         $this->data['type'] = $request->input("type") ?: 1;
-        $this->data["list"] = GroupBuyingExpressModel::where("status", "=", $this->data['type'])->orderBy("id","DESC")->get();
+        $this->data["list"] = GroupBuyingExpressModel::where("status", "=", $this->data['type'])
+            ->orderBy("id", "DESC")
+            ->get();
         foreach ($this->data["list"] as $value)
         {
 
@@ -556,7 +558,7 @@ class GroupBuyingController extends Controller
             foreach (json_decode($value->orders, true) as $order_id)
             {
                 $order = GroupBuyingOrderModel::find($order_id);
-//                $value->order_id[] = $order_id;
+                //                $value->order_id[] = $order_id;
                 $value->order_info .= "{$order->group_id}团货物<br>";
                 if ($order->group_id == 0)
                 {
@@ -568,7 +570,7 @@ class GroupBuyingController extends Controller
                         //                        dd($order_info);
                         foreach ($stock_detail as $detail)
                         {
-                            $value->order_info .= "<a style='color: #f75950;' href='/suki_group_buying_stock_item?item_id=".$stock_item_type_id."' >{$detail["detail"]["item_name"]}</a>:<span>{$detail["detail"]["size"]}_{$detail["detail"]["color"]} {$detail["num"]}个</span><br>";
+                            $value->order_info .= "<a style='color: #f75950;' href='/suki_group_buying_stock_item?item_id=" . $stock_item_type_id . "' >{$detail["detail"]["item_name"]}</a>:<span>{$detail["detail"]["size"]}_{$detail["detail"]["color"]} {$detail["num"]}个</span><br>";
                         }
 
                     }
@@ -758,8 +760,7 @@ class GroupBuyingController extends Controller
     public function stock_item(Request $request)
     {
         $this->data["not_pay_order"] = GroupBuyingOrderModel::where("group_id", "=", "0")
-            ->whereIn("status",[1,2])
-
+            ->whereIn("status", [1, 2])
             ->get();
 
         foreach ($this->data["not_pay_order"] as &$value)
@@ -854,11 +855,11 @@ class GroupBuyingController extends Controller
     public function orders_list(Request $request)
     {
         //1= 等待付款 2=等待收款确认 3=已发货 4=确认收款 5=逃单6=已申请发货7=已取消
-        $this->data["list"] = GroupBuyingOrderModel::where("status","=","4")->get();
+        $this->data["list"] = GroupBuyingOrderModel::where("status", "=", "4")->get();
         foreach ($this->data["list"] as $value)
         {
             $value->info = "";
-            $order_info = json_decode($value->order_info, true);
+            $order_info  = json_decode($value->order_info, true);
             unset($order_info["log_id"]);
             if ($value->group_id == 0)
             {
@@ -884,9 +885,11 @@ class GroupBuyingController extends Controller
             }
 
         }
-//        dd($this->data["list"]);
+
+        //        dd($this->data["list"]);
         return view('PC/Admincp/OrderList')->with('data', $this->data);
     }
+
     public function cancel_stock_order(Request $request)
     {
         $order         = GroupBuyingOrderModel::find($request->input("id"));
@@ -894,17 +897,17 @@ class GroupBuyingController extends Controller
         $order->save();
         foreach (json_decode($order->log_id, true) as $id)
         {
-            $log         = GroupBuyingLogModel::find($id);
-            $log->status = 4;
+            $log              = GroupBuyingLogModel::find($id);
+            $log->status      = 4;
             $log->update_time = date("Y-m-d H:i:s");
             $log->save();
-            $details = json_decode($log->order_info,true);
+            $details = json_decode($log->order_info, true);
             foreach ($details as $detail => $num)
             {
-                $cs = explode("_",$detail);
+                $cs = explode("_", $detail);
 
-                $stock_item = GroupBuyingStockItemModel::where("size","=",$cs[0])
-                    ->where("color","=",$cs[1])
+                $stock_item = GroupBuyingStockItemModel::where("size", "=", $cs[0])
+                    ->where("color", "=", $cs[1])
                     ->select()->first();
                 $stock_item->stock += $num;
                 $stock_item->save();
@@ -913,6 +916,7 @@ class GroupBuyingController extends Controller
 
         return self::response();
     }
+
     public function disable_stock(Request $request)
     {
         $id          = $request->input("item_id");
@@ -922,6 +926,37 @@ class GroupBuyingController extends Controller
         $st->save();
 
         return self::response();
+    }
 
+    public function update_price(Request $request)
+    {
+        $item_id     = $request->input("item_id");
+        $price       = $request->input("price");
+        $item        = GroupBuyingItemModel::find($item_id);
+        $item->item_price = $price;
+        $item->save();
+        if (empty($item))
+        {
+            return self::response([], 40001, "item不存在");
+        }
+
+        $logs = GroupBuyingLogModel
+            ::where("item_id", "=", $item_id)
+            ->where("group_id", "=", $item->group_id)
+            ->get();
+
+        foreach ($logs as $log)
+        {
+            $info = json_decode($log->order_info, true);
+            $num  = 0;
+            foreach ($info as $value)
+            {
+                $num += $value;
+            }
+            $log->order_price = ($price + $item->premium) * $num;
+            $log->save();
+        }
+
+        return self::response();
     }
 }

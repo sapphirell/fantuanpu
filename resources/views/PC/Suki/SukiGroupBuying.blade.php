@@ -56,6 +56,8 @@
                     四期团购
                 @elseif($data["request"]["gid"] == 5)
                     五期团购
+                @elseif($data["request"]["gid"] == 6)
+                    六期团购
                 @endif
             </button>
             <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
@@ -65,6 +67,7 @@
                 <a href="/suki_group_buying?gid=2" class="dropdown-item" href="#">二期团购</a>
                 <a href="/suki_group_buying?gid=4" class="dropdown-item" href="#">四期团购</a>
                 <a href="/suki_group_buying?gid=5" class="dropdown-item" href="#">五期团购</a>
+                <a href="/suki_group_buying?gid=5" class="dropdown-item" href="#">六期团购</a>
             </div>
         </div>
         {{--<ol class="breadcrumb">--}}

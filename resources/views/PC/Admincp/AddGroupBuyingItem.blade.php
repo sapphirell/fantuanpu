@@ -15,7 +15,7 @@
                 <!-- /.panel-heading -->
                 <div class="panel-body" >
 
-                    <form class="form-horizontal" action="/admincp/add_group_buying_item" method="post">
+                    <form class="form-horizontal fm" action="/admincp/add_group_buying_item" method="post">
 
                         <div class="form-group">
                             <label for="inputPassword" class="col-sm-2 control-label">商品名称</label>
@@ -66,6 +66,7 @@
                             </div>
                         </div>
                         <div class="col-sm-2 control-label">
+                            {{--<button type="button" class="submit">提交</button>--}}
                             <input type="submit" class="submit">
                         </div>
                         {{csrf_field('csrf')}}
@@ -92,9 +93,11 @@
             $(".premium").val(parseInt(item_price)*0.12+0.3);
         })
         $('.submit').keypress(function(e) {
-            if (e.keyCode == 13) {
-                e.preventDefault();
-            }
+            $(".fm").submit()
+//            if (e.keyCode == 13) {
+//                console.log("x")
+//                e.preventDefault();
+//            }
         });
     });
 </script>

@@ -70,6 +70,11 @@
                 <td>
                     @if($value["display"] == 1)
                         <a class="rm_item" href="/admincp/remove_group_buying_item?id={{$value["id"]}}">下架</a>
+                        <form action="/admincp/update_price" method="post">
+                            <input type="text" name="price" value="{{$value["item_price"]}}">
+                            <input type="hidden" name="item_id" value="{{$value["id"]}}">
+                            <input type="submit" value="改价">
+                        </form>
                     @else
                         <p>已下架</p>
                     @endif

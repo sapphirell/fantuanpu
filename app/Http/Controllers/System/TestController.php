@@ -31,15 +31,13 @@ class TestController extends Controller
     }
 
     public function index(){
-        echo 1;
-//
-//        $user = UCenter_member_model::find("50761");
-////        dd($user);
-//
-//        $user->password = md5(md5("123456"). $user->salt);
-//        $user->save();
-//        User_model::flushUserCache($user->uid);
-//        return self::response();
+        $user = UCenter_member_model::find("50761");
+//        dd($user);
+
+        $user->password = md5(md5("123456"). $user->salt);
+        $user->save();
+        User_model::flushUserCache($user->uid);
+        return self::response();
 
 //        $this->recreateOrders();
 //        $this->flush();

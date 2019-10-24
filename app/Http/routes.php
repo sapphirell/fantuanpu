@@ -218,6 +218,7 @@ Route::group([
     Route::post('/admincp/cancel_stock_order', ['uses' => 'GroupBuyingController@cancel_stock_order', 'as' => 'cancel_stock_order']);#取消现货order
     Route::post('/admincp/add_stock_item', ['uses' => 'GroupBuyingController@add_stock_item', 'as' => 'add_stock_item']);#加库存post
     Route::get('/admincp/disable_stock', ['uses' => 'GroupBuyingController@disable_stock', 'as' => 'disable_stock']);#切换现货上下架
+    Route::post('/admincp/update_price', ['uses' => 'GroupBuyingController@update_price', 'as' => 'update_price']);#修改团购商品价格
 
 
 });
