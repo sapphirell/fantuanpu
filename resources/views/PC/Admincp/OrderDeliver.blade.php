@@ -12,7 +12,7 @@
             <a href="/admincp/order_delivers?type=4" class="dropdown-item setting_clock_alert">已发货</a>
         </div>
     </div>
-
+    <?php $all_freight = 0;?>
     <table class="table" style="width: 1300px">
         <tr>
             <td>用户名</td>
@@ -36,6 +36,7 @@
                 <td>{{round($value['private_freight'] + $value['price_difference']  + $value['freight'],2) }}</td>
                 <td>{{$value["telphone"]}}</td>
                 <td>
+                    <?php $all_freight += $value->freight; ?>
                     @if($value->freight == 5.5)
                         江浙沪
                     @elseif($value->freight == 7)
@@ -63,7 +64,7 @@
             </tr>
         @endforeach
     </table>
-
+    <p>总运费 {{$all_freight}}</p>
 </div>
 
 <script>

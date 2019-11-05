@@ -117,4 +117,8 @@ class CoreController extends Controller
      * 帖子的预览图片的缓存,缓存50天
      */
     const THREAD_PREVIEW_IMAGE = ['key' => 'thread_preview_image','time' => 60*24*50];
+    /**
+     * 用户申请发货
+     */
+    const GROUP_BUYING_DELIVER = ['key' => 'group_buying_deliver_','time' => 1];
 }

@@ -89,7 +89,7 @@ class GroupBuyingPageController extends Controller
     {
         if ($request->input("debug"))
         {
-            $this->data["user_info"]->uid = 51170;
+            $this->data["user_info"]->uid = 51485;
         }
         if ($request->input("type") == 'last')
         {
@@ -135,7 +135,7 @@ class GroupBuyingPageController extends Controller
     {
         if ($request->input("debug"))
         {
-            $this->data["user_info"]->uid = 51170;
+            $this->data["user_info"]->uid = 51485;
         }
         if ($request->input("type") == 'last')
         {

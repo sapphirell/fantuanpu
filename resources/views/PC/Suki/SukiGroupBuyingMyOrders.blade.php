@@ -477,9 +477,9 @@
         $(".go_to_pay").click(function (e) {
 
             e.preventDefault();
-            alert("暂未截团");
-            return ;
-            window.location.href = "/suki_group_buying_paying?gid=5";
+//            alert("暂未截团");
+//            return ;
+            window.location.href = "/suki_group_buying_paying?gid=6";
 //        alert("支付宝:15658610102")
         })
         $(".check").change(function (e) {
@@ -516,9 +516,11 @@
                 return false;
             }
         })
+        wating = false
         $(".submit_check").click(function (e) {
 //        alert("暂时不可发货");
 //        return ;
+
             var address = $(".address").val();
             var telphone = $(".telphone").val();
             var name = $(".name").val();
@@ -540,14 +542,21 @@
                 alert("须填写完整")
                 return ;
             }
-            $.post("/suki_group_buying_do_deliver",fd,function (e) {
-                alert(e.msg);
-                if (e.ret == 200)
-                {
-                    window.location.href = "/suki_group_buying_deliver?type=2"
-                }
+            if (!wating)
+            {
+                wating = true
+                $(this).text("正在提交中")
+                $.post("/suki_group_buying_do_deliver",fd,function (e) {
+                    alert(e.msg);
+                    if (e.ret == 200)
+                    {
+                        window.location.href = "/suki_group_buying_deliver?type=2"
+                    }
+                    wating = false
 
-            })
+                })
+            }
+
         });
 
         $(".select_province").change(function () {

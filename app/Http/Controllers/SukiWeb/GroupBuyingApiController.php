@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\SukiWeb;
 
+use App\Http\Controllers\System\CoreController;
 use App\Http\DbModel\GroupBuyingAddressModel;
 use App\Http\DbModel\GroupBuyingStockItemModel;
 use App\Http\DbModel\GroupBuyingStockItemTypeModel;
@@ -16,6 +17,8 @@ use App\Http\DbModel\GroupBuyingLogModel;
 use App\Http\DbModel\GroupBuyingModel;
 use App\Http\DbModel\GroupBuyingOrderModel;
 use App\Http\DbModel\User_model;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class GroupBuyingApiController extends Controller
 {
@@ -24,18 +27,19 @@ class GroupBuyingApiController extends Controller
         parent::__construct();
         $this->data["count"] = CommonMemberCount::find($this->data['user_info']->uid);
     }
+
     public function suki_group_buying_item(Request $request)
     {
         $this->data['lastGroupingInfo'] = GroupBuyingModel::getLastGroup();
-        $chk = $this->checkRequest($request, ["order_info", "item_id", "qq"]);
+        $chk                            = $this->checkRequest($request, ["order_info", "item_id", "qq"]);
         if ($chk !== true)
         {
             return self::response([], 40001, "缺少参数" . $chk);
         }
 
-        $item = GroupBuyingItemModel::find($request->input("item_id"));
+        $item             = GroupBuyingItemModel::find($request->input("item_id"));
         $item->item_color = explode("|", $item->item_color);
-//        var_dump( $item->item_size);
+        //        var_dump( $item->item_size);
         $item->item_size = explode("|", $item->item_size);
 
         if (empty($item))
@@ -50,7 +54,7 @@ class GroupBuyingApiController extends Controller
         }
 
         $order_price = 0;
-        $premium = 0;
+        $premium     = 0;
         foreach ($order_info as $key => $value)
         {
             if ($value <= 0)
@@ -64,7 +68,11 @@ class GroupBuyingApiController extends Controller
             }
             if (!in_array($info[1], $item->item_color))
             {
-                return self::response([], 40003, "商品不存在该颜色" . var_export($info[1],true) . "只有" . var_export($item->item_color, true));
+                return self::response(
+                    [],
+                    40003,
+                    "商品不存在该颜色" . var_export($info[1], true) . "只有" . var_export($item->item_color, true)
+                );
             }
             $premium += $value * $item->premium;
             $order_price += $value * $item->premium + $value * $item->item_price; // 辛苦费+商品原价
@@ -72,19 +80,19 @@ class GroupBuyingApiController extends Controller
 
         //        $order_price += $item->item_freight / $item->min_members  + 15; //公摊运费+私人运费
 
-        $orderLog = new GroupBuyingLogModel();
-        $orderLog->uid = $this->data['user_info']->uid;
-        $orderLog->item_id = $item->id;
-        $orderLog->status = 1;
+        $orderLog           = new GroupBuyingLogModel();
+        $orderLog->uid      = $this->data['user_info']->uid;
+        $orderLog->item_id  = $item->id;
+        $orderLog->status   = 1;
         $orderLog->group_id = $item->group_id;
         //        $orderLog->address = $request->input("address");
         $orderLog->private_freight = 0;
         //        $orderLog->name = $request->input("name");
         //        $orderLog->telphone = $request->input("telphone");
-        $orderLog->premium = $premium;
+        $orderLog->premium     = $premium;
         $orderLog->create_date = date("Y-m-d H:i:s");
-        $orderLog->end_date = $this->data['lastGroupingInfo']->enddate;
-        $orderLog->order_info = $request->input("order_info");
+        $orderLog->end_date    = $this->data['lastGroupingInfo']->enddate;
+        $orderLog->order_info  = $request->input("order_info");
         $orderLog->order_price = $order_price;
         //        $orderLog->qq = $request->input("qq");
         $orderLog->save();
@@ -92,14 +100,16 @@ class GroupBuyingApiController extends Controller
         if (!$this->data['user_info']->qq)
         {
 
-            $user = User_model::find($this->data['user_info']->uid);
+            $user     = User_model::find($this->data['user_info']->uid);
             $user->qq = $request->input("qq");
             $user->save();
             User_model::flushUserCache($this->data['user_info']->uid);
         }
+
         return self::response();
 
     }
+
     public function suki_group_buying_do_deliver(Request $request)
     {
         if (!$request->input("orders"))
@@ -124,51 +134,81 @@ class GroupBuyingApiController extends Controller
                 $freight = 18;
                 break;
         }
+        //        DB::beginTransaction(); //开启事务
+        //        DB::commit();
+        //        DB::rollback();
+        $cacheKey = CoreController::GROUP_BUYING_DELIVER;
+        $key      = $cacheKey['key'] . $this->data["user_info"]->uid . "orders:" . json_encode(
+                $request->input("orders")
+            );
+        $response = Cache::remember(
+            $key,
+            $cacheKey['time'],
+            function ()
+            {
+                //添加缓存锁
+                return time();
+            }
+        );
+        if ($response != time())
+        {
+            return self::response([], 40002, "订单短时间内已经多次提交了");
+        }
         //        dd($request->input("orders"));
         $address = GroupBuyingAddressModel::get_my_address($this->data["user_info"]->uid);
         //遍历订单获得价格
-        $user_orders = GroupBuyingOrderModel::where("uid","=",$this->data["user_info"]->uid)->where("status","=",4)
-            ->whereIn('id',$request->input("orders"))->get();
+        $user_orders = GroupBuyingOrderModel::where("uid", "=", $this->data["user_info"]->uid)->where("status", "=", 4)
+            ->whereIn('id', $request->input("orders"))->get();
         if (empty($user_orders))
         {
-            return self::response([],40002,"订单已经提交了");
+            return self::response([], 40002, "订单已经提交了");
         }
-        $private_freight = 0;
+        $private_freight  = 0;
         $price_difference = 0;
-        $log_arr = [];
+        $log_arr          = [];
+        //        foreach ($user_orders as $value)
+        //        {
+        //            if ($value->group_id == 6)
+        //            {
+        //                return self::response([], 40003, "6团团购商品暂时不能发货");
+        //            }
+        //        }
         foreach ($user_orders as $value)
         {
-            $private_freight += ($value->true_private_freight?:$value->private_freight);
-            $price_difference += (($value->true_price ? ($value->true_price - $value->order_price):0));
+
+            $private_freight += ($value->true_private_freight ?: $value->private_freight);
+            $price_difference += (($value->true_price ? ($value->true_price - $value->order_price) : 0));
             $value->status = 6;
             $value->save();
             //合并要标记为发货的log_id
-            $log_arr = array_merge($log_arr, json_decode($value->log_id,true));
+            $log_arr = array_merge($log_arr, json_decode($value->log_id, true));
         }
-        $express = new GroupBuyingExpressModel();
-        $express->freight = $freight;
-        $express->private_freight = $private_freight;
+        $express                   = new GroupBuyingExpressModel();
+        $express->freight          = $freight;
+        $express->private_freight  = $private_freight;
         $express->price_difference = $price_difference;
-        $express->name = $address->name;
-        $express->telphone = $address->telphone;
-        $express->address = $address->address;
-        $express->freight = $freight;
-        $express->uid = $this->data["user_info"]->uid;
-        $express->orders = json_encode($request->input("orders"));
+        $express->name             = $address->name;
+        $express->telphone         = $address->telphone;
+        $express->address          = $address->address;
+        $express->freight          = $freight;
+        $express->uid              = $this->data["user_info"]->uid;
+        $express->orders           = json_encode($request->input("orders"));
         $express->save();
         //把商品购买的信息都编辑为5
 
         foreach ($log_arr as $log_id)
         {
-            $log = GroupBuyingLogModel::find($log_id);
+            $log         = GroupBuyingLogModel::find($log_id);
             $log->status = 5;
             $log->save();
         }
+
         return self::response();
     }
+
     public function suki_group_buying_confirm_orders(Request $request)
     {
-        $chk = $this->checkRequest($request,["orderId"]);
+        $chk = $this->checkRequest($request, ["orderId"]);
         if ($chk !== true)
         {
             return self::response([], 40001, "缺少参数" . $chk);
@@ -183,20 +223,22 @@ class GroupBuyingApiController extends Controller
         {
             return self::response([], 40003, "已经提交过了");
         }
-        $this->data["orders"]->status = 2;
-        $this->data["orders"]->name = $request->input("name");
+        $this->data["orders"]->status   = 2;
+        $this->data["orders"]->name     = $request->input("name");
         $this->data["orders"]->telphone = $request->input("telphone");
-        $this->data["orders"]->qq = $request->input("qq");
-        $this->data["orders"]->address = $request->input("address");
+        $this->data["orders"]->qq       = $request->input("qq");
+        $this->data["orders"]->address  = $request->input("address");
         $this->data["orders"]->save();
-        foreach (json_decode($this->data["orders"]->log_id,true) as $lid)
+        foreach (json_decode($this->data["orders"]->log_id, true) as $lid)
         {
-            $log = GroupBuyingLogModel::find($lid);
+            $log         = GroupBuyingLogModel::find($lid);
             $log->status = 8;
             $log->save();
         }
+
         return self::response();
     }
+
     public function suki_group_buying_cancel_orders(Request $request)
     {
         if (!$request->input("orderId"))
@@ -218,19 +260,21 @@ class GroupBuyingApiController extends Controller
         //如果是现货,要把库存加回去
         if ($this->data["orders"]->group_id == 0)
         {
-            $details = json_decode($this->data["orders"]->order_info,true);
+            $details = json_decode($this->data["orders"]->order_info, true);
             foreach ($details as $detail => $num)
             {
-                $cs = explode("_",$detail);
+                $cs = explode("_", $detail);
 
-                $stock_item = GroupBuyingStockItemModel::where("size","=",$cs[0])
-                    ->where("color","=",$cs[1])
+                $stock_item = GroupBuyingStockItemModel::where("size", "=", $cs[0])
+                    ->where("color", "=", $cs[1])
                     ->select()->first();
                 $stock_item->stock += $num;
                 $stock_item->save();
             }
             //并且把未付款的现货订单取消(因为只可能存在一个)
-            $not_pay_order = GroupBuyingOrderModel::where(["uid" => $this->data["user_info"]->uid,"status"=>1,"group_id"=>0])->get();
+            $not_pay_order = GroupBuyingOrderModel::where(
+                ["uid" => $this->data["user_info"]->uid, "status" => 1, "group_id" => 0]
+            )->get();
             if (!$not_pay_order->isEmpty())
             {
                 $not_pay_order->status = 7;
@@ -246,15 +290,15 @@ class GroupBuyingApiController extends Controller
     {
         if (!$request->input("name"))
         {
-            return self::response([],40001,"缺少参数name");
+            return self::response([], 40001, "缺少参数name");
         }
         if (!$request->input("address"))
         {
-            return self::response([],40001,"缺少参数address");
+            return self::response([], 40001, "缺少参数address");
         }
         if (!$request->input("telphone"))
         {
-            return self::response([],40001,"缺少参数telphone");
+            return self::response([], 40001, "缺少参数telphone");
         }
 
         GroupBuyingAddressModel::save_address(
@@ -263,6 +307,7 @@ class GroupBuyingApiController extends Controller
             $request->input("telphone"),
             $this->data["user_info"]->uid
         );
+
         return self::response();
     }
 
@@ -275,13 +320,18 @@ class GroupBuyingApiController extends Controller
         }
         if (!$this->data['user_info']->qq)
         {
-            $user = User_model::find($this->data['user_info']->uid);
+            $user     = User_model::find($this->data['user_info']->uid);
             $user->qq = $request->input("qq");
             $user->save();
             User_model::flushUserCache($this->data['user_info']->uid);
         }
-        return GroupBuyingCoreController::buy_stock($this->data["user_info"]->uid,$request->input("item_id"),$request->input("order_info"));
-//        return self::response();
+
+        return GroupBuyingCoreController::buy_stock(
+            $this->data["user_info"]->uid,
+            $request->input("item_id"),
+            $request->input("order_info")
+        );
+        //        return self::response();
     }
 
     public function suki_group_buying_select_ticket(Request $request)
@@ -309,6 +359,7 @@ class GroupBuyingApiController extends Controller
             }
             $ticket->save();
         }
+
         return redirect()->route("{$route_to}");
     }
 }

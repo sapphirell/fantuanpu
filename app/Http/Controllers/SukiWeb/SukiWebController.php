@@ -320,6 +320,8 @@ class SukiWebController extends Controller
                 }
             }
         }
+        //我截取的任务
+        $this->data["my_task"] = TaskModel::getTaskList();
         return view('PC/Suki/SukiTaskList')->with('data', $this->data);
     }
 

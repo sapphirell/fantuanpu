@@ -16,7 +16,13 @@
         @foreach($data["list"] as $key => $value)
             <?php $user = get_user($value->uid); ?>
             <tr>
-                <td>{{$user->username}}[{{$value->uid}}]</td>
+                <td>{{$user->username}}<br>[{{$value->uid}}]<br>
+                    @if(in_array($value->id,$data["err_id"]))
+                        <span style="color: #8c3900">可能已经发货</span>
+                    @endif
+
+                    {{--oid:{{$value->id}}--}}
+                </td>
                 <td>{!! $value->info !!}</td>
                 <td>{{$value->order_price}}/@if($value->status == 1){{"等待付款"}}@else{{"已付款"}}@endif</td>
                 <td>{{$user->qq}}</td>
