@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admincp;
 
+use App\Http\Controllers\System\TestController;
 use App\Http\DbModel\GroupBuyingExpressModel;
 use App\Http\DbModel\GroupBuyingItemModel;
 use App\Http\DbModel\GroupBuyingLogModel;
@@ -548,9 +549,17 @@ class GroupBuyingController extends Controller
     public function order_delivers(Request $request)
     {
         $this->data['type'] = $request->input("type") ?: 1;
-        $this->data["list"] = GroupBuyingExpressModel::where("status", "=", $this->data['type'])
-            ->orderBy("id", "DESC")
-            ->get();
+        $this->data["list"] = GroupBuyingExpressModel::where("status", "=", $this->data['type']);
+
+        if ($this->data['type'] == 1 || $this->data['type'] == 3)
+        {
+            $this->data["list"] = $this->data["list"]->orderBy("uid", "DESC")->get();
+        }
+        else
+        {
+            $this->data["list"] = $this->data["list"]->orderBy("id", "DESC")->get();
+
+        }
         foreach ($this->data["list"] as $value)
         {
 
@@ -856,6 +865,7 @@ class GroupBuyingController extends Controller
     {
         //1= 等待付款 2=等待收款确认 3=已发货 4=确认收款 5=逃单6=已申请发货7=已取消
         $this->data["list"] = GroupBuyingOrderModel::where("status", "=", "4")->get();
+        $this->data["err_id"] = TestController::checkNotCancelPackage();
         foreach ($this->data["list"] as $value)
         {
             $value->info = "";
@@ -930,15 +940,16 @@ class GroupBuyingController extends Controller
 
     public function update_price(Request $request)
     {
-        $item_id     = $request->input("item_id");
-        $price       = $request->input("price");
-        $item        = GroupBuyingItemModel::find($item_id);
+        $item_id          = $request->input("item_id");
+        $price            = $request->input("price");
+        $item             = GroupBuyingItemModel::find($item_id);
         $item->item_price = $price;
         $item->save();
         if (empty($item))
         {
             return self::response([], 40001, "item不存在");
         }
+
 
         $logs = GroupBuyingLogModel
             ::where("item_id", "=", $item_id)
@@ -958,5 +969,84 @@ class GroupBuyingController extends Controller
         }
 
         return self::response();
+    }
+
+    public function update_item_freight(Request $request)
+    {
+        $item_id      = $request->input("item_id");
+        $item_freight = $request->input("item_freight");
+        $item         = GroupBuyingItemModel::find($item_id);
+
+        if (empty($item))
+        {
+            return self::response([], 40001, "item不存在");
+        }
+        $ori_freight        = $item->item_freight;
+        $item->item_freight = $item_freight;
+        $item->save();
+        $group_buying = GroupBuyingModel::find($item->group_id);
+        if ($group_buying->status != 3)
+        {
+            return self::response([], "修改成功(开团中)");
+        }
+        //如果团购已经截团:
+        //查找所有购买成功的log
+        $uids = GroupBuyingLogModel::select("uid")->where("item_id", "=", $item_id)->get();
+        //记录这些uid
+        //查找他们这一团的order
+        $orders = GroupBuyingOrderModel::select()->whereIn("uid", $uids)->get();
+        foreach ($orders as $value)
+        {
+            if (!$value->ori_order_data)
+            {
+                $value->ori_order_data = $value->order_info;
+            }
+            //是否有true_freight_price
+            $user_freight_price = $value->true_private_freight ?: $value->private_freight;
+            $user_freight_price += ($item_freight - $ori_freight) / count($uids);
+            //order_info 备份,然后修改
+            $order_info = json_decode($value->order_info, true);
+            foreach ($order_info as $iid => $idtal)
+            {
+                if ($iid == "log_id")
+                {
+                    continue;
+                }
+                if ($iid == $item_id)
+                {
+                    $idtal["item_detail"]["item_freight"] = $item_freight;
+                    $idtal["private_freight"]             = $item_freight;
+                }
+            }
+        }
+
+    }
+
+    public function cancel_overtime_log()
+    {
+        $logs = GroupBuyingLogModel::select()->where("group_id", "=", 0)->where("status", "=", 1)->where(
+            "create_date",
+            "<",
+            date("Y-m-d H:i:s", time() - 7200)
+        )->get();
+        foreach ($logs as $log)
+        {
+            $log->status      = 4;
+            $log->update_time = date("Y-m-d H:i:s");
+            $log->save();
+            $details = json_decode($log->order_info, true);
+            foreach ($details as $detail => $num)
+            {
+                $cs = explode("_", $detail);
+
+                $stock_item = GroupBuyingStockItemModel::where("size", "=", $cs[0])
+                    ->where("color", "=", $cs[1])
+                    ->select()->first();
+                $stock_item->stock += $num;
+                $stock_item->save();
+            }
+        }
+        //        $log              = GroupBuyingLogModel::find($id);
+
     }
 }

@@ -219,6 +219,7 @@ Route::group([
     Route::post('/admincp/add_stock_item', ['uses' => 'GroupBuyingController@add_stock_item', 'as' => 'add_stock_item']);#加库存post
     Route::get('/admincp/disable_stock', ['uses' => 'GroupBuyingController@disable_stock', 'as' => 'disable_stock']);#切换现货上下架
     Route::post('/admincp/update_price', ['uses' => 'GroupBuyingController@update_price', 'as' => 'update_price']);#修改团购商品价格
+    Route::get('/admincp/cancel_overtime_log', ['uses' => 'GroupBuyingController@cancel_overtime_log', 'as' => 'cancel_overtime_log']);#取消超时log
 
 
 });
