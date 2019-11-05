@@ -864,7 +864,7 @@ class GroupBuyingController extends Controller
     public function orders_list(Request $request)
     {
         //1= 等待付款 2=等待收款确认 3=已发货 4=确认收款 5=逃单6=已申请发货7=已取消
-        $this->data["list"] = GroupBuyingOrderModel::where("status", "=", "4")->get();
+        $this->data["list"]   = GroupBuyingOrderModel::where("status", "=", "4")->get();
         $this->data["err_id"] = TestController::checkNotCancelPackage();
         foreach ($this->data["list"] as $value)
         {

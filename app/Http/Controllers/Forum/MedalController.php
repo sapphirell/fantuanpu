@@ -16,7 +16,8 @@ class MedalController extends Controller
         $this->data['medal'] = MedalModel::query();
 
         $this->data['medal'] = $this->data['medal']->get();
-//        dd($this->data);
-        return view('PC/Forum/MedalShop')->with('data',$this->data);
+
+        //        dd($this->data);
+        return view('PC/Forum/MedalShop')->with('data', $this->data);
     }
 }

@@ -20,46 +20,51 @@ use App\Http\Controllers\Controller;
 
 class CommonApiController extends Controller
 {
-    public static function _suki_add_friend($uid,$friend)
+    public static function _suki_add_friend($uid, $friend)
     {
-        if (SukiFriendModel::is_friend($uid,$friend))
+        if (SukiFriendModel::is_friend($uid, $friend))
         {
             return false;
         }
 
-        $suki_friends = new SukiFriendModel();
-        $suki_friends->uid = $uid;
+        $suki_friends            = new SukiFriendModel();
+        $suki_friends->uid       = $uid;
         $suki_friends->friend_id = $friend;
         $suki_friends->save();
+
         return true;
     }
+
     //发送好友申请
-    public static function _suki_send_friend_request($uid,$friend,$message)
+    public static function _suki_send_friend_request($uid, $friend, $message)
     {
-        if (SukiFriendModel::is_friend($uid,$friend))
+        if (SukiFriendModel::is_friend($uid, $friend))
         {
             return false;
         }
-        $friend_request = new SukiFriendRequestModel();
-        $friend_request->uid = $uid;
+        $friend_request            = new SukiFriendRequestModel();
+        $friend_request->uid       = $uid;
         $friend_request->friend_id = $friend;
-        $friend_request->message = $message;
-        $friend_request->time = time();
-        $friend_request->nickname = User_model::find($uid)->username;
+        $friend_request->message   = $message;
+        $friend_request->time      = time();
+        $friend_request->nickname  = User_model::find($uid)->username;
         $friend_request->save();
         //添加一个提醒标记
-        User_model::setUserAlert($uid,"suki","friend_request");
+        User_model::setUserAlert($uid, "suki", "friend_request");
+
         return true;
     }
+
     //添加suki喜欢的帖子
-    public static function _suki_add_my_like_thread(int $uid,int $tid)
+    public static function _suki_add_my_like_thread(int $uid, int $tid)
     {
-        MyLikeModel::add_user_like($uid,$tid,3);
+        MyLikeModel::add_user_like($uid, $tid, 3);
     }
+
     //移除suki喜欢的帖子
-    public static function _suki_rm_my_like_thread(int $uid,int $tid)
+    public static function _suki_rm_my_like_thread(int $uid, int $tid)
     {
-        MyLikeModel::rm_user_like($uid,$tid,3);
+        MyLikeModel::rm_user_like($uid, $tid, 3);
     }
 
 }

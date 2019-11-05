@@ -31,7 +31,7 @@ class GroupBuyingCoreController extends Controller
 
 
         $order_price = 0;
-        $premium = 0;
+        $premium     = 0;
         foreach ($order_info as $key => $buy_num)
         {
             if ($buy_num <= 0)
@@ -43,13 +43,13 @@ class GroupBuyingCoreController extends Controller
             $colorSizeNotExistsFlag = true;
             foreach ($item["detail"] as $item_stock_detail)
             {
-                if ($item_stock_detail->size."_".$item_stock_detail->color == $key)
+                if ($item_stock_detail->size . "_" . $item_stock_detail->color == $key)
                 {
                     $colorSizeNotExistsFlag = false;
                     $order_price += $buy_num * $item_stock_detail->price;
-                    if ($item_stock_detail->stock<$buy_num)
+                    if ($item_stock_detail->stock < $buy_num)
                     {
-                        return self::response([], 40004, "库存不足,当前剩余".$item_stock_detail->stock."个");
+                        return self::response([], 40004, "库存不足,当前剩余" . $item_stock_detail->stock . "个");
                     }
                     $item_stock_detail->stock -= $buy_num;
                     $item_stock_detail->save();
@@ -65,19 +65,19 @@ class GroupBuyingCoreController extends Controller
 
         }
 
-        $orderLog = new GroupBuyingLogModel();
-        $orderLog->uid = $uid;
-        $orderLog->item_id =  $item_id;
-        $orderLog->status = 1;
+        $orderLog           = new GroupBuyingLogModel();
+        $orderLog->uid      = $uid;
+        $orderLog->item_id  = $item_id;
+        $orderLog->status   = 1;
         $orderLog->group_id = 0;
         //        $orderLog->address = $request->input("address");
         $orderLog->private_freight = 0;
         //        $orderLog->name = $request->input("name");
         //        $orderLog->telphone = $request->input("telphone");
-        $orderLog->premium = $premium;
+        $orderLog->premium     = $premium;
         $orderLog->create_date = date("Y-m-d H:i:s");
-        $orderLog->end_date = 0;
-        $orderLog->order_info = json_encode($order_info,JSON_UNESCAPED_UNICODE);
+        $orderLog->end_date    = 0;
+        $orderLog->order_info  = json_encode($order_info, JSON_UNESCAPED_UNICODE);
         $orderLog->order_price = $order_price;
         //        $orderLog->qq = $request->input("qq");
         $orderLog->save();
