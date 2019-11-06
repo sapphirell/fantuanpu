@@ -75,6 +75,11 @@
                             <input type="hidden" name="item_id" value="{{$value["id"]}}">
                             <input type="submit" value="改价">
                         </form>
+                        <form action="/admincp/update_item_freight" method="post">
+                            <input type="text" name="item_freight" value="{{$value["item_freight"]}}">
+                            <input type="hidden" name="item_id" value="{{$value["id"]}}">
+                            <input type="submit" value="改运费">
+                        </form>
                     @else
                         <p>已下架</p>
                     @endif

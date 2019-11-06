@@ -983,7 +983,7 @@ class GroupBuyingController extends Controller
         }
         $ori_freight        = $item->item_freight;
         $item->item_freight = $item_freight;
-        $item->save();
+
         $group_buying = GroupBuyingModel::find($item->group_id);
         if ($group_buying->status != 3)
         {
@@ -991,7 +991,22 @@ class GroupBuyingController extends Controller
         }
         //如果团购已经截团:
         //查找所有购买成功的log
-        $uids = GroupBuyingLogModel::select("uid")->where("item_id", "=", $item_id)->get();
+        $uidsResult = GroupBuyingLogModel::select(['id','status','uid'])->where("item_id", "=", $item_id)->whereIn("status",[2,3,4,5])->get();
+        $uids       = [];
+        foreach ($uidsResult as $uid)
+        {
+            //检查是否有存在2(等待确认付款)和5已经申请发货的,如果有,则需要手工处理完这些订单才可以改价
+            if ($uid->status != 4)
+            {
+                return self::response([],40005,"修改失败,id:".$uid->id."状态为".$uid->status.",必须手动修改完成后才可以改运费");
+            }
+            if (!in_array($uid->uid, $uids))
+            {
+                $uids[] = $uid->uid;
+            }
+        }
+        $item->save();
+        
         //记录这些uid
         //查找他们这一团的order
         $orders = GroupBuyingOrderModel::select()->whereIn("uid", $uids)->get();
@@ -1006,7 +1021,7 @@ class GroupBuyingController extends Controller
             $user_freight_price += ($item_freight - $ori_freight) / count($uids);
             //order_info 备份,然后修改
             $order_info = json_decode($value->order_info, true);
-            foreach ($order_info as $iid => $idtal)
+            foreach ($order_info as $iid => &$idtal)
             {
                 if ($iid == "log_id")
                 {
@@ -1015,10 +1030,17 @@ class GroupBuyingController extends Controller
                 if ($iid == $item_id)
                 {
                     $idtal["item_detail"]["item_freight"] = $item_freight;
-                    $idtal["private_freight"]             = $item_freight;
+                    $idtal["private_freight"]             = ($item_freight / count($uids));
+                    break;
                 }
             }
+            $value->order_info = json_encode($order_info);
+            $value->true_private_freight = $user_freight_price;
+
+            $value->save();
         }
+
+        return self::response();
 
     }
 
