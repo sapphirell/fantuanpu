@@ -1006,7 +1006,7 @@ class GroupBuyingController extends Controller
             }
         }
         $item->save();
-        
+
         //记录这些uid
         //查找他们这一团的order
         $orders = GroupBuyingOrderModel::select()->whereIn("uid", $uids)->get();
