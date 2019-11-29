@@ -307,6 +307,7 @@ class SukiWebController extends Controller
     //suki任务大厅
     public function suki_show_task_list(Request $request)
     {
+
         $this->data["task_list"] = TaskModel::getTaskList();
         $userActiveTask          = TaskLogModel::getActiveTask($this->data["user_info"]->uid);
 
@@ -321,7 +322,7 @@ class SukiWebController extends Controller
             }
         }
         //我截取的任务
-        $this->data["my_task"] = TaskModel::getTaskList();
+        $this->data["my_task"] = $userActiveTask;
 
         return view('PC/Suki/SukiTaskList')->with('data', $this->data);
     }

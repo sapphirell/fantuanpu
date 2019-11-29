@@ -154,9 +154,9 @@
             @endif
         </button>
         <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" x-placement="bottom-start" style="position: absolute; transform: translate3d(10px, 25px, 0px); top: 0px; left: 0px; will-change: transform;">
-            <a href="/suki_group_buying_myorders?type=last" class="dropdown-item setting_clock_alert">正在团购</a>
-            <a href="/suki_group_buying_my_stock?type=last" class="dropdown-item setting_clock_alert">现货</a>
-            <a href="/suki_group_buying_myorders" class="dropdown-item setting_clock_alert">历史订单</a>
+            <a href="/my_orders?type=last" class="dropdown-item setting_clock_alert">正在团购</a>
+            <a href="/my_stock?type=last" class="dropdown-item setting_clock_alert">现货</a>
+            <a href="/my_orders" class="dropdown-item setting_clock_alert">历史订单</a>
 
         </div>
     </div>
@@ -179,7 +179,7 @@
         <?php $order_info = json_decode($value["order_info"],true); ?>
         <div class="my_items_log">
 
-            <a href="/suki_group_buying_item_info?item_id={{$value->item_id}}" class="logs_image" style="overflow: hidden">
+            <a href="/shop/goods?item_id={{$value->item_id}}" class="logs_image" style="overflow: hidden">
                 @if($value->group_id == 0)
                 <span class="stock_tag">
                     现货

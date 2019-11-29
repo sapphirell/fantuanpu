@@ -10,6 +10,14 @@ class TaskLogModel extends Model
     public $table = 'pre_task_log';
     public $timestamps = false;
 
+    public static $takeTaskError = [
+        - 1 => "任务不存在",
+        - 2 => "任务不在截取时间范围内",
+        - 3 => "已经领取过该任务",
+        - 4 => "还有在进行中的任务",
+        - 5 => "请等待下个周期截取",
+    ];
+
     public static function take_task(int $task_id, int $uid)
     {
         //任务属性
@@ -92,6 +100,15 @@ class TaskLogModel extends Model
 
     public static function getActiveTask($uid)
     {
-        return self::select()->where(["uid" => $uid,"status" => 1])->get();
+        $data = self::select()
+            ->where("uid", $uid)
+            ->where("status", 1)
+            ->get();
+        foreach ($data as $key => & $value)
+        {
+            $value->task_gift = json_decode($value->task_gift, true);
+        }
+
+        return $data;
     }
 }

@@ -61,13 +61,13 @@
                 @endif
             </button>
             <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                <a href="/suki_group_buying" class="dropdown-item" href="#">本期团购</a>
-                <a href="/suki_group_buying_stock" class="dropdown-item" href="#">现货</a>
+                <a href="/shop" class="dropdown-item" href="#">本期团购</a>
+                <a href="/shop/stock_goods" class="dropdown-item" href="#">现货</a>
                 {{--<a href="/suki_group_buying?gid=1" class="dropdown-item" href="#">一期团购</a>--}}
                 {{--<a href="/suki_group_buying?gid=2" class="dropdown-item" href="#">二期团购</a>--}}
-                <a href="/suki_group_buying?gid=4" class="dropdown-item" href="#">四期团购</a>
-                <a href="/suki_group_buying?gid=5" class="dropdown-item" href="#">五期团购</a>
-                <a href="/suki_group_buying?gid=6" class="dropdown-item" href="#">六期团购</a>
+                <a href="/shop?gid=4" class="dropdown-item" href="#">四期团购</a>
+                <a href="/shop?gid=5" class="dropdown-item" href="#">五期团购</a>
+                <a href="/shop?gid=6" class="dropdown-item" href="#">六期团购</a>
             </div>
         </div>
         {{--<ol class="breadcrumb">--}}
@@ -90,7 +90,7 @@
                     个
                 </p>
 
-                <a href="/suki_group_buying_item_info?item_id={{$item["id"]}}" style="  border-radius: 5px;  margin-top: 10px;background: #f9c8c9;width: 100%;display: block;color: #fff;text-align: center;background-color: #ffb6c7;background-image: linear-gradient(90deg, #fbded9 0%, #ffa5b2 93%);">查看详情</a>
+                <a href="/shop/goods?item_id={{$item["id"]}}" style="  border-radius: 5px;  margin-top: 10px;background: #f9c8c9;width: 100%;display: block;color: #fff;text-align: center;background-color: #ffb6c7;background-image: linear-gradient(90deg, #fbded9 0%, #ffa5b2 93%);">查看详情</a>
             </div>
 
         @endforeach

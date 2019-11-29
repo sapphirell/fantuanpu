@@ -267,9 +267,12 @@ Route::group([
      * 未登录下的团购页面
      */
     Route::get('/suki_group_buying', ['uses' => 'GroupBuyingPageController@suki_group_buying', 'as' => 'suki_group_buying']);#suki团购
+    Route::get('/shop', ['uses' => 'GroupBuyingPageController@suki_group_buying', 'as' => 'suki_group_buying']);#suki团购
     Route::get('/suki_group_buying_stock', ['uses' => 'GroupBuyingPageController@suki_group_buying_stock', 'as' => 'suki_group_buying_stock']);#suki团购现货购买
     Route::get('/suki_group_buying_stock_item', ['uses' => 'GroupBuyingPageController@suki_group_buying_stock_item', 'as' => 'suki_group_buying_stock_item']);#suki团购现货购买详情
+    Route::get('/shop/stock_goods', ['uses' => 'GroupBuyingPageController@suki_group_buying_stock_item', 'as' => 'suki_group_buying_stock_item']);#suki团购现货购买详情
     Route::get('/suki_group_buying_item_info', ['uses' => 'GroupBuyingPageController@suki_group_buying_item_info', 'as' => 'suki_group_buying_item_info']);#suki团购商品详情
+    Route::get('/shop/goods', ['uses' => 'GroupBuyingPageController@suki_group_buying_item_info', 'as' => 'suki_group_buying_item_info']);#suki团购商品详情
 });
 //Suki web 必须登录的
 Route::group([
@@ -317,7 +320,9 @@ Route::group([
      * 团购页面
      */
     Route::get('/suki_group_buying_myorders', ['uses' => 'GroupBuyingPageController@suki_group_buying_myorders', 'as' => 'suki_group_buying_myorders']);#suki团购我的商品
+    Route::get('/my_orders', ['uses' => 'GroupBuyingPageController@suki_group_buying_myorders', 'as' => 'suki_group_buying_myorders']);#suki团购我的商品
     Route::get('/suki_group_buying_my_stock', ['uses' => 'GroupBuyingPageController@suki_group_buying_my_stock', 'as' => 'suki_group_buying_my_stock']);#suki团购我的商品
+    Route::get('/my_stock', ['uses' => 'GroupBuyingPageController@suki_group_buying_my_stock', 'as' => 'suki_group_buying_my_stock']);#suki团购我的商品
     Route::get('/suki_group_buying_paying', ['uses' => 'GroupBuyingPageController@suki_group_buying_paying', 'as' => 'suki_group_buying_paying']);#suki提交付款证明
     Route::get('/suki_group_buying_deliver', ['uses' => 'GroupBuyingPageController@suki_group_buying_deliver', 'as' => 'suki_group_buying_deliver']);#suki发货页面
     Route::get('/suki_group_buying_address_manager', ['uses' => 'GroupBuyingPageController@suki_group_buying_address_manager', 'as' => 'suki_group_buying_address_manager']);#suki地址管理
