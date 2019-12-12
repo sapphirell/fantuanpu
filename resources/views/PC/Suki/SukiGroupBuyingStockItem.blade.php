@@ -343,7 +343,7 @@
             $.post("/suki_buy_stock_items", fd, function (e) {
                 alert(e.msg)
                 if (e.ret == 200)
-                    window.location.href = "/suki_group_buying_my_stock"
+                    window.location.href = "/my_stock"
             })
         })
 

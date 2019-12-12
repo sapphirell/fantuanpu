@@ -6,7 +6,7 @@
             <td>类</td>
             <td>个</td>
         </tr>
-        @foreach($data["count_info"] as  $key => $value)
+        @foreach($data["count_info"] as $key => $value)
             <tr>
                 <td>{{$key}}</td>
                 <td>{{$value}}个</td>

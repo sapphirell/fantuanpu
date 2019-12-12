@@ -477,8 +477,8 @@
         $(".go_to_pay").click(function (e) {
 
             e.preventDefault();
-//            alert("暂未截团");
-//            return ;
+            alert("暂未截团");
+            return ;
             window.location.href = "/suki_group_buying_paying?gid=6";
 //        alert("支付宝:15658610102")
         })
@@ -518,8 +518,8 @@
         })
         wating = false
         $(".submit_check").click(function (e) {
-//        alert("暂时不可发货");
-//        return ;
+        alert("暂时不可发货");
+        return ;
 
             var address = $(".address").val();
             var telphone = $(".telphone").val();

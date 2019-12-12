@@ -47,8 +47,8 @@
                 @endif
             </button>
             <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                <a href="/suki_group_buying" class="dropdown-item" href="#">本期团购</a>
-                <a href="/suki_group_buying_stock" class="dropdown-item" href="#">现货</a>
+                <a href="/shop" class="dropdown-item" href="#">本期团购</a>
+                <a href="/stocks_shop" class="dropdown-item" href="#">现货</a>
             </div>
         </div>
         {{--<ol class="breadcrumb">--}}
@@ -66,7 +66,7 @@
                 </p>
 
 
-                <a href="/suki_group_buying_stock_item?item_id={{$item["id"]}}" style="  border-radius: 5px;  margin-top: 10px;background: #f9c8c9;width: 100%;display: block;color: #fff;text-align: center;background-color: #ffb6c7;background-image: linear-gradient(90deg, #fbded9 0%, #ffa5b2 93%);">查看详情</a>
+                <a href="/shop/stock_goods?item_id={{$item["id"]}}" style="  border-radius: 5px;  margin-top: 10px;background: #f9c8c9;width: 100%;display: block;color: #fff;text-align: center;background-color: #ffb6c7;background-image: linear-gradient(90deg, #fbded9 0%, #ffa5b2 93%);">查看详情</a>
             </div>
 
         @endforeach

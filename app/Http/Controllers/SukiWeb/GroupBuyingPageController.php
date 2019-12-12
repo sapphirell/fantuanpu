@@ -99,7 +99,7 @@ class GroupBuyingPageController extends Controller
         if ($request->input("type") == 'last')
         {
             $filter             = [4, 6, 7, 9];
-            $group              = [6];
+            $group              = [7];
             $this->data["type"] = "active";
         }
         else

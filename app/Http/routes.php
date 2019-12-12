@@ -220,7 +220,9 @@ Route::group([
     Route::get('/admincp/disable_stock', ['uses' => 'GroupBuyingController@disable_stock', 'as' => 'disable_stock']);#切换现货上下架
     Route::post('/admincp/update_price', ['uses' => 'GroupBuyingController@update_price', 'as' => 'update_price']);#修改团购商品价格
     Route::post('/admincp/update_item_freight', ['uses' => 'GroupBuyingController@update_item_freight', 'as' => 'update_item_freight']);#改运费
-    Route::get('/admincp/cancel_overtime_log', ['uses' => 'GroupBuyingController@cancel_overtime_log', 'as' => 'cancel_overtime_log']);#取消超时log
+    Route::post('/admincp/cancel_overtime_log', ['uses' => 'GroupBuyingController@cancel_overtime_log', 'as' => 'cancel_overtime_log']);#清理超时订单
+    Route::get('/admincp/set_change_log', ['uses' => 'GroupBuyingController@set_change_log', 'as' => 'set_change_log']);#修改用户的订单修改
+
 
 
 });
@@ -269,6 +271,7 @@ Route::group([
     Route::get('/suki_group_buying', ['uses' => 'GroupBuyingPageController@suki_group_buying', 'as' => 'suki_group_buying']);#suki团购
     Route::get('/shop', ['uses' => 'GroupBuyingPageController@suki_group_buying', 'as' => 'suki_group_buying']);#suki团购
     Route::get('/suki_group_buying_stock', ['uses' => 'GroupBuyingPageController@suki_group_buying_stock', 'as' => 'suki_group_buying_stock']);#suki团购现货购买
+    Route::get('/stocks_shop', ['uses' => 'GroupBuyingPageController@suki_group_buying_stock', 'as' => 'suki_group_buying_stock']);#suki团购现货购买
     Route::get('/suki_group_buying_stock_item', ['uses' => 'GroupBuyingPageController@suki_group_buying_stock_item', 'as' => 'suki_group_buying_stock_item']);#suki团购现货购买详情
     Route::get('/shop/stock_goods', ['uses' => 'GroupBuyingPageController@suki_group_buying_stock_item', 'as' => 'suki_group_buying_stock_item']);#suki团购现货购买详情
     Route::get('/suki_group_buying_item_info', ['uses' => 'GroupBuyingPageController@suki_group_buying_item_info', 'as' => 'suki_group_buying_item_info']);#suki团购商品详情

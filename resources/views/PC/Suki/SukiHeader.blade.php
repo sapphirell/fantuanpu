@@ -288,11 +288,11 @@
                 </a>
             </li>
             <li class="trans">
-                <a href="/suki_group_buying_stock"  class="header_items">
-                {{--<a href="/suki_group_buying"  class="header_items">--}}
+                {{--<a href="/stocks_shop"  class="header_items">--}}
+                <a href="/shop"  class="header_items">
                     {{--<i class="fa  fa-gavel fa-fw fa-lg"  style="color: #ffffff;line-height: 23px"></i>--}}
                     <img src="/Image/tuangou2.png" style="width: 20px;">
-                    <p class="none_960" style="color: #fff;display: inline-block">现货</p>
+                    <p class="none_960" style="color: #fff;display: inline-block">团购</p>
                 </a>
             </li>
         </ul>

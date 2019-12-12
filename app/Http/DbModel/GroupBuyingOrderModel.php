@@ -60,4 +60,9 @@ class GroupBuyingOrderModel extends Model
         $order->save();
         return $order;
     }
+
+    public static function getUserOrder($uid, $gid)
+    {
+        return self::select()->where("uid", $uid)->where("gid", $gid)->first();
+    }
 }

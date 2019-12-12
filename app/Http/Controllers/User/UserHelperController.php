@@ -49,7 +49,7 @@ class UserHelperController extends Controller
 //        $avatar = 'images/'.$usrAvatar;
         //本地目录模式
         $local      = dirname(dirname(dirname(dirname(__DIR__)))) . '/public/';
-        $avadir     = 'Image/user_ava/images/';
+        $avadir     = '/Image/user_ava/images/';
         $avatar     = $local . $avadir . $usrAvatar;
 
         if( file_exists($avatar) )

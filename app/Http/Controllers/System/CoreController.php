@@ -41,9 +41,9 @@ class CoreController extends Controller
      */
     const THREAD_VIEW = ['key'=>'thread_view_','time'=>60*24];
     /**
-     * 帖子的回帖缓存 ,回帖不经常修改,缓存1个月
+     * 帖子的回帖缓存 ,回帖不经常修改,缓存3
      */
-    const POSTS_VIEW = ['key'=>'post_view_','time'=>60*24*30];
+    const POSTS_VIEW = ['key'=>'post_view_','time'=>60*24*3];
     /**
      * 最新帖子缓存 ,缓存6秒,避免洪水攻击
      */
@@ -63,15 +63,15 @@ class CoreController extends Controller
     /**
      * 用户组信息
      */
-    const USER_GROUP = ['key' => 'group_', 'time'=>36000];
+    const USER_GROUP = ['key' => 'group_', 'time'=>3600];
     /**
      * 用户积分信息
      */
     const USER_COUNT = ['key' => 'user_count_', 'time'=>360];
     /**
-     *  用户token信息,储存一年
+     *  用户token信息
      */
-    const USER_TOKEN = ['key' => 'user_token_','time'=>1008084812];
+    const USER_TOKEN = ['key' => 'user_token_','time'=>100808];
     /**
      * 用户论坛信息(签名档、自定义头衔、勋章)
      */
@@ -114,9 +114,9 @@ class CoreController extends Controller
      */
     const USER_SETTING = ['key' => 'user_setting_','time' => 60*24*5 ];
     /**
-     * 帖子的预览图片的缓存,缓存50天
+     * 帖子的预览图片的缓存,缓存1天
      */
-    const THREAD_PREVIEW_IMAGE = ['key' => 'thread_preview_image','time' => 60*24*50];
+    const THREAD_PREVIEW_IMAGE = ['key' => 'thread_preview_image','time' => 60*24];
     /**
      * 用户申请发货
      */

@@ -62,7 +62,7 @@
             </button>
             <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                 <a href="/shop" class="dropdown-item" href="#">本期团购</a>
-                <a href="/shop/stock_goods" class="dropdown-item" href="#">现货</a>
+                <a href="/stocks_shop" class="dropdown-item" href="#">现货</a>
                 {{--<a href="/suki_group_buying?gid=1" class="dropdown-item" href="#">一期团购</a>--}}
                 {{--<a href="/suki_group_buying?gid=2" class="dropdown-item" href="#">二期团购</a>--}}
                 <a href="/shop?gid=4" class="dropdown-item" href="#">四期团购</a>

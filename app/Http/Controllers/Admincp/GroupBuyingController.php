@@ -1069,6 +1069,75 @@ class GroupBuyingController extends Controller
             }
         }
         //        $log              = GroupBuyingLogModel::find($id);
-
+        return self::response(["rm"=>count($logs)]);
     }
+
+    public function set_change_log(Request $request)
+    {
+        $requestLogOrderData = json_decode($request->input("order_info"), true);
+        if (empty($requestLogOrderData))
+        {
+            return self::response([], 40001, "orderinfo空");
+        }
+        $log = GroupBuyingLogModel::find($request->input("log_id"));
+        if (empty($log))
+        {
+            return self::response([], 40001, "log不存在");
+        }
+        $logOrderData = json_decode($log->order_info, true);
+
+        //比较新旧差异
+        $diff = [];
+        //检测原来有的订单的变化
+        foreach ($logOrderData as $old_key => $old_value)
+        {
+            foreach ($requestLogOrderData as $new_key => $new_value)
+            {
+                if ($old_key == $new_key)
+                {
+                    if ($new_value != $old_value)
+                    {
+                        $logOrderData[$old_key] = $new_value;
+                        $diff[$new_key] = $new_value - $old_value;
+                    }
+                }
+            }
+        }
+        //如果没有什么要修改的
+        if (empty($diff))
+        {
+            return self::response([], 40001, "需要修改的值为空");
+        }
+        $allZeroFlag = true;
+        foreach ($logOrderData as $val)
+        {
+             if ($val > 0)
+             {
+                 $allZeroFlag = false;
+             }
+        }
+        //用户的本期订单
+        $order = GroupBuyingOrderModel::getUserOrder($request->input("uid"), $request->input("gid"));
+        $order_detail = json_decode($order->ori_order_data, true);
+        if ($allZeroFlag)
+        {
+            //整个订单被砍,该用户的公摊运费需要重新运算,其它买了的用户的公摊也要重新运算
+            //砍单不会造成流团,因为如果不满成团就应该手动去点流团
+
+            if (!$order->true_private_freight)
+            {
+                $order->true_private_freight = $order->private_freight - $log->private_freight;
+            } else
+            {
+                $order->true_private_freight -=  $order->private_freight;
+            }
+            $log->private_freight = 0;
+        }
+        //计算被砍的金额
+        foreach ($diff as $diff_key => $diff_value)
+        {
+
+        }
+    }
+
 }
