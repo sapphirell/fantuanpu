@@ -178,8 +178,11 @@
         ?>
         <?php $order_info = json_decode($value["order_info"],true); ?>
         <div class="my_items_log">
-
+            @if($value->group_id != 0)
             <a href="/shop/goods?item_id={{$value->item_id}}" class="logs_image" style="overflow: hidden">
+            @else
+            <a href="/shop/stock_goods?item_id={{$value->item_id}}" class="logs_image" style="overflow: hidden">
+            @endif
                 @if($value->group_id == 0)
                 <span class="stock_tag">
                     现货
@@ -349,15 +352,26 @@
                                       {{----}}
                                     {{--</div>--}}
                                     <div>
-                                        <p>
-                                            @foreach($order_info as $oi)
-                                                <span>{{$oi["item_detail"]["item_name"]}}</span>
-                                                <br>
-                                                @foreach($oi["detail"] as $type => $num)
-                                                    <span class="my_order_detail">{{$type}} {{$num}}个</span>
+                                        <p style="background: #eee;padding:10px;">
+                                            @if($order->group_id != 0)
+                                                @foreach($order_info as $oi)
+                                                    <span>{{$oi["item_detail"]["item_name"]}}</span>
                                                     <br>
+                                                    @foreach($oi["detail"] as $type => $num)
+                                                        <span class="my_order_detail">{{$type}} {{$num}}个</span>
+                                                        <br>
+                                                    @endforeach
                                                 @endforeach
-                                            @endforeach
+                                            @else
+                                                @foreach($order_info as $oi)
+                                                    @foreach($oi as $v)
+                                                        <span>{{$v["detail"]["item_name"]}}</span>
+                                                        <br>
+                                                        <span class="my_order_detail">{{$v["detail"]["size"]}} - {{$v["detail"]["color"]}} {{$v["num"]}}个</span>
+                                                        <br>
+                                                    @endforeach
+                                                @endforeach
+                                            @endif
                                         </p>
                                     </div>
 
@@ -383,8 +397,8 @@
                         <select class="select_province" style="width: 80px;padding: 0px;font-size: 12px;height: 25px;padding-left: 15px;display: inline-block">
                             <option value="0|0">请选择!!</option>
                             <option value="5.5|1">苏浙沪皖</option>
-                            <option value="7|2">京津冀晋辽吉黑闽赣鲁豫鄂湘粤桂琼川贵滇渝陕甘青宁</option>
                             <option value="18|3">藏疆</option>
+                            <option value="7|2">其它</option>
                         </select>
 
                         {{--<span class="count_title">需支付</span>:--}}
@@ -437,6 +451,7 @@
                             公摊:{{$value['private_freight']}},<br />
                             流团退款:{{$value['price_difference']}},<br />
                             个人运费:{{$value['freight']}}<br />
+                            (合计:{{$value['freight']+$value['private_freight']+$value['price_difference']}})<br />
                             包含:
                             @foreach($value['groups'] as $n => $id)
                                 {{$id}} 团
@@ -477,9 +492,9 @@
         $(".go_to_pay").click(function (e) {
 
             e.preventDefault();
-            alert("暂未截团");
-            return ;
-            window.location.href = "/suki_group_buying_paying?gid=6";
+//            alert("暂未截团");
+//            return ;
+            window.location.href = "/suki_group_buying_paying?gid=7";
 //        alert("支付宝:15658610102")
         })
         $(".check").change(function (e) {
@@ -518,8 +533,8 @@
         })
         wating = false
         $(".submit_check").click(function (e) {
-        alert("暂时不可发货");
-        return ;
+//        alert("暂时不可发货");
+//        return ;
 
             var address = $(".address").val();
             var telphone = $(".telphone").val();

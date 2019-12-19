@@ -1334,3 +1334,23 @@ if (! function_exists('get_user'))
         return \App\Http\DbModel\User_model::find($uid);
     }
 }
+if (! function_exists('get_log_status'))
+{
+    function get_log_status($status) {
+        //1=提交跟团 2=等待确认付款 3=已经付款 4=取消 5=等待商户发货 6=平台已经发货 7=流团 8=等待确认到账 9=下架 10=受影响流团 11=跑单
+        $statusList = [
+            1=>"提交跟团" ,
+            2=>"等待确认付款",
+            3=>"已经付款" ,
+            4=>"取消",
+            5=>"等待商户发货",
+            6=>"平台已经发货",
+            7=>"流团",
+            8=>"等待确认到账",
+            9=>"下架",
+            10=>"受影响流团",
+            11=>"跑单"
+        ];
+        return $statusList[$status];
+    }
+}

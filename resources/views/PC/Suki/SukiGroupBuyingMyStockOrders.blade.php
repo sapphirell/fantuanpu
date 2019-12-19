@@ -348,9 +348,7 @@
                     </div>
 
                     <table style="width: 100%;    min-height: 50px;">
-
                         @foreach($data["my_order"] as $order)
-                            {{--{{dd($order)}}--}}
                             <?php $order_info = json_decode($order->order_info,true); unset($order_info["log_id"]); ?>
 
                             <tr style="    font-size: 12px;">
@@ -362,21 +360,27 @@
                                     @endif
                                 </td>
                                 <td>
-                                    {{--{{dd($order_info)}}--}}
-                                    {{--<div>--}}
-                                    {{--{{($order->true_private_freight?:$order->private_freight) - $order->order_price + ($order->true_price?:$order->order_price)}}--}}
-                                    {{----}}
-                                    {{--</div>--}}
                                     <div>
-                                        <p>
-                                            @foreach($order_info as $oi)
-                                                <span>{{$oi["item_detail"]["item_name"]}}</span>
-                                                <br>
-                                                @foreach($oi["detail"] as $type => $num)
-                                                    <span class="my_order_detail">{{$type}} {{$num}}个</span>
+                                        <p style="background: #eee;padding: 10px;">
+                                            @if($order->group_id != 0)
+                                                @foreach($order_info as $oi)
+                                                    <span>{{$oi["item_detail"]["item_name"]}}</span>
                                                     <br>
+                                                    @foreach($oi["detail"] as $type => $num)
+                                                        <span class="my_order_detail">{{$type}} {{$num}}个</span>
+                                                        <br>
+                                                    @endforeach
                                                 @endforeach
-                                            @endforeach
+                                            @else
+                                                @foreach($order_info as $oi)
+                                                    @foreach($oi as $v)
+                                                        <span>{{$v["detail"]["item_name"]}}</span>
+                                                        <br>
+                                                        <span class="my_order_detail">{{$v["detail"]["size"]}} - {{$v["detail"]["color"]}} {{$v["num"]}}个</span>
+                                                        <br>
+                                                    @endforeach
+                                                @endforeach
+                                            @endif
                                         </p>
                                     </div>
 
@@ -402,8 +406,8 @@
                         <select class="select_province" style="width: 80px;padding: 0px;font-size: 12px;height: 25px;padding-left: 15px;display: inline-block">
                             <option value="0|0">请选择!!</option>
                             <option value="5.5|1">苏浙沪皖</option>
-                            <option value="7|2">京津冀晋辽吉黑闽赣鲁豫鄂湘粤桂琼川贵滇渝陕甘青宁</option>
                             <option value="18|3">藏疆</option>
+                            <option value="7|2">其它</option>
                         </select>
 
                         {{--<span class="count_title">需支付</span>:--}}

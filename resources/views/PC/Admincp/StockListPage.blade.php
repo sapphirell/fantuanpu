@@ -32,6 +32,7 @@
                                     @else
                                         <a class="dis" style="color: #843534" href="/admincp/disable_stock?item_id={{$value->id}}&display=1">上架</a>
                                     @endif
+                                    <a href="/admincp/sale_log?item_id={{$value->id}}">出售记录</a>
                                 </td>
                             </tr>
                         @endforeach

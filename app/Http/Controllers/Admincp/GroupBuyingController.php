@@ -175,7 +175,7 @@ class GroupBuyingController extends Controller
     //查看一个商品的参团者
     public function items_participant(Request $request)
     {
-        $this->data["list"] = GroupBuyingLogModel::where(["item_id" => $request->input("id")])
+        $this->data["list"] = GroupBuyingLogModel::where("item_id" ,$request->input("id"))->where("group_id", "!=", 0)
             ->where("status", "<>", 4)
             //            ->where("status", "<>", 10)
             ->where("status", "<>", 11)
@@ -755,9 +755,14 @@ class GroupBuyingController extends Controller
             foreach ($log_id as $lid)
             {
                 $log = GroupBuyingLogModel::find($lid);
-                if ($log->status = 5)
+                if ($log->status = 5 && $log->group_id != 0)
                 {
                     $log->status = 3;
+                    $log->save();
+                }
+                if ($log->status = 5 && $log->group_id == 0)
+                {
+                    $log->status = 8;
                     $log->save();
                 }
             }
@@ -769,7 +774,7 @@ class GroupBuyingController extends Controller
     public function stock_item(Request $request)
     {
         $this->data["not_pay_order"] = GroupBuyingOrderModel::where("group_id", "=", "0")
-            ->whereIn("status", [1, 2])
+            ->whereIn("status", [1,2])
             ->get();
 
         foreach ($this->data["not_pay_order"] as &$value)
@@ -991,34 +996,36 @@ class GroupBuyingController extends Controller
         }
         //如果团购已经截团:
         //查找所有购买成功的log
-        $uidsResult = GroupBuyingLogModel::select(['id','status','uid'])->where("item_id", "=", $item_id)->whereIn("status",[2,3,4,5])->get();
+        $uidsResult = GroupBuyingLogModel::select(['id','status','uid',"group_id"])
+                    ->where("item_id", "=", $item_id)
+                    ->whereIn("status",[2,3,4,5,6])
+                    ->get();
+
         $uids       = [];
         foreach ($uidsResult as $uid)
         {
             //检查是否有存在2(等待确认付款)和5已经申请发货的,如果有,则需要手工处理完这些订单才可以改价
-            if ($uid->status != 4)
+            if ($uid->status ==2 || $uid->status == 5 || $uid->status == 6)
             {
                 return self::response([],40005,"修改失败,id:".$uid->id."状态为".$uid->status.",必须手动修改完成后才可以改运费");
             }
-            if (!in_array($uid->uid, $uids))
+            if (!in_array($uid->uid, $uids) && $uid->status == 3)
             {
                 $uids[] = $uid->uid;
             }
         }
         $item->save();
-
+        $group_id = $uid->group_id;
         //记录这些uid
         //查找他们这一团的order
-        $orders = GroupBuyingOrderModel::select()->whereIn("uid", $uids)->get();
+        $orders = GroupBuyingOrderModel::select()->whereIn("uid", $uids)->where("group_id",$group_id)->get();
         foreach ($orders as $value)
         {
             if (!$value->ori_order_data)
             {
                 $value->ori_order_data = $value->order_info;
             }
-            //是否有true_freight_price
-            $user_freight_price = $value->true_private_freight ?: $value->private_freight;
-            $user_freight_price += ($item_freight - $ori_freight) / count($uids);
+            $user_freight_price = 0;
             //order_info 备份,然后修改
             $order_info = json_decode($value->order_info, true);
             foreach ($order_info as $iid => &$idtal)
@@ -1027,13 +1034,16 @@ class GroupBuyingController extends Controller
                 {
                     continue;
                 }
+                $user_freight_price += $idtal["private_freight"];
                 if ($iid == $item_id)
                 {
                     $idtal["item_detail"]["item_freight"] = $item_freight;
                     $idtal["private_freight"]             = ($item_freight / count($uids));
-                    break;
-                }
+               }
+
             }
+
+
             $value->order_info = json_encode($order_info);
             $value->true_private_freight = $user_freight_price;
 
@@ -1140,4 +1150,31 @@ class GroupBuyingController extends Controller
         }
     }
 
+    public function sale_log(Request $request)
+    {
+        $this->data["list"] = GroupBuyingLogModel::where("item_id" ,$request->input("item_id"))->where("group_id", 0)
+            ->orderBy("id", "desc")
+            ->get();
+
+        $this->data["count_info"] = [];
+        foreach ($this->data["list"] as &$value)
+        {
+            $user_info         = User_model::find($value->uid);
+            $value["username"] = $user_info->username;
+            $value["qq"]       = $user_info->qq;
+
+
+            foreach (json_decode($value->order_info, true) as $k => $num)
+            {
+                if ($value->status != 4)
+                {
+                    $this->data["count_info"][ $k ] += $num;
+                }
+
+            }
+
+        }
+
+        return view('PC/Admincp/SaleLog')->with('data', $this->data);
+    }
 }

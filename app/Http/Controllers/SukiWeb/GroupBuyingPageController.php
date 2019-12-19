@@ -61,6 +61,7 @@ class GroupBuyingPageController extends Controller
     {
         $this->data["type"]  = "stock";
         $this->data['items'] = GroupBuyingStockItemTypeModel::getList();
+        $this->data['items'] = [];
 
         return view('PC/Suki/SukiGroupBuyingStock')->with('data', $this->data);
     }
@@ -172,7 +173,10 @@ class GroupBuyingPageController extends Controller
         //待申请发货的列表
         $this->data["my_order"] = GroupBuyingOrderModel::where(["uid" => $this->data["user_info"]->uid, "status" => 4])
             ->get();
-
+        if ($request->input("debug"))
+        {
+            dd(($this->data["my_order"]));
+        }
         return view('PC/Suki/SukiGroupBuyingMyStockOrders')->with('data', $this->data);
     }
 

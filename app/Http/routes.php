@@ -222,6 +222,7 @@ Route::group([
     Route::post('/admincp/update_item_freight', ['uses' => 'GroupBuyingController@update_item_freight', 'as' => 'update_item_freight']);#改运费
     Route::post('/admincp/cancel_overtime_log', ['uses' => 'GroupBuyingController@cancel_overtime_log', 'as' => 'cancel_overtime_log']);#清理超时订单
     Route::get('/admincp/set_change_log', ['uses' => 'GroupBuyingController@set_change_log', 'as' => 'set_change_log']);#修改用户的订单修改
+    Route::get('/admincp/sale_log', ['uses' => 'GroupBuyingController@sale_log', 'as' => 'sale_log']);#出售记录
 
 
 
@@ -268,13 +269,13 @@ Route::group([
     /**
      * 未登录下的团购页面
      */
-    Route::get('/suki_group_buying', ['uses' => 'GroupBuyingPageController@suki_group_buying', 'as' => 'suki_group_buying']);#suki团购
+//    Route::get('/suki_group_buying', ['uses' => 'GroupBuyingPageController@suki_group_buying', 'as' => 'suki_group_buying']);#suki团购
     Route::get('/shop', ['uses' => 'GroupBuyingPageController@suki_group_buying', 'as' => 'suki_group_buying']);#suki团购
-    Route::get('/suki_group_buying_stock', ['uses' => 'GroupBuyingPageController@suki_group_buying_stock', 'as' => 'suki_group_buying_stock']);#suki团购现货购买
+//    Route::get('/suki_group_buying_stock', ['uses' => 'GroupBuyingPageController@suki_group_buying_stock', 'as' => 'suki_group_buying_stock']);#suki团购现货购买
     Route::get('/stocks_shop', ['uses' => 'GroupBuyingPageController@suki_group_buying_stock', 'as' => 'suki_group_buying_stock']);#suki团购现货购买
-    Route::get('/suki_group_buying_stock_item', ['uses' => 'GroupBuyingPageController@suki_group_buying_stock_item', 'as' => 'suki_group_buying_stock_item']);#suki团购现货购买详情
+//    Route::get('/suki_group_buying_stock_item', ['uses' => 'GroupBuyingPageController@suki_group_buying_stock_item', 'as' => 'suki_group_buying_stock_item']);#suki团购现货购买详情
     Route::get('/shop/stock_goods', ['uses' => 'GroupBuyingPageController@suki_group_buying_stock_item', 'as' => 'suki_group_buying_stock_item']);#suki团购现货购买详情
-    Route::get('/suki_group_buying_item_info', ['uses' => 'GroupBuyingPageController@suki_group_buying_item_info', 'as' => 'suki_group_buying_item_info']);#suki团购商品详情
+//    Route::get('/suki_group_buying_item_info', ['uses' => 'GroupBuyingPageController@suki_group_buying_item_info', 'as' => 'suki_group_buying_item_info']);#suki团购商品详情
     Route::get('/shop/goods', ['uses' => 'GroupBuyingPageController@suki_group_buying_item_info', 'as' => 'suki_group_buying_item_info']);#suki团购商品详情
 });
 //Suki web 必须登录的
