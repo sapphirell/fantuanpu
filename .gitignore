@@ -1,9 +1,9 @@
-./idea
-./public/Image/
+public/Image/
 .env
-./public/uploads/avatar/temporary/
-./public/mobile/node_modules
-./public/mobile/node_modules/
+public/uploads/avatar/temporary/
+public/mobile/node_modules
+public/mobile/node_modules/
 
-./public/uploads
-。DStore
+public/uploads
+.DStore
+.idea
