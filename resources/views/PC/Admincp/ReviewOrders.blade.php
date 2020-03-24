@@ -38,7 +38,7 @@
                 @if($value["min_members"] > $value["item_count"])
                 @else
                     <tr>
-                        <td><a href="/suki_group_buying_item_info?item_id={{$value["id"]}}">{{$value['item_name']}}</a></td>
+                        <td><a href="/shop/goods?item_id={{$value["id"]}}">{{$value['item_name']}}</a></td>
                         <td><img width="27px" src="{{explode("|",$value["item_image"])[0]}}"></td>
                         <td>{{$value["follow"]}}</td>
                         <td>{{$value["item_count"]}}</td>
@@ -59,7 +59,7 @@
             @else
 
             <tr>
-                <td><a href="/suki_group_buying_item_info?item_id={{$value["id"]}}">{{$value['item_name']}}</a></td>
+                <td><a href="/shop/goods?item_id={{$value["id"]}}">{{$value['item_name']}}</a></td>
                 <td><img width="27px" src="{{explode("|",$value["item_image"])[0]}}"></td>
                 <td>{{$value["follow"]}}</td>
                 <td>{{$value["item_count"]}}</td>

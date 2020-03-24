@@ -61,7 +61,7 @@ class GroupBuyingPageController extends Controller
     {
         $this->data["type"]  = "stock";
         $this->data['items'] = GroupBuyingStockItemTypeModel::getList();
-        $this->data['items'] = [];
+//        $this->data['items'] = [];
 
         return view('PC/Suki/SukiGroupBuyingStock')->with('data', $this->data);
     }
@@ -100,7 +100,7 @@ class GroupBuyingPageController extends Controller
         if ($request->input("type") == 'last')
         {
             $filter             = [4, 6, 7, 9];
-            $group              = [7];
+            $group              = [8];
             $this->data["type"] = "active";
         }
         else
