@@ -18,7 +18,7 @@
             <tr>
                 <td>{{$user->username}}<br>[{{$value->uid}}]<br>
                     @if(in_array($value->id,$data["err_id"]))
-                        <span style="color: #8c3900">可能已经发货</span>
+                        <span style="color: #8c3900">可能已经发货 <a class="check_package" href="/admincp/check_package?id={{$value->id}}">校准</a> </span>
                     @endif
 
                     {{--oid:{{$value->id}}--}}
@@ -40,6 +40,14 @@
 
 <script>
     $(document).ready(function (e) {
+        $(".check_package").click(function (e) {
+            e.preventDefault();
+            var ref = $(this).attr("href");
+            $.get(ref,function (e) {
+                alert(e.msg);
+                window.location.reload()
+            })
+        })
         $(".deliver").click(function (e) {
             e.preventDefault();
             var id = $(this).attr("orderId");

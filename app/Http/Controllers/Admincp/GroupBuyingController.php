@@ -986,14 +986,19 @@ class GroupBuyingController extends Controller
         {
             return self::response([], 40001, "item不存在");
         }
+
         $ori_freight        = $item->item_freight;
         $item->item_freight = $item_freight;
 
         $group_buying = GroupBuyingModel::find($item->group_id);
+
+        $item->save();
         if ($group_buying->status != 3)
         {
-            return self::response([], "修改成功(开团中)");
+            return self::response([],200, "update success(opening)");
         }
+
+
         //如果团购已经截团:
         //查找所有购买成功的log
         $uidsResult = GroupBuyingLogModel::select(['id','status','uid',"group_id"])
@@ -1014,7 +1019,8 @@ class GroupBuyingController extends Controller
                 $uids[] = $uid->uid;
             }
         }
-        $item->save();
+
+
         $group_id = $uid->group_id;
         //记录这些uid
         //查找他们这一团的order
@@ -1177,4 +1183,21 @@ class GroupBuyingController extends Controller
 
         return view('PC/Admincp/SaleLog')->with('data', $this->data);
     }
+
+    public function check_package(Request $request)
+    {
+        $order = GroupBuyingOrderModel::find($request->input("id"));
+        if (empty($order)) {
+            return self::response([], 40001, "订单不存在");
+        }
+
+        if ($order->status != 4) {
+            return self::response([], 40002, "订单状态不是确认收款状态(4)");
+        }
+
+        GroupBuyingOrderModel::changeOrderStatus($request->input("id"));
+
+        return self::response();
+    }
+
 }

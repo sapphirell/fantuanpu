@@ -9,7 +9,8 @@
         "laravel/framework": "5.2.*",
         "predis/predis": "^1.1",
         "guzzlehttp/guzzle": "~5.3|~6.0",
-        "intervention/image": "dev-master"
+        "intervention/image": "dev-master",
+        "ext-json": "*"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

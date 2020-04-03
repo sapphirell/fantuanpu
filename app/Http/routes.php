@@ -220,9 +220,10 @@ Route::group([
     Route::get('/admincp/disable_stock', ['uses' => 'GroupBuyingController@disable_stock', 'as' => 'disable_stock']);#切换现货上下架
     Route::post('/admincp/update_price', ['uses' => 'GroupBuyingController@update_price', 'as' => 'update_price']);#修改团购商品价格
     Route::post('/admincp/update_item_freight', ['uses' => 'GroupBuyingController@update_item_freight', 'as' => 'update_item_freight']);#改运费
-    Route::post('/admincp/cancel_overtime_log', ['uses' => 'GroupBuyingController@cancel_overtime_log', 'as' => 'cancel_overtime_log']);#清理超时订单
+    Route::get('/admincp/cancel_overtime_log', ['uses' => 'GroupBuyingController@cancel_overtime_log', 'as' => 'cancel_overtime_log']);#清理超时订单
     Route::get('/admincp/set_change_log', ['uses' => 'GroupBuyingController@set_change_log', 'as' => 'set_change_log']);#修改用户的订单修改
     Route::get('/admincp/sale_log', ['uses' => 'GroupBuyingController@sale_log', 'as' => 'sale_log']);#出售记录
+    Route::get('/admincp/check_package', ['uses' => 'GroupBuyingController@check_package', 'as' => 'check_package']);#校准未发货
 
 
 

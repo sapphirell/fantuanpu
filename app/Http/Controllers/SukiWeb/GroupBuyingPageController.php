@@ -31,22 +31,17 @@ class GroupBuyingPageController extends Controller
     //suki的团购
     public function suki_group_buying(Request $request)
     {
-        if ($request->input("gid"))
-        {
+        if ($request->input("gid")) {
             $this->data['lastGroupingInfo'] = GroupBuyingModel::find($request->input("gid"));
-        }
-        else
-        {
+        } else {
             $this->data['lastGroupingInfo'] = GroupBuyingModel::getLastGroup();
 
         }
 
         //        $group_id = $type == "stock" ? 0 : $this->data['lastGroupingInfo']->id;
-        if ($this->data['lastGroupingInfo'])
-        {
+        if ($this->data['lastGroupingInfo']) {
             $this->data['items'] = GroupBuyingItemModel::getListInfo($this->data['lastGroupingInfo']->id, false);
-            foreach ($this->data['items'] as & $value)
-            {
+            foreach ($this->data['items'] as & $value) {
                 $value['item_image'] = explode("|", $value['item_image']);
                 $value['item_color'] = explode("|", $value['item_color']);
                 $value['item_size']  = explode("|", $value['item_size']);
@@ -61,7 +56,7 @@ class GroupBuyingPageController extends Controller
     {
         $this->data["type"]  = "stock";
         $this->data['items'] = GroupBuyingStockItemTypeModel::getList();
-//        $this->data['items'] = [];
+        $this->data['items'] = [];
 
         return view('PC/Suki/SukiGroupBuyingStock')->with('data', $this->data);
     }
@@ -93,18 +88,14 @@ class GroupBuyingPageController extends Controller
 
     public function suki_group_buying_myorders(Request $request)
     {
-        if ($request->input("debug"))
-        {
+        if ($request->input("debug")) {
             $this->data["user_info"]->uid = 51485;
         }
-        if ($request->input("type") == 'last')
-        {
+        if ($request->input("type") == 'last') {
             $filter             = [4, 6, 7, 9];
             $group              = [8];
             $this->data["type"] = "active";
-        }
-        else
-        {
+        } else {
             $filter             = [];
             $group              = [];
             $this->data["type"] = "history";
@@ -112,22 +103,18 @@ class GroupBuyingPageController extends Controller
         //正在进行的
         $this->data["active_logs"] = GroupBuyingLogModel::getLogs($this->data["user_info"]->uid, $filter, $group);
         //        dd(    $this->data["active_logs"] );
-        foreach ($this->data["active_logs"] as $value)
-        {
+        foreach ($this->data["active_logs"] as $value) {
 
-            $value->sum_private_freight =
-                round(
-                    $value->item_freight / GroupBuyingLogModel::getNotCancelItemsLog($value["item_id"])['member_count'],
-                    2
-                );
+            $value->sum_private_freight = round($value->item_freight / GroupBuyingLogModel::getNotCancelItemsLog($value["item_id"])['member_count'],
+                2);
 
 
         }
         //待申请发货的列表
-        $this->data["my_order"] = GroupBuyingOrderModel::where(["uid" => $this->data["user_info"]->uid, "status" => 4])
-            ->get();
-        foreach ($this->data["active_logs"] as &$value)
-        {
+        $this->data["my_order"] = GroupBuyingOrderModel::where(["uid"    => $this->data["user_info"]->uid,
+                                                                "status" => 4
+        ])->get();
+        foreach ($this->data["active_logs"] as &$value) {
             $value->item_image = explode("|", $value->item_image)[0];
         }
         //地址
@@ -144,18 +131,14 @@ class GroupBuyingPageController extends Controller
 
     public function suki_group_buying_my_stock(Request $request)
     {
-        if ($request->input("debug"))
-        {
+        if ($request->input("debug")) {
             $this->data["user_info"]->uid = 51485;
         }
-        if ($request->input("type") == 'last')
-        {
+        if ($request->input("type") == 'last') {
             $filter             = [4, 6, 7, 9];
             $group              = [0];
             $this->data["type"] = "active";
-        }
-        else
-        {
+        } else {
             $filter             = [];
             $group              = [0];
             $this->data["type"] = "history";
@@ -167,14 +150,15 @@ class GroupBuyingPageController extends Controller
         //我在使用的优惠券
         $this->data["tickets"] = UserTicketModel::getWantToUseTicket($this->data["user_info"]->uid);
         //未付款地订单
-        $this->data["not_pay_order"] = GroupBuyingOrderModel::where(
-            ["uid" => $this->data["user_info"]->uid, "status" => 1, "group_id" => 0]
-        )->get();
+        $this->data["not_pay_order"] = GroupBuyingOrderModel::where(["uid"      => $this->data["user_info"]->uid,
+                                                                     "status"   => 1,
+                                                                     "group_id" => 0
+            ])->get();
         //待申请发货的列表
-        $this->data["my_order"] = GroupBuyingOrderModel::where(["uid" => $this->data["user_info"]->uid, "status" => 4])
-            ->get();
-        if ($request->input("debug"))
-        {
+        $this->data["my_order"] = GroupBuyingOrderModel::where(["uid"    => $this->data["user_info"]->uid,
+                                                                "status" => 4
+        ])->get();
+        if ($request->input("debug")) {
             dd(($this->data["my_order"]));
         }
         return view('PC/Suki/SukiGroupBuyingMyStockOrders')->with('data', $this->data);
@@ -233,49 +217,37 @@ class GroupBuyingPageController extends Controller
 
     public function suki_group_buying_paying(Request $request)
     {
-        if (!$request->input("gid") && $request->input("gid") !== "0")
-        {
+        if (!$request->input("gid") && $request->input("gid") !== "0") {
             return self::response([], 40001, "缺少参数gid");
         }
-        if ($request->input("gid") === "0")
-        {
+        if ($request->input("gid") === "0") {
             //先查询是否还未付款的订单
-            $notPayOrder = GroupBuyingOrderModel::where("uid", "=", $this->data["user_info"]->uid)->where(
-                "status",
-                "=",
-                "1"
-            )->get();
+            $notPayOrder = GroupBuyingOrderModel::where("uid", "=", $this->data["user_info"]->uid)->where("status", "=",
+                "1")->get();
 
-            if (!$notPayOrder->isEmpty())
-            {
+            if (!$notPayOrder->isEmpty()) {
                 die("还有尚未付款的订单");
             }
             //stock items
-            $submit_logs = GroupBuyingLogModel::getLogs(
-                $this->data["user_info"]->uid,
-                [2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
-                [0]
-            );
+            $submit_logs = GroupBuyingLogModel::getLogs($this->data["user_info"]->uid, [2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+                [0]);
             //打包为order
             $order_info  = [
                 "log_id" => [],
             ];
             $order_price = 0;
             //            dd($submit_logs);
-            if ($submit_logs->isEmpty())
-            {
+            if ($submit_logs->isEmpty()) {
                 die("暂无需要打包的订单");
             }
-            foreach ($submit_logs as $submit_log)
-            {
+            foreach ($submit_logs as $submit_log) {
                 $order_price += $submit_log->order_price;
-                foreach ($submit_log->order_detail as $stock_item_id => $buy_detail)
-                {
-                    $order_info[ $submit_log->item_id ][ $stock_item_id ]["num"] += $buy_detail["buy_num"];
-                    $order_info[ $submit_log->item_id ][ $stock_item_id ]["detail"]["size"]      = $buy_detail['item_size'];
-                    $order_info[ $submit_log->item_id ][ $stock_item_id ]["detail"]["color"]     = $buy_detail['item_color'];
-                    $order_info[ $submit_log->item_id ][ $stock_item_id ]["detail"]["item_name"] = $submit_log->item_name;
-                    $order_info["log_id"][]                                                      = $submit_log->id;
+                foreach ($submit_log->order_detail as $stock_item_id => $buy_detail) {
+                    $order_info[$submit_log->item_id][$stock_item_id]["num"]                 += $buy_detail["buy_num"];
+                    $order_info[$submit_log->item_id][$stock_item_id]["detail"]["size"]      = $buy_detail['item_size'];
+                    $order_info[$submit_log->item_id][$stock_item_id]["detail"]["color"]     = $buy_detail['item_color'];
+                    $order_info[$submit_log->item_id][$stock_item_id]["detail"]["item_name"] = $submit_log->item_name;
+                    $order_info["log_id"][]                                                  = $submit_log->id;
 
                     $log         = GroupBuyingLogModel::find($submit_log->id);
                     $log->status = 2;
@@ -284,21 +256,13 @@ class GroupBuyingPageController extends Controller
 
             }
             $userSelectedTicket  = UserTicketModel::getWantToUseTicketList();
-            $this->data["order"] = GroupBuyingOrderModel::createOrder(
-                $this->data["user_info"]->uid,
-                $order_info,
-                0,
-                $order_price,
-                $userSelectedTicket,
-                0
-            );
+            $this->data["order"] = GroupBuyingOrderModel::createOrder($this->data["user_info"]->uid, $order_info, 0,
+                $order_price, $userSelectedTicket, 0);
 
-        }
-        else
-        {
-            $this->data["order"] = GroupBuyingOrderModel::where(
-                ["uid" => $this->data["user_info"]->uid, "group_id" => $request->input("gid")]
-            )->first();
+        } else {
+            $this->data["order"] = GroupBuyingOrderModel::where(["uid"      => $this->data["user_info"]->uid,
+                                                                 "group_id" => $request->input("gid")
+                ])->first();
         }
 
         return view('PC/Suki/SukiGroupBuyingPaying')->with('data', $this->data);
@@ -307,32 +271,23 @@ class GroupBuyingPageController extends Controller
     public function suki_group_buying_deliver(Request $request)
     {
         $this->data["type"] = $request->input("type") ?: 1;
-        if ($this->data["type"] == 1)
-        {
+        if ($this->data["type"] == 1) {
             $this->data["my_order"] = GroupBuyingOrderModel::where(["uid" => $this->data["user_info"]->uid])->get();
 
             //        dd( $this->data["user_info"]);
             //查询用户的收货地址,如果没有取用户最后一次order的,并存储到用户的地址管理里
 
-            $this->data["address"] = GroupBuyingAddressModel::where(["uid" => $this->data["user_info"]->uid])
-                ->select()
-                ->first();
+            $this->data["address"] = GroupBuyingAddressModel::where(["uid" => $this->data["user_info"]->uid])->select()->first();
 
-            if (empty($this->data["address"]) && $this->data["my_order"][0]->address)
-            {
+            if (empty($this->data["address"]) && $this->data["my_order"][0]->address) {
 
-                $this->data["address"] = GroupBuyingAddressModel::save_address(
-                    $this->data["my_order"][0]->name,
-                    $this->data["my_order"][0]->address,
-                    $this->data["my_order"][0]->telphone,
-                    $this->data["user_info"]->uid
-                );
+                $this->data["address"] = GroupBuyingAddressModel::save_address($this->data["my_order"][0]->name,
+                    $this->data["my_order"][0]->address, $this->data["my_order"][0]->telphone,
+                    $this->data["user_info"]->uid);
 
             }
 
-        }
-        else
-        {
+        } else {
             $this->data["my_express"] = GroupBuyingExpressModel::where(["uid" => $this->data["user_info"]->uid])->get();
         }
 
@@ -342,13 +297,12 @@ class GroupBuyingPageController extends Controller
 
     public function suki_group_buying_my_ticket(Request $request)
     {
-
         $this->data["my_ticket"] = UserTicketModel::getActiveTicket($this->data["user_info"]->uid);
         $this->data["ori_route"] = $request->input("ori_route");
 
-        //        dd($this->data["my_ticket"]);
         return view('PC/Suki/SukiUserTicket')->with('data', $this->data);
     }
+
 
 
 }

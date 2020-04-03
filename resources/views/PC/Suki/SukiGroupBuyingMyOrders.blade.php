@@ -393,7 +393,7 @@
                             </tr>
                         @endforeach
                     </table>
-                    <div>
+                    <div style="margin-top: 15px;">
                         <select class="select_province" style="width: 80px;padding: 0px;font-size: 12px;height: 25px;padding-left: 15px;display: inline-block">
                             <option value="0|0">请选择!!</option>
                             <option value="5.5|1">苏浙沪皖</option>
@@ -492,9 +492,9 @@
         $(".go_to_pay").click(function (e) {
 
             e.preventDefault();
-//            alert("暂未截团");
-//            return ;
-            window.location.href = "/suki_group_buying_paying?gid=7";
+           // alert("暂未截团");
+           // return ;
+            window.location.href = "/suki_group_buying_paying?gid=8";
 //        alert("支付宝:15658610102")
         })
         $(".check").change(function (e) {
@@ -533,8 +533,8 @@
         })
         wating = false
         $(".submit_check").click(function (e) {
-//        alert("暂时不可发货");
-//        return ;
+            // alert("因团购还处于收款或订货流程中，暂时不可发货");
+            // return ;
 
             var address = $(".address").val();
             var telphone = $(".telphone").val();
