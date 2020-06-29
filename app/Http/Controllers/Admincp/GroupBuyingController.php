@@ -220,7 +220,7 @@ class GroupBuyingController extends Controller
                 foreach ($tmp as $item_id => $detail)
                 {
 
-                    $value->order_info .= "<a href='/suki_group_buying_item_info?item_id=" . $item_id . " target='_blank' style='color: #00A0FF'>" . $detail["item_detail"]["item_name"] . "</a>" . ":";
+                    $value->order_info .= "<a href='/shop/goods?item_id=" . $item_id . " target='_blank' style='color: #00A0FF'>" . $detail["item_detail"]["item_name"] . "</a>" . ":";
                     foreach ($detail["detail"] as $fe => $num)
                     {
                         $value->order_info .= $fe . " " . $num . " 个,";
@@ -579,7 +579,7 @@ class GroupBuyingController extends Controller
                         //                        dd($order_info);
                         foreach ($stock_detail as $detail)
                         {
-                            $value->order_info .= "<a style='color: #f75950;' href='/suki_group_buying_stock_item?item_id=" . $stock_item_type_id . "' >{$detail["detail"]["item_name"]}</a>:<span>{$detail["detail"]["size"]}_{$detail["detail"]["color"]} {$detail["num"]}个</span><br>";
+                            $value->order_info .= "<a style='color: #f75950;' href='/shop/stock?item_id=" . $stock_item_type_id . "' >{$detail["detail"]["item_name"]}</a>:<span>{$detail["detail"]["size"]}_{$detail["detail"]["color"]} {$detail["num"]}个</span><br>";
                         }
 
                     }
@@ -591,7 +591,7 @@ class GroupBuyingController extends Controller
                     foreach ($tmp as $item_id => $detail)
                     {
 
-                        $value->order_info .= "<a href='/suki_group_buying_item_info?item_id=" . $item_id . " target='_blank' style='color: #00A0FF'>" . $detail["item_detail"]["item_name"] . "</a>" . ":";
+                        $value->order_info .= "<a href='/shop/goods?item_id=" . $item_id . " target='_blank' style='color: #00A0FF'>" . $detail["item_detail"]["item_name"] . "</a>" . ":";
                         foreach ($detail["detail"] as $fe => $num)
                         {
                             $value->order_info .= $fe . " " . $num . " 个,";
@@ -869,7 +869,7 @@ class GroupBuyingController extends Controller
     public function orders_list(Request $request)
     {
         //1= 等待付款 2=等待收款确认 3=已发货 4=确认收款 5=逃单6=已申请发货7=已取消
-        $this->data["list"]   = GroupBuyingOrderModel::where("status", "=", "4")->get();
+        $this->data["list"]   = GroupBuyingOrderModel::where("status", "=", "4")->orderBy("uid", "desc")->get();
         $this->data["err_id"] = TestController::checkNotCancelPackage();
         foreach ($this->data["list"] as $value)
         {
@@ -890,7 +890,7 @@ class GroupBuyingController extends Controller
             {
                 foreach ($order_info as $item_id => $detail)
                 {
-                    $value->info .= "<a href='/suki_group_buying_item_info?item_id=" . $item_id . " target='_blank' style='color: #00A0FF'>" . $detail["item_detail"]["item_name"] . "</a>" . ":";
+                    $value->info .= "<a href='/shop/goods?item_id=" . $item_id . " target='_blank' style='color: #00A0FF'>" . $detail["item_detail"]["item_name"] . "</a>" . ":";
                     foreach ($detail["detail"] as $fe => $num)
                     {
                         $value->info .= $fe . " " . $num . " 个,";

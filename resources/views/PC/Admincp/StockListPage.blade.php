@@ -21,7 +21,7 @@
                         </tr>
                         @foreach($data["list"] as $value)
                             <tr>
-                                <td>{{$value->item_name}}</td>
+                                <td><a href="/shop/stock_goods?item_id={{$value->id}}">{{$value->item_name}}</a></td>
                                 <td><img width="27px" src="{{explode("|",$value->item_image)[0]}}" ></td>
                                 <td>
                                     <a href="/admincp/push_stock_page?tid={{$value->id}}">上架</a>

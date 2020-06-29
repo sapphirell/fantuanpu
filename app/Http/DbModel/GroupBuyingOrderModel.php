@@ -4,6 +4,31 @@ namespace App\Http\DbModel;
 
 use Illuminate\Database\Eloquent\Model;
 
+/****
+ * @property string uid
+ * @property string order_info
+ * @property string name
+ * @property string telphone
+ * @property string qq
+ * @property string address
+ * @property string status
+ * @property string private_freight
+ * @property string order_price
+ * @property string log_id
+ * @property string group_id
+ * @property string ori_order_data
+ * @property string true_price
+ * @property string true_private_freight
+ * @property string cancel  被取消的订单详情
+ * @property string ori_log_id
+ * @property int use_ticket
+ * @property int ticket_id
+ * @property int off_value
+ * @method array find
+ *
+ * Class GroupBuyingOrderModel
+ * @package App\Http\DbModel
+ */
 class GroupBuyingOrderModel extends Model
 {
     public $table = "pre_group_buying_order";

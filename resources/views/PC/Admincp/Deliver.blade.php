@@ -6,7 +6,7 @@
 <body style="padding: 20px">
     <div style="margin-bottom: 10px">订单号</div>
     <input type="hidden" value="{{$data["id"]}}" class="form-control id">
-    <input type="text" class="form-control waybill_no"  >
+    <input type="text" class="form-control waybill_no" checked="checked" value="[中通]7312838">
     <input type="submit" value="提交" class ="submit">
 </body>
 
@@ -20,7 +20,8 @@
             $.post("/admincp/do_deliver",pd,function (e) {
                 console.log(pd)
                 alert(e.msg)
-                layer.closeAll()
+                parent.window.location.reload()
+                // layer.closeAll()
             })
         })
     })

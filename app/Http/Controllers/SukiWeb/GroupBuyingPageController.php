@@ -75,7 +75,7 @@ class GroupBuyingPageController extends Controller
         $this->data["item_info"]  = GroupBuyingItemModel::find($request->input("item_id"));
         $this->data["group_info"] = GroupBuyingModel::find($this->data["item_info"]->group_id);
 
-        $this->data["item_info"]->item_image = explode("|", $this->data["item_info"]->item_image);
+        $this->data["item_info"]->item_image = explode("|", rtrim($this->data["item_info"]->item_image, "|"));
         $this->data["item_info"]->item_color = explode("|", $this->data["item_info"]->item_color);
         $this->data["item_info"]->item_size  = explode("|", $this->data["item_info"]->item_size);
         $item_follow                         = GroupBuyingLogModel::getNotCancelItemsLog($request->input("item_id"));
@@ -93,7 +93,7 @@ class GroupBuyingPageController extends Controller
         }
         if ($request->input("type") == 'last') {
             $filter             = [4, 6, 7, 9];
-            $group              = [8];
+            $group              = [10];
             $this->data["type"] = "active";
         } else {
             $filter             = [];

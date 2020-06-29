@@ -30,7 +30,7 @@
         @foreach($data["list"] as $value)
             <?php $user = get_user($value->uid) ?>
             <tr>
-                <td>{{$user->username}}[{{$value->uid}}]</td>
+                <td>{{$value->id}} | {{$user->username}}[{{$value->uid}}]</td>
                 <td>{{$value["name"]}}</td>
                 <td>{{$value["address"]}}</td>
                 <td>{{round($value['private_freight'] + $value['price_difference']  + $value['freight'],2) }}</td>

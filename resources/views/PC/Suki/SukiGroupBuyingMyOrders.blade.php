@@ -492,9 +492,9 @@
         $(".go_to_pay").click(function (e) {
 
             e.preventDefault();
-           // alert("暂未截团");
-           // return ;
-            window.location.href = "/suki_group_buying_paying?gid=8";
+           alert("暂未截团");
+           return ;
+            window.location.href = "/suki_group_buying_paying?gid=10";
 //        alert("支付宝:15658610102")
         })
         $(".check").change(function (e) {
