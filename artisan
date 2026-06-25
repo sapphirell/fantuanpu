@@ -1,6 +1,8 @@
 #!/usr/bin/env php
 <?php
 
+error_reporting(E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED);
+
 /*
 |--------------------------------------------------------------------------
 | Register The Auto Loader
