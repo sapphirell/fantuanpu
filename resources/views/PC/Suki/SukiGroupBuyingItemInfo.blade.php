@@ -93,6 +93,9 @@
 
             <div class="item_info_ul" style="float: left;">
                 <h1 style="color: #7B6164;font-size: 18px;font-weight: 500;text-align: left">{{$data["item_info"]->item_name}}</h1>
+                <div style="padding: 3px;color: #848484;">
+                    {{$data["item_info"]->description}}
+                </div>
                 <div style="background: #efefef;padding: 8px;margin-bottom: 10px">
                     <p>单价: <span class="item_info_num">{{$data["item_info"]->item_price + $data["item_info"]->premium}}</span>元</p>
                     <p>最低成团: <span class="item_info_num">{{$data["item_info"]->min_members}}</span>个 (当前{{$data["item_member"] . "人购买了" . $data["item_follow"]}}个)</p>

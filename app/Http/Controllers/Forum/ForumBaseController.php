@@ -67,6 +67,7 @@ class ForumBaseController extends Controller
 
     public function ForumIndex(Request $request, UserBaseController $userBaseController)
     {
+//        error_reporting(E_ALL);
         $cacheKey                 = CoreController::NODES;
         $this->data['forumGroup'] = Redis::remember(
             $cacheKey['key'],

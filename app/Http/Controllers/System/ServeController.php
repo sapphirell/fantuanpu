@@ -33,14 +33,19 @@ class ServeController extends Controller
 
     public function index(Request $request)
     {
-        $domain = $request->getHost();
-        if (in_array($domain,self::$local_domain))
-            return view("PC/Common/LocalhostIndex");
-        if (in_array($domain,self::$fantuanpu_domain))
-            return (new ForumBaseController((new Forum_forum_model()) , (new Thread_model())))
-                ->ForumIndex($request,(new UserBaseController())); // -_-什么鬼...
-        if (in_array($domain,self::$local_domain));
-            return (new SukiWebController())->index($request);
+
+//        return view("PC/Common/LocalhostIndex");
+
+        return (new SukiWebController())->index($request);
+
+        //        $domain = $request->getHost();
+//        if (in_array($domain,self::$local_domain))
+//            return view("PC/Common/LocalhostIndex");
+//        if (in_array($domain,self::$fantuanpu_domain))
+//            return (new ForumBaseController((new Forum_forum_model()) , (new Thread_model())))
+//                ->ForumIndex($request,(new UserBaseController())); // -_-什么鬼...
+//        if (in_array($domain,self::$local_domain));
+//            return (new SukiWebController())->index($request);
     }
     public function clock_alert()
     {

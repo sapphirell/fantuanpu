@@ -78,10 +78,10 @@ class SukiWebApiController extends Controller
         {
             return self::response([], 40003, '您的账户已被禁言');
         }
-        if ($user_info->groupid == 8)
-        {
-            return self::response([], 40003, '您的账户邮箱未验证,因此不能发表主题');
-        }
+//        if ($user_info->groupid == 8)
+//        {
+//            return self::response([], 40003, '您的账户邮箱未验证,因此不能发表主题');
+//        }
 
         $checkParams = $this->checkRequest($request, ['subject', 'message']);
         if ($checkParams !== true)

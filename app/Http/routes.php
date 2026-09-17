@@ -104,7 +104,7 @@ Route::group([
         'domain.fantuanpu'
     ],
 ], function () {
-    //    Route::get('/',             ['uses' => 'ForumBaseController@ForumIndex', 'as' => 'forum']);#论坛首页
+//    Route::get('/',             ['uses' => 'ForumBaseController@ForumIndex', 'as' => 'forum']);#论坛首页
     Route::get('/forum.php',    ['uses' => 'ForumBaseController@ForumIndex', 'as' => 'forum-index']);#论坛首页
     Route::get('/index',        ['uses' => 'ForumBaseController@ForumIndex', 'as' => 'forum-index']);#论坛首页
     Route::get('/about', ['uses' => 'ForumBaseController@index', 'as' => 'about']);#about
@@ -132,7 +132,7 @@ Route::group([
     'namespace' => 'Forum',
     'middleware' => [
         'need.login',
-        'domain.fantuanpu'
+//        'domain.fantuanpu'
     ],
 ], function () {
     Route::get('/set_top_thread', ['uses' => 'ThreadController@set_top_thread', 'as' => 'set_top_thread']);#设置帖子为置顶
@@ -283,7 +283,7 @@ Route::group([
 Route::group([
     'namespace' => 'SukiWeb',
     'middleware' => [
-        'domain.lolita',
+//        'domain.lolita',
         'need.login.web'
 
     ],
